@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年第38周 部门推广销售业绩报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Microsoft YaHei", -apple-system, sans-serif; background: #f5f7fa; color: #2c3e50; padding: 32px 24px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  header { background: linear-gradient(135deg,#1f4e79,#2e72b8); color:#fff; border-radius: 14px; padding: 28px 30px; margin-bottom: 24px; }
+  header h1 { font-size: 24px; margin-bottom: 6px; }
+  header p { font-size: 14px; opacity: .9; }
+  .overview { background:#fff; border-radius: 14px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+  .overview h2 { font-size: 18px; margin-bottom: 14px; }
+  .kpis { display:grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 14px; }
+  .kpi { background:#f8fafc; border-radius: 10px; padding: 16px; text-align:center; }
+  .kpi label { font-size: 13px; color:#7f8c9b; display:block; margin-bottom: 8px; }
+  .kpi .v { font-size: 20px; font-weight:700; }
+  .charts { display:grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+  .chart-box { background:#fff; border-radius:14px; padding: 18px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+  .chart-box h3 { font-size: 15px; margin-bottom: 10px; }
+  .chart-box .c { height: 320px; }
+  section { background:#fff; border-radius:14px; padding: 22px 24px; margin-bottom: 24px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+  .dept-head { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .dept-head h2 { font-size: 19px; }
+  .badge { background:#eaf2fb; color:#1f4e79; border-radius:20px; padding:4px 12px; font-size:13px; font-weight:600; }
+  .cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:18px; }
+  .card { background:#f8fafc; border-radius:10px; padding:14px; text-align:center; border-left:3px solid #2e72b8; }
+  .card label { font-size:12px; color:#7f8c9b; display:block; margin-bottom:6px; }
+  .card .val { font-size:16px; font-weight:700; }
+  .card .accent { color:#e67e22; }
+  table { width:100%; border-collapse: collapse; font-size: 14px; }
+  thead th { background:#f0f4f8; color:#34495e; padding:10px 8px; text-align:right; font-weight:600; position:sticky; top:0; }
+  thead th:first-child { text-align:left; }
+  tbody td { padding:9px 8px; text-align:right; border-bottom:1px solid #eef1f4; }
+  tbody td:first-child, tbody td.name { text-align:left; }
+  td.name { font-weight:600; }
+  tbody tr:hover { background:#f7fafd; }
+  .note { font-size:13px; color:#95a5a6; margin-top:8px; }
+  @media (max-width: 900px){ .charts { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>2026年第38周 部门推广销售业绩报告</h1>
+    <p>数据来源：盛途 ERP 产品推广表现 · 统计周 2026-W38 · 金额为报表原币种</p>
+  </header>
+
+  <div class="overview">
+    <h2>全公司推广业绩汇总（W38）</h2>
+    <div class="kpis">
+      <div class="kpi"><label>推广人数</label><div class="v">25</div></div>
+      <div class="kpi"><label>净销售额</label><div class="v">1,777,331.59</div></div>
+      <div class="kpi"><label>广告销售额</label><div class="v">674,878.15</div></div>
+      <div class="kpi"><label>广告花费</label><div class="v">194,465.88</div></div>
+      <div class="kpi"><label>订单毛利</label><div class="v">289,964.85</div></div>
+      <div class="kpi"><label>ACOS</label><div class="v">28.81%</div></div>
+      <div class="kpi"><label>TACOS</label><div class="v">10.94%</div></div>
+      <div class="kpi"><label>毛利率</label><div class="v">16.31%</div></div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="chart-box"><h3>各部门 销售与广告投入 (W38)</h3><div id="c1" class="c"></div></div>
+    <div class="chart-box"><h3>各部门 比率指标 (W38)</h3><div id="c2" class="c"></div></div>
+  </div>
+
+  
+  <section>
+    <div class="dept-head">
+      <h2>事业一部开发部门</h2>
+      <span class="badge">推广人 1 人</span>
+    </div>
+    <div class="cards">
+      <div class="card"><label>净销售额</label><div class="val accent">73,765.95</div></div>
+      <div class="card"><label>广告销售额</label><div class="val">29,368.24</div></div>
+      <div class="card"><label>广告花费(推广费)</label><div class="val">8,834.36</div></div>
+      <div class="card"><label>订单毛利</label><div class="val">9,329.85</div></div>
+      <div class="card"><label>ACOS</label><div class="val">30.08%</div></div>
+      <div class="card"><label>TACOS</label><div class="val">11.98%</div></div>
+      <div class="card"><label>毛利率</label><div class="val">12.65%</div></div>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>推广人</th><th>净销售额</th><th>广告销售额</th><th>广告花费</th><th>订单毛利</th><th>ACOS</th><th>TACOS</th><th>毛利率</th></tr></thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td class="name">陈云艳</td>
+        <td>73,765.95</td>
+        <td>29,368.24</td>
+        <td>8,834.36</td>
+        <td>9,329.85</td>
+        <td>30.08%</td>
+        <td>11.98%</td>
+        <td>12.65%</td>
+      </tr></tbody>
+    </table>
+  </section>
+  <section>
+    <div class="dept-head">
+      <h2>事业一部运营部门</h2>
+      <span class="badge">推广人 20 人</span>
+    </div>
+    <div class="cards">
+      <div class="card"><label>净销售额</label><div class="val accent">1,725,308.39</div></div>
+      <div class="card"><label>广告销售额</label><div class="val">655,312.67</div></div>
+      <div class="card"><label>广告花费(推广费)</label><div class="val">189,637.89</div></div>
+      <div class="card"><label>订单毛利</label><div class="val">288,285.09</div></div>
+      <div class="card"><label>ACOS</label><div class="val">28.94%</div></div>
+      <div class="card"><label>TACOS</label><div class="val">10.99%</div></div>
+      <div class="card"><label>毛利率</label><div class="val">16.71%</div></div>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>推广人</th><th>净销售额</th><th>广告销售额</th><th>广告花费</th><th>订单毛利</th><th>ACOS</th><th>TACOS</th><th>毛利率</th></tr></thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td class="name">范昌娟</td>
+        <td>209,566.46</td>
+        <td>64,712.77</td>
+        <td>15,899.21</td>
+        <td>40,693.85</td>
+        <td>24.57%</td>
+        <td>7.59%</td>
+        <td>19.42%</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td class="name">张淑珍</td>
+        <td>181,299.06</td>
+        <td>69,353.08</td>
+        <td>19,879.69</td>
+        <td>30,971.03</td>
+        <td>28.66%</td>
+        <td>10.97%</td>
+        <td>17.08%</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td class="name">丁道理</td>
+        <td>159,288.67</td>
+        <td>74,289.02</td>
+        <td>22,399.13</td>
+        <td>24,456.65</td>
+        <td>30.15%</td>
+        <td>14.06%</td>
+        <td>15.35%</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td class="name">范雅晴</td>
+        <td>137,348.23</td>
+        <td>50,151.43</td>
+        <td>17,374.59</td>
+        <td>24,239.22</td>
+        <td>34.64%</td>
+        <td>12.65%</td>
+        <td>17.65%</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td class="name">吴跃</td>
+        <td>129,271.61</td>
+        <td>47,603.63</td>
+        <td>11,827.30</td>
+        <td>22,825.99</td>
+        <td>24.85%</td>
+        <td>9.15%</td>
+        <td>17.66%</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td class="name">张颖</td>
+        <td>110,319.66</td>
+        <td>36,300.43</td>
+        <td>11,087.54</td>
+        <td>21,546.54</td>
+        <td>30.54%</td>
+        <td>10.05%</td>
+        <td>19.53%</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td class="name">丁惠敏</td>
+        <td>100,635.12</td>
+        <td>40,854.15</td>
+        <td>11,000.31</td>
+        <td>17,184.64</td>
+        <td>26.93%</td>
+        <td>10.93%</td>
+        <td>17.08%</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td class="name">袁雯丽</td>
+        <td>97,145.82</td>
+        <td>32,016.10</td>
+        <td>7,447.82</td>
+        <td>18,735.30</td>
+        <td>23.26%</td>
+        <td>7.67%</td>
+        <td>19.29%</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td class="name">陈云艳</td>
+        <td>73,765.95</td>
+        <td>29,368.24</td>
+        <td>8,834.36</td>
+        <td>9,329.85</td>
+        <td>30.08%</td>
+        <td>11.98%</td>
+        <td>12.65%</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td class="name">刘雨晴</td>
+        <td>69,733.38</td>
+        <td>28,562.44</td>
+        <td>8,317.09</td>
+        <td>10,387.52</td>
+        <td>29.12%</td>
+        <td>11.93%</td>
+        <td>14.90%</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td class="name">秦书月</td>
+        <td>65,993.12</td>
+        <td>25,666.67</td>
+        <td>5,231.42</td>
+        <td>11,950.65</td>
+        <td>20.38%</td>
+        <td>7.93%</td>
+        <td>18.11%</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td class="name">AI推广</td>
+        <td>63,281.30</td>
+        <td>24,111.27</td>
+        <td>8,261.83</td>
+        <td>7,788.83</td>
+        <td>34.27%</td>
+        <td>13.06%</td>
+        <td>12.31%</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td class="name">胡宏金</td>
+        <td>63,252.33</td>
+        <td>27,874.47</td>
+        <td>7,176.60</td>
+        <td>10,806.45</td>
+        <td>25.75%</td>
+        <td>11.35%</td>
+        <td>17.08%</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td class="name">李超</td>
+        <td>54,883.93</td>
+        <td>22,048.10</td>
+        <td>7,610.08</td>
+        <td>7,210.37</td>
+        <td>34.52%</td>
+        <td>13.87%</td>
+        <td>13.14%</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td class="name">吴瑶</td>
+        <td>52,031.75</td>
+        <td>21,858.93</td>
+        <td>6,669.24</td>
+        <td>6,948.30</td>
+        <td>30.51%</td>
+        <td>12.82%</td>
+        <td>13.35%</td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td class="name">徐叶</td>
+        <td>51,526.45</td>
+        <td>21,943.57</td>
+        <td>8,145.26</td>
+        <td>6,508.17</td>
+        <td>37.12%</td>
+        <td>15.81%</td>
+        <td>12.63%</td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td class="name">程智刚</td>
+        <td>40,096.85</td>
+        <td>12,123.60</td>
+        <td>4,220.08</td>
+        <td>7,438.52</td>
+        <td>34.81%</td>
+        <td>10.52%</td>
+        <td>18.55%</td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td class="name">于战战</td>
+        <td>32,786.00</td>
+        <td>12,675.71</td>
+        <td>3,907.59</td>
+        <td>5,201.02</td>
+        <td>30.83%</td>
+        <td>11.92%</td>
+        <td>15.86%</td>
+      </tr>
+      <tr>
+        <td>19</td>
+        <td class="name">郑思璇</td>
+        <td>16,917.54</td>
+        <td>7,496.41</td>
+        <td>2,331.40</td>
+        <td>1,746.32</td>
+        <td>31.10%</td>
+        <td>13.78%</td>
+        <td>10.32%</td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td class="name">韦燕敏</td>
+        <td>16,165.16</td>
+        <td>6,302.65</td>
+        <td>2,017.35</td>
+        <td>2,315.87</td>
+        <td>32.01%</td>
+        <td>12.48%</td>
+        <td>14.33%</td>
+      </tr></tbody>
+    </table>
+  </section>
+  <section>
+    <div class="dept-head">
+      <h2>事业三部</h2>
+      <span class="badge">推广人 5 人</span>
+    </div>
+    <div class="cards">
+      <div class="card"><label>净销售额</label><div class="val accent">52,023.20</div></div>
+      <div class="card"><label>广告销售额</label><div class="val">19,565.48</div></div>
+      <div class="card"><label>广告花费(推广费)</label><div class="val">4,827.99</div></div>
+      <div class="card"><label>订单毛利</label><div class="val">1,679.76</div></div>
+      <div class="card"><label>ACOS</label><div class="val">24.68%</div></div>
+      <div class="card"><label>TACOS</label><div class="val">9.28%</div></div>
+      <div class="card"><label>毛利率</label><div class="val">3.23%</div></div>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>推广人</th><th>净销售额</th><th>广告销售额</th><th>广告花费</th><th>订单毛利</th><th>ACOS</th><th>TACOS</th><th>毛利率</th></tr></thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td class="name">倪锐</td>
+        <td>20,933.67</td>
+        <td>6,500.12</td>
+        <td>1,546.09</td>
+        <td>1,358.19</td>
+        <td>23.79%</td>
+        <td>7.39%</td>
+        <td>6.49%</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td class="name">董思敏</td>
+        <td>15,713.47</td>
+        <td>8,697.13</td>
+        <td>1,655.92</td>
+        <td>224.34</td>
+        <td>19.04%</td>
+        <td>10.54%</td>
+        <td>1.43%</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td class="name">鲍远娇</td>
+        <td>7,118.47</td>
+        <td>1,947.45</td>
+        <td>785.32</td>
+        <td>-233.05</td>
+        <td>40.33%</td>
+        <td>11.03%</td>
+        <td>-3.27%</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td class="name">孙莹</td>
+        <td>6,874.22</td>
+        <td>2,096.30</td>
+        <td>624.97</td>
+        <td>528.87</td>
+        <td>29.81%</td>
+        <td>9.09%</td>
+        <td>7.69%</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td class="name">周礼旺</td>
+        <td>1,383.37</td>
+        <td>324.48</td>
+        <td>215.69</td>
+        <td>-198.59</td>
+        <td>66.47%</td>
+        <td>15.59%</td>
+        <td>-14.36%</td>
+      </tr></tbody>
+    </table>
+  </section>
+
+  <div class="note">说明：金额为报表库原币种（未折算人民币）；广告销售额 = 广告带来的销售额；ACOS = 广告花费÷广告销售额；TACOS = 广告花费÷净销售额；毛利率 = 订单毛利÷净销售额。推广1/2/3组为事业一部运营部门下属分组，此处按事业部口径汇总展示。</div>
+</div>
+
+<script>
+const deps = [{"name":"一部·开发","net":73765.95,"ad":29368.24,"cost":8834.36,"acos":30.08,"tacos":11.98,"gm":12.65},{"name":"一部·运营","net":1725308.39,"ad":655312.67,"cost":189637.89,"acos":28.94,"tacos":10.99,"gm":16.71},{"name":"三部","net":52023.2,"ad":19565.48,"cost":4827.99,"acos":24.68,"tacos":9.28,"gm":3.23}];
+const c1 = echarts.init(document.getElementById('c1'));
+c1.setOption({
+  tooltip:{ trigger:'axis', axisPointer:{type:'shadow'}, valueFormatter:v=>Number(v||0).toLocaleString('zh-CN') },
+  legend:{ data:['净销售额','广告销售额','广告花费'] },
+  grid:{ left:70, right:20, top:40, bottom:30 },
+  xAxis:{ type:'category', data: deps.map(d=>d.name) },
+  yAxis:{ type:'value', name:'金额' },
+  series:[
+    { name:'净销售额', type:'bar', data:deps.map(d=>d.net), itemStyle:{color:'#2e72b8'} },
+    { name:'广告销售额', type:'bar', data:deps.map(d=>d.ad), itemStyle:{color:'#8fd3f4'} },
+    { name:'广告花费', type:'bar', data:deps.map(d=>d.cost), itemStyle:{color:'#e67e22'} },
+  ]
+});
+const c2 = echarts.init(document.getElementById('c2'));
+c2.setOption({
+  tooltip:{ trigger:'axis', valueFormatter:v=>v+'%' },
+  legend:{ data:['ACOS','TACOS','毛利率'] },
+  grid:{ left:50, right:20, top:40, bottom:30 },
+  xAxis:{ type:'category', data: deps.map(d=>d.name) },
+  yAxis:{ type:'value', name:'%' },
+  series:[
+    { name:'ACOS', type:'bar', data:deps.map(d=>d.acos), itemStyle:{color:'#e74c3c'} },
+    { name:'TACOS', type:'bar', data:deps.map(d=>d.tacos), itemStyle:{color:'#f39c12'} },
+    { name:'毛利率', type:'bar', data:deps.map(d=>d.gm), itemStyle:{color:'#27ae60'} },
+  ]
+});
+window.addEventListener('resize', ()=>{ c1.resize(); c2.resize(); });
+</script>
+</body>
+</html>

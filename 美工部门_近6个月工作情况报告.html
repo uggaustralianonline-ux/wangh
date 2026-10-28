@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>美工部门近6个月工作情况报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", -apple-system, sans-serif; background: #f4f6fb; color: #26313d; padding: 24px; overflow-x: auto; }
+.wrap { max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 22px; margin-bottom: 4px; }
+.sub { color: #7a8598; font-size: 13px; margin-bottom: 18px; }
+.kpis { display: flex; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+.kpi { background: #fff; border-radius: 10px; padding: 16px 20px; flex: 1; min-width: 160px; box-shadow: 0 1px 3px rgba(20,40,80,.08); }
+.kpi .k { color: #7a8598; font-size: 13px; }
+.kpi .v { font-size: 26px; font-weight: 700; margin-top: 4px; }
+.kpi .v small { font-size: 13px; color: #9aa6b8; font-weight: 400; margin-left: 4px; }
+.card { background: #fff; border-radius: 10px; padding: 18px 20px; margin-bottom: 22px; box-shadow: 0 1px 3px rgba(20,40,80,.08); }
+.card h2 { font-size: 16px; margin-bottom: 12px; color: #1d2733; }
+.chart { width: 100%; height: 340px; }
+table { width: 100%; min-width: 1500px; border-collapse: collapse; font-size: 12px; }
+th, td { border: 1px solid #eef1f6; padding: 7px 8px; text-align: center; }
+thead th { background: #2f6feb; color: #fff; position: sticky; top: 0; }
+tbody tr:nth-child(even) { background: #f8fafd; }
+td.name { font-weight: 600; color: #1d2733; }
+td.c { color: #2f6feb; font-weight: 600; }
+td.s { color: #17a2a2; }
+td.avgp { color: #e0850f; font-weight: 600; }
+td.avg { color: #e0850f; font-weight: 700; }
+th.hp { background: #fdeecf; color: #e0850f; }
+th.msub { background: #dfe8fb; color: #2f6feb; }
+th.hc, th.hs { background: #dfe8fb; color: #2f6feb; }
+tfoot td { background: #fff7e8; font-weight: 700; }
+.note { color: #9aa6b8; font-size: 12px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>美工部门 · 近6个月工作情况报告</h1>
+  <div class="sub">统计范围：视觉设计部门 · 美工角色 | 数据区间：2026-03 ~ 2026-08 | 来源：盛途ERP(MSkuImages) | 生成时间：2026-09-16 21:43</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">在职美工人数</div><div class="v">18<small>人</small></div></div>
+    <div class="kpi"><div class="k">近6个月完成图片</div><div class="v">1676<small>张</small></div></div>
+    <div class="kpi"><div class="k">近6个月难度总分</div><div class="v">6112.0<small>分</small></div></div>
+    <div class="kpi"><div class="k">月均完成量</div><div class="v">279.3<small>张</small></div></div>
+    <div class="kpi"><div class="k">在职人均完成</div><div class="v">93.1<small>张</small></div></div>
+    <div class="kpi"><div class="k">平均每套难度分</div><div class="v">3.65<small>分/套</small></div></div>
+  </div>
+
+  <div class="card">
+    <h2>逐月完成趋势（部门整体）</h2>
+    <div id="chart_trend" class="chart"></div>
+  </div>
+
+  <div class="card">
+    <h2>各美工近6个月完成量排行</h2>
+    <div id="chart_person" class="chart"></div>
+  </div>
+
+  <div class="card">
+    <h2>人员明细表（张数 / 难度分）</h2>
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2">#</th><th rowspan="2">姓名</th><th rowspan="2">工号</th>
+          <th rowspan="2">合计<br/>张数</th><th rowspan="2">合计<br/>难度分</th><th rowspan="2">平均<br/>难度分/套</th>
+          <th class="msub" colspan="3">2026.03</th><th class="msub" colspan="3">2026.04</th><th class="msub" colspan="3">2026.05</th><th class="msub" colspan="3">2026.06</th><th class="msub" colspan="3">2026.07</th><th class="msub" colspan="3">2026.08</th>
+        </tr>
+        <tr><th class="hc">张</th><th class="hs">难度分</th><th class="hp">每套均分</th><th class="hc">张</th><th class="hs">难度分</th><th class="hp">每套均分</th><th class="hc">张</th><th class="hs">难度分</th><th class="hp">每套均分</th><th class="hc">张</th><th class="hs">难度分</th><th class="hp">每套均分</th><th class="hc">张</th><th class="hs">难度分</th><th class="hp">每套均分</th><th class="hc">张</th><th class="hs">难度分</th><th class="hp">每套均分</th></tr>
+      </thead>
+      <tbody>
+<tr><td class="idx">1</td><td class="name">刘小欢</td><td class="job">531</td><td class="c">137</td><td class="s">425.0</td><td class="s avg">3.1</td><td class="c">20</td><td class="s">76.0</td><td class="s avgp">3.8</td><td class="c">20</td><td class="s">64.0</td><td class="s avgp">3.2</td><td class="c">26</td><td class="s">67.5</td><td class="s avgp">2.6</td><td class="c">23</td><td class="s">71.5</td><td class="s avgp">3.11</td><td class="c">25</td><td class="s">67.0</td><td class="s avgp">2.68</td><td class="c">23</td><td class="s">79.0</td><td class="s avgp">3.43</td></tr>
+<tr><td class="idx">2</td><td class="name">叶淦</td><td class="job">634</td><td class="c">125</td><td class="s">422.5</td><td class="s avg">3.38</td><td class="c">23</td><td class="s">79.0</td><td class="s avgp">3.43</td><td class="c">16</td><td class="s">50.0</td><td class="s avgp">3.12</td><td class="c">21</td><td class="s">66.0</td><td class="s avgp">3.14</td><td class="c">23</td><td class="s">74.0</td><td class="s avgp">3.22</td><td class="c">23</td><td class="s">81.5</td><td class="s avgp">3.54</td><td class="c">19</td><td class="s">72.0</td><td class="s avgp">3.79</td></tr>
+<tr><td class="idx">3</td><td class="name">储淑霞</td><td class="job">646</td><td class="c">124</td><td class="s">495.0</td><td class="s avg">3.99</td><td class="c">25</td><td class="s">88.5</td><td class="s avgp">3.54</td><td class="c">20</td><td class="s">78.0</td><td class="s avgp">3.9</td><td class="c">16</td><td class="s">71.0</td><td class="s avgp">4.44</td><td class="c">18</td><td class="s">81.0</td><td class="s avgp">4.5</td><td class="c">25</td><td class="s">91.5</td><td class="s avgp">3.66</td><td class="c">20</td><td class="s">85.0</td><td class="s avgp">4.25</td></tr>
+<tr><td class="idx">4</td><td class="name">王文文</td><td class="job">262</td><td class="c">121</td><td class="s">461.0</td><td class="s avg">3.81</td><td class="c">20</td><td class="s">79.5</td><td class="s avgp">3.98</td><td class="c">22</td><td class="s">76.5</td><td class="s avgp">3.48</td><td class="c">19</td><td class="s">63.5</td><td class="s avgp">3.34</td><td class="c">20</td><td class="s">80.0</td><td class="s avgp">4.0</td><td class="c">20</td><td class="s">84.5</td><td class="s avgp">4.22</td><td class="c">20</td><td class="s">77.0</td><td class="s avgp">3.85</td></tr>
+<tr><td class="idx">5</td><td class="name">武亚宁</td><td class="job">487</td><td class="c">120</td><td class="s">414.5</td><td class="s avg">3.45</td><td class="c">29</td><td class="s">78.0</td><td class="s avgp">2.69</td><td class="c">16</td><td class="s">56.0</td><td class="s avgp">3.5</td><td class="c">20</td><td class="s">69.0</td><td class="s avgp">3.45</td><td class="c">22</td><td class="s">75.5</td><td class="s avgp">3.43</td><td class="c">19</td><td class="s">77.5</td><td class="s avgp">4.08</td><td class="c">14</td><td class="s">58.5</td><td class="s avgp">4.18</td></tr>
+<tr><td class="idx">6</td><td class="name">童瑶瑶</td><td class="job">773</td><td class="c">119</td><td class="s">452.0</td><td class="s avg">3.8</td><td class="c">20</td><td class="s">79.5</td><td class="s avgp">3.98</td><td class="c">20</td><td class="s">76.5</td><td class="s avgp">3.83</td><td class="c">19</td><td class="s">68.5</td><td class="s avgp">3.61</td><td class="c">19</td><td class="s">71.0</td><td class="s avgp">3.74</td><td class="c">20</td><td class="s">80.5</td><td class="s avgp">4.03</td><td class="c">21</td><td class="s">76.0</td><td class="s avgp">3.62</td></tr>
+<tr><td class="idx">7</td><td class="name">周莉</td><td class="job">605</td><td class="c">119</td><td class="s">469.5</td><td class="s avg">3.95</td><td class="c">22</td><td class="s">85.5</td><td class="s avgp">3.89</td><td class="c">18</td><td class="s">76.0</td><td class="s avgp">4.22</td><td class="c">16</td><td class="s">68.0</td><td class="s avgp">4.25</td><td class="c">22</td><td class="s">77.0</td><td class="s avgp">3.5</td><td class="c">19</td><td class="s">82.5</td><td class="s avgp">4.34</td><td class="c">22</td><td class="s">80.5</td><td class="s avgp">3.66</td></tr>
+<tr><td class="idx">8</td><td class="name">陈凯玲</td><td class="job">633</td><td class="c">117</td><td class="s">424.0</td><td class="s avg">3.62</td><td class="c">27</td><td class="s">89.5</td><td class="s avgp">3.31</td><td class="c">18</td><td class="s">71.0</td><td class="s avgp">3.94</td><td class="c">12</td><td class="s">44.0</td><td class="s avgp">3.67</td><td class="c">21</td><td class="s">70.0</td><td class="s avgp">3.33</td><td class="c">23</td><td class="s">79.0</td><td class="s avgp">3.43</td><td class="c">16</td><td class="s">70.5</td><td class="s avgp">4.41</td></tr>
+<tr><td class="idx">9</td><td class="name">张国庆</td><td class="job">446</td><td class="c">116</td><td class="s">417.5</td><td class="s avg">3.6</td><td class="c">18</td><td class="s">79.0</td><td class="s avgp">4.39</td><td class="c">17</td><td class="s">62.5</td><td class="s avgp">3.68</td><td class="c">22</td><td class="s">63.0</td><td class="s avgp">2.86</td><td class="c">19</td><td class="s">75.0</td><td class="s avgp">3.95</td><td class="c">22</td><td class="s">64.0</td><td class="s avgp">2.91</td><td class="c">18</td><td class="s">74.0</td><td class="s avgp">4.11</td></tr>
+<tr><td class="idx">10</td><td class="name">邵文强</td><td class="job">405</td><td class="c">112</td><td class="s">398.5</td><td class="s avg">3.56</td><td class="c">17</td><td class="s">78.0</td><td class="s avgp">4.59</td><td class="c">7</td><td class="s">36.0</td><td class="s avgp">5.14</td><td class="c">19</td><td class="s">58.5</td><td class="s avgp">3.08</td><td class="c">26</td><td class="s">67.0</td><td class="s avgp">2.58</td><td class="c">21</td><td class="s">81.0</td><td class="s avgp">3.86</td><td class="c">22</td><td class="s">78.0</td><td class="s avgp">3.55</td></tr>
+<tr><td class="idx">11</td><td class="name">孙燕燕</td><td class="job">624</td><td class="c">111</td><td class="s">425.5</td><td class="s avg">3.83</td><td class="c">28</td><td class="s">91.0</td><td class="s avgp">3.25</td><td class="c">15</td><td class="s">49.5</td><td class="s avgp">3.3</td><td class="c">17</td><td class="s">63.0</td><td class="s avgp">3.71</td><td class="c">18</td><td class="s">71.0</td><td class="s avgp">3.94</td><td class="c">17</td><td class="s">80.0</td><td class="s avgp">4.71</td><td class="c">16</td><td class="s">71.0</td><td class="s avgp">4.44</td></tr>
+<tr><td class="idx">12</td><td class="name">吴芳</td><td class="job">112</td><td class="c">109</td><td class="s">404.5</td><td class="s avg">3.71</td><td class="c">17</td><td class="s">74.0</td><td class="s avgp">4.35</td><td class="c">13</td><td class="s">60.0</td><td class="s avgp">4.62</td><td class="c">16</td><td class="s">64.0</td><td class="s avgp">4.0</td><td class="c">23</td><td class="s">71.0</td><td class="s avgp">3.09</td><td class="c">19</td><td class="s">79.0</td><td class="s avgp">4.16</td><td class="c">21</td><td class="s">56.5</td><td class="s avgp">2.69</td></tr>
+<tr><td class="idx">13</td><td class="name">孟夏美</td><td class="job">801</td><td class="c">82</td><td class="s">304.0</td><td class="s avg">3.71</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">8</td><td class="s">33.0</td><td class="s avgp">4.12</td><td class="c">14</td><td class="s">46.5</td><td class="s avgp">3.32</td><td class="c">21</td><td class="s">67.5</td><td class="s avgp">3.21</td><td class="c">18</td><td class="s">80.5</td><td class="s avgp">4.47</td><td class="c">21</td><td class="s">76.5</td><td class="s avgp">3.64</td></tr>
+<tr><td class="idx">14</td><td class="name">程萌萌</td><td class="job">812</td><td class="c">58</td><td class="s">218.5</td><td class="s avg">3.77</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">7</td><td class="s">30.0</td><td class="s avgp">4.29</td><td class="c">19</td><td class="s">69.0</td><td class="s avgp">3.63</td><td class="c">14</td><td class="s">64.0</td><td class="s avgp">4.57</td><td class="c">18</td><td class="s">55.5</td><td class="s avgp">3.08</td></tr>
+<tr><td class="idx">15</td><td class="name">邱丽君</td><td class="job">518</td><td class="c">29</td><td class="s">91.5</td><td class="s avg">3.16</td><td class="c">22</td><td class="s">75.0</td><td class="s avgp">3.41</td><td class="c">7</td><td class="s">16.5</td><td class="s avgp">2.36</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td></tr>
+<tr><td class="idx">16</td><td class="name">林文瑞</td><td class="job">827</td><td class="c">27</td><td class="s">97.0</td><td class="s avg">3.59</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">4</td><td class="s">13.0</td><td class="s avgp">3.25</td><td class="c">23</td><td class="s">84.0</td><td class="s avgp">3.65</td></tr>
+<tr><td class="idx">17</td><td class="name">仝玉鸿</td><td class="job">321</td><td class="c">25</td><td class="s">92.0</td><td class="s avg">3.68</td><td class="c">20</td><td class="s">72.5</td><td class="s avgp">3.62</td><td class="c">5</td><td class="s">19.5</td><td class="s avgp">3.9</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td></tr>
+<tr><td class="idx">18</td><td class="name">邹云凤</td><td class="job">823</td><td class="c">25</td><td class="s">99.5</td><td class="s avg">3.98</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">0</td><td class="s">0</td><td class="s avgp">0.0</td><td class="c">7</td><td class="s">26.5</td><td class="s avgp">3.79</td><td class="c">18</td><td class="s">73.0</td><td class="s avgp">4.06</td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">全员合计</td><td class="c">1676</td><td class="s">6112.0</td><td class="s avg">3.65</td>
+          <td class="c">308</td><td class="s">1125.0</td><td class="s avgp">3.65</td><td class="c">222</td><td class="s">825.0</td><td class="s avgp">3.72</td><td class="c">244</td><td class="s">842.5</td><td class="s avgp">3.45</td><td class="c">294</td><td class="s">1020.5</td><td class="s avgp">3.47</td><td class="c">296</td><td class="s">1132.0</td><td class="s avgp">3.82</td><td class="c">312</td><td class="s">1167.0</td><td class="s avgp">3.74</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="note">注：单元格格式为「张数 / 难度分」。难度分=媒体ImageCount求和。下表为在职美工，另有协同账号「图片外包」近6个月完成2张/0分未计入。</div>
+  </div>
+</div>
+
+<script>
+var labels = ["2026.03", "2026.04", "2026.05", "2026.06", "2026.07", "2026.08"];
+var countSeries = [308, 222, 244, 294, 296, 312];
+var scoreSeries = [1125.0, 825.0, 842.5, 1020.5, 1132.0, 1167.0];
+var avgSeries = [3.65, 3.72, 3.45, 3.47, 3.82, 3.74];
+
+var trend = echarts.init(document.getElementById('chart_trend'));
+trend.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['完成张数', '难度总分', '平均每套难度分'] },
+  grid: { left: 40, right: 52, top: 36, bottom: 24 },
+  xAxis: { type: 'category', data: labels },
+  yAxis: [
+    { type: 'value', name: '张数' },
+    { type: 'value', name: '难度分' },
+    { type: 'value', name: '分/套' }
+  ],
+  series: [
+    { name: '完成张数', type: 'bar', data: countSeries, itemStyle: { color: '#2f6feb' }, barWidth: 30 },
+    { name: '难度总分', type: 'line', yAxisIndex: 1, data: scoreSeries, itemStyle: { color: '#17a2a2' }, smooth: true },
+    { name: '平均每套难度分', type: 'line', yAxisIndex: 2, data: avgSeries, itemStyle: { color: '#f0a62b' }, smooth: true, symbolSize: 6 }
+  ]
+});
+
+var pnames = ["\u5218\u5c0f\u6b22", "\u53f6\u6de6", "\u50a8\u6dd1\u971e", "\u738b\u6587\u6587", "\u6b66\u4e9a\u5b81", "\u7ae5\u7476\u7476", "\u5468\u8389", "\u9648\u51ef\u73b2", "\u5f20\u56fd\u5e86", "\u90b5\u6587\u5f3a", "\u5b59\u71d5\u71d5", "\u5434\u82b3", "\u5b5f\u590f\u7f8e", "\u7a0b\u840c\u840c", "\u90b1\u4e3d\u541b", "\u6797\u6587\u745e", "\u4edd\u7389\u9e3f", "\u90b9\u4e91\u51e4"];
+var pcounts = [137, 125, 124, 121, 120, 119, 119, 117, 116, 112, 111, 109, 82, 58, 29, 27, 25, 25];
+var person = echarts.init(document.getElementById('chart_person'));
+person.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  grid: { left: 60, right: 30, top: 20, bottom: 24 },
+  xAxis: { type: 'value', name: '张数' },
+  yAxis: { type: 'category', data: pnames.slice().reverse() },
+  series: [{ name: '完成张数', type: 'bar', data: pcounts.slice().reverse(), itemStyle: { color: '#2f6feb' }, barWidth: 16 }]
+});
+window.addEventListener('resize', function(){ trend.resize(); person.resize(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年7月 新品销售额人员分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f4f6fa; --card:#ffffff; --ink:#1f2430; --sub:#6b7280;
+    --brand:#3b6ef6; --brand2:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+    --line:#eef1f6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",-apple-system,sans-serif;padding:28px 24px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  header h1{font-size:24px;font-weight:700;letter-spacing:.5px}
+  header .meta{color:var(--sub);font-size:13px;margin-top:8px;display:flex;gap:18px;flex-wrap:wrap}
+  .badge{background:#eef2ff;color:var(--brand);border-radius:20px;padding:3px 12px;font-size:12px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0 8px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .kpi .t{color:var(--sub);font-size:13px;margin-bottom:8px}
+  .kpi .v{font-size:26px;font-weight:700}
+  .kpi .d{font-size:12px;color:var(--sub);margin-top:6px}
+  .kpi .v small{font-size:14px;color:var(--sub);font-weight:400}
+  .grid{display:grid;gap:20px;margin-top:20px}
+  .g2{grid-template-columns:1fr 1fr}.g1{grid-template-columns:1fr}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 12px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .card h3{font-size:16px;font-weight:600;margin-bottom:4px}
+  .card .desc{color:var(--sub);font-size:12px;margin-bottom:12px}
+  .chart{width:100%;height:340px}
+  .chart.sm{height:300px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line)}
+  th{color:var(--sub);font-weight:500;background:#fafbfe;font-size:12px}
+  td:first-child,th:first-child{text-align:left}
+  tr:last-child td{border-bottom:none}
+  .num{font-variant-numeric:tabular-nums}
+  .hl{color:var(--brand);font-weight:600}
+  .rank1{color:#ffb020}.rank2{color:#9aa3af}.rank3{color:#cd7f32}
+  tr.sum td{background:#f4f6fb;font-weight:600;color:var(--ink);border-top:2px solid #e3e8f2}
+  .foot{color:var(--sub);font-size:12px;margin-top:24px;line-height:1.8}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;background:#f0f4ff;color:var(--brand)}
+  @media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>2026年7月 新品销售额人员分析报告</h1>
+    <div class="meta">
+      <span>数据来源：盛途系统（定海ERP）</span>
+      <span class="badge">7月口径：2025-12-20 ~ 2026-07-31 开售 · 考核月 2026-07</span>
+      <span class="badge">8月口径：2025-12-20 ~ 2026-08-31 开售 · 考核月 2026-08</span>
+    </div>
+  </header>
+
+  <div style="margin:28px 0 6px;display:flex;align-items:center;gap:10px">
+    <div style="height:8px;width:8px;border-radius:50%;background:var(--ink)"></div>
+    <h2 style="font-size:17px;font-weight:700">各部门新品销售额汇总</h2>
+    <span class="badge">7月 vs 8月 · 单位：美元</span>
+  </div>
+
+  <div class="grid g1">
+    <div class="card">
+      <h3>各部门新品销售额（开发归集口径）</h3>
+      <div class="desc">业绩归新品开发人所在部门（ERP Products.DeveloperId）· 开售窗口：7月 2025-12-20~2026-07-31 / 8月 2025-12-20~2026-08-31 · 环比=8月净销售额/7月-1</div>
+      <div id="deptDevTable"></div>
+    </div>
+  </div>
+
+  <div class="grid g1">
+    <div class="card">
+      <h3>各部门新品销售额（推广归集口径）</h3>
+      <div class="desc">业绩归推广人所在部门（ERP Msku.KeeperId）· 事业一部开发部门行的量主要为未分配推广人的新品，非实际推广业绩</div>
+      <div id="deptPromoTable"></div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>部门净销售额对比：7月 vs 8月（开发归集）</h3>
+      <div class="desc">色相=部门 · 浅色=7月 · 深色=8月 · 单位：美元</div>
+      <div class="chart" id="deptCompareChart"></div>
+    </div>
+    <div class="card">
+      <h3>部门净销售额对比：7月 vs 8月（推广归集）</h3>
+      <div class="desc">色相=部门 · 浅色=7月 · 深色=8月 · 单位：美元</div>
+      <div class="chart" id="deptPromoCompareChart"></div>
+    </div>
+  </div>
+
+  <div style="margin:28px 0 6px;display:flex;align-items:center;gap:10px">
+    <div style="height:8px;width:8px;border-radius:50%;background:var(--brand)"></div>
+    <h2 style="font-size:17px;font-weight:700">7月份数据</h2>
+    <span class="badge">开售窗口 2025-12-20 ~ 2026-07-31 · 考核月 2026-07</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="t">7月新品总销量</div><div class="v num" id="kpiVol">--<small> 件</small></div><div class="d">本月指定开售窗口新品合计</div></div>
+    <div class="kpi"><div class="t">7月新品净销售额</div><div class="v num" id="kpiNet">--<small> 美元</small></div><div class="d" id="kpiNetDesc">--</div></div>
+    <div class="kpi"><div class="t">开发人 / ASIN</div><div class="v num" id="kpiDevAsin">--</div><div class="d" id="kpiDevDesc">--</div></div>
+    <div class="kpi"><div class="t">新品客单价</div><div class="v num" id="kpiPrice">--<small> 美元/件</small></div><div class="d">净销售额 / 销量</div></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>开发人净销售额排名</h3>
+      <div class="desc" id="devNetDesc">开发人净销售额</div>
+      <div class="chart" id="devNet"></div>
+    </div>
+    <div class="card">
+      <h3>销量 vs 客单价对比</h3>
+      <div class="desc">按部门分组 · 柱=销量(件) / 点=客单价(美元)</div>
+      <div class="chart" id="devVolumePrice"></div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>单ASIN产出效率</h3>
+      <div class="desc">净销售额 / ASIN数 · 按部门分组着色 · 评价开发人聚焦度与单品质量</div>
+      <div class="chart" id="devAsinEff"></div>
+    </div>
+    <div class="card">
+      <h3>事业部贡献分布</h3>
+      <div class="desc">各部门 7月新品净销售额占比</div>
+      <div class="chart" id="deptPie"></div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>推广人 7 月新品销量 Top 10</h3>
+      <div class="desc">开售窗口 2025-12-20 ~ 2026-07-31 · 按销量降序 · 按部门分组着色</div>
+      <div class="chart" id="trend"></div>
+    </div>
+    <div class="card">
+      <h3>推广人 7月新品净销售额 Top 10</h3>
+      <div class="desc">推广侧承接新品净销售额排行（指定开售窗口口径）· 按部门分组着色</div>
+      <div class="chart" id="promoBar"></div>
+    </div>
+  </div>
+
+  <div class="grid g1">
+    <div class="card">
+      <h3>开发人明细表（7月新品）</h3>
+      <div class="desc">按部门分组 · 组内按净销售额降序 · 含部门小计行 · 客单价=净额/销量 · 单ASIN产出=净额/ASIN数</div>
+      <div id="devTable"></div>
+    </div>
+  </div>
+
+  <div class="grid g1">
+    <div class="card">
+      <h3>推广人净销售额与 ASIN 明细（7月新品）</h3>
+      <div class="desc" id="promoNetDesc">推广人净销售额明细 · 口径=2025-12-20~2026-07-31 开售新品 · 另有 26,100 件 / 290,089.80 美元新品未分配推广人，未计入本表</div>
+      <div id="promoNetTable"></div>
+    </div>
+  </div>
+
+  <div style="margin:36px 0 6px;display:flex;align-items:center;gap:10px">
+    <div style="height:8px;width:8px;border-radius:50%;background:var(--brand2)"></div>
+    <h2 style="font-size:17px;font-weight:700">8月份数据</h2>
+    <span class="badge">开售窗口 2025-12-20 ~ 2026-08-31 · 考核月 2026-08</span>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="t">8月新品总销量</div><div class="v num" id="kpiVolAug">--<small> 件</small></div><div class="d">8月指定开售窗口新品合计</div></div>
+    <div class="kpi"><div class="t">8月新品净销售额</div><div class="v num" id="kpiNetAug">--<small> 美元</small></div><div class="d" id="kpiNetAugDesc">--</div></div>
+    <div class="kpi"><div class="t">开发人 / ASIN（8月）</div><div class="v num" id="kpiDevAsinAug">--</div><div class="d" id="kpiDevAugDesc">--</div></div>
+    <div class="kpi"><div class="t">新品客单价（8月）</div><div class="v num" id="kpiPriceAug">--<small> 美元/件</small></div><div class="d">净销售额 / 销量</div></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>开发人净销售额：7月 vs 8月</h3>
+      <div class="desc">按部门分组排序 · 色相区分部门（蓝=一部开发、橙=一部运营、绿=三部）· 单位：美元</div>
+      <div class="chart" id="devCompareAug"></div>
+    </div>
+    <div class="card">
+      <h3>推广人净销售额：7月 vs 8月</h3>
+      <div class="desc">按部门分组排序 · 色相区分部门（蓝=一部开发、橙=一部运营、绿=三部）· 单位：美元</div>
+      <div class="chart" id="promoCompareAug"></div>
+    </div>
+  </div>
+
+  <div class="grid g1">
+    <div class="card">
+      <h3>8月开发人明细表（开售窗口 2025-12-20 ~ 2026-08-31）</h3>
+      <div class="desc">按部门分组 · 组内按净销售额降序 · 含部门小计行 · 客单价=净额/销量 · 单ASIN产出=净额/ASIN数</div>
+      <div id="devTableAug"></div>
+    </div>
+  </div>
+
+  <div class="grid g1">
+    <div class="card">
+      <h3>8月推广人净销售额与 ASIN 明细（开售窗口 2025-12-20 ~ 2026-08-31）</h3>
+      <div class="desc">另有 38,617 件 / 414,490.68 美元新品未分配推广人，未计入本表</div>
+      <div id="promoNetTableAug"></div>
+    </div>
+  </div>
+
+  <div class="foot" id="footNote">
+    说明：① 新品口径为用户指定开售窗口（7月：2025-12-20 ~ 2026-07-31；8月：2025-12-20 ~ 2026-08-31，均非滚动6个月），销量/净销售额分别为 2026-07 / 2026-08 考核月数据。
+    ② 开发人表按 ERP Products.DeveloperId 归集，推广人表按 ERP Msku.KeeperId 归集，两表统计口径不同、不宜直接相加对比。
+    ③ 另有未分配推广人的新品销量（归属事业一部开发部门）：7月 26,100 件 / 290,089.80 美元、8月 38,617 件 / 414,490.68 美元，未计入推广人排名。
+    ④ 净销售额单位为美元（美金），未折算人民币；AI推广 为系统账号。
+    ⑤ 图表与明细表均按部门区分（蓝=事业一部开发部门、橙=事业一部运营部门、绿=事业三部），明细表含部门小计行；开发人归属其 DeveloperId 所在部门，推广人归属其 KeeperId 所在部门。
+    ⑥ 数据由盛途 MCP 接口实时拉取，仅供参考决策，以 ERP 实物数字为准。
+    ⑦ 部门销售额汇总：开发归集=按开发人所在部门统计（Products.DeveloperId），推广归集=按推广人所在部门统计（Msku.KeeperId）；推广归集中事业一部开发部门的量主要为未分配推广人的新品（7月 26,100 件 / 290,089.80 美元、8月 38,617 件 / 414,490.68 美元）；合计为公司级去重口径，不等于各部门简单相加。
+  </div>
+</div>
+
+<script>
+  // ===== 数据注入区（由skill执行时替换） =====
+  // 开发人数据（按净销售额降序），来源 query_new-product-developer-stats（合肥盛途公司级去重）
+  // 口径=开售窗口 2025-12-20 ~ 2026-07-31，考核月 2026-07
+  const devData = [
+    {name:"徐亮", team:"开发1组", vol:6504, net:85977.03, asin:177},
+    {name:"刘朱", team:"开发2组", vol:5261, net:56303.12, asin:224},
+    {name:"吴正", team:"开发1组", vol:4900, net:55615.59, asin:170},
+    {name:"黄利园", team:"开发2组", vol:5250, net:54230.12, asin:136},
+    {name:"钱程", team:"开发1组", vol:3499, net:51229.19, asin:106},
+    {name:"车彩霞", team:"开发1组", vol:3963, net:44321.45, asin:137},
+    {name:"王婷婷", team:"开发2组", vol:3831, net:38461.30, asin:138},
+    {name:"卢文莲", team:"开发2组", vol:2613, net:29887.81, asin:109},
+    {name:"李新雅", team:"开发2组", vol:2880, net:29247.25, asin:119},
+    {name:"代焕住", team:"开发1组", vol:1735, net:16474.63, asin:86},
+    {name:"贾闪闪", team:"开发2组", vol:1729, net:12561.68, asin:78},
+    {name:"倪锐", team:"事业三部", vol:508, net:11287.08, asin:35},
+    {name:"鲍远娇", team:"事业三部", vol:892, net:8623.53, asin:24}
+  ];
+
+  // 事业部汇总（开发口径）
+  const departments = [
+    {name:"事业一部开发部门", net:474309.17, vol:42165},
+    {name:"事业三部", net:19910.61, vol:1400}
+  ];
+
+  // 推广人净销售额明细（公司级去重），来源 query_new-product-promotion-stats，Month==2026-07
+  // 口径=开售窗口 2025-12-20 ~ 2026-07-31
+  const promoNet = [
+    {name:"范昌娟", grp:"事业一部运营部门", team:"推广1组", vol:4860, net:59051.50, asin:113},
+    {name:"张淑珍", grp:"事业一部运营部门", team:"推广2组", vol:4732, net:46537.23, asin:146},
+    {name:"张颖", grp:"事业一部运营部门", team:"推广1组", vol:3699, net:42259.01, asin:151},
+    {name:"丁惠敏", grp:"事业一部运营部门", team:"推广1组", vol:4328, net:41482.63, asin:168},
+    {name:"袁雯丽", grp:"事业一部运营部门", team:"推广1组", vol:4342, net:39640.13, asin:144},
+    {name:"范雅晴", grp:"事业一部运营部门", team:"推广3组", vol:2916, net:34403.39, asin:159},
+    {name:"徐叶", grp:"事业一部运营部门", team:"推广3组", vol:2504, net:31940.13, asin:127},
+    {name:"吴跃", grp:"事业一部运营部门", team:"推广2组", vol:3001, net:30853.07, asin:79},
+    {name:"韦燕敏", grp:"事业一部运营部门", team:"推广2组", vol:2530, net:30299.58, asin:117},
+    {name:"胡宏金", grp:"事业一部运营部门", team:"推广1组", vol:2303, net:29341.37, asin:96},
+    {name:"吴瑶", grp:"事业一部运营部门", team:"推广1组", vol:2355, net:27400.70, asin:107},
+    {name:"董思敏", grp:"事业三部", team:"事业三部", vol:373, net:25691.17, asin:29},
+    {name:"刘雨晴", grp:"事业一部运营部门", team:"推广2组", vol:2365, net:25551.84, asin:130},
+    {name:"郑思璇", grp:"事业一部运营部门", team:"推广2组", vol:1938, net:24030.54, asin:112},
+    {name:"李超", grp:"事业一部运营部门", team:"推广2组", vol:2441, net:23972.89, asin:158},
+    {name:"程智刚", grp:"事业一部运营部门", team:"推广1组", vol:2325, net:23165.17, asin:109},
+    {name:"秦书月", grp:"事业一部运营部门", team:"推广3组", vol:2539, net:23136.26, asin:144},
+    {name:"丁道理", grp:"事业一部运营部门", team:"推广2组", vol:1474, net:22828.82, asin:74},
+    {name:"于战战", grp:"事业一部运营部门", team:"推广1组", vol:1767, net:22465.13, asin:106},
+    {name:"孙莹", grp:"事业三部", team:"事业三部", vol:1597, net:19502.89, asin:17},
+    {name:"鲍远娇", grp:"事业三部", team:"事业三部", vol:901, net:8546.54, asin:21},
+    {name:"倪锐", grp:"事业三部", team:"事业三部", vol:568, net:6015.70, asin:42},
+    {name:"韩咏琪", grp:"事业一部运营部门", team:"推广3组", vol:216, net:3492.92, asin:12},
+    {name:"陈云艳", grp:"事业一部运营部门", team:"—", vol:198, net:2599.95, asin:12},
+    {name:"AI推广", grp:"事业一部运营部门", team:"推广3组", vol:75, net:854.40, asin:5}
+  ];
+
+  // ===== 数据注入区结束 =====
+
+  // 计算衍生指标
+  devData.forEach(d => {
+    d.price = d.vol > 0 ? +(d.net / d.vol).toFixed(2) : 0;
+    d.as = d.asin > 0 ? +(d.net / d.asin).toFixed(0) : 0;
+  });
+  promoNet.forEach(p => {
+    p.price = p.vol > 0 ? +(p.net / p.vol).toFixed(2) : 0;
+    p.as = p.asin > 0 ? +(p.net / p.asin).toFixed(0) : 0;
+  });
+
+  // KPI
+  const totalVol = devData.reduce((s, d) => s + d.vol, 0);
+  const totalNet = devData.reduce((s, d) => s + d.net, 0);
+  const totalAsin = devData.reduce((s, d) => s + d.asin, 0);
+  const devCount = devData.length;
+  document.getElementById('kpiVol').innerHTML = totalVol.toLocaleString() + '<small> 件</small>';
+  document.getElementById('kpiNet').innerHTML = totalNet.toLocaleString() + '<small> 美元</small>';
+  document.getElementById('kpiNetDesc').textContent = '\u2248 ' + (totalNet / 10000).toFixed(1) + ' 万美元';
+  document.getElementById('kpiDevAsin').textContent = devCount + ' / ' + totalAsin.toLocaleString();
+  document.getElementById('kpiPrice').innerHTML = (totalVol > 0 ? (totalNet / totalVol).toFixed(1) : '--') + '<small> 美元/件</small>';
+
+  const AXIS = {axisLine:{lineStyle:{color:'#dfe3ec'}},axisLabel:{color:'#6b7280',fontSize:11},splitLine:{lineStyle:{color:'#eef1f6'}}};
+  const rankMedal = ['rank1','rank2','rank3'];
+  const charts = [];
+
+  // 部门区分：固定排序（一部开发 → 一部运营 → 三部）与配色 [主色, 浅色]，浅色用于7月柱
+  const DEPT_ORDER = ['事业一部开发部门','事业一部运营部门','事业三部'];
+  const DEPT_COLORS = {'事业一部开发部门':['#3b6ef6','#b9ccff'],'事业一部运营部门':['#f59e0b','#fde1a9'],'事业三部':['#22c55e','#a7f3c9']};
+  const deptOfDev = d => d.team === '事业三部' ? '事业三部' : '事业一部开发部门';
+  const deptOfPromo = p => p.grp || '其他';
+  const deptColor = (dept, light) => (DEPT_COLORS[dept] || ['#9ca3af','#d1d5db'])[light ? 1 : 0];
+  const deptRank = dept => { const i = DEPT_ORDER.indexOf(dept); return i < 0 ? 99 : i; };
+  const deptSort = deptOf => (a, b) => deptRank(deptOf(a)) - deptRank(deptOf(b)) || b.net - a.net;
+
+  // 7月KPI部门人数（置于 deptOfDev 定义之后，避免前向引用）
+  const devDeptCount = devData.filter(d => deptOfDev(d) === '事业一部开发部门').length;
+  document.getElementById('kpiDevDesc').textContent = '其中事业一部开发部门 ' + devDeptCount + ' 人 · 事业三部 ' + (devCount - devDeptCount) + ' 人';
+
+  // 按部门分组的明细表：部门为第一排序键、组内按净销售额降序，每组末行加部门小计
+  function renderDeptGroupedTable(elId, arr, deptOf, nameLabel, asinLabel) {
+    const sorted = [...arr].sort(deptSort(deptOf));
+    const groups = [];
+    sorted.forEach(d => {
+      const g = deptOf(d);
+      if (groups.length === 0 || groups[groups.length - 1].dept !== g) groups.push({dept: g, items: []});
+      groups[groups.length - 1].items.push(d);
+    });
+    let idx = 0;
+    let html = '<table><thead><tr><th>排名</th><th>' + nameLabel + '</th><th>部门</th><th>小组</th><th>销量(件)</th><th>净销售额(美元)</th><th>' + asinLabel + '</th><th>客单价(美元)</th><th>单ASIN产出(美元)</th></tr></thead><tbody>';
+    groups.forEach(g => {
+      g.items.forEach(d => {
+        html += '<tr><td class="' + (rankMedal[idx] || '') + '">' + (idx + 1) + '</td><td>' + d.name + '</td><td>' + g.dept + '</td><td>' + d.team + '</td>' +
+          '<td class="num">' + d.vol.toLocaleString() + '</td><td class="num">' + d.net.toLocaleString() + '</td>' +
+          '<td class="num">' + d.asin + '</td><td class="num">' + d.price + '</td><td class="num">' + d.as + '</td></tr>';
+        idx++;
+      });
+      const vol = g.items.reduce((s, d) => s + d.vol, 0), net = g.items.reduce((s, d) => s + d.net, 0), asin = g.items.reduce((s, d) => s + d.asin, 0);
+      html += '<tr class="sum"><td colspan="4">' + g.dept + ' 小计</td><td class="num">' + vol.toLocaleString() + '</td><td class="num">' + net.toLocaleString() + '</td>' +
+        '<td class="num">' + asin + '</td><td class="num">' + (vol > 0 ? (net / vol).toFixed(2) : 0) + '</td><td class="num">' + (asin > 0 ? (net / asin).toFixed(0) : 0) + '</td></tr>';
+    });
+    html += '</tbody></table>';
+    document.getElementById(elId).innerHTML = html;
+  }
+
+  // ===== 各部门新品销售额汇总（盛途MCP部门汇总字段，姓名/部门经脚本解码） =====
+  const deptDevStats = [
+    {name:'事业一部开发部门', volJul:42165, netJul:474309.17, volAug:67604, netAug:731348.89},
+    {name:'事业三部', volJul:1400, netJul:19910.61, volAug:2570, netAug:28715.75}
+  ];
+  const deptDevTotal = {name:'合计（公司去重）', volJul:43565, netJul:494219.78, volAug:70174, netAug:760064.64};
+  const deptPromoStats = [
+    {name:'事业一部运营部门', volJul:52908, netJul:585306.66, volAug:76307, netAug:821531.21},
+    {name:'事业三部', volJul:3439, netJul:59756.30, volAug:4407, netAug:59727.89},
+    {name:'事业一部开发部门', volJul:26298, netJul:292689.75, volAug:38818, netAug:417217.27, note:'*主要为未分配推广人的新品'}
+  ];
+  const deptPromoTotal = {name:'合计（公司去重）', volJul:56347, netJul:645062.96, volAug:80714, netAug:881259.10};
+
+  function renderDeptStatsTable(elId, rows, total) {
+    const cell = d => '<td class="num">' + d.volJul.toLocaleString() + '</td><td class="num">' + d.netJul.toLocaleString() + '</td>' +
+      '<td class="num">' + d.volAug.toLocaleString() + '</td><td class="num">' + d.netAug.toLocaleString() + '</td>' +
+      '<td class="num">' + (Math.abs((d.netAug / d.netJul - 1) * 100) < 0.05 ? '持平' : ((d.netAug / d.netJul - 1) * 100).toFixed(1) + '%') + '</td>';
+    let html = '<table><thead><tr><th>部门</th><th>7月销量(件)</th><th>7月净销售额(美元)</th><th>8月销量(件)</th><th>8月净销售额(美元)</th><th>净销售额环比</th></tr></thead><tbody>';
+    rows.forEach(d => { html += '<tr><td>' + d.name + (d.note ? ' ' + d.note : '') + '</td>' + cell(d) + '</tr>'; });
+    html += '<tr class="sum"><td>' + total.name + '</td>' + cell(total) + '</tr></tbody></table>';
+    document.getElementById(elId).innerHTML = html;
+  }
+  renderDeptStatsTable('deptDevTable', deptDevStats, deptDevTotal);
+  renderDeptStatsTable('deptPromoTable', deptPromoStats, deptPromoTotal);
+
+  function deptCompareOption(rows) {
+    return {
+      grid:{left:80,right:20,top:30,bottom:26},
+      tooltip:{trigger:'axis',valueFormatter:v=>Number(v).toLocaleString()+' 美元'},
+      legend:{data:['7月','8月'],top:2,icon:'roundRect',itemWidth:12,itemHeight:12,textStyle:{fontSize:11}},
+      xAxis:{type:'category',data:rows.map(d=>d.name),...AXIS,axisLabel:{color:'#6b7280',fontSize:10,interval:0}},
+      yAxis:{type:'value',axisLabel:{color:'#6b7280',fontSize:10,formatter:v=>v>=10000?(v/10000)+'万':v},splitLine:{lineStyle:{color:'#eef1f6'}}},
+      series:[
+        {name:'7月',type:'bar',barWidth:'32%',data:rows.map(d=>({value:d.netJul,itemStyle:{color:deptColor(d.name,true),borderRadius:[4,4,0,0]}})),label:{show:true,position:'top',fontSize:9,color:'#6b7280',formatter:p=>p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value}},
+        {name:'8月',type:'bar',barWidth:'32%',data:rows.map(d=>({value:d.netAug,itemStyle:{color:deptColor(d.name),borderRadius:[4,4,0,0]}})),label:{show:true,position:'top',fontSize:9,color:'#1f2430',formatter:p=>p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value}}
+      ]
+    };
+  }
+  const dcDev = echarts.init(document.getElementById('deptCompareChart'));
+  dcDev.setOption(deptCompareOption(deptDevStats));
+  charts.push(dcDev);
+  const dcPromo = echarts.init(document.getElementById('deptPromoCompareChart'));
+  dcPromo.setOption(deptCompareOption(deptPromoStats));
+  charts.push(dcPromo);
+
+  // 1 净销售额排名
+  if (devData.length > 0) {
+    const devNetArr = [...devData].sort(deptSort(deptOfDev)).reverse();
+    document.getElementById('devNetDesc').textContent = devData.length + ' 名开发人 · 按部门分组着色（蓝=一部开发、绿=三部）· 7月新品净销售额';
+    const c1 = echarts.init(document.getElementById('devNet'));
+    c1.setOption({
+      grid:{left:70,right:20,top:10,bottom:20},
+      tooltip:{trigger:'axis',valueFormatter:v=>Number(v).toLocaleString()+' 美元'},
+      xAxis:{type:'value',axisLabel:{color:'#6b7280',fontSize:10,formatter:v=>v>=10000?(v/10000)+'万':v},splitLine:{lineStyle:{color:'#eef1f6'}}},
+      yAxis:{type:'category',data:devNetArr.map(d=>d.name),...AXIS,splitLine:{show:false}},
+      series:[{type:'bar',data:devNetArr.map(d=>({value:d.net,itemStyle:{borderRadius:[0,5,5,0],color:deptColor(deptOfDev(d))}})),
+        label:{show:true,position:'right',fontSize:10,color:'#6b7280',formatter:p=>p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value}}]
+    });
+    charts.push(c1);
+
+    // 2 销量柱 + 客单价线
+    const devVolArr = [...devData].sort((a, b) => deptRank(deptOfDev(a)) - deptRank(deptOfDev(b)) || b.vol - a.vol);
+    const c2 = echarts.init(document.getElementById('devVolumePrice'));
+    c2.setOption({
+      grid:{left:55,right:60,top:50,bottom:20},
+      tooltip:{trigger:'axis'},
+      legend:{data:['销量(件)','客单价(美元)'],top:8,icon:'roundRect',itemWidth:12,itemHeight:12,textStyle:{fontSize:11}},
+      xAxis:{type:'category',data:devVolArr.map(d=>d.name),...AXIS,axisLabel:{color:'#6b7280',fontSize:10}},
+      yAxis:[{type:'value',name:'销量',...AXIS,axisLabel:{color:'#6b7280',fontSize:10}},{type:'value',name:'美元',min:0,...AXIS,nameTextStyle:{fontSize:10},axisLabel:{color:'#6b7280',fontSize:10}}],
+      series:[
+        {name:'销量(件)',type:'bar',barWidth:'55%',data:devVolArr.map(d=>({value:d.vol,itemStyle:{color:deptColor(deptOfDev(d)),borderRadius:[5,5,0,0]}})),
+          label:{show:true,position:'top',fontSize:9,color:'#1f2430'}},
+        {name:'客单价(美元)',type:'line',yAxisIndex:1,data:devVolArr.map(d=>d.price),symbolSize:7,lineStyle:{color:'#374151',width:2.5},itemStyle:{color:'#374151'},
+          label:{show:true,position:'top',fontSize:9,color:'#374151'}}
+      ]
+    });
+    charts.push(c2);
+
+    // 3 单ASIN产出
+    const asArr = [...devData].sort((a, b) => deptRank(deptOfDev(a)) - deptRank(deptOfDev(b)) || b.as - a.as).reverse();
+    const c3 = echarts.init(document.getElementById('devAsinEff'));
+    c3.setOption({
+      grid:{left:70,right:30,top:10,bottom:20},
+      tooltip:{trigger:'axis',valueFormatter:v=>v+' 美元/ASIN'},
+      xAxis:{type:'value',axisLabel:{color:'#6b7280',fontSize:10},splitLine:{lineStyle:{color:'#eef1f6'}}},
+      yAxis:{type:'category',data:asArr.map(d=>d.name),...AXIS,splitLine:{show:false}},
+      series:[{type:'bar',data:asArr.map(d=>({value:d.as,itemStyle:{borderRadius:[0,5,5,0],color:deptColor(deptOfDev(d))}})),
+        label:{show:true,position:'right',fontSize:10,color:'#6b7280'}}]
+    });
+    charts.push(c3);
+
+    // 5 推广人销量Top10（指定开售窗口，无月度序列）
+    if (promoNet.length > 0) {
+      const promoVolTop = [...promoNet].sort((a, b) => b.vol - a.vol).slice(0, 10).sort((a, b) => deptRank(deptOfPromo(a)) - deptRank(deptOfPromo(b)) || b.vol - a.vol).reverse();
+      const c5 = echarts.init(document.getElementById('trend'));
+      c5.setOption({
+        grid:{left:70,right:40,top:10,bottom:20},
+        tooltip:{trigger:'axis',valueFormatter:v=>Number(v).toLocaleString()+' 件'},
+        xAxis:{type:'value',axisLabel:{color:'#6b7280',fontSize:10},splitLine:{lineStyle:{color:'#eef1f6'}}},
+        yAxis:{type:'category',data:promoVolTop.map(d=>d.name),...AXIS,splitLine:{show:false}},
+      series:[{type:'bar',data:promoVolTop.map(d=>({value:d.vol,itemStyle:{borderRadius:[0,5,5,0],color:deptColor(deptOfPromo(d))}})),
+        label:{show:true,position:'right',fontSize:10,color:'#6b7280',formatter:p=>p.value.toLocaleString()}}]
+      });
+      charts.push(c5);
+    }
+
+    // 开发人明细表（按部门分组）
+    renderDeptGroupedTable('devTable', devData, deptOfDev, '开发人', 'ASIN数');
+  }
+
+  // 4 部门饼图
+  if (departments.length > 0) {
+    const c4 = echarts.init(document.getElementById('deptPie'));
+    c4.setOption({
+      tooltip:{trigger:'item',formatter:'{b}<br/>净销售额：{c} 美元（{d}%）'},
+      legend:{bottom:4,textStyle:{fontSize:11}},
+      series:[{type:'pie',radius:['42%','68%'],center:['50%','45%'],
+        label:{fontSize:11,formatter:'{b}\n{d}%'},
+        data:departments.map(d=>({name:d.name,value:d.net})),
+        itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:2},
+        color:['#3b6ef6','#22c55e','#f59e0b','#8b5cf6','#ef4444']}]
+    });
+    charts.push(c4);
+  }
+
+  // 6 推广人净销售额Top10
+  if (promoNet.length > 0) {
+    const promoNetTop = [...promoNet].sort((a, b) => b.net - a.net).slice(0, 10).sort((a, b) => deptRank(deptOfPromo(a)) - deptRank(deptOfPromo(b)) || b.net - a.net).reverse();
+    const c6 = echarts.init(document.getElementById('promoBar'));
+    c6.setOption({
+      grid:{left:80,right:50,top:10,bottom:20},
+      tooltip:{trigger:'axis',valueFormatter:v=>Number(v).toLocaleString()+' 美元'},
+      xAxis:{type:'value',axisLabel:{color:'#6b7280',fontSize:10,formatter:v=>v>=10000?(v/10000)+'万':v},splitLine:{lineStyle:{color:'#eef1f6'}}},
+      yAxis:{type:'category',data:promoNetTop.map(d=>d.name),...AXIS,splitLine:{show:false}},
+      series:[{type:'bar',data:promoNetTop.map(d=>({value:d.net,itemStyle:{borderRadius:[0,5,5,0],color:deptColor(deptOfPromo(d))}})),
+        label:{show:true,position:'right',fontSize:10,color:'#6b7280',formatter:p=>p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value}}]
+    });
+    charts.push(c6);
+  }
+
+  // 推广人净销售额与 ASIN 明细表（按部门分组）
+  if (promoNet.length > 0) {
+    renderDeptGroupedTable('promoNetTable', promoNet, deptOfPromo, '推广人', '产品数(ASIN)');
+  }
+
+  // ===== 8月数据（开售窗口 2025-12-20 ~ 2026-08-31，考核月 2026-08） =====
+  const devDataAug = [
+    {name:"车彩霞", team:"开发1组", vol:9414, net:106548.03, asin:162},
+    {name:"徐亮", team:"开发1组", vol:7891, net:98553.41, asin:195},
+    {name:"王婷婷", team:"开发2组", vol:8867, net:86958.30, asin:174},
+    {name:"刘朱", team:"开发2组", vol:7276, net:76696.58, asin:261},
+    {name:"黄利园", team:"开发2组", vol:7105, net:73042.69, asin:173},
+    {name:"李新雅", team:"开发2组", vol:6845, net:71852.40, asin:164},
+    {name:"吴正", team:"开发1组", vol:6788, net:64511.14, asin:210},
+    {name:"钱程", team:"开发1组", vol:4071, net:58529.10, asin:130},
+    {name:"卢文莲", team:"开发2组", vol:4771, net:52258.74, asin:156},
+    {name:"代焕住", team:"开发1组", vol:2692, net:26190.44, asin:109},
+    {name:"贾闪闪", team:"开发2组", vol:1884, net:16208.06, asin:83},
+    {name:"鲍远娇", team:"事业三部", vol:1531, net:15270.70, asin:32},
+    {name:"倪锐", team:"事业三部", vol:1039, net:13445.05, asin:36}
+  ];
+
+  const promoNetAug = [
+    {name:"范昌娟", grp:"事业一部运营部门", team:"推广1组", vol:6732, net:83020.40, asin:137},
+    {name:"张淑珍", grp:"事业一部运营部门", team:"推广2组", vol:7653, net:75130.19, asin:158},
+    {name:"张颖", grp:"事业一部运营部门", team:"推广1组", vol:5609, net:63043.49, asin:163},
+    {name:"袁雯丽", grp:"事业一部运营部门", team:"推广1组", vol:6357, net:56952.37, asin:171},
+    {name:"丁惠敏", grp:"事业一部运营部门", team:"推广1组", vol:6119, net:56883.37, asin:168},
+    {name:"吴跃", grp:"事业一部运营部门", team:"推广2组", vol:5130, net:52465.11, asin:96},
+    {name:"范雅晴", grp:"事业一部运营部门", team:"推广3组", vol:4563, net:49508.90, asin:154},
+    {name:"徐叶", grp:"事业一部运营部门", team:"推广3组", vol:4125, net:48070.14, asin:140},
+    {name:"吴瑶", grp:"事业一部运营部门", team:"推广1组", vol:3829, net:41723.61, asin:119},
+    {name:"韦燕敏", grp:"事业一部运营部门", team:"推广2组", vol:3035, net:39531.85, asin:130},
+    {name:"于战战", grp:"事业一部运营部门", team:"推广1组", vol:2948, net:37101.94, asin:123},
+    {name:"秦书月", grp:"事业一部运营部门", team:"推广3组", vol:3671, net:36559.38, asin:153},
+    {name:"刘雨晴", grp:"事业一部运营部门", team:"推广2组", vol:3354, net:35974.80, asin:127},
+    {name:"郑思璇", grp:"事业一部运营部门", team:"推广2组", vol:2750, net:34217.49, asin:112},
+    {name:"李超", grp:"事业一部运营部门", team:"推广2组", vol:3456, net:32034.87, asin:152},
+    {name:"程智刚", grp:"事业一部运营部门", team:"推广1组", vol:2867, net:28856.68, asin:129},
+    {name:"胡宏金", grp:"事业一部运营部门", team:"推广1组", vol:2034, net:26016.39, asin:110},
+    {name:"孙莹", grp:"事业三部", team:"事业三部", vol:1717, net:21481.18, asin:18},
+    {name:"丁道理", grp:"事业一部运营部门", team:"推广2组", vol:1788, net:20803.69, asin:85},
+    {name:"董思敏", grp:"事业三部", team:"事业三部", vol:334, net:15076.86, asin:29},
+    {name:"鲍远娇", grp:"事业三部", team:"事业三部", vol:1484, net:14939.77, asin:24},
+    {name:"倪锐", grp:"事业三部", team:"事业三部", vol:872, net:8230.08, asin:40},
+    {name:"陈云艳", grp:"事业一部运营部门", team:"—", vol:201, net:2726.59, asin:12},
+    {name:"AI推广", grp:"事业一部运营部门", team:"推广3组", vol:53, net:491.02, asin:4},
+    {name:"韩咏琪", grp:"事业一部运营部门", team:"推广3组", vol:33, net:418.93, asin:11}
+  ];
+
+  devDataAug.forEach(d => {
+    d.price = d.vol > 0 ? +(d.net / d.vol).toFixed(2) : 0;
+    d.as = d.asin > 0 ? +(d.net / d.asin).toFixed(0) : 0;
+  });
+  promoNetAug.forEach(p => {
+    p.price = p.vol > 0 ? +(p.net / p.vol).toFixed(2) : 0;
+    p.as = p.asin > 0 ? +(p.net / p.asin).toFixed(0) : 0;
+  });
+
+  const totalVolAug = devDataAug.reduce((s, d) => s + d.vol, 0);
+  const totalNetAug = devDataAug.reduce((s, d) => s + d.net, 0);
+  const totalAsinAug = devDataAug.reduce((s, d) => s + d.asin, 0);
+  document.getElementById('kpiVolAug').innerHTML = totalVolAug.toLocaleString() + '<small> 件</small>';
+  document.getElementById('kpiNetAug').innerHTML = totalNetAug.toLocaleString() + '<small> 美元</small>';
+  document.getElementById('kpiNetAugDesc').textContent = '\u2248 ' + (totalNetAug / 10000).toFixed(1) + ' 万美元';
+  document.getElementById('kpiDevAsinAug').textContent = devDataAug.length + ' / ' + totalAsinAug.toLocaleString();
+  const devDeptCountAug = devDataAug.filter(d => deptOfDev(d) === '事业一部开发部门').length;
+  document.getElementById('kpiDevAugDesc').textContent = '其中事业一部开发部门 ' + devDeptCountAug + ' 人 · 事业三部 ' + (devDataAug.length - devDeptCountAug) + ' 人';
+  document.getElementById('kpiPriceAug').innerHTML = (totalVolAug > 0 ? (totalNetAug / totalVolAug).toFixed(1) : '--') + '<small> 美元/件</small>';
+
+  // 7月 vs 8月 对比
+  if (devData.length > 0 && devDataAug.length > 0) {
+    const julDevMap = {}; devData.forEach(d => julDevMap[d.name] = d.net);
+    const augDevSorted = [...devDataAug].sort(deptSort(deptOfDev));
+    const cd = echarts.init(document.getElementById('devCompareAug'));
+    cd.setOption({
+      grid:{left:60,right:20,top:30,bottom:66},
+      tooltip:{trigger:'axis',valueFormatter:v=>Number(v).toLocaleString()+' 美元'},
+      legend:{data:['7月','8月'],top:2,icon:'roundRect',itemWidth:12,itemHeight:12,textStyle:{fontSize:11}},
+      xAxis:{type:'category',data:augDevSorted.map(d=>d.name),...AXIS,axisLabel:{color:'#6b7280',fontSize:10,interval:0,rotate:40}},
+      yAxis:{type:'value',axisLabel:{color:'#6b7280',fontSize:10,formatter:v=>v>=10000?(v/10000)+'万':v},splitLine:{lineStyle:{color:'#eef1f6'}}},
+      series:[
+        {name:'7月',type:'bar',data:augDevSorted.map(d=>({value:julDevMap[d.name]||0,itemStyle:{color:deptColor(deptOfDev(d),true),borderRadius:[4,4,0,0]}}))},
+        {name:'8月',type:'bar',data:augDevSorted.map(d=>({value:d.net,itemStyle:{color:deptColor(deptOfDev(d)),borderRadius:[4,4,0,0]}}))}
+      ]
+    });
+    charts.push(cd);
+
+    const julPromoMap = {}; promoNet.forEach(p => julPromoMap[p.name] = p.net);
+    const augPromoSorted = [...promoNetAug].sort(deptSort(deptOfPromo));
+    const cp = echarts.init(document.getElementById('promoCompareAug'));
+    cp.setOption({
+      grid:{left:60,right:20,top:30,bottom:66},
+      tooltip:{trigger:'axis',valueFormatter:v=>Number(v).toLocaleString()+' 美元'},
+      legend:{data:['7月','8月'],top:2,icon:'roundRect',itemWidth:12,itemHeight:12,textStyle:{fontSize:11}},
+      xAxis:{type:'category',data:augPromoSorted.map(d=>d.name),...AXIS,axisLabel:{color:'#6b7280',fontSize:10,interval:0,rotate:40}},
+      yAxis:{type:'value',axisLabel:{color:'#6b7280',fontSize:10,formatter:v=>v>=10000?(v/10000)+'万':v},splitLine:{lineStyle:{color:'#eef1f6'}}},
+      series:[
+        {name:'7月',type:'bar',data:augPromoSorted.map(d=>({value:julPromoMap[d.name]||0,itemStyle:{color:deptColor(deptOfPromo(d),true),borderRadius:[4,4,0,0]}}))},
+        {name:'8月',type:'bar',data:augPromoSorted.map(d=>({value:d.net,itemStyle:{color:deptColor(deptOfPromo(d)),borderRadius:[4,4,0,0]}}))}
+      ]
+    });
+    charts.push(cp);
+  }
+
+  // 8月开发人明细表（按部门分组）
+  if (devDataAug.length > 0) {
+    renderDeptGroupedTable('devTableAug', devDataAug, deptOfDev, '开发人', 'ASIN数');
+  }
+
+  // 8月推广人明细表（按部门分组）
+  if (promoNetAug.length > 0) {
+    renderDeptGroupedTable('promoNetTableAug', promoNetAug, deptOfPromo, '推广人', '产品数(ASIN)');
+  }
+
+  window.addEventListener('resize', () => charts.forEach(c => c.resize()));
+</script>
+</body>
+</html>

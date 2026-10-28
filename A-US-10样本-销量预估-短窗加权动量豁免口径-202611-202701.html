@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A-US 10 个分层试点样本 销量预估（短窗加权 + 动量豁免 + 形态漂移 + 水平一致性软上限 + 系数退化兜底口径版）2026-11 ~ 2027-01</title>
+<style>
+  :root{--bg:#f5f6f8;--card:#fff;--ink:#1a1d23;--sub:#5b6270;--line:#e3e6ea;--accent:#2563eb;
+    --red:#dc2626;--amber:#d97706;--green:#16a34a;--grey:#9aa1ad;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;line-height:1.6;font-size:14px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px;}
+  h1{font-size:22px;margin:0 0 6px;}
+  h2{font-size:17px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent);}
+  h3{font-size:15px;margin:22px 0 8px;padding-left:8px;border-left:3px solid var(--accent);}
+  .meta{color:var(--sub);font-size:13px;margin-bottom:18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px;}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:12px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;}
+  .kpi .lbl{font-size:12px;color:var(--sub);}
+  .kpi .val{font-size:20px;font-weight:700;margin-top:3px;}
+  .kpi .val small{font-size:12px;font-weight:400;color:var(--sub);margin-left:3px;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  th,td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:right;white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;}
+  thead th{background:#f0f2f5;color:var(--sub);font-weight:600;font-size:12px;}
+  tbody tr:hover{background:#fafbfc;}
+  .up{color:var(--green);font-weight:600;} .down{color:var(--red);font-weight:600;}
+  .tag{display:inline-block;padding:0 6px;border-radius:9px;font-size:11px;border:1px solid;margin-left:5px;}
+  .tag.g{color:var(--green);border-color:#b6e2c1;background:#effaf2;}
+  .tag.r{color:var(--red);border-color:#f3c0c0;background:#fdf1f1;}
+  .tag.a{color:var(--amber);border-color:#f0d6a8;background:#fdf6ea;}
+  .note{font-size:12.5px;color:var(--sub);}
+  ul{margin:8px 0 0;padding-left:20px;} li{margin:4px 0;}
+  .callout{border-radius:10px;padding:14px 16px;font-size:13px;margin:10px 0;}
+  .callout.g{background:#effaf2;border:1px solid #b6e2c1;}
+  .callout.r{background:#fdf1f1;border:1px solid #f3c0c0;}
+  .callout.a{background:#fdf6ea;border:1px solid #f0d6a8;}
+  .callout.b{background:#eef3fd;border:1px solid #bcd0f5;}
+  .bar-wrap{display:flex;align-items:center;gap:8px;margin:5px 0;}
+  .bar-wrap .name{width:118px;font-size:12px;color:var(--sub);flex:none;}
+  .bar-track{flex:1;background:#eef0f3;border-radius:5px;height:20px;position:relative;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:#fff;font-size:11.5px;font-weight:600;}
+  .b-new{background:linear-gradient(90deg,#3b82f6,#2563eb);} .b-old{background:#b8c0cc;}
+  code{background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>A-US 10 个分层试点样本 — 销量预估（短窗加权 + 动量豁免 + 形态漂移 + 水平一致性软上限 + 系数退化兜底口径版）</h1>
+  <div class="meta">
+    店铺：A-US（领星 sid 4651，美国）　|　基准日：2026-10-16（当月明细截至 10-15）　|　预测区间：2026-11 ~ 2027-01　|　单位：件<br>
+    样本来源：<b>去季节化闸门分层抽样试点</b>——按 2025-10 历史季节系数排序，取系数最低 5 个 + 最高 5 个，用于检验「短窗加权 + 收窄单向闸门 + 系统性爬坡月豁免 + 形态漂移口径同源 + 水平一致性软上限（含动量豁免）+ 系数退化兜底」规则在极端季节性产品上的表现。
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="lbl">10 样本 基准合计（3 月）</div><div class="val">8,461<small>件</small></div></div>
+    <div class="kpi"><div class="lbl">保守 / 乐观合计</div><div class="val">7,192 / 10,576</div></div>
+    <div class="kpi"><div class="lbl">去年同期同月合计</div><div class="val">6,991<small>件</small></div></div>
+    <div class="kpi"><div class="lbl">闸门触发 / 豁免</div><div class="val">1<small>个 / 豁免 1</small></div></div>
+    <div class="kpi"><div class="lbl">形态漂移（改用近一年）</div><div class="val">6<small>个样本</small></div></div>
+    <div class="kpi"><div class="lbl">水平封顶 / 动量豁免</div><div class="val">6<small>个 / 豁免 3</small></div></div>
+    <div class="kpi"><div class="lbl">系数退化兜底</div><div class="val">2<small>个目标月</small></div></div>
+    <div class="kpi"><div class="lbl">季节系数「高」置信</div><div class="val">4<small>个样本</small></div></div>
+    <div class="kpi"><div class="lbl">断货风险样本</div><div class="val down">5<small>个样本</small></div></div>
+  </div>
+
+  <div class="callout b">
+    <b>一句话结论：</b>本轮 10 个样本中有 <b>4 个</b>季节系数达到「高」置信（两年各 12 个月完整、同月量级充足、方向一致）；
+    其余因历史不足退化为「最近可用年份」系数或 1.0。本轮把<b>短窗权重由 0.4 提到 0.5</b>（近 7/14 天更能反映市场变化与运营动作），
+    并对水平封顶引入<b>动量豁免</b>：近期真实回升的样本（动量比 &gt; 1.10）放行封顶、改受 3×累计水平约束。
+    经<b>水平一致性软上限（k=1.5）+ 动量豁免</b>与<b>系数退化兜底</b>修正后，模型基准合计 <b>8,461 件</b>
+    （不封顶且不兜底为 10,636 件、仅软上限为 9,575 件、旧硬替换为 7,174 件），对去年同期实际 <b>6,991 件</b>为 <b>+21.0%</b>——
+    落在「不封顶」与「硬替换」之间：软上限拦住去季基准脱离当年常态水平的极端高估、动量豁免把真实回升的样本（3 个）从封顶线放行、
+    退化兜底把 2 个「无历史系数月」从系数 1.0 的退化口径改回「去年同月量 × 累计同比」的真实低位。
+    个体分歧仍存，<b>极端季节性 + 历史稀薄的样本是本轮口径的主要风险点</b>（见第五节）。
+  </div>
+
+  <h2>一、本轮口径与数据说明</h2>
+  <div class="card">
+    <ul>
+      <li><b>基础日销（短窗加权，本轮升级）</b>：领星 <code>query_product_performance_asin_lists</code> 的 7/14/30/90 天窗口，
+        <code>短期日销 = (近7天 + 近14天)/2</code>、<code>中期日销 = (近30天 + 近90天)/2</code>，
+        <code>基础日销 = 短期日销×0.5 + 中期日销×0.5</code>。
+        <b>短窗权重由 0.4 提到 0.5</b>——近 7/14 天的销量变化更可能反映<b>市场变化与运营动作</b>（排名 / 广告 / 促销 / 竞品），
+        而非长期结构，提高权重让近期动量更快进入基准。
+        <b>动量比 = 短期日销 ÷ 中期日销</b>，&gt;1.15 向上、&lt;0.85 向下（向下需先排查断货/排名/广告原因）。</li>
+      <li><b>去季节化</b>：<code>去季节化基准 = 基础日销 ÷ 当月（10 月）季节系数</code>，
+        再 <code>目标月销量 = 去季节化基准 × 目标月系数 × 校准系数 × 情景系数 × 天数</code>。</li>
+      <li><b>去季节化前置校验闸门（收窄单向 + 系统性爬坡月豁免）</b>：仅当 <code>当月季节系数 &lt; 0.95</code> <b>且</b>
+        <code>当月实际日均 / 上月日均 &gt; 1.05</code> <b>且</b> <code>历史同月爬坡比 ≤ 1.05</code> 时判定「历史淡季、实际不淡」，关闭去季节化并标注。
+        若 <b>历史同月爬坡比 &gt; 1.05</b>（去年/前年同月「当月日均÷上月日均」均值），说明该月是本品历年都在爬坡的系统性形态，闸门<b>豁免</b>、照常去季节化。
+        本轮 10 个样本中触发 <b>1 个</b>、豁免 <b>1 个</b>。</li>
+      <li><b>系数年份口径：两年均值 vs 最近一年（形态漂移判定，本轮新增）</b>：默认用 2024/2025 两年均值平滑单年噪声；
+        但当任一相关月（当前月 + 各目标月）的两年同月系数<b>相对偏离 &gt; 30%</b>（且两年同月量均 ≥50 件可比）时，判定为<b>形态漂移</b>
+        （两年形态发生结构性位移，均值会把旺季「削峰填谷」），全部相关月改用<b>最近一年（2025）</b>系数。
+        <b>口径必须整套同源</b>——分母（当前月系数，用于去季节化）与分子（各目标月系数）须来自同一口径，不得混用。
+        本轮 <b>6 个</b>样本判定形态漂移并改用最近一年口径。</li>
+      <li><b>水平一致性软上限 + 动量豁免（本轮升级，k=1.5 / 豁免 3.0）</b>：即使口径同源、前置闸门未触发，去季节化基准仍可能被推到远高于该品
+        <b>当年常态水平</b>的位置（当月历史系数偏低 + 当月动量偏高，÷ 小系数放大数倍）。用
+        <code>累计口径水平 = 去年全年日均 × 当年 1~9 月累计同比</code> 做上界校验：
+        <code>水平比 = 去季基准 ÷ 累计口径水平</code>，<b>水平比 &gt; 1.50</b> 时判定基准高估，
+        <b>封顶在 1.5×累计口径水平</b>（<b>不做硬替换</b>）并标注。
+        <b>动量豁免（本轮新增）</b>：封顶前先看<b>动量比 = 短期日销 ÷ 中期日销</b>——若 <b>&gt; 1.10</b>，
+        说明近期销量确实在回升（市场变化 / 运营动作驱动），此时<b>放行封顶</b>、改受 <b>3×累计口径水平</b> 的极端上界约束；
+        这样既不误伤真实爬坡，又拦住水平比极高（可达 3~15）的极端高估。
+        <b>单向阈值</b>——只拦高估，不拦低估（水平比 ≤ 1.50 含 &lt; 1 照常采用去季基准）。本轮 <b>6 个</b>样本触发水平比 &gt;1.50，其中 <b>3 个</b>获动量豁免。</li>
+      <li><b>目标月系数退化兜底（本轮新增）</b>：目标月季节系数置信为「不足」（该月在两基年都无有效数据、算不出系数）时，
+        公式只能按系数 <b>1.0（年均水平）</b>估计——若该月实际远低于年均（如 1 月仅为年均的 0.43 倍），退化本身就会系统性高估，
+        且这条路径<b>绕过软上限</b>（软上限只作用于去季基准）。故在满足
+        <code>去年同月销量 &lt; 100 件</code> <b>且</b> <code>当年累计同比 ≤ 2.0</code> 时，该月改用
+        <b>兜底值 = 去年同月销量 × 当年累计同比</b> 并标注；不满足条件的退化月沿用原公式。
+        启用条件用于排除「大基数 × 高同比」相乘的极端放大（回测中曾出现 596 件 × 3.45 = 2,578 件）。
+        本轮 <b>2 个</b>目标月启用兜底。</li>
+      <li><b>退化兜底的回测依据（本轮新增）</b>：同一 77 样本窗口上，兜底使 MAPE 由 <b>417.9%</b> 降至 <b>63.3%</b>、
+        RMSE 由 <b>1,441.8%</b> 降至 <b>91.1%</b>（个体精度大幅改善），改动样本 13 个；合计偏差由 −23.9% 变为 −29.9%
+        （兜底把「小基数月」的预估压回真实低位，方向上正确但整体略偏保守）。触发样本（水平比 &gt; 1.50 的 16 个窗口）
+        中位误差不受影响（仍 26.2%），说明兜底与软上限处理的是<b>不同的</b>样本群体。
+        曾试「去年同月 ÷ 前年同月」作兜底同比，但退化样本的前年同月大多为 0（42 个退化月中 38 个），方案不可用，仍用累计同比。</li>
+      <li><b>软上限系数 k=1.5 的回测依据（本轮新增）</b>：用 10 个样本的 2023-11 ~ 2026-10 月度序列，
+        构造 <b>8 个 as-of 窗口 × 有效 ASIN = 77 个样本窗口</b>（as-of 2026-03~07 用 2024/2025 两年基年，as-of 2025-10~12 用 2024 单基年覆盖冬季），
+        逐窗口按线上同构流程预测未来 3 个月并与真实值比较。结果：
+        <b>77 个窗口中有 16 个触发水平比 &gt; 1.50</b>（21%）；这 16 个样本的<b>实际去季水平 ÷ 累计口径水平</b>中位数为 <b>1.19</b>
+        （剔除 6 个「实际几乎归零」的塌方样本后为 <b>1.48</b>）。
+        即：触发样本的真实水平普遍<b>高于</b>累计口径水平，硬替换（k=1.0）会系统性低估——触发样本中位误差 <b>−15.6%</b>、
+        全样本合计偏差 <b>−33.1%</b>；而完全不封顶则合计偏差 <b>+4.2%</b>、触发样本中位误差 <b>+72.5%</b>。
+        取 <b>k=1.5</b> 时交易中样本中位误差 <b>+1.6%</b>（近乎无偏），既保留上行空间，又对极端高估（水平比可达 3~15）形成有效上界。
+        <span class="tag a">k 由历史回测确定，非拍阈值</span></li>
+      <li><b>动量豁免的取值依据（本轮新增）</b>：先单独调短窗权重（0.4/0.5/0.6/0.7 四档）发现——<b>权重对已触发封顶的样本完全无效</b>，
+        封顶线会先把它们压回去（B0D46V9DNP 在四档权重下 11 月均被 1.5× 线压到 124 件）。故必须同步调整封顶规则。
+        对 6 个封顶样本做动量比分析：其中 <b>3 个近期在回升</b>（B0D46V9DNP 1.17、B0D7ZG7XPW 1.49、B0D8RXKPS1 2.91）、<b>3 个在下跌</b>
+        （B08X6SMJ47 0.90、B0DT4B9JV3 0.24、B0882T9BZ8 0.77）。<b>无差别放开封顶（k=2.0）会推高近期在跌的样本</b>
+        （B0DT4B9JV3 由 +140% 推到 +244%），风险收益比差。故采用<b>「动量比 &gt; 1.10 才豁免」</b>的条件式放行，
+        并给豁免样本加 <b>3×累计水平</b> 的极端上界（防止水平比 3~15 的样本被无约束放大）。结果：合计由不封顶的 10,636 件（+52.1%）
+        修正为 8,461 件（+21.0%），回升样本回归真实水平、下跌样本护栏完好。
+        <span class="tag a">阈值与上界由线上样本动量分析确定</span></li>
+      <li><b>季节系数可靠性分级</b>：两年（2024/2025）各 ≥10 个有效月 且 该月两年量均 ≥50 件 且 方向不冲突 → 两年<b>可比</b>（置信「高」，
+        口径按上一条形态漂移判定取两年均值或最近一年）；
+        否则取<b>最近可用年份</b>该月系数（中/低）；两者皆缺 → 退化为 1.0（不足）。
+        <span class="tag a">本轮 6 个样本落在后两档</span></li>
+      <li><b>关键词校准</b>：仅对已拉取 SIF 关键词信号的 4 个样本生效
+        （<code>market_get_asin_keyword_signals</code> 取 <code>traffic_share</code> 加权
+        <code>market_get_keyword_demand</code> 的<b>近期同比</b>，禁用年度均值同比）；
+        其余 6 个未做校准，系数按 1.00。</li>
+      <li><b>情景系数</b>：保守 ×0.85 / 基准 ×1.00 / 乐观 ×1.25。</li>
+    </ul>
+  </div>
+
+  <h2>二、10 个样本总表</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>ASIN</th><th>基础日销<br>(件/天)</th><th>动量比</th><th>系数口径</th><th>当月(10月)<br>季节系数</th>
+      <th>闸门</th><th>去季节化<br>基准(件/天)</th><th>校准<br>系数</th>
+      <th>11月<br>系数</th><th>12月<br>系数</th><th>1月<br>系数</th>
+      <th>基准合计<br>(件)</th><th>去年同期<br>(件)</th><th>vs 去年</th></tr></thead>
+      <tbody><tr><td><b>B08X6SMJ47</b></td><td>16.95</td><td class="down">0.90</td><td><span class="tag a">漂移 0.80</span></td><td>0.242<span class="tag g">高</span></td><td>—</td><td><span class="tag a">封顶×1.5 3.31</span></td><td>70.01 → <b>31.72</b></td><td>0.219</td><td>0.205</td><td>0.667</td><td><b>981</b></td><td>795</td><td class="up">+23.4%</td></tr><tr><td><b>B08H24W1TT</b></td><td>3.88</td><td class="up">1.17</td><td><span class="tag a">漂移 0.76</span></td><td>0.320<span class="tag g">高</span></td><td><span class="tag a">豁免</span></td><td><span class="tag g">正常 0.50</span></td><td>12.12</td><td>3.409</td><td>7.654</td><td>0.071</td><td><b>3,853</b></td><td>3,748</td><td class="up">+2.8%</td></tr><tr><td><b>B0D46V9DNP</b></td><td>11.24</td><td class="up">1.17</td><td><span class="tag a">漂移 1.57</span></td><td>0.329<span class="tag a">中</span></td><td><span class="tag r">触发</span></td><td><span class="tag g">豁免×3 1.57</span></td><td>11.24 → <b>11.24</b></td><td>0.386</td><td>0.376</td><td>1.266</td><td><b>703</b></td><td>519</td><td class="up">+35.4%</td></tr><tr><td><b>B0DT4B9JV3</b></td><td>7.13</td><td class="down">0.24</td><td><span class="note">不可比</span></td><td>0.460<span class="tag a">中</span></td><td>—</td><td><span class="tag a">封顶×1.5 2.01</span></td><td>15.49 → <b>11.57</b></td><td>0.602</td><td>1.093</td><td>1.000</td><td><b>704</b></td><td>293</td><td class="up">+140.3%</td></tr><tr><td><b>B0882T9BZ8</b></td><td>8.39</td><td class="down">0.77</td><td><span class="tag a">漂移 0.45</span></td><td>0.481<span class="tag g">高</span></td><td>—</td><td><span class="tag a">封顶×1.5 1.64</span></td><td>17.44 → <b>15.94</b></td><td>0.666</td><td>1.067</td><td>1.252</td><td><b>1,757</b></td><td>982</td><td class="up">+78.9%</td></tr><tr><td><b>B07ZJ75K8C</b></td><td>6.26</td><td class="down">0.78</td><td><span class="tag a">漂移 0.98</span></td><td>1.970<span class="tag a">中</span></td><td>—</td><td><span class="tag g">正常 0.54</span></td><td>3.18</td><td>0.716</td><td>0.954</td><td>0.485</td><td><b>227</b></td><td>521</td><td class="down">-56.5%</td></tr><tr><td><b>B0D7ZG7XPW</b></td><td>20.42</td><td class="up">1.49</td><td><span class="tag a">漂移 0.84</span></td><td>1.973<span class="tag a">中</span></td><td>—</td><td><span class="tag g">豁免×3 4.66</span></td><td>10.35 → <b>6.66</b></td><td>0.315</td><td>0.109</td><td>0.392</td><td><b>167</b></td><td>68</td><td class="up">+144.9%</td></tr><tr><td><b>B0D8RXKPS1</b></td><td>38.87</td><td class="up">2.91</td><td><span class="tag g">未漂移 0.26</span></td><td>7.815<span class="tag a">中</span></td><td>—</td><td><span class="tag g">豁免×3 2.16</span></td><td>4.97 → <b>4.97</b></td><td>0.117</td><td>0.044</td><td>1.000</td><td><b>25</b></td><td>20</td><td class="up">+27.0%</td></tr><tr><td><b>B0D8BCMJLR</b></td><td>43.02</td><td class="up">2.19</td><td><span class="tag g">未漂移 0.01</span></td><td>7.977<span class="tag a">中</span></td><td>—</td><td><span class="tag g">正常 1.05</span></td><td>5.39</td><td>0.069</td><td>0.067</td><td>0.061</td><td><b>33</b></td><td>27</td><td class="up">+20.7%</td></tr><tr><td><b>B08D96QQY9</b></td><td>8.75</td><td class="up">2.29</td><td><span class="tag g">未漂移 0.09</span></td><td>9.208<span class="tag g">高</span></td><td>—</td><td><span class="tag g">正常 0.69</span></td><td>0.95</td><td>0.198</td><td>0.114</td><td>0.114</td><td><b>12</b></td><td>18</td><td class="down">-31.3%</td></tr></tbody>
+    </table>
+    <p class="note" style="margin-top:10px">
+      动量比 &gt;1.15 为向上、&lt;0.85 为向下（需先排查断货/排名/广告原因）；季节系数后标签为置信等级（高/中/低/不足）。
+    </p>
+  </div>
+
+  <h2>三、逐月三情景明细（2026-11 ~ 2027-01）</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>ASIN</th><th>月份</th><th>季节系数</th><th>保守(-15%)</th><th>基准</th><th>乐观(+25%)</th>
+      <th>去年同期实际</th><th>vs 去年</th></tr></thead>
+      <tbody><tr><td>B08X6SMJ47</td><td>2026-11</td><td>0.219<span class="tag g">高</span></td><td>163</td><td><b>192</b></td><td>239</td><td>202</td><td class="down">-5.2%</td></tr><tr><td>B08X6SMJ47</td><td>2026-12</td><td>0.205<span class="tag g">高</span></td><td>158</td><td><b>186</b></td><td>232</td><td>196</td><td class="down">-5.2%</td></tr><tr><td>B08X6SMJ47</td><td>2027-01</td><td>0.667<span class="tag g">高</span></td><td>513</td><td><b>603</b></td><td>754</td><td>397</td><td class="up">+51.9%</td></tr><tr><td>B08H24W1TT</td><td>2026-11</td><td>3.409<span class="tag g">高</span></td><td>980</td><td><b>1,153</b></td><td>1,441</td><td>1,113</td><td class="up">+3.6%</td></tr><tr><td>B08H24W1TT</td><td>2026-12</td><td>7.654<span class="tag g">高</span></td><td>2,274</td><td><b>2,675</b></td><td>3,344</td><td>2,582</td><td class="up">+3.6%</td></tr><tr><td>B08H24W1TT</td><td>2027-01</td><td>0.071<span class="tag a">中</span></td><td>21</td><td><b>25</b></td><td>31</td><td>53</td><td class="down">-53.1%</td></tr><tr><td>B0D46V9DNP</td><td>2026-11</td><td>0.386<span class="tag a">中</span></td><td>111</td><td><b>130</b></td><td>163</td><td>176</td><td class="down">-26.0%</td></tr><tr><td>B0D46V9DNP</td><td>2026-12</td><td>0.376<span class="tag a">中</span></td><td>111</td><td><b>131</b></td><td>164</td><td>177</td><td class="down">-26.0%</td></tr><tr><td>B0D46V9DNP</td><td>2027-01</td><td>1.266<span class="tag a">中</span></td><td>375</td><td><b>441</b></td><td>551</td><td>166</td><td class="up">+165.8%</td></tr><tr><td>B0DT4B9JV3</td><td>2026-11</td><td>0.602<span class="tag a">中</span></td><td>178</td><td><b>209</b></td><td>261</td><td>81</td><td class="up">+157.9%</td></tr><tr><td>B0DT4B9JV3</td><td>2026-12</td><td>1.093<span class="tag a">中</span></td><td>333</td><td><b>392</b></td><td>490</td><td>152</td><td class="up">+157.9%</td></tr><tr><td>B0DT4B9JV3</td><td>2027-01</td><td>1.000<span class="tag r">不足</span></td><td>88</td><td><b>103</b></td><td>129</td><td>60</td><td class="up">+71.9%</td></tr><tr><td>B0882T9BZ8</td><td>2026-11</td><td>0.666<span class="tag g">高</span></td><td>325</td><td><b>382</b></td><td>477</td><td>233</td><td class="up">+63.9%</td></tr><tr><td>B0882T9BZ8</td><td>2026-12</td><td>1.067<span class="tag g">高</span></td><td>538</td><td><b>633</b></td><td>791</td><td>386</td><td class="up">+63.9%</td></tr><tr><td>B0882T9BZ8</td><td>2027-01</td><td>1.252<span class="tag g">高</span></td><td>631</td><td><b>742</b></td><td>928</td><td>363</td><td class="up">+104.5%</td></tr><tr><td>B07ZJ75K8C</td><td>2026-11</td><td>0.716<span class="tag g">高</span></td><td>63</td><td><b>74</b></td><td>92</td><td>133</td><td class="down">-44.5%</td></tr><tr><td>B07ZJ75K8C</td><td>2026-12</td><td>0.954<span class="tag g">高</span></td><td>86</td><td><b>101</b></td><td>127</td><td>183</td><td class="down">-44.5%</td></tr><tr><td>B07ZJ75K8C</td><td>2027-01</td><td>0.485<span class="tag g">高</span></td><td>44</td><td><b>52</b></td><td>64</td><td>205</td><td class="down">-74.8%</td></tr><tr><td>B0D7ZG7XPW</td><td>2026-11</td><td>0.315<span class="tag a">中</span></td><td>54</td><td><b>63</b></td><td>79</td><td>28</td><td class="up">+125.1%</td></tr><tr><td>B0D7ZG7XPW</td><td>2026-12</td><td>0.109<span class="tag a">中</span></td><td>19</td><td><b>23</b></td><td>28</td><td>10</td><td class="up">+125.1%</td></tr><tr><td>B0D7ZG7XPW</td><td>2027-01</td><td>0.392<span class="tag a">中</span></td><td>69</td><td><b>81</b></td><td>101</td><td>30</td><td class="up">+170.1%</td></tr><tr><td>B0D8RXKPS1</td><td>2026-11</td><td>0.117<span class="tag a">中</span></td><td>15</td><td><b>17</b></td><td>22</td><td>13</td><td class="up">+34.2%</td></tr><tr><td>B0D8RXKPS1</td><td>2026-12</td><td>0.044<span class="tag a">中</span></td><td>6</td><td><b>7</b></td><td>8</td><td>5</td><td class="up">+34.2%</td></tr><tr><td>B0D8RXKPS1</td><td>2027-01</td><td>1.000<span class="tag r">不足</span></td><td>1</td><td><b>1</b></td><td>2</td><td>2</td><td class="down">-37.8%</td></tr><tr><td>B0D8BCMJLR</td><td>2026-11</td><td>0.069<span class="tag a">中</span></td><td>10</td><td><b>11</b></td><td>14</td><td>11</td><td class="up">+1.9%</td></tr><tr><td>B0D8BCMJLR</td><td>2026-12</td><td>0.067<span class="tag a">中</span></td><td>10</td><td><b>11</b></td><td>14</td><td>11</td><td class="up">+1.9%</td></tr><tr><td>B0D8BCMJLR</td><td>2027-01</td><td>0.061<span class="tag a">中</span></td><td>9</td><td><b>10</b></td><td>13</td><td>5</td><td class="up">+103.7%</td></tr><tr><td>B08D96QQY9</td><td>2026-11</td><td>0.198<span class="tag r">低</span></td><td>5</td><td><b>6</b></td><td>7</td><td>3</td><td class="up">+87.7%</td></tr><tr><td>B08D96QQY9</td><td>2026-12</td><td>0.114<span class="tag a">中</span></td><td>3</td><td><b>3</b></td><td>4</td><td>10</td><td class="down">-66.4%</td></tr><tr><td>B08D96QQY9</td><td>2027-01</td><td>0.114<span class="tag a">中</span></td><td>3</td><td><b>3</b></td><td>4</td><td>5</td><td class="down">-32.7%</td></tr></tbody>
+    </table>
+  </div>
+
+  <h2>四、高置信样本详析（4 个）</h2>
+  
+    <h3>B08X6SMJ47</h3>
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">基础日销</div><div class="val">16.95<small>件/天</small></div></div>
+      <div class="kpi"><div class="lbl">动量比（短/中）</div><div class="val">0.90<small>平稳</small></div></div>
+      <div class="kpi"><div class="lbl">采用基准</div><div class="val">31.72<small>件/天（已封顶）</small></div></div>
+      <div class="kpi"><div class="lbl">校准系数</div><div class="val">0.92</div></div>
+      <div class="kpi"><div class="lbl">基准合计（3 月）</div><div class="val">981<small>件</small></div></div>
+      <div class="kpi"><div class="lbl">vs 去年同期</div><div class="val up">+23.4%</div></div>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>窗口</th><th>近 7 天</th><th>近 14 天</th><th>近 30 天</th><th>近 90 天</th></tr></thead>
+      <tbody><tr><td>日均（件/天）</td><td>15.29</td><td>16.86</td><td>20.83</td><td>14.83</td></tr></tbody></table>
+      <p class="note" style="margin-top:8px">短期日销 16.07 × 0.5 + 中期日销 17.83 × 0.5 = 基础日销 16.95 件/天（动量比 = 短期 16.07 ÷ 中期 17.83 = 0.90）。</p>
+      <p class="note" style="margin:0"><b>闸门未触发：</b>当月（10 月）系数 0.242，实际日均 16.73 / 上月日均 21.70 = 0.77，不满足「系数&lt;0.95 且 一致性比&gt;1.05」，照常去季节化。</p>
+      <p class="note" style="margin:6px 0 0"><b>水平一致性封顶：</b>去季节化基准 70.01 ÷ 累计口径水平 21.15 = 水平比 <b>3.31 &gt; 1.50</b>，且动量比 0.90 ≤ 1.10（近期未回升）→ 判定当月相对位置异常、基准高估 → <b>封顶在 1.5×累计水平 = 31.72 件/天</b>（累计口径水平 = 去年全年日均 × 当年 1~9 月累计同比）。<b>不做硬替换</b>：保留上行空间，只拦住极端高估。</p>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>月份</th><th>季节系数</th><th>预估日销</th><th>保守(-15%)</th><th>基准</th><th>乐观(+25%)</th><th>去年同期实际</th></tr></thead>
+      <tbody>
+      <tr><td>2026-11</td><td>0.219</td><td>6.39</td><td>163</td><td><b>192</b></td><td>239</td><td>202</td></tr><tr><td>2026-12</td><td>0.205</td><td>6.00</td><td>158</td><td><b>186</b></td><td>232</td><td>196</td></tr><tr><td>2027-01</td><td>0.667</td><td>19.46</td><td>513</td><td><b>603</b></td><td>754</td><td>397</td></tr>
+      <tr style="background:#f7f9fc"><td><b>合计</b></td><td>—</td><td>—</td><td><b>834</b></td>
+      <td><b>981</b></td><td><b>1,226</b></td><td>795</td></tr>
+      </tbody></table>
+      
+    </div>
+    <div class="card">
+      <p style="margin:0 0 6px"><b>关键词与季节性证据（SIF）</b></p>
+      <table><thead><tr><th>流量词</th><th>流量占比</th><th>近期同比</th><th>动量</th><th>峰值月</th><th>低谷月</th><th>季节强度</th><th>健康 / 依赖</th></tr></thead><tbody><tr><td>track spikes</td><td>37.62%</td><td class="down">-30.7%</td><td>见顶回落</td><td>03/02/04</td><td>08/09/10</td><td>高</td><td>volatile · natural_dominant</td></tr><tr><td>spikes track shoes</td><td>17.81%</td><td class="up">+1.4%</td><td>稳定</td><td>03/02/04</td><td>08/10/07</td><td>高</td><td>core · natural_dominant</td></tr><tr><td>cross country spikes</td><td>11.99%</td><td class="up">+8.7%</td><td>稳定</td><td>08/09/10</td><td>01/12/02</td><td>高</td><td>core · natural_dominant</td></tr><tr><td>spikes</td><td>8.98%</td><td class="up">+36.9%</td><td>加速增长</td><td>03/04/02</td><td>11/12/07</td><td>高</td><td>volatile · natural_dominant</td></tr><tr><td>nike dragonfly xc spikes</td><td>4.75%</td><td class="down">-12.5%</td><td>稳定</td><td>08/09/07</td><td>12/02/06</td><td>高</td><td>standard · natural_dominant</td></tr><tr><td>nike spikes</td><td>3.29%</td><td class="down">-4.4%</td><td>稳定</td><td>03/02/04</td><td>07/06/09</td><td>高</td><td>standard · natural_dominant</td></tr></tbody></table>
+      <p class="note" style="margin-top:10px">按流量占比加权的<b>近期同比 = -8.47%</b>（覆盖 30 词中 94% 的流量份额）。据此净校准系数取 <b>0.92</b>（公式：1 + 加权近期同比，夹在 [0.70, 1.30]；核心词健康/依赖与排名形态的微调见上表）。</p>
+    </div>
+    <h3>B08H24W1TT</h3>
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">基础日销</div><div class="val">3.88<small>件/天</small></div></div>
+      <div class="kpi"><div class="lbl">动量比（短/中）</div><div class="val">1.17<small>向上</small></div></div>
+      <div class="kpi"><div class="lbl">采用基准</div><div class="val">12.12<small>件/天</small></div></div>
+      <div class="kpi"><div class="lbl">校准系数</div><div class="val">0.93</div></div>
+      <div class="kpi"><div class="lbl">基准合计（3 月）</div><div class="val">3,853<small>件</small></div></div>
+      <div class="kpi"><div class="lbl">vs 去年同期</div><div class="val up">+2.8%</div></div>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>窗口</th><th>近 7 天</th><th>近 14 天</th><th>近 30 天</th><th>近 90 天</th></tr></thead>
+      <tbody><tr><td>日均（件/天）</td><td>4.29</td><td>4.07</td><td>3.97</td><td>3.20</td></tr></tbody></table>
+      <p class="note" style="margin-top:8px">短期日销 4.18 × 0.5 + 中期日销 3.58 × 0.5 = 基础日销 3.88 件/天（动量比 = 短期 4.18 ÷ 中期 3.58 = 1.17）。</p>
+      <p class="note" style="margin:0"><b>闸门豁免（系统性爬坡月）：</b>当月（10 月）历史系数 0.320 &lt; 0.95，一致性比 4.07 / 3.70 = 1.10 &gt; 1.05，本应触发；但历史同月爬坡比 = 1.82 &gt; 1.05（历年 10 月均在从 9 月爬坡），判定为<b>系统性爬坡月，闸门豁免</b>，照常去季节化。</p>
+      <p class="note" style="margin:6px 0 0"><b>水平一致性正常：</b>去季节化基准 12.12 ÷ 累计口径水平 24.40 = 水平比 0.50 ≤ 1.50，照常采用去季节化基准。</p>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>月份</th><th>季节系数</th><th>预估日销</th><th>保守(-15%)</th><th>基准</th><th>乐观(+25%)</th><th>去年同期实际</th></tr></thead>
+      <tbody>
+      <tr><td>2026-11</td><td>3.409</td><td>38.44</td><td>980</td><td><b>1,153</b></td><td>1,441</td><td>1,113</td></tr><tr><td>2026-12</td><td>7.654</td><td>86.29</td><td>2,274</td><td><b>2,675</b></td><td>3,344</td><td>2,582</td></tr><tr><td>2027-01</td><td>0.071</td><td>0.80</td><td>21</td><td><b>25</b></td><td>31</td><td>53</td></tr>
+      <tr style="background:#f7f9fc"><td><b>合计</b></td><td>—</td><td>—</td><td><b>3,275</b></td>
+      <td><b>3,853</b></td><td><b>4,816</b></td><td>3,748</td></tr>
+      </tbody></table>
+      
+    </div>
+    <div class="card">
+      <p style="margin:0 0 6px"><b>关键词与季节性证据（SIF）</b></p>
+      <table><thead><tr><th>流量词</th><th>流量占比</th><th>近期同比</th><th>动量</th><th>峰值月</th><th>低谷月</th><th>季节强度</th><th>健康 / 依赖</th></tr></thead><tbody><tr><td>christmas iron on patches</td><td>38.97%</td><td class="down">-10.6%</td><td>稳定</td><td>11/12/10</td><td>05/01/06</td><td>高</td><td>volatile · natural_dominant</td></tr><tr><td>christmas patches</td><td>21.42%</td><td class="down">-25.2%</td><td>出现减速信号</td><td>11/12/10</td><td>06/07/08</td><td>高</td><td>volatile · natural_dominant</td></tr><tr><td>iron on christmas patches</td><td>20.89%</td><td class="up">+17.4%</td><td>稳定</td><td>12/11/10</td><td>08/09/10</td><td>高</td><td>volatile · natural_dominant</td></tr><tr><td>christmas patches iron on</td><td>14.05%</td><td class="down">-7.4%</td><td>稳定</td><td>11/12/10</td><td>07/08/09</td><td>高</td><td>volatile · mixed</td></tr><tr><td>christmas appliques</td><td>0.78%</td><td class="up">+31.5%</td><td>稳定</td><td>11/12/10</td><td>09/10/12</td><td>数据不足</td><td>standard · natural_dominant</td></tr><tr><td>christmas material</td><td>0.76%</td><td class="up">+19.4%</td><td>稳定</td><td>11/10/12</td><td>07/01/08</td><td>高</td><td>standard · natural_dominant</td></tr></tbody></table>
+      <p class="note" style="margin-top:10px">按流量占比加权的<b>近期同比 = -6.66%</b>（覆盖 18 词中 99% 的流量份额）。据此净校准系数取 <b>0.93</b>（公式：1 + 加权近期同比，夹在 [0.70, 1.30]；核心词健康/依赖与排名形态的微调见上表）。</p>
+    </div>
+    <h3>B0882T9BZ8</h3>
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">基础日销</div><div class="val">8.39<small>件/天</small></div></div>
+      <div class="kpi"><div class="lbl">动量比（短/中）</div><div class="val">0.77<small>向下</small></div></div>
+      <div class="kpi"><div class="lbl">采用基准</div><div class="val">15.94<small>件/天（已封顶）</small></div></div>
+      <div class="kpi"><div class="lbl">校准系数</div><div class="val">1.20</div></div>
+      <div class="kpi"><div class="lbl">基准合计（3 月）</div><div class="val">1,757<small>件</small></div></div>
+      <div class="kpi"><div class="lbl">vs 去年同期</div><div class="val up">+78.9%</div></div>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>窗口</th><th>近 7 天</th><th>近 14 天</th><th>近 30 天</th><th>近 90 天</th></tr></thead>
+      <tbody><tr><td>日均（件/天）</td><td>6.86</td><td>7.79</td><td>8.87</td><td>10.04</td></tr></tbody></table>
+      <p class="note" style="margin-top:8px">短期日销 7.32 × 0.5 + 中期日销 9.46 × 0.5 = 基础日销 8.39 件/天（动量比 = 短期 7.32 ÷ 中期 9.46 = 0.77）。</p>
+      <p class="note" style="margin:0"><b>闸门未触发：</b>当月（10 月）系数 0.481，实际日均 7.73 / 上月日均 10.23 = 0.76，不满足「系数&lt;0.95 且 一致性比&gt;1.05」，照常去季节化。</p>
+      <p class="note" style="margin:6px 0 0"><b>水平一致性封顶：</b>去季节化基准 17.44 ÷ 累计口径水平 10.62 = 水平比 <b>1.64 &gt; 1.50</b>，且动量比 0.77 ≤ 1.10（近期未回升）→ 判定当月相对位置异常、基准高估 → <b>封顶在 1.5×累计水平 = 15.94 件/天</b>（累计口径水平 = 去年全年日均 × 当年 1~9 月累计同比）。<b>不做硬替换</b>：保留上行空间，只拦住极端高估。</p>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>月份</th><th>季节系数</th><th>预估日销</th><th>保守(-15%)</th><th>基准</th><th>乐观(+25%)</th><th>去年同期实际</th></tr></thead>
+      <tbody>
+      <tr><td>2026-11</td><td>0.666</td><td>12.73</td><td>325</td><td><b>382</b></td><td>477</td><td>233</td></tr><tr><td>2026-12</td><td>1.067</td><td>20.41</td><td>538</td><td><b>633</b></td><td>791</td><td>386</td></tr><tr><td>2027-01</td><td>1.252</td><td>23.95</td><td>631</td><td><b>742</b></td><td>928</td><td>363</td></tr>
+      <tr style="background:#f7f9fc"><td><b>合计</b></td><td>—</td><td>—</td><td><b>1,493</b></td>
+      <td><b>1,757</b></td><td><b>2,196</b></td><td>982</td></tr>
+      </tbody></table>
+      
+    </div>
+    <div class="card">
+      <p style="margin:0 0 6px"><b>关键词与季节性证据（SIF）</b></p>
+      <table><thead><tr><th>流量词</th><th>流量占比</th><th>近期同比</th><th>动量</th><th>峰值月</th><th>低谷月</th><th>季节强度</th><th>健康 / 依赖</th></tr></thead><tbody><tr><td>perler beads boards</td><td>25.11%</td><td class="up">+28.5%</td><td>加速增长</td><td>07/08/06</td><td>04/03/02</td><td>高</td><td>core · natural_dominant</td></tr><tr><td>fuse beads</td><td>11.59%</td><td class="up">+40.1%</td><td>加速增长</td><td>11/12/07</td><td>04/05/09</td><td>高</td><td>core · natural_dominant</td></tr><tr><td>fuse beads pegboards</td><td>10.53%</td><td class="up">+60.6%</td><td>稳定</td><td>12/11/07</td><td>04/10/09</td><td>中等</td><td>core · natural_dominant</td></tr><tr><td>perler bead boards</td><td>8.36%</td><td class="up">+29.0%</td><td>加速增长</td><td>11/12/07</td><td>10/04/02</td><td>中等</td><td>core · natural_dominant</td></tr><tr><td>perler pegboard</td><td>7.01%</td><td class="up">+27.7%</td><td>回暖中</td><td>12/11/01</td><td>09/08/05</td><td>高</td><td>core · mixed</td></tr><tr><td>perler beads pegboards</td><td>4.59%</td><td class="down">-45.4%</td><td>稳定</td><td>07/11/06</td><td>05/04/09</td><td>高</td><td>standard · natural_dominant</td></tr></tbody></table>
+      <p class="note" style="margin-top:10px">按流量占比加权的<b>近期同比 = +32.09%</b>（覆盖 30 词中 87% 的流量份额）。据此净校准系数取 <b>1.20</b>（公式：1 + 加权近期同比，夹在 [0.70, 1.30]；核心词健康/依赖与排名形态的微调见上表）。</p>
+    </div>
+    <h3>B07ZJ75K8C</h3>
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">基础日销</div><div class="val">6.26<small>件/天</small></div></div>
+      <div class="kpi"><div class="lbl">动量比（短/中）</div><div class="val">0.78<small>向下</small></div></div>
+      <div class="kpi"><div class="lbl">采用基准</div><div class="val">3.18<small>件/天</small></div></div>
+      <div class="kpi"><div class="lbl">校准系数</div><div class="val">1.08</div></div>
+      <div class="kpi"><div class="lbl">基准合计（3 月）</div><div class="val">227<small>件</small></div></div>
+      <div class="kpi"><div class="lbl">vs 去年同期</div><div class="val down">-56.5%</div></div>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>窗口</th><th>近 7 天</th><th>近 14 天</th><th>近 30 天</th><th>近 90 天</th></tr></thead>
+      <tbody><tr><td>日均（件/天）</td><td>4.86</td><td>6.14</td><td>7.47</td><td>6.58</td></tr></tbody></table>
+      <p class="note" style="margin-top:8px">短期日销 5.50 × 0.5 + 中期日销 7.02 × 0.5 = 基础日销 6.26 件/天（动量比 = 短期 5.50 ÷ 中期 7.02 = 0.78）。</p>
+      <p class="note" style="margin:0"><b>闸门未触发：</b>当月（10 月）系数 1.970，实际日均 5.80 / 上月日均 7.17 = 0.81，不满足「系数&lt;0.95 且 一致性比&gt;1.05」，照常去季节化。</p>
+      <p class="note" style="margin:6px 0 0"><b>水平一致性正常：</b>去季节化基准 3.18 ÷ 累计口径水平 5.92 = 水平比 0.54 ≤ 1.50，照常采用去季节化基准。</p>
+    </div>
+    <div class="card">
+      <table><thead><tr><th>月份</th><th>季节系数</th><th>预估日销</th><th>保守(-15%)</th><th>基准</th><th>乐观(+25%)</th><th>去年同期实际</th></tr></thead>
+      <tbody>
+      <tr><td>2026-11</td><td>0.716</td><td>2.46</td><td>63</td><td><b>74</b></td><td>92</td><td>133</td></tr><tr><td>2026-12</td><td>0.954</td><td>3.27</td><td>86</td><td><b>101</b></td><td>127</td><td>183</td></tr><tr><td>2027-01</td><td>0.485</td><td>1.66</td><td>44</td><td><b>52</b></td><td>64</td><td>205</td></tr>
+      <tr style="background:#f7f9fc"><td><b>合计</b></td><td>—</td><td>—</td><td><b>193</b></td>
+      <td><b>227</b></td><td><b>284</b></td><td>521</td></tr>
+      </tbody></table>
+      
+    </div>
+    <div class="card">
+      <p style="margin:0 0 6px"><b>关键词与季节性证据（SIF）</b></p>
+      <table><thead><tr><th>流量词</th><th>流量占比</th><th>近期同比</th><th>动量</th><th>峰值月</th><th>低谷月</th><th>季节强度</th><th>健康 / 依赖</th></tr></thead><tbody><tr><td>emergency whistle</td><td>21.45%</td><td class="down">-1.0%</td><td>稳定</td><td>01/07/06</td><td>12/11/05</td><td>中等</td><td>core · natural_dominant</td></tr><tr><td>safety whistle</td><td>10.30%</td><td class="down">-28.6%</td><td>稳定</td><td>07/06/05</td><td>12/11/02</td><td>中等</td><td>volatile · natural_dominant</td></tr><tr><td>whistle emergency</td><td>9.03%</td><td class="down">-61.2%</td><td>出现减速信号</td><td>06/01/02</td><td>12/11/08</td><td>高</td><td>core · natural_dominant</td></tr><tr><td>whistles for adults emergency</td><td>5.31%</td><td class="up">+0.0%</td><td>稳定</td><td>08/05/09</td><td>12/11/01</td><td>高</td><td>volatile · natural_dominant</td></tr><tr><td>whistles</td><td>5.09%</td><td class="down">-8.6%</td><td>稳定</td><td>01/08/06</td><td>12/11/03</td><td>高</td><td>volatile · natural_dominant</td></tr><tr><td>red whistle</td><td>3.90%</td><td class="down">-41.2%</td><td>稳定</td><td>10/09/08</td><td>12/03/11</td><td>高</td><td>standard · natural_dominant</td></tr></tbody></table>
+      <p class="note" style="margin-top:10px">按流量占比加权的<b>近期同比 = +8.10%</b>（覆盖 30 词中 77% 的流量份额）。据此净校准系数取 <b>1.08</b>（公式：1 + 加权近期同比，夹在 [0.70, 1.30]；核心词健康/依赖与排名形态的微调见上表）。</p>
+    </div>
+
+  <h2>五、低置信样本（6 个，季节系数依赖单年或退化）</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>ASIN</th><th>基础日销</th><th>动量比</th><th>当月系数</th><th>口径</th><th>前置闸门</th><th>水平闸</th>
+      <th>采用基准</th><th>11月</th><th>12月</th><th>1月</th><th>基准合计</th><th>去年同期</th><th>vs 去年</th></tr></thead>
+      <tbody><tr><td><b>B0D46V9DNP</b></td><td>11.24</td><td class="up">1.17</td><td>0.329<span class="tag a">中</span></td><td><span class="tag a">漂移 1.57</span></td><td>是</td><td><span class="tag g">豁免×3 1.57</span></td><td>11.24 → <b>11.24</b></td><td>130</td><td>131</td><td>441</td><td><b>703</b></td><td>519</td><td class="up">+35.4%</td></tr><tr><td><b>B0DT4B9JV3</b></td><td>7.13</td><td class="down">0.24</td><td>0.460<span class="tag a">中</span></td><td><span class="note">不可比</span></td><td>否</td><td><span class="tag a">封顶×1.5 2.01</span></td><td>15.49 → <b>11.57</b></td><td>209</td><td>392</td><td>103</td><td><b>704</b></td><td>293</td><td class="up">+140.3%</td></tr><tr><td><b>B0D7ZG7XPW</b></td><td>20.42</td><td class="up">1.49</td><td>1.973<span class="tag a">中</span></td><td><span class="tag a">漂移 0.84</span></td><td>否</td><td><span class="tag g">豁免×3 4.66</span></td><td>10.35 → <b>6.66</b></td><td>63</td><td>23</td><td>81</td><td><b>167</b></td><td>68</td><td class="up">+144.9%</td></tr><tr><td><b>B0D8RXKPS1</b></td><td>38.87</td><td class="up">2.91</td><td>7.815<span class="tag a">中</span></td><td><span class="tag g">未漂移 0.26</span></td><td>否</td><td><span class="tag g">豁免×3 2.16</span></td><td>4.97 → <b>4.97</b></td><td>17</td><td>7</td><td>1</td><td><b>25</b></td><td>20</td><td class="up">+27.0%</td></tr><tr><td><b>B0D8BCMJLR</b></td><td>43.02</td><td class="up">2.19</td><td>7.977<span class="tag a">中</span></td><td><span class="tag g">未漂移 0.01</span></td><td>否</td><td><span class="tag g">正常 1.05</span></td><td>5.39</td><td>11</td><td>11</td><td>10</td><td><b>33</b></td><td>27</td><td class="up">+20.7%</td></tr><tr><td><b>B08D96QQY9</b></td><td>8.75</td><td class="up">2.29</td><td>9.208<span class="tag g">高</span></td><td><span class="tag g">未漂移 0.09</span></td><td>否</td><td><span class="tag g">正常 0.69</span></td><td>0.95</td><td>6</td><td>3</td><td>3</td><td><b>12</b></td><td>18</td><td class="down">-31.3%</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:10px">
+      这 6 个样本的共同特征：2024 年数据不完整（或全年为 0）、或同月绝对量过小，
+      导致季节系数无法用两年均值，只能取最近可用年份甚至退化为 1.0。
+      其中 <b>B0D8RXKPS1 / B0D8BCMJLR / B08D96QQY9</b> 为典型「10 月独占全年大半」的强季节性品
+      （10 月系数 7.8~9.2），11~1 月系数低至 0.04~0.20——这类样本的预估对系数选择极度敏感，<b>不建议直接用于排产</b>。
+      另有 <b>B0DT4B9JV3 / B0D8RXKPS1</b> 因去季基准脱离当年常态水平触发<b>水平一致性校验</b>（水平比 2.01 / 2.16）——
+      其中 B0D8RXKPS1 动量比 2.91 &gt; 1.10 触发<b>动量豁免</b>（近期真实回升），封顶被放行；B0DT4B9JV3 动量比 0.24，照常封顶。
+      两者的 1 月季节系数置信为「不足」（2024/2025 年 1 月均无销量、算不出系数），满足「去年同月 &lt; 100 件 且 累计同比 ≤ 2.0」，
+      故 1 月改用<b>系数退化兜底</b>（去年同月量 × 累计同比）：B0DT4B9JV3 的 1 月由 359 件修正为 <b>103 件</b>、合计由 960 件修正为 <b>704 件</b>（+227.5% → +140.3%）；
+      B0D8RXKPS1 的 1 月由 154 件修正为 <b>1 件</b>（去年同月仅 2 件 × 累计同比 0.62），合计由 178 件修正为 <b>25 件</b>——该月去年同月基数过小，兜底值参考性弱，需标注。
+    </p>
+  </div>
+
+  <h2>六、口径校验：模型基准 vs 去年同期实际</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>ASIN</th><th>模型基准合计</th><th>去年同期合计</th><th>偏差</th><th>系数置信</th><th>系数口径</th><th>校准</th><th>前置闸门</th><th>水平一致性</th><th>校准状态</th></tr></thead>
+      <tbody><tr><td><b>B0D7ZG7XPW</b></td><td>167</td><td>68</td><td class="up">+144.9%</td><td>中/低</td><td>形态漂移（偏离 0.84）→ 最近一年口径</td><td>1.00</td><td class="note">正常去季节化</td><td class="note">水平比 4.66 &gt; 1.50，但动量比 1.49 &gt; 1.10 → 动量豁免，上界放宽到 3×累计水平 6.66 件/天</td><td class="note">未做关键词校准</td></tr><tr><td><b>B0DT4B9JV3</b></td><td>704</td><td>293</td><td class="up">+140.3%</td><td>中/低</td><td>两年均值口径</td><td>1.00</td><td class="note">正常去季节化</td><td class="note">水平一致性封顶（水平比 2.01 &gt; 1.50，动量比 0.24 ≤ 1.10）→ 封顶在 1.5×累计水平 11.57 件/天</td><td class="note">未做关键词校准</td></tr><tr><td><b>B0882T9BZ8</b></td><td>1,757</td><td>982</td><td class="up">+78.9%</td><td>高</td><td>形态漂移（偏离 0.45）→ 最近一年口径</td><td>1.20</td><td class="note">正常去季节化</td><td class="note">水平一致性封顶（水平比 1.64 &gt; 1.50，动量比 0.77 ≤ 1.10）→ 封顶在 1.5×累计水平 15.94 件/天</td><td class="note">关键词已校准</td></tr><tr><td><b>B07ZJ75K8C</b></td><td>227</td><td>521</td><td class="down">-56.5%</td><td>中/低</td><td>形态漂移（偏离 0.98）→ 最近一年口径</td><td>1.08</td><td class="note">正常去季节化</td><td class="note">水平一致性正常（水平比 0.54）</td><td class="note">关键词已校准</td></tr><tr><td><b>B0D46V9DNP</b></td><td>703</td><td>519</td><td class="up">+35.4%</td><td>中/低</td><td>形态漂移（偏离 1.57）→ 最近一年口径</td><td>1.00</td><td class="note">闸门触发：关闭去季节化</td><td class="note">水平比 1.57 &gt; 1.50，但动量比 1.17 &gt; 1.10 → 动量豁免，上界放宽到 3×累计水平 21.41 件/天</td><td class="note">未做关键词校准</td></tr><tr><td><b>B08D96QQY9</b></td><td>12</td><td>18</td><td class="down">-31.3%</td><td>高</td><td>两年均值口径</td><td>1.00</td><td class="note">正常去季节化</td><td class="note">水平一致性正常（水平比 0.69）</td><td class="note">未做关键词校准</td></tr><tr><td><b>B0D8RXKPS1</b></td><td>25</td><td>20</td><td class="up">+27.0%</td><td>中/低</td><td>两年均值口径</td><td>1.00</td><td class="note">正常去季节化</td><td class="note">水平比 2.16 &gt; 1.50，但动量比 2.91 &gt; 1.10 → 动量豁免，上界放宽到 3×累计水平 6.92 件/天</td><td class="note">未做关键词校准</td></tr><tr><td><b>B08X6SMJ47</b></td><td>981</td><td>795</td><td class="up">+23.4%</td><td>高</td><td>形态漂移（偏离 0.80）→ 最近一年口径</td><td>0.92</td><td class="note">正常去季节化</td><td class="note">水平一致性封顶（水平比 3.31 &gt; 1.50，动量比 0.90 ≤ 1.10）→ 封顶在 1.5×累计水平 31.72 件/天</td><td class="note">关键词已校准</td></tr><tr><td><b>B0D8BCMJLR</b></td><td>33</td><td>27</td><td class="up">+20.7%</td><td>中/低</td><td>两年均值口径</td><td>1.00</td><td class="note">正常去季节化</td><td class="note">水平一致性正常（水平比 1.05）</td><td class="note">未做关键词校准</td></tr><tr><td><b>B08H24W1TT</b></td><td>3,853</td><td>3,748</td><td class="up">+2.8%</td><td>高</td><td>形态漂移（偏离 0.76）→ 最近一年口径</td><td>0.93</td><td class="note">系统性爬坡月，闸门豁免</td><td class="note">水平一致性正常（水平比 0.50）</td><td class="note">关键词已校准</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <p style="margin:0 0 6px"><b>水平一致性软上限 前后对照</b>（去季基准 vs 累计口径水平；上界 = k×累计水平，豁免样本 k=3、其余 k=1.5；合计 11~1 月）</p>
+    <table>
+      <thead><tr><th>ASIN</th><th>水平闸</th><th>去季基准<br>(件/天)</th><th>累计口径水平<br>(件/天)</th><th>水平比</th><th>上界 k×水平<br>(件/天)</th>
+      <th>不封顶合计<br>(件)</th><th>封顶后合计<br>(件)</th><th>去年同期<br>(件)</th><th>不封顶同比</th><th>封顶后同比</th></tr></thead>
+      <tbody><tr><td><b>B0D7ZG7XPW</b></td><td><span class="tag g">豁免×3</span></td><td>10.35</td><td>2.22</td><td>4.66</td><td>6.66</td><td>259</td><td><b>167</b></td><td>68</td><td class="up">+280.7%</td><td class="up">+144.9%</td></tr><tr><td><b>B08X6SMJ47</b></td><td><span class="tag a">封顶×1.5</span></td><td>70.01</td><td>21.15</td><td>3.31</td><td>31.72</td><td>2,164</td><td><b>981</b></td><td>795</td><td class="up">+172.2%</td><td class="up">+23.4%</td></tr><tr><td><b>B0D8RXKPS1</b></td><td><span class="tag g">豁免×3</span></td><td>4.97</td><td>2.31</td><td>2.16</td><td>6.92</td><td>178</td><td><b>25</b></td><td>20</td><td class="up">+791.8%</td><td class="up">+27.0%</td></tr><tr><td><b>B0DT4B9JV3</b></td><td><span class="tag a">封顶×1.5</span></td><td>15.49</td><td>7.71</td><td>2.01</td><td>11.57</td><td>1,285</td><td><b>704</b></td><td>293</td><td class="up">+338.5%</td><td class="up">+140.3%</td></tr><tr><td><b>B0882T9BZ8</b></td><td><span class="tag a">封顶×1.5</span></td><td>17.44</td><td>10.62</td><td>1.64</td><td>15.94</td><td>1,923</td><td><b>1,757</b></td><td>982</td><td class="up">+95.8%</td><td class="up">+78.9%</td></tr><tr><td><b>B0D46V9DNP</b></td><td><span class="tag g">豁免×3</span></td><td>11.24</td><td>7.14</td><td>1.57</td><td>21.41</td><td>703</td><td><b>703</b></td><td>519</td><td class="up">+35.4%</td><td class="up">+35.4%</td></tr><tr><td><b>B0D8BCMJLR</b></td><td><span class="tag g">正常</span></td><td>5.39</td><td>5.15</td><td>1.05</td><td>7.73</td><td>33</td><td><b>33</b></td><td>27</td><td class="up">+20.7%</td><td class="up">+20.7%</td></tr><tr><td><b>B08D96QQY9</b></td><td><span class="tag g">正常</span></td><td>0.95</td><td>1.37</td><td>0.69</td><td>2.05</td><td>12</td><td><b>12</b></td><td>18</td><td class="down">-31.3%</td><td class="down">-31.3%</td></tr><tr><td><b>B07ZJ75K8C</b></td><td><span class="tag g">正常</span></td><td>3.18</td><td>5.92</td><td>0.54</td><td>8.89</td><td>227</td><td><b>227</b></td><td>521</td><td class="down">-56.5%</td><td class="down">-56.5%</td></tr><tr><td><b>B08H24W1TT</b></td><td><span class="tag g">正常</span></td><td>12.12</td><td>24.40</td><td>0.50</td><td>36.61</td><td>3,853</td><td><b>3,853</b></td><td>3,748</td><td class="up">+2.8%</td><td class="up">+2.8%</td></tr><tr style="background:#f7f9fc"><td><b>合计</b></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>10,636</td><td><b>8,461</b></td><td>6,991</td><td class="up">+52.1%</td><td class="up">+21.0%</td></tr></tbody>
+    </table>
+    <p class="note" style="margin-top:10px">
+      <b>累计口径水平 = 去年全年日均 × 当年 1~9 月累计同比</b>，是「用整年累计量算出的当年常态日均」，不受当月单点波动影响。
+      <b>水平比 = 去季基准 ÷ 累计口径水平 &gt; 1.50</b> 时判定基准脱离当年常态水平、属高估，<b>封顶在 k×累计口径水平</b>（不做硬替换）：
+      动量比 ≤ 1.10 取 <b>k=1.5</b>；动量比 &gt; 1.10（近期真实回升）<b>豁免</b>、取 <b>k=3.0</b>。
+      该规则<b>单向</b>：只拦高估，不拦低估（水平比 ≤ 1.50 含 &lt; 1 均照常采用去季基准）。
+      10 样本合计由不封顶的 <b>10,636 件（+52.1%）</b> 修正为 <b>8,461 件（+21.0%）</b>；
+      作为对照，旧「硬替换为累计水平」口径为 <b>7,174 件（+2.6%）</b>——软上限把被压掉的真实爬坡动量还回来了一部分。
+    </p>
+  </div>
+
+  <div class="card">
+    <p style="margin:0 0 6px"><b>同比拆解：水平因子 × 校准系数</b>（净因子 − 1 ≈ 对去年同月同比）</p>
+    <table>
+      <thead><tr><th>ASIN</th><th>水平闸</th><th>采用基准<br>(件/天)</th><th>去年全年日均<br>(件/天)</th>
+      <th>水平因子</th><th>校准系数</th><th>净因子 − 1</th><th>实际同比<br>(11~1月)</th></tr></thead>
+      <tbody><tr><td><b>B0D7ZG7XPW</b></td><td><span class="tag a">水平封顶</span></td><td>6.66</td><td>2.96</td><td>2.251</td><td>1.00</td><td class="up">+125.1%</td><td class="up">+144.9%</td></tr><tr><td><b>B08X6SMJ47</b></td><td><span class="tag a">水平封顶</span></td><td>31.72</td><td>30.77</td><td>1.031</td><td>0.92</td><td class="down">-5.2%</td><td class="up">+23.4%</td></tr><tr><td><b>B0D8RXKPS1</b></td><td><span class="tag a">水平封顶</span></td><td>4.97</td><td>3.71</td><td>1.342</td><td>1.00</td><td class="up">+34.2%</td><td class="up">+27.0%</td></tr><tr><td><b>B0DT4B9JV3</b></td><td><span class="tag a">水平封顶</span></td><td>11.57</td><td>4.48</td><td>2.579</td><td>1.00</td><td class="up">+157.9%</td><td class="up">+140.3%</td></tr><tr><td><b>B0882T9BZ8</b></td><td><span class="tag a">水平封顶</span></td><td>15.94</td><td>11.67</td><td>1.366</td><td>1.20</td><td class="up">+63.9%</td><td class="up">+78.9%</td></tr><tr><td><b>B0D46V9DNP</b></td><td><span class="tag a">水平封顶</span></td><td>11.24</td><td>15.18</td><td>0.740</td><td>1.00</td><td class="down">-26.0%</td><td class="up">+35.4%</td></tr><tr><td><b>B0D8BCMJLR</b></td><td><span class="note">—</span></td><td>5.39</td><td>5.29</td><td>1.019</td><td>1.00</td><td class="up">+1.9%</td><td class="up">+20.7%</td></tr><tr><td><b>B08D96QQY9</b></td><td><span class="note">—</span></td><td>0.95</td><td>2.82</td><td>0.336</td><td>1.00</td><td class="down">-66.4%</td><td class="down">-31.3%</td></tr><tr><td><b>B07ZJ75K8C</b></td><td><span class="note">—</span></td><td>3.18</td><td>6.19</td><td>0.513</td><td>1.08</td><td class="down">-44.5%</td><td class="down">-56.5%</td></tr><tr><td><b>B08H24W1TT</b></td><td><span class="note">—</span></td><td>12.12</td><td>10.88</td><td>1.114</td><td>0.93</td><td class="up">+3.6%</td><td class="up">+2.8%</td></tr></tbody>
+    </table>
+    <p class="note" style="margin-top:10px">
+      <b>水平因子 = 采用基准 ÷ 去年全年日均</b>；水平闸<b>封顶/豁免</b>时，采用基准 = k×累计水平 = k×(去年全年日均 × 当年累计同比)，
+      故水平因子 = <b>k × 当年 1~9 月累计同比</b>（k 通常 1.5；动量豁免样本为 3.0——这正是软上限与硬替换的差别）。
+      <b>净因子 = 水平因子 × 校准系数</b>，净因子 − 1 即该品「当年水平 + 关键词」两层对同比的贡献。
+      <br><b>为何「净因子 − 1」与「实际同比」可能不等：</b>净因子只反映水平与校准两层，而实际同比还含<b>季节系数差</b>与<b>基数年差异</b>。
+      11/12 月的去年同期是 <b>2025</b> 同月，1 月的去年同期是 <b>2026</b> 同月——基数年不同。
+      以 B08X6SMJ47 为例：封顶后水平因子 1.031（= 1.5 × 当年累计同比 0.687）× 校准 0.92 = 净因子 0.949 → 对 2025 同月 −5.1%；
+      而 1 月比的是 2026-01（397 件），故合计显示 +23.4%。若统一对 2025 同月比，则会得到更负的同比。
+      <br><b>四口径对照（以 B08X6SMJ47 为例）：</b>
+      A 去季节化、不封顶 <b>2,164 件（+172.2%）</b> →
+      B 旧「硬替换为累计水平」<b>654 件（−17.8%）</b> →
+      C 完全不去季节化、直接用近期读数（基础日销 16.95）<b>524 件（−34.1%）</b> →
+      D <b>本轮软上限 k=1.5</b> <b>981 件（+23.4%）</b>。
+      软上限把基准从硬替换的 21.15 件/天提到 31.72 件/天（= 1.5×累计水平），既高于近期实际读数 16.95，也未放任 70.01 的极端高估。
+    </p>
+  </div>
+
+  <div class="callout g">
+    <b>① 分歧最大的 B08X6SMJ47（track spikes）由<b>水平一致性软上限</b>修正：由 2,164 件（+172%）封顶到 981 件（+23%）。</b>
+    该样本两年 10/11/12 月系数相对偏离 0.59 / 0.65 / 0.80，判定<b>形态漂移</b>，整套改用 2025 单年口径（当月分母 0.242），
+    去季节化把基准抬到 <b>70.01 件/天</b>（为 2025 全年日均 30.8 的 2.3 倍）。
+    前置闸门之所以未触发，是因为一致性比取「当月 ÷ 上月」= 0.77（9 月同样高），未能识别当月相对全年位置的抬升。
+    但水平一致性校验识别出去季基准 70.01 ÷ 累计口径水平 21.15 = <b>水平比 3.31 &gt; 1.50</b>——当年 1~9 月累计同比仅 <b>0.69</b>，
+    去季基准明显脱离当年常态水平 → 本应封顶；但动量比 0.90 ≤ 1.10（近期未回升，短窗甚至低于中窗），<b>不满足动量豁免</b>，
+    故 <b>封顶在 1.5×21.15 = 31.72 件/天</b>（旧硬替换口径为 21.15 件/天），11~1 月由 2,164 件修正为 981 件。
+    <span class="tag g">由「水平一致性软上限」修复</span>
+  </div>
+
+  <div class="callout g">
+    <b>② B08H24W1TT（圣诞烫画贴片）：豁免 + 口径同源两处修正后，基准回到 3,853 件，与去年同期 3,748 件基本持平（+2.8%）。</b>
+    该样本当月系数 0.320、一致性比 1.10，本应触发闸门；但<b>历史同月爬坡比 = 1.82</b>
+    （2025 年 10/9 日均比 1.56、2024 年 2.09，历年 10 月均在从 9 月爬坡），判定为<b>系统性爬坡月，闸门豁免</b>（此步把基准由 1,179 提到 2,286）。
+    同时其 11/12 月系数两年相对偏离 0.55 / 0.60（2025 峰值月由 11 月位移到 12 月），判定<b>形态漂移</b>，改用 2025 单年口径
+    （12 月系数由均值 5.89 回到 2025 的 7.65，11 月由 4.72 回到 3.41）——两处修正叠加后 3,853 件。
+    若沿用「关闭去季节化 + 两年均值」，会得到 −39% 的系统性低估。
+    <span class="tag g">已由「系统性爬坡月豁免 + 形态漂移口径同源」两条规则修复</span>
+  </div>
+
+  <div class="callout a">
+    <b>③ 动量向下的样本需先排查原因再采信。</b>
+    <b>B0DT4B9JV3</b>（动量 0.24，可售天数仅 7 天）、<b>B0882T9BZ8</b>（0.77）、<b>B07ZJ75K8C</b>（0.78）短窗口显著低于中窗口。
+    其中 B0DT4B9JV3 明显受断货抑制（可售 7 天、预计 2027-02-11 才到货），其基础日销 7.13 件/天含 7–8 月峰值，
+    <b>高于当前实际 3.07 件/天 2.3 倍</b>，预估偏高的可能性大，应按保守情景排产
+    （水平一致性软上限已将其去季基准由 15.49 封顶到 11.57、系数退化兜底又把 1 月由 359 件压回 103 件，
+    11~1 月合计由 960 件（+228%）修正为 704 件（+140%），但相对去年同期仍翻倍有余，仍需谨慎）。
+  </div>
+
+  <div class="callout b">
+    <b>④ 关键词校准方向：</b>4 个已校准样本中，<b>B0882T9BZ8（拼豆板）加权近期同比 +32.1%</b>，
+    核心词 perler beads boards / fuse beads 均为 core 且加速增长，校准上浮至 <b>1.20</b>；
+    另 3 个（B08X6SMJ47 −8.5%、B08H24W1TT −6.7%、B07ZJ75K8C +8.1%）校准在 0.92~1.08 之间，基本中性。
+  </div>
+
+  <div class="callout a">
+    <b>⑤ 形态漂移口径（本轮沿用）：</b>10 个样本中 <b>6 个</b>判定形态漂移并整套改用最近一年（2025）系数，
+    两年同月系数相对偏离分别为 B08X6SMJ47 0.80、B08H24W1TT 0.76、B0D46V9DNP 1.57、B0882T9BZ8 0.45、B07ZJ75K8C 0.98、B0D7ZG7XPW 0.84（均 &gt; 0.30）。
+    关键约束是<b>口径同源</b>：去季节化的当月分母与目标月分子必须来自同一口径，混用两套年份等于换了一个「全年常态」基准，结果既不是最近一年形态、也不是均值形态。
+    其余 4 个（B0DT4B9JV3、B0D8RXKPS1、B0D8BCMJLR、B08D96QQY9）因 2024 年数据不足或偏离未达阈值，仍用两年均值或单年退化。
+  </div>
+
+  <div class="callout a">
+    <b>⑥ 水平一致性软上限 + 动量豁免（本轮由「硬替换」升级为「带 k 的封顶」，k=1.5 / 豁免 3.0）：</b>10 个样本中 <b>6 个</b>触发水平比 &gt;1.50——
+    B0D7ZG7XPW 4.66、B08X6SMJ47 3.31、B0D8RXKPS1 2.16、B0DT4B9JV3 2.01、B0882T9BZ8 1.64、B0D46V9DNP 1.57。
+    成因分两类：B08X6SMJ47 / B0D46V9DNP / B0DT4B9JV3 / B0882T9BZ8 属「当月历史季节系数偏低（0.242~0.481）」——÷ 小系数把去季基准放大；
+    B0D7ZG7XPW / B0D8RXKPS1 属「当年 1~9 月累计同比低（0.75 / 0.62）压低了当年常态水平」——分子正常、分母偏小。两类叠加当月动量偏高，去季基准因而远高于当年常态水平。
+    <b>动量豁免（本轮新增）：</b>封顶前先看动量比——其中 <b>3 个</b>（B0D46V9DNP 1.17、B0D7ZG7XPW 1.49、B0D8RXKPS1 2.91）近期确实在回升，
+    <b>放行封顶</b>、改受 3×累计水平约束；另 3 个（B08X6SMJ47 0.90、B0DT4B9JV3 0.24、B0882T9BZ8 0.77）近期在跌，照常封顶在 1.5×累计水平。
+    Q4 重季节品不受影响（B08H24W1TT 0.50、B07ZJ75K8C 0.54），故该规则不误伤旺季品。
+    <b>为何不再硬替换：</b>77 个历史样本窗口的回测显示，触发样本的实际去季水平中位数为累计水平的 <b>1.19 倍</b>
+    （剔除塌方样本后 <b>1.48 倍</b>），硬替换（k=1.0）会系统性低估（触发样本中位误差 −15.6%）。
+    取 k=1.5 + 动量豁免后合计由不封顶的 <b>10,636 件（+52.1%）</b>修正为 <b>8,461 件（+21.0%）</b>，
+    旧硬替换口径则为 7,174 件（+2.6%）。
+    <span class="tag g">拦住「脱离当年常态水平」的极端高估，同时把真实回升样本从封顶线放行</span>
+  </div>
+
+  <div class="callout a">
+    <b>⑦ 系数退化兜底（本轮新增）：</b>本轮 <b>2 个</b>目标月触发——B0DT4B9JV3 与 B0D8RXKPS1 的 1 月。
+    两者 2024/2025 年 1 月销量均为 0（未上市），季节系数算不出 → 置信「不足」→ 公式只能按系数 1.0（年均水平）估计，
+    把 1 月当成平季，B0DT4B9JV3 估出 359 件、B0D8RXKPS1 估出 154 件。
+    因两者均满足「去年同月 &lt; 100 件 且 当年累计同比 ≤ 2.0」，改用兜底值 = 去年同月销量 × 当年累计同比：
+    B0DT4B9JV3 → 60 × 1.72 ≈ <b>103 件</b>（合计 960 → <b>704 件</b>）；
+    B0D8RXKPS1 → 2 × 0.62 ≈ <b>1 件</b>（合计 178 → <b>25 件</b>）。
+    10 样本合计由仅软上限的 <b>9,575 件（+37.0%）</b>进一步修正为 <b>8,461 件（+21.0%）</b>。
+    <b>启用条件的意义：</b>兜底是两个数相乘，若去年同月基数大（≥100 件）且当年同比极高（&gt;2.0），会推向极端（回测中曾出现 596 × 3.45 ≈ 2,578 件），
+    故只对「小基数 × 温和同比」启用；77 窗口回测显示该条件把 MAPE 由 417.9% 压到 <b>63.3%</b>、RMSE 由 1,441.8% 压到 <b>91.1%</b>，改动样本 13 个。
+    <span class="tag g">修复「无历史系数月按年均水平高估」</span>
+  </div>
+
+  <h2>七、库存与备货</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>ASIN</th><th>当前库存<br>(可售+待调仓+入库中)</th><th>保守合计</th><th>基准合计</th><th>乐观合计</th>
+      <th>按基准可覆盖<br>(天)</th><th>库存状态</th><th>建议补货量<br>(基准−库存+15%安全库存)</th><th>可售天数 / 预计断货日</th></tr></thead>
+      <tbody><tr><td><b>B08X6SMJ47</b></td><td>1,365</td><td>834</td><td>981</td><td>1,226</td><td>127</td><td><span class="tag g">库存充足</span></td><td>—</td><td class="note">93 / 2027-01-03</td></tr><tr><td><b>B08H24W1TT</b></td><td>607</td><td>3,275</td><td>3,853</td><td>4,816</td><td>14</td><td><span class="tag r">断货风险</span></td><td>3,824</td><td class="note">191 / 1970-01-01</td></tr><tr><td><b>B0D46V9DNP</b></td><td>489</td><td>597</td><td>703</td><td>878</td><td>63</td><td><span class="tag r">断货风险</span></td><td>319</td><td class="note">45 / 2027-01-27</td></tr><tr><td><b>B0DT4B9JV3</b></td><td>143</td><td>598</td><td>704</td><td>880</td><td>18</td><td><span class="tag r">断货风险</span></td><td>667</td><td class="note">7 / 2027-02-11</td></tr><tr><td><b>B0882T9BZ8</b></td><td>917</td><td>1,493</td><td>1,757</td><td>2,196</td><td>47</td><td><span class="tag r">断货风险</span></td><td>1,104</td><td class="note">92 / 2027-02-15</td></tr><tr><td><b>B07ZJ75K8C</b></td><td>313</td><td>193</td><td>227</td><td>284</td><td>126</td><td><span class="tag g">库存充足</span></td><td>—</td><td class="note">48 / 2027-01-15</td></tr><tr><td><b>B0D7ZG7XPW</b></td><td>41</td><td>142</td><td>167</td><td>208</td><td>22</td><td><span class="tag r">断货风险</span></td><td>151</td><td class="note">6 / 2026-10-17</td></tr><tr><td><b>B0D8RXKPS1</b></td><td>604</td><td>22</td><td>25</td><td>32</td><td>2164</td><td><span class="tag g">库存充足</span></td><td>—</td><td class="note">59 / 2026-10-27</td></tr><tr><td><b>B0D8BCMJLR</b></td><td>808</td><td>28</td><td>33</td><td>41</td><td>2256</td><td><span class="tag g">库存充足</span></td><td>—</td><td class="note">53 / 2026-10-31</td></tr><tr><td><b>B08D96QQY9</b></td><td>313</td><td>11</td><td>12</td><td>15</td><td>2305</td><td><span class="tag g">库存充足</span></td><td>—</td><td class="note">104 / 2026-11-13</td></tr></tbody>
+    </table>
+    <p class="note" style="margin-top:10px">
+      库存口径仅计 <code>afn_fulfillable_quantity + reserved_fc_transfers + afn_inbound_receiving_quantity</code>，
+      不含预留与客单占用。补货量未含生产周期与头程时间，需按各产品实际参数倒推最晚下单日。
+    </p>
+  </div>
+
+  <h2>八、结论与建议</h2>
+  <div class="card">
+    <ul>
+      <li><b>可直接采信（高置信 + 校准已做）：</b>
+        <b>B0882T9BZ8</b> 基准 <b>1,757 件</b>（同比 +78.9%，关键词 +32% 支撑）；
+        <b>B08H24W1TT</b> 豁免 + 形态漂移口径同源后基准 <b>3,853 件</b>
+        （同比 +2.8%，与去年同期基本持平，回归圣诞品合理形态）；
+        <b>B08X6SMJ47</b> 经<b>水平一致性软上限</b>封顶后基准 <b>981 件</b>
+        （同比 +23.4%；不封顶为 2,164 件（+172%）、旧硬替换口径为 654 件（−18%），
+        本轮封顶在 1.5×累计水平 = 31.72 件/天，保留真实爬坡动量），
+        可采信，但建议跟踪 11 月实际动销验证。</li>
+      <li><b>需先解决断货：</b>B0DT4B9JV3（可售 7 天）、B0D7ZG7XPW（可售 6 天、预计 10-17 断货）为最高优先级，
+        断货未解前的销量数据不可用于预估校准。</li>
+      <li><b>不建议直接排产（低置信）：</b>B0D8RXKPS1 / B0D8BCMJLR / B08D96QQY9 三个万圣节型强季节品，
+        季节系数依赖单年且绝对值极小（11~1 月仅 1~17 件/月），预估仅供参考。</li>
+      <li><b>口径层面：</b>本轮前置闸门触发 1 次、豁免 1 次，方向均正确（触发为「历史淡季、实际不淡」）。
+        此前暴露的五类系统性问题均已修复：
+        ①「旺季前低位月份触发闸门、反向压低旺季」由<b>「系统性爬坡月豁免」</b>修复（B08H24W1TT 爬坡比 1.82 → 豁免，1,179 → 2,286）；
+        ②「两年形态漂移被均值削峰填谷」由<b>「形态漂移口径同源」</b>修复（6 个样本改用最近一年口径，B08H24W1TT 进一步 2,286 → 3,853）；
+        ③「去季基准脱离当年常态水平的高估」（含「当月与上月同高」时一致性比失效的盲区）由<b>「水平一致性软上限」</b>修复
+        （6 个样本触发水平比 &gt;1.50，B08X6SMJ47 由 2,164 → 981；旧硬替换口径 654 件会系统性低估真实爬坡）；
+        ④「近期销量回升被 1.5× 封顶线误伤」由<b>「动量豁免（&gt;1.10 放行、3×上限兜底）」</b>修复
+        （3 个回升样本放行，B0D46V9DNP 11 月由 124 → 130 件，而近期在跌的 3 个样本护栏完好）；
+        ⑤「目标月无历史系数时按年均水平（系数 1.0）高估」由<b>「系数退化兜底」</b>修复
+        （2 个目标月改用「去年同月量 × 累计同比」，B0DT4B9JV3 的 1 月由 359 → 103 件、合计 960 → 704 件）。
+        10 样本合计：不封顶且不兜底 <b>10,636 件（+52.1%）</b> → 仅软上限 <b>9,575 件（+37.0%）</b>
+        → 软上限 + 兜底 <b>8,461 件（+21.0%）</b>，落在不封顶与硬替换之间。</li>
+    </ul>
+  </div>
+
+  <p class="note" style="margin-top:22px">
+    数据来源：领星 ERP（A-US sid 4651；月度销量序列、逐日明细、聚合窗口、FBA 库存）·
+    SIF MCP（<code>market_get_asin_keyword_signals</code> 流量结构、<code>market_get_keyword_demand</code> 近期同比与季节性）·
+    方法论：asin-sales-forecast 三维加权预测模型（2026-10-17 短窗加权 + 动量豁免 + 形态漂移 + 水平一致性软上限 + 系数退化兜底口径版）。未做盛途内部计划交叉验证（未提供 MSKU/产品编号）。
+  </p>
+
+</div>
+</body>
+</html>

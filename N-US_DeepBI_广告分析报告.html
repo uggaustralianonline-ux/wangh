@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N-US 店铺 DeepBI 广告分析报告（最近14天）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #333; padding: 24px; }
+.header { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 32px 40px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.header h1 { font-size: 26px; margin-bottom: 8px; }
+.header .subtitle { font-size: 14px; opacity: 0.85; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.kpi-card { background: white; padding: 24px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; transition: transform 0.2s; }
+.kpi-card:hover { transform: translateY(-3px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.kpi-value { font-size: 28px; font-weight: 700; margin-top: 8px; }
+.kpi-label { font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-card.green .kpi-value { color: #2e7d32; }
+.kpi-card.red .kpi-value { color: #c62828; }
+.kpi-card.blue .kpi-value { color: #1565c0; }
+.kpi-card.orange .kpi-value { color: #e65100; }
+.section { background: white; border-radius: 10px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.section h2 { font-size: 18px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #e0e0e0; color: #1a73e8; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #f5f7fa; padding: 12px 10px; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #e0e0e0; white-space: nowrap; }
+th.num { text-align: right; }
+td { padding: 10px; border-bottom: 1px solid #f0f0f0; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr:hover { background: #f9f9f9; }
+.badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-enabled { background: #e8f5e9; color: #2e7d32; }
+.badge-paused { background: #fff3e0; color: #e65100; }
+.badge-sp { background: #e3f2fd; color: #1565c0; }
+.chart-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+.chart-box { background: #fafbfc; border-radius: 8px; padding: 16px; }
+.chart-box h3 { font-size: 14px; color: #666; margin-bottom: 8px; }
+.chart { height: 320px; }
+.acos-good { color: #2e7d32; font-weight: 600; }
+.acos-warn { color: #f57c00; font-weight: 600; }
+.acos-bad { color: #c62828; font-weight: 600; }
+.note { background: #fffde7; border-left: 4px solid #fbc02d; padding: 12px 16px; margin-top: 12px; border-radius: 4px; font-size: 13px; }
+.summary-bar { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.summary-pill { background: #e8f0fe; color: #1a73e8; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; }
+.footer { text-align: center; color: #999; font-size: 12px; margin-top: 24px; padding: 16px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>N-US 店铺 DeepBI 广告分析报告</h1>
+    <div class="subtitle">报告周期：2026-08-07 至 2026-08-20（最近14天） | 数据来源：领星 ERP MCP</div>
+</div>
+
+<div class="summary-bar">
+    <span class="summary-pill">DeepBI 广告活动：20 个</span>
+    <span class="summary-pill">启用中：15 个</span>
+    <span class="summary-pill">已暂停：5 个</span>
+    <span class="summary-pill">广告类型：SP（商品推广）</span>
+</div>
+
+<div class="kpi-grid">
+    <div class="kpi-card blue">
+        <div class="kpi-label">总花费</div>
+        <div class="kpi-value">$754.68</div>
+    </div>
+    <div class="kpi-card green">
+        <div class="kpi-label">广告销售额</div>
+        <div class="kpi-value">$2,597.02</div>
+    </div>
+    <div class="kpi-card green">
+        <div class="kpi-label">整体 ACOS</div>
+        <div class="kpi-value">29.06%</div>
+    </div>
+    <div class="kpi-card green">
+        <div class="kpi-label">整体 ROAS</div>
+        <div class="kpi-value">3.44</div>
+    </div>
+    <div class="kpi-card orange">
+        <div class="kpi-label">总点击数</div>
+        <div class="kpi-value">1,562</div>
+    </div>
+    <div class="kpi-card blue">
+        <div class="kpi-label">总曝光量</div>
+        <div class="kpi-value">194,821</div>
+    </div>
+    <div class="kpi-card green">
+        <div class="kpi-label">总订单数</div>
+        <div class="kpi-value">227</div>
+    </div>
+    <div class="kpi-card blue">
+        <div class="kpi-label">平均 CPC</div>
+        <div class="kpi-value">$0.48</div>
+    </div>
+    <div class="kpi-card orange">
+        <div class="kpi-label">平均 CTR</div>
+        <div class="kpi-value">0.80%</div>
+    </div>
+    <div class="kpi-card green">
+        <div class="kpi-label">平均 CVR</div>
+        <div class="kpi-value">14.53%</div>
+    </div>
+    <div class="kpi-card blue">
+        <div class="kpi-label">启用活动花费</div>
+        <div class="kpi-value">$629.48</div>
+    </div>
+    <div class="kpi-card orange">
+        <div class="kpi-label">暂停活动花费</div>
+        <div class="kpi-value">$125.20</div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>广告活动明细（按花费降序）</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>广告活动名称</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th class="num">花费</th>
+                <th class="num">销售额</th>
+                <th class="num">ACOS</th>
+                <th class="num">ROAS</th>
+                <th class="num">点击</th>
+                <th class="num">曝光</th>
+                <th class="num">订单</th>
+                <th class="num">CPC</th>
+                <th class="num">CTR</th>
+                <th class="num">CVR</th>
+            </tr>
+        </thead>
+        <tbody>
+<tr><td>1</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$55.26</td><td class="num">$185.62</td><td class="num acos-good">29.77%</td><td class="num">3.36</td><td class="num">101</td><td class="num">10,972</td><td class="num">14</td><td class="num">$0.55</td><td class="num">0.92%</td><td class="num">13.86%</td></tr><tr><td>2</td><td>DeepBI_0721_B0BNQ94T5W_cat_washing_bag</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$52.77</td><td class="num">$318.80</td><td class="num acos-good">16.55%</td><td class="num">6.04</td><td class="num">107</td><td class="num">11,273</td><td class="num">20</td><td class="num">$0.49</td><td class="num">0.95%</td><td class="num">18.69%</td></tr><tr><td>3</td><td>DeepBI_0502_B0GQSCVXC9_AUTO</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$47.75</td><td class="num">$199.80</td><td class="num acos-good">23.90%</td><td class="num">4.18</td><td class="num">119</td><td class="num">7,480</td><td class="num">19</td><td class="num">$0.40</td><td class="num">1.59%</td><td class="num">15.97%</td></tr><tr><td>4</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$47.19</td><td class="num">$169.53</td><td class="num acos-good">27.84%</td><td class="num">3.59</td><td class="num">89</td><td class="num">4,556</td><td class="num">16</td><td class="num">$0.53</td><td class="num">1.95%</td><td class="num">17.98%</td></tr><tr><td>5</td><td>DeepBI_0502_B09MVK6H4B_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$45.50</td><td class="num">$157.40</td><td class="num acos-good">28.91%</td><td class="num">3.46</td><td class="num">56</td><td class="num">18,234</td><td class="num">15</td><td class="num">$0.81</td><td class="num">0.31%</td><td class="num">26.79%</td></tr><tr><td>6</td><td>DeepBI_0514_B09MVK6H4B_ASIN</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$44.37</td><td class="num">$132.30</td><td class="num acos-warn">33.54%</td><td class="num">2.98</td><td class="num">51</td><td class="num">9,473</td><td class="num">12</td><td class="num">$0.87</td><td class="num">0.54%</td><td class="num">23.53%</td></tr><tr><td>7</td><td>DeepBI_0502_B0FNWMNV19_AUTO</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$42.56</td><td class="num">$243.63</td><td class="num acos-good">17.47%</td><td class="num">5.72</td><td class="num">104</td><td class="num">13,715</td><td class="num">23</td><td class="num">$0.41</td><td class="num">0.76%</td><td class="num">22.12%</td></tr><tr><td>8</td><td>DeepBI_0514_B0BRMYXQ3Z_ASIN</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$42.48</td><td class="num">$102.59</td><td class="num acos-warn">41.41%</td><td class="num">2.42</td><td class="num">84</td><td class="num">14,787</td><td class="num">10</td><td class="num">$0.51</td><td class="num">0.57%</td><td class="num">11.90%</td></tr><tr><td>9</td><td>DeepBI_0502_B0BX92G8FN_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$42.05</td><td class="num">$135.71</td><td class="num acos-warn">30.99%</td><td class="num">3.23</td><td class="num">79</td><td class="num">25,524</td><td class="num">16</td><td class="num">$0.53</td><td class="num">0.31%</td><td class="num">20.25%</td></tr><tr><td>10</td><td>DeepBI_0502_B0BJTRW361_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$41.95</td><td class="num">$97.77</td><td class="num acos-warn">42.91%</td><td class="num">2.33</td><td class="num">140</td><td class="num">12,111</td><td class="num">13</td><td class="num">$0.30</td><td class="num">1.16%</td><td class="num">9.29%</td></tr><tr><td>11</td><td>DeepBI_0502_B0DJ8V2RV7_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$41.70</td><td class="num">$141.85</td><td class="num acos-good">29.40%</td><td class="num">3.40</td><td class="num">86</td><td class="num">10,052</td><td class="num">13</td><td class="num">$0.48</td><td class="num">0.86%</td><td class="num">15.12%</td></tr><tr><td>12</td><td>DeepBI_0502_B0H7WZQXSQ_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$39.02</td><td class="num">$208.83</td><td class="num acos-good">18.69%</td><td class="num">5.35</td><td class="num">101</td><td class="num">7,793</td><td class="num">18</td><td class="num">$0.39</td><td class="num">1.30%</td><td class="num">17.82%</td></tr><tr><td>13</td><td>DeepBI_0502_B0H9LLJWN3_AUTO</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$34.55</td><td class="num">$169.45</td><td class="num acos-good">20.39%</td><td class="num">4.90</td><td class="num">109</td><td class="num">8,354</td><td class="num">12</td><td class="num">$0.32</td><td class="num">1.30%</td><td class="num">11.01%</td></tr><tr><td>14</td><td>DeepBI_0502_B0GTLSWBWH_AUTO</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$27.65</td><td class="num">$51.96</td><td class="num acos-bad">53.21%</td><td class="num">1.88</td><td class="num">63</td><td class="num">9,596</td><td class="num">4</td><td class="num">$0.44</td><td class="num">0.66%</td><td class="num">6.35%</td></tr><tr><td>15</td><td>DeepBI_0502_B0BRMYXQ3Z_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-paused">暂停</span></td><td class="num">$27.12</td><td class="num">$34.96</td><td class="num acos-bad">77.57%</td><td class="num">1.29</td><td class="num">49</td><td class="num">7,404</td><td class="num">4</td><td class="num">$0.55</td><td class="num">0.66%</td><td class="num">8.16%</td></tr><tr><td>16</td><td>DeepBI_0514_B0H7WZQXSQ_ASIN</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-paused">暂停</span></td><td class="num">$25.68</td><td class="num">$19.98</td><td class="num acos-bad">128.53%</td><td class="num">0.78</td><td class="num">32</td><td class="num">6,230</td><td class="num">2</td><td class="num">$0.80</td><td class="num">0.51%</td><td class="num">6.25%</td></tr><tr><td>17</td><td>DeepBI_0514_B0BNQ94T5W_ASIN</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-paused">暂停</span></td><td class="num">$24.80</td><td class="num">$46.97</td><td class="num acos-bad">52.80%</td><td class="num">1.89</td><td class="num">64</td><td class="num">5,365</td><td class="num">3</td><td class="num">$0.39</td><td class="num">1.19%</td><td class="num">4.69%</td></tr><tr><td>18</td><td>DeepBI_0721_B0BNQ94T5W_cat_wash_bag</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-enabled">启用</span></td><td class="num">$24.68</td><td class="num">$126.92</td><td class="num acos-good">19.45%</td><td class="num">5.14</td><td class="num">44</td><td class="num">1,758</td><td class="num">8</td><td class="num">$0.56</td><td class="num">2.50%</td><td class="num">18.18%</td></tr><tr><td>19</td><td>DeepBI_0502_B0H9LLJWN3_MANUAL</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-paused">暂停</span></td><td class="num">$24.07</td><td class="num">$36.97</td><td class="num acos-bad">65.11%</td><td class="num">1.54</td><td class="num">46</td><td class="num">5,597</td><td class="num">3</td><td class="num">$0.52</td><td class="num">0.82%</td><td class="num">6.52%</td></tr><tr><td>20</td><td>DeepBI_0514_B0CS6MQ7J2_ASIN</td><td><span class="badge badge-sp">SP</span></td><td><span class="badge badge-paused">暂停</span></td><td class="num">$23.53</td><td class="num">$15.98</td><td class="num acos-bad">147.25%</td><td class="num">0.68</td><td class="num">38</td><td class="num">4,547</td><td class="num">2</td><td class="num">$0.62</td><td class="num">0.84%</td><td class="num">5.26%</td></tr>
+<tr style="background: #e8f0fe; font-weight: 700;"><td></td><td>合计</td><td></td><td></td><td class="num">$754.68</td><td class="num">$2,597.02</td><td class="num">29.06%</td><td class="num">3.44</td><td class="num">1,562</td><td class="num">194,821</td><td class="num">227</td><td class="num">$0.48</td><td class="num">0.80%</td><td class="num">14.53%</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="chart-container">
+    <div class="section" style="margin-bottom:0;">
+        <h2>花费 vs 销售额（Top 10 活动）</h2>
+        <div class="chart-box">
+            <div id="chart_spend_sales" class="chart"></div>
+        </div>
+    </div>
+    <div class="section" style="margin-bottom:0;">
+        <h2>ACOS 对比（Top 10 活动）</h2>
+        <div class="chart-box">
+            <div id="chart_acos" class="chart"></div>
+        </div>
+    </div>
+</div>
+
+<div class="chart-container" style="margin-top: 24px;">
+    <div class="section" style="margin-bottom:0;">
+        <h2>花费占比分布</h2>
+        <div class="chart-box">
+            <div id="chart_pie" class="chart"></div>
+        </div>
+    </div>
+    <div class="section" style="margin-bottom:0;">
+        <h2>启用 vs 暂停对比</h2>
+        <div class="chart-box">
+            <div id="chart_state" class="chart"></div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>搜索词明细（Top 4 花费活动）</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>广告活动</th>
+                <th>搜索词</th>
+                <th class="num">花费</th>
+                <th class="num">销售额</th>
+                <th class="num">ACOS</th>
+                <th class="num">点击</th>
+                <th class="num">曝光</th>
+                <th class="num">订单</th>
+                <th class="num">CPC</th>
+                <th class="num">CTR</th>
+                <th class="num">CVR</th>
+                <th class="num">ROAS</th>
+            </tr>
+        </thead>
+        <tbody>
+<tr><td>1</td><td>DeepBI_0721_B0BNQ94T5W_cat_was</td><td>cat washing bag</td><td class="num">$49.33</td><td class="num">$318.80</td><td class="num acos-good">15.47%</td><td class="num">100</td><td class="num">8,560</td><td class="num">20</td><td class="num">$0.49</td><td class="num">1.17%</td><td class="num">20.00%</td><td class="num">6.46</td></tr><tr><td>2</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>magnetic name tags</td><td class="num">$3.93</td><td class="num">$19.98</td><td class="num acos-good">19.67%</td><td class="num">6</td><td class="num">115</td><td class="num">2</td><td class="num">$0.66</td><td class="num">5.22%</td><td class="num">33.33%</td><td class="num">5.08</td></tr><tr><td>3</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school ornaments for tree</td><td class="num">$3.60</td><td class="num">$47.36</td><td class="num acos-good">7.60%</td><td class="num">6</td><td class="num">157</td><td class="num">4</td><td class="num">$0.60</td><td class="num">3.82%</td><td class="num">66.67%</td><td class="num">13.16</td></tr><tr><td>4</td><td>DeepBI_0721_B0BNQ94T5W_cat_was</td><td>cat wash bag</td><td class="num">$2.49</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">5</td><td class="num">259</td><td class="num">0</td><td class="num">$0.50</td><td class="num">1.93%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>5</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school tree decorations</td><td class="num">$2.37</td><td class="num">$13.99</td><td class="num acos-good">16.94%</td><td class="num">4</td><td class="num">294</td><td class="num">1</td><td class="num">$0.59</td><td class="num">1.36%</td><td class="num">25.00%</td><td class="num">5.90</td></tr><tr><td>6</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>pencil ornaments</td><td class="num">$2.29</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">4</td><td class="num">93</td><td class="num">0</td><td class="num">$0.57</td><td class="num">4.30%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>7</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school ornaments for small tree</td><td class="num">$2.02</td><td class="num">$12.99</td><td class="num acos-good">15.55%</td><td class="num">3</td><td class="num">24</td><td class="num">1</td><td class="num">$0.67</td><td class="num">12.50%</td><td class="num">33.33%</td><td class="num">6.43</td></tr><tr><td>8</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>magnetic bus name tags</td><td class="num">$1.99</td><td class="num">$9.99</td><td class="num acos-good">19.92%</td><td class="num">3</td><td class="num">10</td><td class="num">1</td><td class="num">$0.66</td><td class="num">30.00%</td><td class="num">33.33%</td><td class="num">5.02</td></tr><tr><td>9</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school christmas tree decorations</td><td class="num">$1.83</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">3</td><td class="num">31</td><td class="num">0</td><td class="num">$0.61</td><td class="num">9.68%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>10</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school ornaments for tree</td><td class="num">$1.60</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">3</td><td class="num">94</td><td class="num">0</td><td class="num">$0.53</td><td class="num">3.19%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>11</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>felt apples</td><td class="num">$1.59</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">3</td><td class="num">24</td><td class="num">0</td><td class="num">$0.53</td><td class="num">12.50%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>12</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>school bus driver essentials</td><td class="num">$1.43</td><td class="num">$19.98</td><td class="num acos-good">7.16%</td><td class="num">3</td><td class="num">16</td><td class="num">1</td><td class="num">$0.48</td><td class="num">18.75%</td><td class="num">33.33%</td><td class="num">13.97</td></tr><tr><td>13</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>school bus magnetic name tags</td><td class="num">$1.28</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">25</td><td class="num">0</td><td class="num">$0.64</td><td class="num">8.00%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>14</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>school bus magnets for names</td><td class="num">$1.26</td><td class="num">$9.99</td><td class="num acos-good">12.61%</td><td class="num">2</td><td class="num">3</td><td class="num">1</td><td class="num">$0.63</td><td class="num">66.67%</td><td class="num">50.00%</td><td class="num">7.93</td></tr><tr><td>15</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>pencil ornament</td><td class="num">$1.22</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num">$0.61</td><td class="num">66.67%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>16</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school christmas tree ornaments</td><td class="num">$1.22</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">32</td><td class="num">0</td><td class="num">$0.61</td><td class="num">6.25%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>17</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school ornaments</td><td class="num">$1.22</td><td class="num">$13.99</td><td class="num acos-good">8.72%</td><td class="num">2</td><td class="num">39</td><td class="num">1</td><td class="num">$0.61</td><td class="num">5.13%</td><td class="num">50.00%</td><td class="num">11.47</td></tr><tr><td>18</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school tree ornaments</td><td class="num">$1.22</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">247</td><td class="num">0</td><td class="num">$0.61</td><td class="num">0.81%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>19</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>apple ornaments</td><td class="num">$1.22</td><td class="num">$12.99</td><td class="num acos-good">9.39%</td><td class="num">2</td><td class="num">88</td><td class="num">1</td><td class="num">$0.61</td><td class="num">2.27%</td><td class="num">50.00%</td><td class="num">10.65</td></tr><tr><td>20</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>bus decorations for school bus</td><td class="num">$1.22</td><td class="num">$9.99</td><td class="num acos-good">12.21%</td><td class="num">3</td><td class="num">7</td><td class="num">1</td><td class="num">$0.41</td><td class="num">42.86%</td><td class="num">33.33%</td><td class="num">8.19</td></tr><tr><td>21</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school ornaments for tree</td><td class="num">$1.20</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">16</td><td class="num">0</td><td class="num">$0.60</td><td class="num">12.50%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>22</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school tree ornaments</td><td class="num">$1.20</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">47</td><td class="num">0</td><td class="num">$0.60</td><td class="num">4.26%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>23</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>magnetic buses</td><td class="num">$1.16</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num">$0.58</td><td class="num">100.00%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>24</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school ornaments</td><td class="num">$1.14</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">10</td><td class="num">0</td><td class="num">$0.57</td><td class="num">20.00%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>25</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>back to school ornaments for tree</td><td class="num">$1.13</td><td class="num">$13.99</td><td class="num acos-good">8.08%</td><td class="num">2</td><td class="num">53</td><td class="num">1</td><td class="num">$0.57</td><td class="num">3.77%</td><td class="num">50.00%</td><td class="num">12.38</td></tr><tr><td>26</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>apple ornaments for tree</td><td class="num">$1.12</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">9</td><td class="num">0</td><td class="num">$0.56</td><td class="num">22.22%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>27</td><td>DeepBI_0502_B0GQSCVXC9_AUTO</td><td>b0gs9pp64s</td><td class="num">$1.06</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">15</td><td class="num">0</td><td class="num">$0.53</td><td class="num">13.33%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>28</td><td>DeepBI_0502_B0GQSCVXC9_AUTO</td><td>b0f3x9ytfs</td><td class="num">$1.06</td><td class="num">$19.98</td><td class="num acos-good">5.31%</td><td class="num">2</td><td class="num">55</td><td class="num">2</td><td class="num">$0.53</td><td class="num">3.64%</td><td class="num">100.00%</td><td class="num">18.85</td></tr><tr><td>29</td><td>DeepBI_0502_B0GQSCVXC9_AUTO</td><td>b0cf5mvxc5</td><td class="num">$1.04</td><td class="num">$19.98</td><td class="num acos-good">5.21%</td><td class="num">3</td><td class="num">7</td><td class="num">2</td><td class="num">$0.35</td><td class="num">42.86%</td><td class="num">66.67%</td><td class="num">19.21</td></tr><tr><td>30</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>school bus driver supplies</td><td class="num">$1.02</td><td class="num">$9.99</td><td class="num acos-good">10.21%</td><td class="num">2</td><td class="num">6</td><td class="num">1</td><td class="num">$0.51</td><td class="num">33.33%</td><td class="num">50.00%</td><td class="num">9.79</td></tr><tr><td>31</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>school bus name tag magnets</td><td class="num">$0.99</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">8</td><td class="num">0</td><td class="num">$0.50</td><td class="num">25.00%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>32</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>bus name tags for students</td><td class="num">$0.99</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">14</td><td class="num">0</td><td class="num">$0.50</td><td class="num">14.29%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>33</td><td>DeepBI_0502_B0GTLSWBWH_MANUAL</td><td>apple craft</td><td class="num">$0.96</td><td class="num">$32.76</td><td class="num acos-good">2.93%</td><td class="num">2</td><td class="num">4</td><td class="num">2</td><td class="num">$0.48</td><td class="num">50.00%</td><td class="num">100.00%</td><td class="num">34.13</td></tr><tr><td>34</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>bus seat labels</td><td class="num">$0.94</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">$0.94</td><td class="num">100.00%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>35</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>bus magnets for names</td><td class="num">$0.94</td><td class="num">$19.98</td><td class="num acos-good">4.70%</td><td class="num">2</td><td class="num">18</td><td class="num">2</td><td class="num">$0.47</td><td class="num">11.11%</td><td class="num">100.00%</td><td class="num">21.26</td></tr><tr><td>36</td><td>DeepBI_0502_B0GQSCVXC9_AUTO</td><td>bus tags</td><td class="num">$0.90</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">23</td><td class="num">0</td><td class="num">$0.45</td><td class="num">8.70%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>37</td><td>DeepBI_0502_B0GQSCVXC9_AUTO</td><td>bus magnets for names</td><td class="num">$0.90</td><td class="num">$9.99</td><td class="num acos-good">9.01%</td><td class="num">2</td><td class="num">16</td><td class="num">1</td><td class="num">$0.45</td><td class="num">12.50%</td><td class="num">50.00%</td><td class="num">11.10</td></tr><tr><td>38</td><td>DeepBI_0502_B0GQSCVXC9_AUTO</td><td>bus magnets for school bus</td><td class="num">$0.90</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">6</td><td class="num">0</td><td class="num">$0.45</td><td class="num">33.33%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>39</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>classroom name tags for desk</td><td class="num">$0.89</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">1</td><td class="num">26</td><td class="num">0</td><td class="num">$0.89</td><td class="num">3.85%</td><td class="num">0.00%</td><td class="num">0.00</td></tr><tr><td>40</td><td>DeepBI_0502_B0GQSCVXC9_MANUAL</td><td>big bus seating chart tags</td><td class="num">$0.87</td><td class="num">$0.00</td><td class="num acos-bad">无销售</td><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num">$0.44</td><td class="num">100.00%</td><td class="num">0.00%</td><td class="num">0.00</td></tr>
+        </tbody>
+    </table>
+    <div class="note">
+        搜索词数据覆盖 Top 4 花费广告活动，共 154 条搜索词记录。
+    </div>
+</div>
+
+<div class="section">
+    <h2>核心发现与建议</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+            <h3 style="color: #2e7d32; margin-bottom: 10px; font-size: 15px;">表现优秀</h3>
+            <ul style="list-style: none; font-size: 13px; line-height: 2;">
+<li>✅ DeepBI_0721_B0BNQ94T5W_cat_washing_bag：花费 $53，销售 $319，ACOS 16.6%</li><li>✅ DeepBI_0502_B0GQSCVXC9_AUTO：花费 $48，销售 $200，ACOS 23.9%</li><li>✅ DeepBI_0502_B0FNWMNV19_AUTO：花费 $43，销售 $244，ACOS 17.5%</li><li>✅ DeepBI_0502_B0H7WZQXSQ_MANUAL：花费 $39，销售 $209，ACOS 18.7%</li><li>✅ DeepBI_0502_B0H9LLJWN3_AUTO：花费 $35，销售 $169，ACOS 20.4%</li>
+            </ul>
+        </div>
+        <div>
+            <h3 style="color: #c62828; margin-bottom: 10px; font-size: 15px;">需要关注</h3>
+            <ul style="list-style: none; font-size: 13px; line-height: 2;">
+<li>⚠️ DeepBI_0502_B0GTLSWBWH_AUTO：花费 $28，销售 $52，ACOS 53.2%（enabled）</li><li>⚠️ DeepBI_0502_B0BRMYXQ3Z_MANUAL：花费 $27，销售 $35，ACOS 77.6%（paused）</li><li>⚠️ DeepBI_0514_B0H7WZQXSQ_ASIN：花费 $26，销售 $20，ACOS 128.5%（paused）</li><li>⚠️ DeepBI_0514_B0BNQ94T5W_ASIN：花费 $25，销售 $47，ACOS 52.8%（paused）</li><li>⚠️ DeepBI_0502_B0H9LLJWN3_MANUAL：花费 $24，销售 $37，ACOS 65.1%（paused）</li>
+            </ul>
+        </div>
+    </div>
+    <div class="note">
+        <strong>整体评价：</strong>DeepBI 广告活动整体 ACOS 为 29.06%，ROAS 为 3.44，整体表现良好。
+        共 15 个启用中活动花费 $629.48，贡献主要销售额；
+        5 个已暂停活动仍产生 $125.20 花费（归因于暂停前的点击归因）。
+        建议继续优化高 ACOS 活动的关键词和竞价，扩大低 ACOS 高 ROAS 活动的预算。
+    </div>
+</div>
+
+<div class="footer">
+    报告生成时间：2026-08-21 | 数据来源：领星 ERP MCP | 店铺：N-US (Profile ID: 2508910388070071)
+</div>
+
+<script>
+var top10_names = ["DeepBI_0502_B0GTLSWBWH_MA", "DeepBI_0721_B0BNQ94T5W_ca", "DeepBI_0502_B0GQSCVXC9_AU", "DeepBI_0502_B0GQSCVXC9_MA", "DeepBI_0502_B09MVK6H4B_MA", "DeepBI_0514_B09MVK6H4B_AS", "DeepBI_0502_B0FNWMNV19_AU", "DeepBI_0514_B0BRMYXQ3Z_AS", "DeepBI_0502_B0BX92G8FN_MA", "DeepBI_0502_B0BJTRW361_MA"];
+var top10_spends = [55.26, 52.77, 47.75, 47.19, 45.5, 44.37, 42.56, 42.48, 42.05, 41.95];
+var top10_sales = [185.62, 318.8, 199.8, 169.53, 157.4, 132.3, 243.63, 102.59, 135.71, 97.77];
+var top10_acos = [29.77, 16.55, 23.9, 27.84, 28.91, 33.54, 17.47, 41.41, 30.99, 42.91];
+var pie_data = [{"name": "DeepBI_0502_B0GTLSWBWH_MANUAL", "value": 55.26}, {"name": "DeepBI_0721_B0BNQ94T5W_cat_was", "value": 52.77}, {"name": "DeepBI_0502_B0GQSCVXC9_AUTO", "value": 47.75}, {"name": "DeepBI_0502_B0GQSCVXC9_MANUAL", "value": 47.19}, {"name": "DeepBI_0502_B09MVK6H4B_MANUAL", "value": 45.5}, {"name": "DeepBI_0514_B09MVK6H4B_ASIN", "value": 44.37}, {"name": "DeepBI_0502_B0FNWMNV19_AUTO", "value": 42.56}, {"name": "DeepBI_0514_B0BRMYXQ3Z_ASIN", "value": 42.48}, {"name": "DeepBI_0502_B0BX92G8FN_MANUAL", "value": 42.05}, {"name": "DeepBI_0502_B0BJTRW361_MANUAL", "value": 41.95}, {"name": "DeepBI_0502_B0DJ8V2RV7_MANUAL", "value": 41.7}, {"name": "DeepBI_0502_B0H7WZQXSQ_MANUAL", "value": 39.02}, {"name": "DeepBI_0502_B0H9LLJWN3_AUTO", "value": 34.55}, {"name": "DeepBI_0502_B0GTLSWBWH_AUTO", "value": 27.65}, {"name": "DeepBI_0502_B0BRMYXQ3Z_MANUAL", "value": 27.12}, {"name": "DeepBI_0514_B0H7WZQXSQ_ASIN", "value": 25.68}, {"name": "DeepBI_0514_B0BNQ94T5W_ASIN", "value": 24.8}, {"name": "DeepBI_0721_B0BNQ94T5W_cat_was", "value": 24.68}, {"name": "DeepBI_0502_B0H9LLJWN3_MANUAL", "value": 24.07}, {"name": "DeepBI_0514_B0CS6MQ7J2_ASIN", "value": 23.53}];
+
+var chart1 = echarts.init(document.getElementById('chart_spend_sales'));
+chart1.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['花费', '销售额'], top: 5 },
+    grid: { left: '3%', right: '4%', bottom: '18%', containLabel: true },
+    xAxis: { type: 'category', data: top10_names, axisLabel: { rotate: 35, fontSize: 10 } },
+    yAxis: { type: 'value', name: 'USD' },
+    series: [
+        { name: '花费', type: 'bar', data: top10_spends, itemStyle: { color: '#e65100' } },
+        { name: '销售额', type: 'bar', data: top10_sales, itemStyle: { color: '#2e7d32' } }
+    ]
+});
+
+var chart2 = echarts.init(document.getElementById('chart_acos'));
+chart2.setOption({
+    tooltip: { trigger: 'axis', formatter: function(params) { return params[0].name + '<br/>ACOS: ' + params[0].value + '%'; } },
+    grid: { left: '3%', right: '4%', bottom: '18%', containLabel: true },
+    xAxis: { type: 'category', data: top10_names, axisLabel: { rotate: 35, fontSize: 10 } },
+    yAxis: { type: 'value', name: 'ACOS %' },
+    series: [{
+        type: 'bar',
+        data: top10_acos.map(function(v) {
+            return { value: v, itemStyle: { color: v < 25 ? '#2e7d32' : v < 40 ? '#f57c00' : '#c62828' } };
+        }),
+        markLine: { data: [{ yAxis: 30, name: '目标' }], lineStyle: { color: '#1565c0', type: 'dashed' } }
+    }]
+});
+
+var chart3 = echarts.init(document.getElementById('chart_pie'));
+chart3.setOption({
+    tooltip: { trigger: 'item', formatter: '{b}: ${c} ({d}%)' },
+    legend: { type: 'scroll', orient: 'vertical', right: 0, top: 'middle', textStyle: { fontSize: 10 } },
+    series: [{
+        type: 'pie', radius: ['35%', '65%'], center: ['40%', '50%'],
+        data: pie_data,
+        label: { formatter: '{d}%', fontSize: 10 }
+    }]
+});
+
+var chart4 = echarts.init(document.getElementById('chart_state'));
+chart4.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['启用', '暂停'], top: 5 },
+    grid: { left: '3%', right: '4%', bottom: '10%', containLabel: true },
+    xAxis: { type: 'category', data: ['活动数', '花费($)', '销售额($)', '点击', '订单'] },
+    yAxis: { type: 'value' },
+    series: [
+        { name: '启用', type: 'bar', data: [15, 629.48, 2442.16, 1333, 213], itemStyle: { color: '#2e7d32' } },
+        { name: '暂停', type: 'bar', data: [5, 125.2, 154.86, 229, 14], itemStyle: { color: '#e65100' } }
+    ]
+});
+
+window.addEventListener('resize', function() {
+    chart1.resize(); chart2.resize(); chart3.resize(); chart4.resize();
+});
+</script>
+
+</body>
+</html>

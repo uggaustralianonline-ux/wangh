@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AWD vs 常规 FBA 费用对比计算器（2026）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f6f8; color: #333; padding: 24px; }
+  .container { max-width: 1280px; margin: 0 auto; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .subtitle { color: #888; font-size: 13px; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .card h2 { font-size: 15px; margin-bottom: 14px; color: #222; border-bottom: 2px solid #eef0f3; padding-bottom: 8px; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 13px; color: #555; margin-bottom: 4px; }
+  .field input, .field select {
+    width: 100%; padding: 8px 10px; border: 1px solid #dcdfe4; border-radius: 6px;
+    font-size: 14px; background: #fafbfc; transition: all 0.15s;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: #4a90e2; background: #fff; }
+  .field .hint { font-size: 11px; color: #999; margin-top: 2px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .result-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
+  .result-row:last-child { border-bottom: none; }
+  .result-row .amt { font-weight: 600; color: #333; }
+  .result-row.subtotal { background: #fafbfc; font-weight: 600; padding: 10px 8px; border-radius: 4px; }
+  .result-row.total { background: linear-gradient(135deg,#667eea,#764ba2); color: #fff; font-size: 15px; font-weight: 700; padding: 12px 8px; border-radius: 6px; }
+  .result-row.total .amt { color: #fff; }
+  .savings-box { margin-top: 14px; padding: 14px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 14px; }
+  .savings-box.gain { background: #e8f8ef; color: #1a7f37; border: 1px solid #b6e3c6; }
+  .savings-box.loss { background: #feecec; color: #c0392b; border: 1px solid #f5b7b1; }
+  .savings-box.neutral { background: #f5f5f5; color: #666; border: 1px solid #ddd; }
+
+  #chart { width: 100%; height: 320px; margin-top: 10px; }
+
+  .rate-note { font-size: 11px; color: #888; margin-top: 8px; line-height: 1.6; }
+  .rate-note strong { color: #555; }
+
+  .section-title { font-size: 12px; font-weight: 700; color: #667eea; margin: 16px 0 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section-title:first-child { margin-top: 0; }
+
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .pill-blue { background: #e8f1ff; color: #1971c2; }
+  .pill-purple { background: #f0e8ff; color: #7048e8; }
+  .pill-green { background: #e6f7ee; color: #2f9e44; }
+  .pill-orange { background: #fff3e0; color: #e8590c; }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📦 AWD vs 常规 FBA 费用对比计算器</h1>
+  <div class="subtitle">基于 2026 年 1 月 15 日起生效的最新费率 · 仅供参考，实际以亚马逊账单为准</div>
+
+  <div class="grid">
+    <!-- 左侧：输入区 -->
+    <div class="card">
+      <h2>🔧 参数设置</h2>
+
+      <div class="section-title">产品尺寸</div>
+      <div class="two-col">
+        <div class="field">
+          <label>长 (inch)</label>
+          <input type="number" id="len" value="10" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label>宽 (inch)</label>
+          <input type="number" id="wid" value="5" step="0.1" min="0">
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>高 (inch)</label>
+          <input type="number" id="hei" value="2.5" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label>单件重量 (lb)</label>
+          <input type="number" id="wt" value="0.5" step="0.1" min="0">
+        </div>
+      </div>
+      <div class="field">
+        <label>每件装箱数量 (件/箱)</label>
+        <input type="number" id="perBox" value="65" step="1" min="1">
+      </div>
+
+      <div class="section-title">销售参数</div>
+      <div class="field">
+        <label>每月销量 (件/月)</label>
+        <input type="number" id="monthlyUnits" value="2000" step="10" min="0">
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>计算月份</label>
+          <select id="month">
+            <option value="1">1月（非旺季）</option>
+            <option value="2">2月（非旺季）</option>
+            <option value="3">3月（非旺季）</option>
+            <option value="4">4月（非旺季）</option>
+            <option value="5">5月（非旺季）</option>
+            <option value="6">6月（非旺季）</option>
+            <option value="7">7月（非旺季）</option>
+            <option value="8">8月（非旺季）</option>
+            <option value="9">9月（非旺季）</option>
+            <option value="10" selected>10月（旺季）</option>
+            <option value="11">11月（旺季）</option>
+            <option value="12">12月（旺季）</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>仓储利用率</label>
+          <select id="utilRate">
+            <option value="0">≤22周（无附加费）</option>
+            <option value="1">22~28周</option>
+            <option value="2">28~36周</option>
+            <option value="3">36~44周</option>
+            <option value="4">44~52周</option>
+            <option value="5">>52周</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>FBA 日均库存周转天数</label>
+        <input type="number" id="fbaDays" value="21" step="1" min="1">
+        <div class="hint">FBA 仓内平均停留天数，影响仓储费基数</div>
+      </div>
+
+      <div class="section-title">AWD 方案选择</div>
+      <div class="two-col">
+        <div class="field">
+          <label>AWD 费率方案</label>
+          <select id="awdTier">
+            <option value="base">基础费率</option>
+            <option value="smart" selected>智能仓储（10% off 仓储）</option>
+            <option value="managed">亚马逊管理（20% off 仓储 + 10% off 运输）</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>AWD 仓库区域</label>
+          <select id="awdRegion">
+            <option value="west">西海岸</option>
+            <option value="east" selected>东海岸/东南部/中南部</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>AWD 日均库存周转天数</label>
+        <input type="number" id="awdDays" value="45" step="1" min="1">
+        <div class="hint">AWD 是批量仓储，周转天数通常比 FBA 长</div>
+      </div>
+
+      <div class="section-title">头程 / 清关 / 末端派送（分摊到每件）</div>
+      <div class="two-col">
+        <div class="field">
+          <label>FBA 模式 ($/件)</label>
+          <input type="number" id="fbaInboundPerUnit" value="1.30" step="0.05" min="0">
+          <div class="hint">中国直运美国 FBA</div>
+        </div>
+        <div class="field">
+          <label>AWD 模式 ($/件)</label>
+          <input type="number" id="awdInboundPerUnit" value="1.05" step="0.05" min="0">
+          <div class="hint">经 GWD 枢纽或海运整柜，通常更低</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>FBA 仓储利用率附加费是否豁免</label>
+        <select id="utilExempt">
+          <option value="no">未豁免</option>
+          <option value="yes" selected>已豁免（AWD 自动补货满 70%）</option>
+        </select>
+        <div class="hint">使用 AWD 自动补货且近13周 70%+ FBA 库存自动补货者可豁免</div>
+      </div>
+    </div>
+
+    <!-- 右侧：结果区 -->
+    <div>
+      <div class="card" style="margin-bottom:20px">
+        <h2>📊 月度费用对比（按当前销量）</h2>
+        <div id="chart"></div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:1fr 1fr; gap:16px">
+        <!-- FBA -->
+        <div class="card" style="border-top: 3px solid #4a90e2">
+          <h2><span class="pill pill-blue">常规 FBA</span></h2>
+          <div id="fbaBreakdown"></div>
+        </div>
+        <!-- AWD -->
+        <div class="card" style="border-top: 3px solid #7048e8">
+          <h2><span class="pill pill-purple">AWD</span></h2>
+          <div id="awdBreakdown"></div>
+        </div>
+      </div>
+
+      <div id="savingsBox" class="savings-box"></div>
+
+      <div class="card" style="margin-top:20px">
+        <h2>📋 费率依据（2026）</h2>
+        <div class="rate-note">
+          <strong>常规 FBA 月度仓储费（$/cu ft/月）：</strong><br>
+          · 非旺季 1-9 月：标准尺寸 $0.78 / 大件 $0.56<br>
+          · 旺季 10-12 月：标准尺寸 $2.40 / 大件 $1.40<br>
+          · 仓储利用率附加费：按过去 13 周平均日占用/日均发货比值分层追加 $0.44~$1.88（标准） / $0.23~$1.26（大件）/cu ft<br><br>
+          <strong>AWD 仓储费（$/cu ft/月，无季节性加价）：</strong><br>
+          · 西海岸：基础 $0.57 → 智能 $0.51(10%↓) → 管理 $0.46(20%↓)<br>
+          · 东海岸/东南/中南：基础 $0.48 → 智能 $0.43(10%↓) → 管理 $0.38(20%↓)<br><br>
+          <strong>AWD 其他费用：</strong>入库 $1.40/箱、出库 $1.40/箱、AWD→FBA 运输 $1.40/cu ft（管理费率 $1.26）<br><br>
+          <strong>重要区别：</strong>常规 FBA 无单独入库/出库费（已含在 FBA 配送费里），AWD 需额外支付入+出+仓间运输共约 $2.80/箱 + 运输费；AWD 无旺季加价、可豁免仓储利用率附加费；FBA 配送费两者相同，不在此对比中重复计算。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== 费率常量 ==========
+const RATES = {
+  FBA: {
+    storage: {
+      standard: { nonPeak: 0.78, peak: 2.40 },
+      oversize: { nonPeak: 0.56, peak: 1.40 }
+    },
+    utilSurcharge: {
+      standard: [0, 0.44, 0.76, 1.16, 1.58, 1.88], // 22-, 22-28, 28-36, 36-44, 44-52, 52+
+      oversize: [0, 0.23, 0.46, 0.63, 0.76, 1.26]
+    }
+  },
+  AWD: {
+    storage: {
+      west:     { base: 0.57, smart: 0.51, managed: 0.46 },
+      east:     { base: 0.48, smart: 0.43, managed: 0.38 }
+    },
+    inboundPerBox: 1.40,
+    inboundPerBoxWestPallet: 1.05,
+    outboundPerBox: 1.40,
+    transport: { base: 1.40, smart: 1.40, managed: 1.26 }
+  }
+};
+
+// ========== 工具函数 ==========
+function $(id){ return document.getElementById(id); }
+function volCuFt(len, wid, hei){ return len * wid * hei / 1728; } // cu in → cu ft
+function isPeak(m){ return m >= 10 && m <= 12; }
+
+// FBA 尺寸判定（简化版，更精确的需查卖家后台）
+function fbaSizeTier(len, wid, hei, wt){
+  const longest = Math.max(len, wid, hei);
+  if (longest > 18 || wt > 20) return 'oversize';
+  return 'standard';
+}
+
+// ========== 计算核心 ==========
+function calc(){
+  const len = parseFloat($('len').value)||0;
+  const wid = parseFloat($('wid').value)||0;
+  const hei = parseFloat($('hei').value)||0;
+  const wt = parseFloat($('wt').value)||0;
+  const perBox = parseInt($('perBox').value)||1;
+  const monthlyUnits = parseInt($('monthlyUnits').value)||0;
+  const month = parseInt($('month').value);
+  const utilRateIdx = parseInt($('utilRate').value);
+  const fbaDays = parseFloat($('fbaDays').value)||0;
+  const awdDays = parseFloat($('awdDays').value)||0;
+  const awdTier = $('awdTier').value;
+  const awdRegion = $('awdRegion').value;
+  const fbaInboundPerUnit = parseFloat($('fbaInboundPerUnit').value)||0;
+  const awdInboundPerUnit = parseFloat($('awdInboundPerUnit').value)||0;
+  const utilExempt = $('utilExempt').value === 'yes';
+
+  if (!len || !wid || !hei || !monthlyUnits || !perBox) { renderEmpty(); return; }
+
+  const unitVol = volCuFt(len, wid, hei);     // 单件 cu ft
+  const boxVol = unitVol * perBox;             // 每箱 cu ft
+  const boxesPerMonth = monthlyUnits / perBox; // 月装箱数
+  const isPeakMonth = isPeak(month);
+  const tier = fbaSizeTier(len, wid, hei, wt);
+  const tierLabel = tier === 'standard' ? '标准尺寸' : '大件';
+
+  // --- FBA 模式 ---
+  const fbaDailyAvgUnits = monthlyUnits * (fbaDays / 30);  // FBA 仓日均库存
+  const fbaVolPerMonth = fbaDailyAvgUnits * unitVol;       // 月度占用 cu ft
+
+  const fbaStorageRate = isPeakMonth
+    ? RATES.FBA.storage[tier].peak
+    : RATES.FBA.storage[tier].nonPeak;
+  const fbaStorageFee = fbaVolPerMonth * fbaStorageRate;
+
+  // 仓储利用率附加费（库龄>30天比例简化为 50%）
+  const exemptFromUtil = utilExempt;
+  const utilSurcharge = exemptFromUtil ? 0
+    : fbaVolPerMonth * (RATES.FBA.utilSurcharge[tier][utilRateIdx] || 0);
+
+  const fbaInboundTotal = monthlyUnits * fbaInboundPerUnit;
+  const awdInboundTotal = monthlyUnits * awdInboundPerUnit;
+
+  const fbaTotal = fbaInboundTotal + fbaStorageFee + utilSurcharge;
+
+  // --- AWD 模式 ---
+  const awdDailyAvgUnits = monthlyUnits * (awdDays / 30);
+  const awdVolPerMonth = awdDailyAvgUnits * unitVol;
+
+  const awdStorageRate = RATES.AWD.storage[awdRegion][awdTier];
+  const awdStorageFee = awdVolPerMonth * awdStorageRate;
+
+  const awdInbound = boxesPerMonth * RATES.AWD.inboundPerBox;
+  const awdOutbound = boxesPerMonth * RATES.AWD.outboundPerBox;
+  const awdTransportRate = RATES.AWD.transport[awdTier];
+  const awdTransport = boxesPerMonth * boxVol * awdTransportRate;
+
+  const awdTotal = awdInboundTotal + awdInbound + awdStorageFee + awdOutbound + awdTransport;
+
+  // ========== 渲染 ==========
+  const fmt = v => '$' + v.toFixed(2);
+  const renderRow = (label, value, cls) =>
+    `<div class="result-row ${cls||''}"><span>${label}</span><span class="amt">${value}</span></div>`;
+
+  $('fbaBreakdown').innerHTML =
+    renderRow('头程分摊', fmt(fbaInboundTotal)) +
+    renderRow(`FBA 仓储 (${fbaVolPerMonth.toFixed(1)} cu ft × $${fbaStorageRate}${isPeakMonth?' 旺季':''})`, fmt(fbaStorageFee)) +
+    renderRow(`仓储利用率附加费`, fmt(utilSurcharge)) +
+    renderRow('月度合计', fmt(fbaTotal), 'subtotal') +
+    `<div class="result-row total"><span>单件成本</span><span class="amt">${fmt(fbaTotal/monthlyUnits)}</span></div>`;
+
+  $('awdBreakdown').innerHTML =
+    renderRow('头程分摊', fmt(awdInboundTotal)) +
+    renderRow('AWD 入库处理', fmt(awdInbound)) +
+    renderRow(`AWD 仓储 (${awdVolPerMonth.toFixed(1)} cu ft × $${awdStorageRate})`, fmt(awdStorageFee)) +
+    renderRow('AWD 出库处理', fmt(awdOutbound)) +
+    renderRow(`AWD→FBA 运输 (${(boxesPerMonth*boxVol).toFixed(1)} cu ft × $${awdTransportRate})`, fmt(awdTransport)) +
+    renderRow('月度合计', fmt(awdTotal), 'subtotal') +
+    `<div class="result-row total"><span>单件成本</span><span class="amt">${fmt(awdTotal/monthlyUnits)}</span></div>`;
+
+  // 节省额
+  const diff = fbaTotal - awdTotal;
+  const diffPct = (diff / fbaTotal * 100);
+  const box = $('savingsBox');
+  if (Math.abs(diff) < 0.01) {
+    box.className = 'savings-box neutral';
+    box.innerHTML = '两者费用几乎持平';
+  } else if (diff > 0) {
+    box.className = 'savings-box gain';
+    box.innerHTML = `💰 使用 AWD 每月节省 <b>${fmt(diff)}</b>（<b>${diffPct.toFixed(1)}%</b>），单件降低 ${fmt(diff/monthlyUnits)}`;
+  } else {
+    box.className = 'savings-box loss';
+    box.innerHTML = `⚠️ 使用 AWD 每月多花 <b>${fmt(-diff)}</b>（<b>${(-diffPct).toFixed(1)}%</b>），单件增加 ${fmt(-diff/monthlyUnits)}`;
+  }
+
+  // 图表
+  renderChart({
+    fbaInbound: fbaInboundTotal,
+    awdInbound: awdInboundTotal,
+    fbaStorage: fbaStorageFee,
+    utilSurcharge,
+    awdIn: awdInbound,
+    awdStorage: awdStorageFee,
+    awdOut: awdOutbound,
+    awdShip: awdTransport
+  });
+}
+
+function renderChart(d){
+  const chart = echarts.init($('chart'));
+  const categories = ['头程分摊','入库处理','仓储费','出库处理','运输费','附加费'];
+  const fba = [d.fbaInbound, 0, d.fbaStorage, 0, 0, d.utilSurcharge];
+  const awd = [d.awdInbound, d.awdIn, d.awdStorage, d.awdOut, d.awdShip, 0];
+  chart.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['常规 FBA', 'AWD'], top: 0 },
+    grid: { left: 40, right: 20, top: 40, bottom: 30 },
+    xAxis: { type: 'category', data: categories },
+    yAxis: { type: 'value', name: '$' },
+    series: [
+      { name: '常规 FBA', type: 'bar', data: fba, itemStyle: { color: '#4a90e2' } },
+      { name: 'AWD', type: 'bar', data: awd, itemStyle: { color: '#7048e8' } }
+    ]
+  });
+  window.addEventListener('resize', () => chart.resize());
+}
+
+function renderEmpty(){
+  $('fbaBreakdown').innerHTML = '<div style="color:#999;padding:20px;text-align:center">请填写参数</div>';
+  $('awdBreakdown').innerHTML = '<div style="color:#999;padding:20px;text-align:center">请填写参数</div>';
+  $('savingsBox').className = 'savings-box neutral';
+  $('savingsBox').innerHTML = '请先填写产品参数';
+  $('chart').innerHTML = '';
+}
+
+// 事件绑定
+document.querySelectorAll('input, select').forEach(el => {
+  el.addEventListener('input', calc);
+  el.addEventListener('change', calc);
+});
+
+// 初始计算
+calc();
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# === 编辑器/IDE 临时文件 ===
+~$*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# === Trae 内部 ===
+.trae/
+.trae-html-share-packages/
+.workbuddy/
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+
+# === 临时/中间数据（下划线前缀，可重新生成） ===
+_*/
+_*.json
+_*.csv
+_*.txt
+_*.py
+*.pickle
+*.pkl
+raw/
+
+# === Office 锁文件 ===
+~$*

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9个父ASIN 预秒杀可行性分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1a2233; --sub:#5b6478;
+    --line:#e4e8f0; --gold:#c9a227; --goldbg:#fdf8e7;
+    --silver:#8d99ae; --silverbg:#f2f4f8;
+    --bronze:#b07d4f; --bronzebg:#fbf3ec;
+    --ok:#1f9d55; --okbg:#e8f7ee;
+    --warn:#d98600; --warnbg:#fff5e5;
+    --bad:#d64545; --badbg:#fdecec;
+    --blue:#2f6fed;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    line-height:1.65;font-size:14px;}
+  .wrap{max-width:1240px;margin:0 auto;padding:28px 22px 80px;}
+  header.hero{background:linear-gradient(135deg,#14213d 0%,#22345c 55%,#2f4a7d 100%);
+    color:#fff;border-radius:16px;padding:34px 36px;margin-bottom:22px;
+    box-shadow:0 10px 30px rgba(20,33,61,.18);}
+  header.hero h1{margin:0 0 10px;font-size:27px;letter-spacing:.5px;font-weight:600;}
+  header.hero .sub{color:#c6d3e8;font-size:13.5px;margin-bottom:18px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:16px;}
+  .meta-item{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);
+    border-radius:10px;padding:11px 14px;}
+  .meta-item .k{font-size:11.5px;color:#a9bcd8;letter-spacing:.5px;}
+  .meta-item .v{font-size:13.5px;font-weight:600;color:#fff;margin-top:3px;word-break:break-all;}
+  .verdict{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
+  .verdict .box{flex:1;min-width:240px;background:var(--card);border-radius:12px;
+    padding:16px 18px;border-left:4px solid var(--blue);box-shadow:0 2px 8px rgba(20,33,61,.06);}
+  .verdict .box.warn{border-left-color:var(--warn);}
+  .verdict .box.bad{border-left-color:var(--bad);}
+  .verdict .box.ok{border-left-color:var(--ok);}
+  .verdict .box h4{margin:0 0 6px;font-size:13px;color:var(--sub);font-weight:600;letter-spacing:.5px;}
+  .verdict .box p{margin:0;font-size:14px;}
+  section{background:var(--card);border-radius:14px;padding:24px 26px;margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(20,33,61,.055);}
+  h2{font-size:18px;margin:0 0 6px;font-weight:600;display:flex;align-items:center;gap:9px;}
+  h2 .num{display:inline-flex;width:24px;height:24px;border-radius:7px;background:#eef3ff;
+    color:var(--blue);font-size:12.5px;align-items:center;justify-content:center;font-weight:700;}
+  .sec-desc{color:var(--sub);font-size:12.8px;margin:0 0 18px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px;}
+  .rank-card{border-radius:13px;padding:20px;border:1px solid var(--line);position:relative;overflow:hidden;}
+  .rank-card.g1{background:linear-gradient(180deg,var(--goldbg),#fff);border-color:#eadfb4;}
+  .rank-card.g2{background:linear-gradient(180deg,var(--silverbg),#fff);border-color:#dde2ea;}
+  .rank-card.g3{background:linear-gradient(180deg,var(--bronzebg),#fff);border-color:#ecdccc;}
+  .rank-badge{position:absolute;top:16px;right:16px;font-size:11px;font-weight:700;
+    padding:3px 9px;border-radius:20px;letter-spacing:.5px;}
+  .g1 .rank-badge{background:var(--gold);color:#fff;}
+  .g2 .rank-badge{background:var(--silver);color:#fff;}
+  .g3 .rank-badge{background:var(--bronze);color:#fff;}
+  .rank-card h3{margin:0 0 2px;font-size:15.5px;font-weight:600;padding-right:60px;}
+  .rank-card .asin{font-family:Consolas,Monaco,monospace;font-size:12.5px;color:var(--sub);margin-bottom:12px;}
+  .score-row{display:flex;align-items:baseline;gap:6px;margin-bottom:12px;}
+  .score-row .big{font-size:30px;font-weight:700;line-height:1;}
+  .g1 .score-row .big{color:var(--gold);}
+  .g2 .score-row .big{color:var(--silver);}
+  .g3 .score-row .big{color:var(--bronze);}
+  .score-row .den{font-size:13px;color:var(--sub);}
+  .rank-card ul{margin:0;padding-left:17px;font-size:13px;color:#33405a;}
+  .rank-card ul li{margin-bottom:5px;}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+  .tag{font-size:11.5px;padding:2.5px 9px;border-radius:20px;background:#eef1f7;color:#4a5568;}
+  .tag.ok{background:var(--okbg);color:var(--ok);}
+  .tag.warn{background:var(--warnbg);color:var(--warn);}
+  .tag.bad{background:var(--badbg);color:var(--bad);}
+  table{width:100%;border-collapse:collapse;font-size:12.8px;}
+  th{background:#f2f5fa;color:#3d4a63;font-weight:600;text-align:left;padding:9px 10px;
+    border-bottom:1px solid var(--line);white-space:nowrap;font-size:12px;}
+  td{padding:9px 10px;border-bottom:1px solid #f0f3f8;vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#fafbfe;}
+  .mono{font-family:Consolas,Monaco,monospace;font-size:12.2px;}
+  .num-r{text-align:right;font-variant-numeric:tabular-nums;}
+  .pill{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+  .pill.ok{background:var(--okbg);color:var(--ok);}
+  .pill.warn{background:var(--warnbg);color:var(--warn);}
+  .pill.bad{background:var(--badbg);color:var(--bad);}
+  .chart{width:100%;height:330px;}
+  .chart.tall{height:380px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+  .detail{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px;}
+  .detail.a{border-left:4px solid var(--gold);}
+  .detail.b{border-left:4px solid var(--silver);}
+  .detail.c{border-left:4px solid var(--bronze);}
+  .detail h3{margin:0 0 4px;font-size:15px;}
+  .detail .reason{font-size:13px;color:#33405a;margin:10px 0;}
+  .kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0;}
+  .kv div{background:#f8fafd;border-radius:8px;padding:8px 11px;}
+  .kv .k{font-size:11.5px;color:var(--sub);}
+  .kv .v{font-size:13.5px;font-weight:600;margin-top:1px;}
+  .risk{background:var(--warnbg);border-radius:9px;padding:10px 13px;font-size:12.8px;color:#7a5200;}
+  .note{background:#f4f7fc;border-left:3px solid #b9c8e4;border-radius:6px;
+    padding:11px 14px;font-size:12.8px;color:#3d4a63;margin:14px 0;}
+  .actions{counter-reset:act;}
+  .action{display:flex;gap:14px;padding:13px 0;border-bottom:1px dashed var(--line);}
+  .action:last-child{border-bottom:none;}
+  .action .p{flex:0 0 44px;height:26px;border-radius:6px;font-size:11.5px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;color:#fff;margin-top:2px;}
+  .p.p0{background:var(--bad);} .p.p1{background:var(--warn);}
+  .p.p2{background:var(--blue);} .p.p3{background:var(--silver);}
+  .action .body{flex:1;}
+  .action .body strong{font-size:13.5px;}
+  .action .body p{margin:3px 0 0;font-size:12.8px;color:var(--sub);}
+  footer{text-align:center;color:#8b95a8;font-size:12px;padding:18px 0 0;}
+  .legend-inline{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--sub);margin-bottom:10px;}
+  .legend-inline span::before{content:"■";margin-right:5px;font-size:10px;}
+  .legend-inline .lg-ok::before{color:var(--ok);}
+  .legend-inline .lg-warn::before{color:var(--warn);}
+  .legend-inline .lg-bad::before{color:var(--bad);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>9 个父 ASIN · 预秒杀可行性分析</h1>
+  <div class="sub">评估目标：未来两周（2026-10-20 ~ 2026-11-03）是否具备 Lightning Deal / Best Deal 执行条件</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="k">核心数据源</div><div class="v">领星 ERP · 产品表现（ASIN 维度）</div></div>
+    <div class="meta-item"><div class="k">市场数据源</div><div class="v">SIF · ASIN 档案 / 流量趋势 / 词根趋势</div></div>
+    <div class="meta-item"><div class="k">数据拉取时间</div><div class="v">2026-10-20（SIF 数据更新至 2026-10-19）</div></div>
+    <div class="meta-item"><div class="k">ERP 版本标识</div><div class="v">help 未返回 catalogVersion，已用 SIF 趋势交叉校验</div></div>
+  </div>
+</header>
+
+<div class="verdict">
+  <div class="box bad">
+    <h4>核心结论</h4>
+    <p><strong>本批次没有「库存 + 时机」双优的 A 级候选。</strong>9 个 ASIN 中仅 1 个库存达标，2 个临界，6 个库存不足。</p>
+  </div>
+  <div class="box warn">
+    <h4>最该做的动作</h4>
+    <p>不是排秒杀，而是<strong>先补货</strong>：B0CQ4QYWL3、B08MKWRZ3W、B0DD3R6LK5 当前库销比均 ≤1.1 个月。</p>
+  </div>
+  <div class="box ok">
+    <h4>可执行的 3 个</h4>
+    <p>B0GHPVZGLX（补货后可做）、B0987J7WDB（清库存定位）、B0DJSKJ3R9（不建议，风险高于收益）。</p>
+  </div>
+</div>
+
+<section>
+  <h2><span class="num">01</span>Top 3 推荐</h2>
+  <p class="sec-desc">仅统计通过库存门槛（✅ 达标 / ⚠ 临界）的 ASIN，按 9 维度总分排序。本批次无 ✅ 且高分的 ASIN，Top 1 与 Top 3 均带库存风险标记。</p>
+  <div class="cards">
+
+    <div class="rank-card g1">
+      <div class="rank-badge">TOP 1</div>
+      <h3>拼豆模板套装 20Pcs</h3>
+      <div class="asin">B0GHPVZGLX · AUGSUN 5mm Fuse Beads Pegboards</div>
+      <div class="score-row"><span class="big">54</span><span class="den">/ 90 分</span></div>
+      <ul>
+        <li><strong>Q4 旺季爬坡：</strong>拼豆词根搜索量 9 月 39,434，去年同期 10→11→12 月为 30,277→49,499→57,020，接下来两周进入上行通道。</li>
+        <li><strong>库存临界可控：</strong>FBA 可售 2,626 件，含在途/待调仓 3,174 件，按当前 37.7 件/日测算库销比 2.32 个月。</li>
+        <li><strong>利润空间最好：</strong>毛利率 21.4%，是本批 9 个 ASIN 中最高，85 折后仍可打平。</li>
+      </ul>
+      <div class="tags">
+        <span class="tag ok">旺季爬坡</span>
+        <span class="tag warn">⚠ 库存临界</span>
+        <span class="tag">流量 -12.6%</span>
+        <span class="tag">毛利 21.4%</span>
+      </div>
+    </div>
+
+    <div class="rank-card g2">
+      <div class="rank-badge">TOP 2</div>
+      <h3>玉米叉 18Pcs 不锈钢</h3>
+      <div class="asin">B0987J7WDB · AUGSUN Corn Cob Holders</div>
+      <div class="score-row"><span class="big">39</span><span class="den">/ 90 分</span></div>
+      <ul>
+        <li><strong>库存极其充裕：</strong>FBA 可售 4,926 件，库销比 8.09 个月，是本批唯一 ✅ 达标的 ASIN。</li>
+        <li><strong>定位必须是清库存：</strong>玉米叉搜索量已从 7 月 47,388 跌至 9 月 22,474，淡季做秒杀拉不动转化，只能换出货。</li>
+        <li><strong>评论基础扎实：</strong>4,770 条评论、4.6 星，折扣转化有承接。</li>
+      </ul>
+      <div class="tags">
+        <span class="tag ok">库存达标 8.1 月</span>
+        <span class="tag bad">淡季低谷</span>
+        <span class="tag bad">流量 -50.7%</span>
+        <span class="tag">毛利 7.3%</span>
+      </div>
+    </div>
+
+    <div class="rank-card g3">
+      <div class="rank-badge">TOP 3</div>
+      <h3>田径钉 3/8 英寸 120Pcs</h3>
+      <div class="asin">B0DJSKJ3R9 · AUGSUN Track Spikes</div>
+      <div class="score-row"><span class="big">34</span><span class="den">/ 90 分</span></div>
+      <ul>
+        <li><strong>库存临界：</strong>FBA 可售 785 件，库销比 2.04 个月，勉强达到 ⚠ 门槛线。</li>
+        <li><strong>时机最差：</strong>田径钉搜索量 4 月峰值 138,175，9 月仅 5,707，处于年度谷底。</li>
+        <li><strong>不建议执行：</strong>库存临界 + 淡季 + 流量 -52.7%，秒杀大概率是「用库存换不来排名」。</li>
+      </ul>
+      <div class="tags">
+        <span class="tag warn">⚠ 库存临界</span>
+        <span class="tag bad">淡季低谷</span>
+        <span class="tag bad">流量 -52.7%</span>
+        <span class="tag">毛利 20.0%</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">02</span>库存门槛判定总览</h2>
+  <p class="sec-desc">
+    库销比 = FBA 可售 ÷ 月销量。为避免用 9 月整月数据高估当前库存（多个 ASIN 正在放量），本报告统一采用<strong>近 14 天日均销量 × 30 天</strong>作为「月销量」口径；同时列出 10 月 1-20 日实际销量供核对。
+  </p>
+  <div class="legend-inline">
+    <span class="lg-ok">✅ 达标（≥2.5 月）</span>
+    <span class="lg-warn">⚠ 临界（2.0-2.5 月）</span>
+    <span class="lg-bad">❌ 不足（&lt;2.0 月）</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>父 ASIN</th><th>产品</th>
+        <th class="num-r">10月MTD</th><th class="num-r">预计月销</th>
+        <th class="num-r">FBA可售</th><th class="num-r">含在途</th>
+        <th class="num-r">库销比</th><th class="num-r">门槛</th>
+        <th class="num-r">总分</th><th class="num-r">排名</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">B0CQ4QYWL3</td><td>万圣节/国庆铁布贴 36Pcs</td><td class="num-r">3,218</td><td class="num-r">5,022</td><td class="num-r">5,252</td><td class="num-r">6,183</td><td class="num-r"><strong>1.05</strong></td><td class="num-r"><span class="pill bad">❌ 不足</span></td><td class="num-r">68</td><td class="num-r">—</td></tr>
+      <tr><td class="mono">B08MKWRZ3W</td><td>脏辫钩针工具</td><td class="num-r">2,644</td><td class="num-r">4,110</td><td class="num-r">3,046</td><td class="num-r">4,371</td><td class="num-r"><strong>0.74</strong></td><td class="num-r"><span class="pill bad">❌ 严重不足</span></td><td class="num-r">51</td><td class="num-r">—</td></tr>
+      <tr><td class="mono">B0DD3R6LK5</td><td>60Pcs 补丁贴</td><td class="num-r">1,266</td><td class="num-r">1,977</td><td class="num-r">2,046</td><td class="num-r">2,976</td><td class="num-r"><strong>1.03</strong></td><td class="num-r"><span class="pill bad">❌ 不足</span></td><td class="num-r">62</td><td class="num-r">—</td></tr>
+      <tr><td class="mono">B09PB9NWZB</td><td>皮革耳环 9Pairs</td><td class="num-r">879</td><td class="num-r">1,329</td><td class="num-r">1,342</td><td class="num-r">1,427</td><td class="num-r"><strong>1.01</strong></td><td class="num-r"><span class="pill bad">❌ 不足</span></td><td class="num-r">62</td><td class="num-r">—</td></tr>
+      <tr><td class="mono">B0DHL5X1XM</td><td>万圣节补丁贴 12Pcs</td><td class="num-r">474</td><td class="num-r">816</td><td class="num-r">1,580</td><td class="num-r">1,856</td><td class="num-r"><strong>1.94</strong></td><td class="num-r"><span class="pill bad">❌ 不足</span></td><td class="num-r">60</td><td class="num-r">—</td></tr>
+      <tr><td class="mono">B0D849XTR9</td><td>木雕刻刀 20Pcs</td><td class="num-r">554</td><td class="num-r">873</td><td class="num-r">566</td><td class="num-r">697</td><td class="num-r"><strong>0.65</strong></td><td class="num-r"><span class="pill bad">❌ 严重不足</span></td><td class="num-r">51</td><td class="num-r">—</td></tr>
+      <tr><td class="mono">B0GHPVZGLX</td><td>拼豆模板 20Pcs</td><td class="num-r">732</td><td class="num-r">1,131</td><td class="num-r">2,626</td><td class="num-r">3,174</td><td class="num-r"><strong>2.32</strong></td><td class="num-r"><span class="pill warn">⚠ 临界</span></td><td class="num-r">54</td><td class="num-r"><strong>1</strong></td></tr>
+      <tr><td class="mono">B0DJSKJ3R9</td><td>田径钉 120Pcs</td><td class="num-r">263</td><td class="num-r">384</td><td class="num-r">785</td><td class="num-r">813</td><td class="num-r"><strong>2.04</strong></td><td class="num-r"><span class="pill warn">⚠ 临界</span></td><td class="num-r">34</td><td class="num-r"><strong>3</strong></td></tr>
+      <tr><td class="mono">B0987J7WDB</td><td>玉米叉 18Pcs</td><td class="num-r">426</td><td class="num-r">609</td><td class="num-r">4,926</td><td class="num-r">5,040</td><td class="num-r"><strong>8.09</strong></td><td class="num-r"><span class="pill ok">✅ 达标</span></td><td class="num-r">39</td><td class="num-r"><strong>2</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>口径提示：</strong>若按「10 月 1-20 日已实现销量」直接相除，B0DHL5X1XM 会得到 3.33 个月（误判为达标）。该 ASIN 当前仍以 27 件/日稳定出货，剩余库存仅够 58 天，而秒杀需覆盖 2.5 个月销量（约 2,040 件）&gt; 现有 1,580 件，因此真实判定为不足。
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">03</span>库存 vs 销量关系</h2>
+  <p class="sec-desc">横轴为预计月销量，纵轴为 FBA 可售库存。虚线为 2.5 个月安全线——落在虚线下方即代表秒杀期间会断货。</p>
+  <div id="chartInv" class="chart tall"></div>
+</section>
+
+<section>
+  <h2><span class="num">04</span>季节性验证（SIF 词根月搜索量）</h2>
+  <p class="sec-desc">取各产品核心词根过去 12 个月搜索量。2026 年 10 月数据尚未产出，最新完整月为 2026-09。判断标准：当前搜索量 &gt; 年均 1.5 倍为旺季，&lt; 0.6 倍为淡季；环比上升 &gt;20% 为爬坡。</p>
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:14px;margin:0 0 6px;">旺季爬坡组（适合做）</h3>
+      <div id="chartSeasonUp" class="chart"></div>
+    </div>
+    <div>
+      <h3 style="font-size:14px;margin:0 0 6px;">淡季 / 常青组（不适合做）</h3>
+      <div id="chartSeasonDown" class="chart"></div>
+    </div>
+  </div>
+  <table style="margin-top:18px;">
+    <thead>
+      <tr><th>父 ASIN</th><th>核心词根</th><th class="num-r">2026-08</th><th class="num-r">2026-09</th><th class="num-r">环比</th><th>季节性判定</th><th class="num-r">时机分</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">B0CQ4QYWL3</td><td>iron on patches（万圣节变体）</td><td class="num-r">7,227</td><td class="num-r">12,772</td><td class="num-r">+76.7%</td><td>旺季峰值（去年 10 月 25,898）</td><td class="num-r">8</td></tr>
+      <tr><td class="mono">B0DHL5X1XM</td><td>halloween patches</td><td class="num-r">6,515</td><td class="num-r">10,292</td><td class="num-r">+58.0%</td><td>旺季峰值（去年 10 月 24,878）</td><td class="num-r">9</td></tr>
+      <tr><td class="mono">B0GHPVZGLX</td><td>fuse beads</td><td class="num-r">42,601</td><td class="num-r">39,434</td><td class="num-r">-7.4%</td><td>旺季爬坡（去年 11-12 月 49k→57k）</td><td class="num-r">8</td></tr>
+      <tr><td class="mono">B0D849XTR9</td><td>wood carving kit</td><td class="num-r">37,282</td><td class="num-r">39,838</td><td class="num-r">+6.9%</td><td>旺季爬坡（去年 11-12 月 59k→85k）</td><td class="num-r">9</td></tr>
+      <tr><td class="mono">B0DD3R6LK5</td><td>iron on patches</td><td class="num-r">215,187</td><td class="num-r">174,793</td><td class="num-r">-18.8%</td><td>常青品类（全年 138k-235k）</td><td class="num-r">7</td></tr>
+      <tr><td class="mono">B08MKWRZ3W</td><td>dreadlock crochet hook</td><td class="num-r">3,555</td><td class="num-r">2,590</td><td class="num-r">-27.1%</td><td>常青偏弱（12 个月 2.6k-6.5k）</td><td class="num-r">6</td></tr>
+      <tr><td class="mono">B09PB9NWZB</td><td>leather earrings</td><td class="num-r">2,792</td><td class="num-r">3,131</td><td class="num-r">+12.1%</td><td>常青品类（全年波动 &lt;40%）</td><td class="num-r">6</td></tr>
+      <tr><td class="mono">B0987J7WDB</td><td>corn cob holders</td><td class="num-r">39,409</td><td class="num-r">22,474</td><td class="num-r">-43.0%</td><td>淡季低谷（7 月峰值 47,388）</td><td class="num-r">3</td></tr>
+      <tr><td class="mono">B0DJSKJ3R9</td><td>track spikes</td><td class="num-r">5,116</td><td class="num-r">5,707</td><td class="num-r">+11.6%</td><td>淡季低谷（4 月峰值 138,175）</td><td class="num-r">3</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2><span class="num">05</span>9 维度评分矩阵</h2>
+  <p class="sec-desc">90 分制。库存维度 &lt;4 分者标记 ❌，不参与排名推荐。总分高但库存不达标的 ASIN（如 B0CQ4QYWL3 68 分）说明「产品能打，只是没货」，属于补货优先级最高的一类。</p>
+  <div style="overflow-x:auto;">
+  <table>
+    <thead>
+      <tr>
+        <th>父 ASIN</th><th class="num-r">销量基础</th><th class="num-r">流量趋势</th><th class="num-r">BSR走势</th>
+        <th class="num-r">价格带</th><th class="num-r">评论基础</th><th class="num-r">季节时机</th>
+        <th class="num-r">利润空间</th><th class="num-r">综合动量</th><th class="num-r">库存充足</th>
+        <th class="num-r">总分</th><th class="num-r">门槛</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">B0CQ4QYWL3</td><td class="num-r">10</td><td class="num-r">10</td><td class="num-r">8</td><td class="num-r">8</td><td class="num-r">9</td><td class="num-r">8</td><td class="num-r">3</td><td class="num-r">10</td><td class="num-r">2</td><td class="num-r"><strong>68</strong></td><td class="num-r"><span class="pill bad">❌</span></td></tr>
+      <tr><td class="mono">B0DD3R6LK5</td><td class="num-r">9</td><td class="num-r">10</td><td class="num-r">8</td><td class="num-r">5</td><td class="num-r">8</td><td class="num-r">7</td><td class="num-r">3</td><td class="num-r">10</td><td class="num-r">2</td><td class="num-r"><strong>62</strong></td><td class="num-r"><span class="pill bad">❌</span></td></tr>
+      <tr><td class="mono">B09PB9NWZB</td><td class="num-r">8</td><td class="num-r">10</td><td class="num-r">8</td><td class="num-r">8</td><td class="num-r">9</td><td class="num-r">6</td><td class="num-r">1</td><td class="num-r">10</td><td class="num-r">2</td><td class="num-r"><strong>62</strong></td><td class="num-r"><span class="pill bad">❌</span></td></tr>
+      <tr><td class="mono">B0DHL5X1XM</td><td class="num-r">7</td><td class="num-r">8</td><td class="num-r">8</td><td class="num-r">9</td><td class="num-r">5</td><td class="num-r">9</td><td class="num-r">1</td><td class="num-r">10</td><td class="num-r">3</td><td class="num-r"><strong>60</strong></td><td class="num-r"><span class="pill bad">❌</span></td></tr>
+      <tr><td class="mono">B0GHPVZGLX</td><td class="num-r">8</td><td class="num-r">4</td><td class="num-r">6</td><td class="num-r">5</td><td class="num-r">10</td><td class="num-r">8</td><td class="num-r">6</td><td class="num-r">3</td><td class="num-r">4</td><td class="num-r"><strong>54</strong></td><td class="num-r"><span class="pill warn">⚠</span></td></tr>
+      <tr><td class="mono">B08MKWRZ3W</td><td class="num-r">10</td><td class="num-r">6</td><td class="num-r">2</td><td class="num-r">8</td><td class="num-r">10</td><td class="num-r">6</td><td class="num-r">3</td><td class="num-r">5</td><td class="num-r">1</td><td class="num-r"><strong>51</strong></td><td class="num-r"><span class="pill bad">❌</span></td></tr>
+      <tr><td class="mono">B0D849XTR9</td><td class="num-r">7</td><td class="num-r">6</td><td class="num-r">7</td><td class="num-r">3</td><td class="num-r">8</td><td class="num-r">9</td><td class="num-r">3</td><td class="num-r">7</td><td class="num-r">1</td><td class="num-r"><strong>51</strong></td><td class="num-r"><span class="pill bad">❌</span></td></tr>
+      <tr><td class="mono">B0987J7WDB</td><td class="num-r">5</td><td class="num-r">2</td><td class="num-r">1</td><td class="num-r">7</td><td class="num-r">10</td><td class="num-r">3</td><td class="num-r">1</td><td class="num-r">1</td><td class="num-r">9</td><td class="num-r"><strong>39</strong></td><td class="num-r"><span class="pill ok">✅</span></td></tr>
+      <tr><td class="mono">B0DJSKJ3R9</td><td class="num-r">5</td><td class="num-r">2</td><td class="num-r">1</td><td class="num-r">4</td><td class="num-r">9</td><td class="num-r">3</td><td class="num-r">5</td><td class="num-r">1</td><td class="num-r">4</td><td class="num-r"><strong>34</strong></td><td class="num-r"><span class="pill warn">⚠</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note">
+    <strong>利润维度口径：</strong>采用领星 ERP <span class="mono">gross_margin</span>（2026-10，已扣除成本、亚马逊佣金/FBA 费用与广告费）。因此本批 9 个 ASIN 毛利率落在 7%-21% 区间，<strong>按 85 折做秒杀，多数会亏损</strong>。建议折扣控制在 10%-12%，或明确定位为清库存（如 B0987J7WDB）。
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">06</span>评分 × 库销比分布</h2>
+  <p class="sec-desc">右上象限（高分 + 高库存）才是理想秒杀标的。本批次没有 ASIN 落入该象限，虚线框出的是 60 分以上但库存不足的「高潜力待补货」集群。</p>
+  <div id="chartScatter" class="chart tall"></div>
+</section>
+
+<section>
+  <h2><span class="num">07</span>Top 3 详细分析与风险</h2>
+
+  <div class="detail a">
+    <h3>TOP 1 · B0GHPVZGLX 拼豆模板 20Pcs — 54 分</h3>
+    <div class="kv">
+      <div><div class="k">预计月销</div><div class="v">1,131 件</div></div>
+      <div><div class="k">FBA 可售</div><div class="v">2,626 件</div></div>
+      <div><div class="k">库销比</div><div class="v">2.32 月（⚠）</div></div>
+      <div><div class="k">评论 / 星级</div><div class="v">3,694 条 · 4.7 星</div></div>
+      <div><div class="k">售价</div><div class="v">$11.44</div></div>
+      <div><div class="k">毛利率</div><div class="v">21.4%</div></div>
+    </div>
+    <div class="reason">
+      <strong>推荐理由：</strong>拼豆是典型 Q4 礼品/亲子手工品，词根搜索量去年 11 月 49,499、12 月 57,020，接下来两周正好进入爬坡起点。同时该 ASIN 库存从 8 月 1,779 件累积到 10 月 2,626 件，而销量从 1,733 件/月降到 1,131 件/月，属于「库存开始积压 + 旺季即将到来」的组合，秒杀既能去库存又能卡位 Q4 排名。
+    </div>
+    <div class="risk">
+      <strong>风险：</strong>① 库销比 2.32 个月，秒杀需量约 2,828 件，缺口约 200 件，必须先在秒杀前补货 ≥600 件（含安全垫）；② 近 2 周流量环比 -12.6%，旺季尚未真正启动，建议把秒杀排到 <strong>11 月上旬</strong>而非本周；③ 85 折后毛利仅约 10%，折扣上限建议 12%。
+    </div>
+  </div>
+
+  <div class="detail b">
+    <h3>TOP 2 · B0987J7WDB 玉米叉 18Pcs — 39 分</h3>
+    <div class="kv">
+      <div><div class="k">预计月销</div><div class="v">609 件</div></div>
+      <div><div class="k">FBA 可售</div><div class="v">4,926 件</div></div>
+      <div><div class="k">库销比</div><div class="v">8.09 月（✅）</div></div>
+      <div><div class="k">评论 / 星级</div><div class="v">4,770 条 · 4.6 星</div></div>
+      <div><div class="k">售价</div><div class="v">$9.96</div></div>
+      <div><div class="k">毛利率</div><div class="v">7.3%</div></div>
+    </div>
+    <div class="reason">
+      <strong>推荐理由：</strong>本批唯一库存达标 ASIN，8 个月库销比意味着即使按 2.5 倍秒杀增量出货也毫无断货风险。4,770 条评论、4.6 星，折扣页面的转化承接能力强。适合作为「清库存型秒杀」标的，目标是把积压库存换成现金与评论增量。
+    </div>
+    <div class="risk">
+      <strong>风险：</strong>① 季节性已过——玉米叉搜索量 7 月峰值 47,388 → 9 月 22,474，接下来两个月是全年低谷，秒杀转化率会明显低于旺季；② 近 2 周流量 -50.7%，BSR 从 6,302 跌至 11,754；③ 毛利率仅 7.3%，85 折必亏，建议折扣 20%-25% 明确定位为清库存，不要指望拉排名。
+    </div>
+  </div>
+
+  <div class="detail c">
+    <h3>TOP 3 · B0DJSKJ3R9 田径钉 120Pcs — 34 分</h3>
+    <div class="kv">
+      <div><div class="k">预计月销</div><div class="v">384 件</div></div>
+      <div><div class="k">FBA 可售</div><div class="v">785 件</div></div>
+      <div><div class="k">库销比</div><div class="v">2.04 月（⚠）</div></div>
+      <div><div class="k">评论 / 星级</div><div class="v">1,601 条 · 4.6 星</div></div>
+      <div><div class="k">售价</div><div class="v">$10.59</div></div>
+      <div><div class="k">毛利率</div><div class="v">20.0%</div></div>
+    </div>
+    <div class="reason">
+      <strong>为什么仍列第三：</strong>库存刚过临界线（2.04 月），毛利率 20% 在本批中排第二，评论基础扎实。若平台给了不可放弃的秒杀名额，这是唯一「勉强可执行」的低销量选项。
+    </div>
+    <div class="risk">
+      <strong>明确不建议执行：</strong>① 田径钉是强季节性品，4 月峰值 138,175、9 月仅 5,707，当前处于年度谷底；② 近 2 周流量 -52.7%，BSR 从 12,683 恶化到 23,195；③ 9 月销量 887 件是 8 月 506 件的异常尖峰（开学季），10 月已回落到 263 件/20 天。此时做秒杀 = 用库存换不到排名。
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">08</span>未通过门槛的 6 个 ASIN：问题都在「没货」</h2>
+  <p class="sec-desc">这 6 个 ASIN 中有 4 个总分高于 Top 2，产品力本身没问题，纯粹是库存跟不上当前销量。处理优先级：先补货，秒杀延后。</p>
+  <table>
+    <thead>
+      <tr><th>父 ASIN</th><th>产品</th><th class="num-r">总分</th><th class="num-r">库销比</th><th>当前状态</th><th>建议</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">B0CQ4QYWL3</td><td>万圣节/国庆铁布贴 36Pcs</td><td class="num-r">68</td><td class="num-r">1.05</td><td>万圣节旺季峰值 + 流量 +54.4% + BSR 改善 44.5%，但 5,252 件只够 1 个月</td><td>本周最不该做的事就是秒杀；立即空运补货，目标库销比 ≥2.5 月（约 12,500 件）</td></tr>
+      <tr><td class="mono">B0DD3R6LK5</td><td>60Pcs 补丁贴</td><td class="num-r">62</td><td class="num-r">1.03</td><td>流量 +80.5%、BSR 改善 24.5%，库存 2,046 件仅够 31 天</td><td>补货 3,000+ 件；万圣节/圣诞前是补丁贴旺季，不要断货</td></tr>
+      <tr><td class="mono">B09PB9NWZB</td><td>皮革耳环 9Pairs</td><td class="num-r">62</td><td class="num-r">1.01</td><td>流量 +195.7%、BSR 改善 35.4%，10 月放量明显（879 件/20 天）</td><td>毛利率为负（-13%），先查清亏损原因（广告/退货/降价），再谈补货与秒杀</td></tr>
+      <tr><td class="mono">B0DHL5X1XM</td><td>万圣节补丁贴 12Pcs</td><td class="num-r">60</td><td class="num-r">1.94</td><td>季节时机最好（9 分），但库存差 460 件才能覆盖秒杀需量</td><td>万圣节只剩 11 天，补货来不及；放弃本季秒杀，转为常规销售并观察圣诞款</td></tr>
+      <tr><td class="mono">B08MKWRZ3W</td><td>脏辫钩针工具</td><td class="num-r">51</td><td class="num-r">0.74</td><td>销量最大（4,110 件/月），库存仅 22 天，已出现 BSR 下滑 33%</td><td>最高优先级补货；断货会直接摧毁类目排名</td></tr>
+      <tr><td class="mono">B0D849XTR9</td><td>木雕刻刀 20Pcs</td><td class="num-r">51</td><td class="num-r">0.65</td><td>Q4 礼品旺季（时机 9 分），但 566 件库存仅够 19 天</td><td>11-12 月是全年峰值（去年 12 月搜索 85,030），必须在 10 月底前完成补货</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2><span class="num">09</span>行动建议（按优先级）</h2>
+  <div class="actions">
+    <div class="action"><div class="p p0">P0</div><div class="body">
+      <strong>立即补货 3 个断货高风险 ASIN</strong>
+      <p>B08MKWRZ3W（0.74 月）、B0D849XTR9（0.65 月）、B09PB9NWZB（1.01 月）。这三个已经进入 30 天警戒区，断货损失远大于任何秒杀收益。</p>
+    </div></div>
+    <div class="action"><div class="p p0">P0</div><div class="body">
+      <strong>B0CQ4QYWL3 / B0DD3R6LK5 取消本季秒杀计划</strong>
+      <p>两者分数最高（68 / 62）但库存只有 1 个月。万圣节只剩 11 天，补货已来不及，正确动作是保住现有排名、正常出货。</p>
+    </div></div>
+    <div class="action"><div class="p p1">P1</div><div class="body">
+      <strong>B0GHPVZGLX 补货 ≥600 件后，排 11 月上旬秒杀</strong>
+      <p>不要在 10 月底做——拼豆真正的旺季是 11-12 月。折扣控制在 12% 以内，保住 21% 毛利率的底线。</p>
+    </div></div>
+    <div class="action"><div class="p p2">P2</div><div class="body">
+      <strong>B0987J7WDB 以清库存为目标执行秒杀</strong>
+      <p>8 个月库存、毛利率 7.3%，不要用「拉排名」的 KPI 考核这次活动。折扣 20%-25%，目标是把 4,926 件压到 3 个月以内。</p>
+    </div></div>
+    <div class="action"><div class="p p3">P3</div><div class="body">
+      <strong>B0DJSKJ3R9 不执行秒杀</strong>
+      <p>淡季 + 流量 -52.7% + 库存临界。等明年 3 月田径季前再评估。</p>
+    </div></div>
+    <div class="action"><div class="p p3">P3</div><div class="body">
+      <strong>B0DHL5X1XM 放弃本季，转圣诞款</strong>
+      <p>库存差 460 件，且 11 月 1 日后万圣节需求断崖。把资源转到圣诞/新年主题补丁贴。</p>
+    </div></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">10</span>方法论与数据说明</h2>
+  <table>
+    <tbody>
+      <tr><th style="width:170px;">销量口径</th><td>领星 ERP 按父 ASIN 汇总，2026-02-01 ~ 2026-10-20，按月分组。「预计月销」= 近 14 天日均销量 × 30，避免用 9 月整月数据低估正在放量的 ASIN。</td></tr>
+      <tr><th>库存口径</th><td>FBA 可售 = <span class="mono">afn_fulfillable_quantity</span>；含在途 = FBA 可售 + FBA 待调仓 + FBA 预留 + 入库中。库销比按 FBA 可售计算。</td></tr>
+      <tr><th>库存门槛</th><td>秒杀需量 = 月销量 × 2.5（覆盖 2 周秒杀期 3-5 倍日销 + 2 周常规销售）。≥2.5 月 ✅ 通过；2.0-2.5 月 ⚠ 临界；&lt;2.0 月 ❌ 不通过，不参与排名。</td></tr>
+      <tr><th>流量趋势</th><td>SIF <span class="mono">ops_get_asin_traffic_trend</span>，周粒度、近 3 个月。剔除最后一个未走完的周（2026-10-18 起仅 1-2 天数据），用最近 2 个完整周均值对比之前 4 个完整周均值。</td></tr>
+      <tr><th>BSR 走势</th><td>领星 ERP 父 ASIN <span class="mono">cate_rank</span>，2026-09 → 2026-10 变化幅度。</td></tr>
+      <tr><th>价格带</th><td>领星 ERP <span class="mono">avg_landed_price</span>（实际成交均价），并以 SIF 子体挂牌价区间交叉核对。</td></tr>
+      <tr><th>评论基础</th><td>SIF 子体评论合计。若所有子体评论数完全一致（共享评论池），取单值不重复累加。</td></tr>
+      <tr><th>季节性</th><td>SIF <span class="mono">market_get_keyword_root_trend</span> 月粒度、近 24 个月。旺季 = 当前 &gt; 年均 1.5 倍；淡季 = &lt; 0.6 倍。</td></tr>
+      <tr><th>利润空间</th><td>领星 ERP <span class="mono">gross_margin</span>（2026-10），已含广告费与平台费用。Sorftime 产品详情不提供 FBA 费用/佣金字段，未采用。</td></tr>
+      <tr><th>数据一致性</th><td>ERP <span class="mono">help</span> 未返回 <span class="mono">catalogVersion</span>，按 skill 要求改用 SIF 流量趋势交叉校验：ERP 月度销量走势与 SIF 周流量方向在 9 个 ASIN 上全部一致（如 B0987J7WDB 双双大幅下滑、B09PB9NWZB 双双大幅上升），未发现 Key 过期导致的失真。</td></tr>
+    </tbody>
+  </table>
+  <div class="note" style="margin-top:16px;">
+    SIF 数据更新至 2026-10-19（每日刷新、T+1 延迟）；领星 ERP 拉取时间为 2026-10-20。本报告不含 SIF <span class="mono">render_footer</span> 验证链接——本次调用的 <span class="mono">market_get_asin_profile</span>、<span class="mono">ops_get_asin_traffic_trend</span>、<span class="mono">market_get_keyword_root_trend</span> 均未返回该字段，仅返回 <span class="mono">data_notice</span>。
+  </div>
+</section>
+
+<footer>报告生成时间 2026-10-20 · 数据源：领星 ERP + SIF · 评分体系 9 维度 × 10 分 = 90 分制</footer>
+</div>
+
+<script>
+const C = {blue:'#2f6fed', gold:'#c9a227', silver:'#8d99ae', bronze:'#b07d4f',
+  ok:'#1f9d55', warn:'#d98600', bad:'#d64545', grey:'#b9c2d0', ink:'#1a2233', sub:'#5b6478'};
+const baseText = {fontFamily:'"PingFang SC","Microsoft YaHei",sans-serif', color:C.sub, fontSize:12};
+
+/* ---------- 库存 vs 销量 ---------- */
+const invData = [
+  {asin:'B0CQ4QYWL3', sales:5022, stock:5252, ratio:1.05, gate:'bad'},
+  {asin:'B08MKWRZ3W', sales:4110, stock:3046, ratio:0.74, gate:'bad'},
+  {asin:'B0DD3R6LK5', sales:1977, stock:2046, ratio:1.03, gate:'bad'},
+  {asin:'B09PB9NWZB', sales:1329, stock:1342, ratio:1.01, gate:'bad'},
+  {asin:'B0DHL5X1XM', sales:816,  stock:1580, ratio:1.94, gate:'bad'},
+  {asin:'B0D849XTR9', sales:873,  stock:566,  ratio:0.65, gate:'bad'},
+  {asin:'B0GHPVZGLX', sales:1131, stock:2626, ratio:2.32, gate:'warn'},
+  {asin:'B0DJSKJ3R9', sales:384,  stock:785,  ratio:2.04, gate:'warn'},
+  {asin:'B0987J7WDB', sales:609,  stock:4926, ratio:8.09, gate:'ok'}
+];
+const chInv = echarts.init(document.getElementById('chartInv'));
+chInv.setOption({
+  grid:{left:56,right:30,top:40,bottom:44},
+  tooltip:{trigger:'axis', formatter: p => {
+    const d = invData[p[0].dataIndex];
+    return `<b>${d.asin}</b><br/>预计月销：${d.sales}<br/>FBA可售：${d.stock}<br/>库销比：${d.ratio} 月`;
+  }},
+  legend:{data:['FBA可售库存','预计月销量','2.5月安全线'], top:6, textStyle:baseText},
+  xAxis:{type:'category', data:invData.map(d=>d.asin), axisLabel:{...baseText, rotate:32, fontSize:11},
+    axisLine:{lineStyle:{color:'#dde3ec'}}},
+  yAxis:{type:'value', name:'件', nameTextStyle:baseText, splitLine:{lineStyle:{color:'#f0f3f8'}},
+    axisLabel:baseText},
+  series:[
+    {name:'FBA可售库存', type:'bar', data:invData.map(d=>({value:d.stock, itemStyle:{color:d.gate==='ok'?C.ok:d.gate==='warn'?C.warn:C.bad}})),
+     barWidth:26, itemStyle:{borderRadius:[4,4,0,0]}},
+    {name:'预计月销量', type:'bar', data:invData.map(d=>d.sales), barWidth:26,
+     itemStyle:{color:'#c8d3e6', borderRadius:[4,4,0,0]}, label:{show:true, position:'top', fontSize:10, color:C.sub}},
+    {name:'2.5月安全线', type:'line', data:invData.map(d=>Math.round(d.sales*2.5)), symbol:'none',
+     lineStyle:{type:'dashed', color:'#7b8aa5', width:1.5}}
+  ]
+});
+
+/* ---------- 季节性 ---------- */
+const months = ['25-10','25-11','25-12','26-01','26-02','26-03','26-04','26-05','26-06','26-07','26-08','26-09'];
+const seasonUp = [
+  {name:'fuse beads', data:[30277,49499,57020,37929,31863,37101,34464,36404,45520,50060,42601,39434], color:C.blue},
+  {name:'wood carving kit', data:[30419,58868,85030,39136,28146,25535,23631,31777,33792,40621,37282,39838], color:C.ok},
+  {name:'halloween patches', data:[24878,null,null,null,null,null,null,null,1388,3126,6515,10292], color:C.warn}
+];
+const seasonDown = [
+  {name:'corn cob holders', data:[11712,9777,8964,7474,6974,8292,10479,27287,40186,47388,39409,22474], color:C.bad},
+  {name:'track spikes', data:[8565,15954,19257,27292,114430,197812,138175,37111,14777,6666,5116,5707], color:'#7b4bd6'},
+  {name:'dreadlock hook', data:[3065,2838,3303,3555,2671,3262,3126,3616,2803,2737,3555,2590], color:C.silver},
+  {name:'leather earrings', data:[3459,3333,3767,2499,2671,3777,3787,3934,3424,2909,2792,3131], color:'#4a9dc9'}
+];
+function seasonOpt(list){
+  return {
+    grid:{left:64,right:18,top:44,bottom:40},
+    tooltip:{trigger:'axis'},
+    legend:{data:list.map(s=>s.name), top:4, textStyle:{...baseText,fontSize:11}},
+    xAxis:{type:'category', data:months, axisLabel:{...baseText,fontSize:10}, axisLine:{lineStyle:{color:'#dde3ec'}}},
+    yAxis:{type:'value', splitLine:{lineStyle:{color:'#f0f3f8'}}, axisLabel:{...baseText, formatter:v=> v>=1000? (v/1000)+'k':v}},
+    series:list.map(s=>({name:s.name, type:'line', data:s.data, smooth:true, symbolSize:4,
+      lineStyle:{width:2,color:s.color}, itemStyle:{color:s.color}, connectNulls:false}))
+  };
+}
+echarts.init(document.getElementById('chartSeasonUp')).setOption(seasonOpt(seasonUp));
+echarts.init(document.getElementById('chartSeasonDown')).setOption(seasonOpt(seasonDown));
+
+/* ---------- 散点 ---------- */
+const scoreData = [
+  {asin:'B0CQ4QYWL3', score:68, ratio:1.05, gate:'bad'},
+  {asin:'B0DD3R6LK5', score:62, ratio:1.03, gate:'bad'},
+  {asin:'B09PB9NWZB', score:62, ratio:1.01, gate:'bad'},
+  {asin:'B0DHL5X1XM', score:60, ratio:1.94, gate:'bad'},
+  {asin:'B0GHPVZGLX', score:54, ratio:2.32, gate:'warn'},
+  {asin:'B08MKWRZ3W', score:51, ratio:0.74, gate:'bad'},
+  {asin:'B0D849XTR9', score:51, ratio:0.65, gate:'bad'},
+  {asin:'B0987J7WDB', score:39, ratio:8.09, gate:'ok'},
+  {asin:'B0DJSKJ3R9', score:34, ratio:2.04, gate:'warn'}
+];
+const chSc = echarts.init(document.getElementById('chartScatter'));
+chSc.setOption({
+  grid:{left:56,right:36,top:44,bottom:52},
+  tooltip:{formatter: p => `<b>${p.data.name}</b><br/>总分：${p.data.value[1]}<br/>库销比：${p.data.value[0]} 月`},
+  xAxis:{type:'value', name:'库销比（月）', nameLocation:'middle', nameGap:30, nameTextStyle:baseText,
+    min:0, max:9, splitLine:{lineStyle:{color:'#f0f3f8'}}, axisLabel:baseText},
+  yAxis:{type:'value', name:'总分', nameTextStyle:baseText, min:20, max:80,
+    splitLine:{lineStyle:{color:'#f0f3f8'}}, axisLabel:baseText},
+  series:[{
+    type:'scatter', symbolSize:20,
+    data:scoreData.map(d=>({name:d.asin, value:[d.ratio,d.score],
+      itemStyle:{color:d.gate==='ok'?C.ok:d.gate==='warn'?C.warn:C.bad, opacity:.85}})),
+    label:{show:true, position:'right', formatter:p=>p.name, fontSize:10, color:C.sub},
+    markLine:{silent:true, symbol:'none', lineStyle:{type:'dashed', color:'#9aa8bd'},
+      data:[{xAxis:2.5,label:{formatter:'2.5月门槛',fontSize:10,color:C.sub}},
+            {yAxis:60,label:{formatter:'60分',fontSize:10,color:C.sub}}]},
+    markArea:{silent:true, itemStyle:{color:'rgba(31,157,85,0.05)'},
+      data:[[{xAxis:2.5,yAxis:60},{xAxis:9,yAxis:80}]]}
+  }]
+});
+
+window.addEventListener('resize', ()=>{ chInv.resize(); chSc.resize();
+  document.querySelectorAll('.chart').forEach(el=>{ const i=echarts.getInstanceByDom(el); if(i) i.resize(); });
+});
+</script>
+</body>
+</html>

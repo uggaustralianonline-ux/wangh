@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10个ASIN 预秒杀可行性分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --gold:#d4a017; --silver:#9aa0a6; --bronze:#b87333;
+    --pass:#1e8e5a; --warn:#d97706; --fail:#dc2626;
+    --bg:#0f1422; --card:#1a2133; --card2:#1f2840; --line:#2a3350;
+    --text:#e8ecf5; --muted:#93a0bd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+  header.hero{background:linear-gradient(135deg,#16213a,#1a2133 55%,#231a33);border:1px solid var(--line);border-radius:16px;padding:30px 32px;margin-bottom:26px}
+  header.hero h1{font-size:24px;margin-bottom:8px;letter-spacing:.5px}
+  header.hero .sub{color:var(--muted);font-size:13px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .meta .chip{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--muted)}
+  .meta .chip b{color:var(--text);font-weight:600}
+  h2{font-size:18px;margin:30px 0 14px;display:flex;align-items:center;gap:8px}
+  h2::before{content:"";width:4px;height:18px;background:#4f8cff;border-radius:2px;display:inline-block}
+  h3{font-size:15px;margin:14px 0 8px;color:#cdd7ee}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:860px){.g3,.g2{grid-template-columns:1fr}}
+  /* Top3 */
+  .top3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:860px){.top3{grid-template-columns:1fr}}
+  .medal{border-radius:14px;padding:20px;position:relative;overflow:hidden;border:1px solid var(--line)}
+  .medal .medal-icon{font-size:34px;position:absolute;top:14px;right:16px;opacity:.9}
+  .medal .rank{font-size:13px;font-weight:700;letter-spacing:1px;display:inline-block;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+  .medal h3{font-size:17px;margin:6px 0}
+  .medal .score{font-size:40px;font-weight:800;margin:6px 0}
+  .medal .score small{font-size:14px;color:var(--muted);font-weight:500}
+  .medal p{font-size:13px;color:var(--muted)}
+  .medal.gold{background:linear-gradient(160deg,#3a2f12,#211a10);border-color:#5c4a18}
+  .medal.gold .rank{background:#d4a017;color:#1b1402}
+  .medal.silver{background:linear-gradient(160deg,#2e3440,#1a1e28);border-color:#4a5261}
+  .medal.silver .rank{background:var(--silver);color:#14171d}
+  .medal.bronze{background:linear-gradient(160deg,#3a2a1d,#1f1710);border-color:#5c4327}
+  .medal.bronze .rank{background:var(--bronze);color:#1e1409}
+  .medal .tag{display:inline-block;background:rgba(255,255,255,.08);border-radius:6px;padding:2px 8px;font-size:12px;margin:2px 4px 2px 0}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:var(--card2);color:var(--muted);text-align:left;padding:10px 12px;font-weight:600;white-space:nowrap}
+  td{padding:10px 12px;border-top:1px solid var(--line)}
+  tr:hover td{background:rgba(79,140,255,.05)}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .badge{display:inline-block;padding:2px 9px;border-radius:16px;font-size:11.5px;font-weight:700}
+  .badge.pass{background:rgba(30,142,90,.16);color:var(--pass);border:1px solid rgba(30,142,90,.4)}
+  .badge.warn{background:rgba(217,119,6,.16);color:var(--warn);border:1px solid rgba(217,119,6,.4)}
+  .badge.fail{background:rgba(220,38,38,.16);color:var(--fail);border:1px solid rgba(220,38,38,.4)}
+  .score-cell{font-weight:700}
+  th.sticky{position:sticky;top:0}
+  /* detail */
+  .detail-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+  .meter{margin-top:10px}
+  .dim{display:flex;align-items:center;gap:10px;margin:7px 0}
+  .dim .lbl{width:92px;font-size:12px;color:var(--muted);flex-shrink:0}
+  .dim .bar{flex:1;height:8px;background:#2a3350;border-radius:5px;overflow:hidden}
+  .dim .bar i{display:block;height:100%;border-radius:5px}
+  .dim .val{width:46px;text-align:right;font-size:12.5px;font-weight:700}
+  .note{background:rgba(217,119,6,.07);border:1px solid rgba(217,119,6,.3);border-radius:10px;padding:12px 14px;font-size:13px;color:#f2c98d;margin-bottom:16px}
+  .grid-cell{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .grid-cell .lbl{font-size:12px;color:var(--muted)}
+  .grid-cell .val{font-size:16px;font-weight:700;margin-top:3px}
+  .foot{color:var(--muted);font-size:12px;margin-top:26px;border-top:1px solid var(--line);padding-top:16px}
+  .chartbox{width:100%;height:340px}
+  .chartbox.sm{height:280px}
+  ul.tight li{margin:5px 0;font-size:13.5px}
+  code{background:rgba(79,140,255,.12);padding:1px 6px;border-radius:5px;font-size:12px;color:#9cc0ff}
+  .method{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13px;color:#c6d0e6}
+  .step{display:flex;gap:12px;margin:8px 0}
+  .step .n{width:24px;height:24px;border-radius:50%;background:#4f8cff;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>预秒杀可行性分析 · 10个ASIN 本周名单</h1>
+    <div class="sub">评估目标：判断这批父ASIN 在未来两周（Lightning Deal / Best Deal）是否适合做秒杀、优先级如何，用数据代替拍脑袋。</div>
+    <div class="meta">
+      <span class="chip">领星ERP catalogVersion：<b>lingxing-mcp-20260909-v2</b></span>
+      <span class="chip">数据拉取时间：<b>2026-09-09</b></span>
+      <span class="chip">SIF数据更新：<b>至 2026-09-08</b></span>
+      <span class="chip">评估口径：<b>8月（就近整月）为基准月</b></span>
+      <span class="chip">站点：<b>US</b></span>
+    </div>
+  </header>
+
+  <div class="note">
+    <b>数据质量声明：</b>领星ERP为当日直连（catalogVersion 20260909-v2），已与SIF近期购买量交叉验证，<b>未见失真相位，判为可信源</b>。SIF流量趋势均为周度数据（含 2026-09-06 当周因T+1延迟的异常回落，评分以 6 周整体方向为准）。毛利率采用领星口径，个别 ASIN 数值偏低属成本结构差异，秒杀前建议复核真实采购/头程成本。
+  </div>
+
+  <!-- Top3 -->
+  <h2>Top 3 秒杀推荐</h2>
+  <div class="top3">
+    <div class="medal gold">
+      <div class="medal-icon">🥇</div>
+      <div class="rank">#1 金牌推荐</div>
+      <h3>B0D7H6PN12</h3>
+      <p>Football Theme Iron on Patches 30pcs</p>
+      <div class="score">72<small>/90</small></div>
+      <p>流量 sharp_growth · 秋季足球+绣章双旺季 · 库存3.23月充裕</p>
+      <div style="margin-top:10px">
+        <span class="tag">✅ 门槛通过</span><span class="tag">$8.24</span><span class="tag">4.6★ / 1080评</span>
+      </div>
+    </div>
+    <div class="medal silver">
+      <div class="medal-icon">🥈</div>
+      <div class="rank">#2 银牌推荐</div>
+      <h3>B093GC1P2Q</h3>
+      <p>Track & Cross Country Spikes 20pcs</p>
+      <div class="score">68<small>/90</small></div>
+      <p>库存5.75月最充裕 · 越野赛季旺季爬坡 · $6.03黄金价格带</p>
+      <div style="margin-top:10px">
+        <span class="tag">✅ 门槛通过</span><span class="tag">$6.03</span><span class="tag">4.6★ / 1445评</span>
+      </div>
+    </div>
+    <div class="medal bronze">
+      <div class="medal-icon">🥉</div>
+      <div class="rank">#3 铜牌推荐</div>
+      <h3>B0DJSKJ3R9</h3>
+      <p>Track Spikes 120pcs Stainless Steel</p>
+      <div class="score">64<small>/90</small></div>
+      <p>同为越野赛季高峰 · 流量 sharp_growth · 库存2.95月达标</p>
+      <div style="margin-top:10px">
+        <span class="tag">✅ 门槛通过</span><span class="tag">$10.12</span><span class="tag">4.6★ / 1597评</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 库存总览 -->
+  <h2>一、库存 + 销售总览（门槛判定）</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>ASIN</th><th>产品</th><th class="num">8月销量</th><th class="num">FBA可售</th><th class="num">库销比(月)</th><th class="num">秒杀需量(销量×2.5)</th><th>门槛判定</th></tr></thead>
+      <tbody>
+        <tr><td><code>B0D7H6PN12</code></td><td>Football Iron on Patches 30pcs</td><td class="num">1,557</td><td class="num">5,024</td><td class="num">3.23</td><td class="num">3,893</td><td><span class="badge pass">✅ 通过</span></td></tr>
+        <tr><td><code>B093GC1P2Q</code></td><td>Track Spikes 20pcs</td><td class="num">493</td><td class="num">2,833</td><td class="num">5.75</td><td class="num">1,233</td><td><span class="badge pass">✅ 通过</span></td></tr>
+        <tr><td><code>B0DJSKJ3R9</code></td><td>Track Spikes 120pcs</td><td class="num">506</td><td class="num">1,495</td><td class="num">2.95</td><td class="num">1,265</td><td><span class="badge pass">✅ 通过</span></td></tr>
+        <tr><td><code>B0DD3R6LK5</code></td><td>60Pcs Pink Iron on Patches</td><td class="num">1,468</td><td class="num">3,401</td><td class="num">2.32</td><td class="num">3,670</td><td><span class="badge warn">⚠ 临界</span></td></tr>
+        <tr><td><code>B0CJ4SPFGZ</code></td><td>Back to School Teacher Stud Earrings</td><td class="num">1,649</td><td class="num">4,042</td><td class="num">2.45</td><td class="num">4,123</td><td><span class="badge warn">⚠ 临界</span></td></tr>
+        <tr><td><code>B08ZYLT7VR</code></td><td>Corn Holders 5 Pairs</td><td class="num">2,085</td><td class="num">4,249</td><td class="num">2.04</td><td class="num">5,213</td><td><span class="badge warn">⚠ 临界</span></td></tr>
+        <tr><td><code>B0GHPVZGLX</code></td><td>Fuse Beads Pegboards 20pcs</td><td class="num">1,490</td><td class="num">1,850</td><td class="num">1.24</td><td class="num">3,725</td><td><span class="badge fail">❌ 不通过</span></td></tr>
+        <tr><td><code>B08XPRYKLX</code></td><td>Swivel Clasps Snap Hooks 100pcs</td><td class="num">1,454</td><td class="num">2,731</td><td class="num">1.88</td><td class="num">3,635</td><td><span class="badge fail">❌ 不通过</span></td></tr>
+        <tr><td><code>B08MW3X2MG</code></td><td>Acrylic Clay Roller</td><td class="num">1,001</td><td class="num">1,296</td><td class="num">1.29</td><td class="num">2,503</td><td><span class="badge fail">❌ 不通过</span></td></tr>
+        <tr><td><code>B07XDJ2DVH</code></td><td>Dreadlock Crochet Hook 8pcs</td><td class="num">563</td><td class="num">981</td><td class="num">1.74</td><td class="num">1,408</td><td><span class="badge fail">❌ 不通过</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px">库销比 = FBA可售 ÷ 8月销量；秒杀需量 = 8月销量 × 2.5（覆盖2周秒杀3-5倍日销 + 2周常规销售）。未通过门槛的4个ASIN不参与推荐排名。</p>
+  </div>
+
+  <!-- 季节性 -->
+  <h2>二、季节性分析（SIF 关键词12个月趋势）</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>cross country spikes — 越野赛季（对应 B093GC1P2Q / B0DJSKJ3R9）</h3>
+      <div id="chartSeasonSpikes" class="chartbox sm"></div>
+      <p style="font-size:12.5px;color:var(--muted)">2026-08 词根综合量 2.9万，逼近历史峰值 3.5万（2025-08），自3月低点 0.15万 强势爬坡。<b style="color:#9cc0ff">当前正处于8-11月越野赛季爬坡+峰值窗口，秒杀时机极佳。</b></p>
+    </div>
+    <div class="card">
+      <h3>iron on patches — 绣章（对应 B0D7H6PN12 / B0DD3R6LK5）</h3>
+      <div id="chartSeasonPatches" class="chartbox sm"></div>
+      <p style="font-size:12.5px;color:var(--muted)">词根综合量 85.4万（2026-08）创历史新高，全年高位常青偏旺。足球主题绣章叠加9-12月美式足球赛季。</p>
+    </div>
+  </div>
+
+  <!-- 评分矩阵 -->
+  <h2>三、9维度评分矩阵（90分制）</h2>
+  <div class="card">
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>ASIN</th><th>销量基础</th><th>流量趋势</th><th>BSR走势</th><th>价格带</th><th>评论基础</th><th>季节时机</th><th>利润空间</th><th>综合动量</th><th>库存充足</th><th class="num">总分</th><th>门槛</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:rgba(212,160,23,.06)"><td><code>B0D7H6PN12</code></td><td class="score-cell">8</td><td class="score-cell" style="color:#5bd0a0">10</td><td class="score-cell">8</td><td class="score-cell">7</td><td class="score-cell">9</td><td class="score-cell" style="color:#5bd0a0">9</td><td class="score-cell">4</td><td class="score-cell">10</td><td class="score-cell">7</td><td class="num"><b>72</b></td><td><span class="badge pass">✅</span></td></tr>
+        <tr style="background:rgba(154,160,166,.06)"><td><code>B093GC1P2Q</code></td><td class="score-cell">4</td><td class="score-cell" style="color:#5bd0a0">10</td><td class="score-cell">8</td><td class="score-cell">9</td><td class="score-cell">9</td><td class="score-cell" style="color:#5bd0a0">9</td><td class="score-cell">3</td><td class="score-cell">10</td><td class="score-cell">9</td><td class="num"><b>68</b></td><td><span class="badge pass">✅</span></td></tr>
+        <tr style="background:rgba(184,115,51,.06)"><td><code>B0DJSKJ3R9</code></td><td class="score-cell">4</td><td class="score-cell" style="color:#5bd0a0">10</td><td class="score-cell">8</td><td class="score-cell">5</td><td class="score-cell">9</td><td class="score-cell" style="color:#5bd0a0">9</td><td class="score-cell">3</td><td class="score-cell">10</td><td class="score-cell">6</td><td class="num"><b>64</b></td><td><span class="badge pass">✅</span></td></tr>
+        <tr><td><code>B0DD3R6LK5</code></td><td class="score-cell">7</td><td class="score-cell">4</td><td class="score-cell">6</td><td class="score-cell">4</td><td class="score-cell">10</td><td class="score-cell">6</td><td class="score-cell">3</td><td class="score-cell">4</td><td class="score-cell">4</td><td class="num"><b>48</b></td><td><span class="badge warn">⚠</span></td></tr>
+        <tr><td><code>B0CJ4SPFGZ</code></td><td class="score-cell">9</td><td class="score-cell">2</td><td class="score-cell">4</td><td class="score-cell">7</td><td class="score-cell">2</td><td class="score-cell">4</td><td class="score-cell">3</td><td class="score-cell">2</td><td class="score-cell">4</td><td class="num"><b>37</b></td><td><span class="badge warn">⚠</span></td></tr>
+        <tr><td><code>B08ZYLT7VR</code></td><td class="score-cell">10</td><td class="score-cell">4</td><td class="score-cell">3</td><td class="score-cell">8</td><td class="score-cell">10</td><td class="score-cell">4</td><td class="score-cell">3</td><td class="score-cell">3</td><td class="score-cell">4</td><td class="num"><b>49</b></td><td><span class="badge warn">⚠</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px">库存维度 &lt;4 分（库销比&lt;2.0月）的ASIN标记 ❌ 不参与排名；临界（2.0-2.5月）参与但标注风险。仅列出门槛为 ✅/⚠ 的6个候选，其余4个见下方简析。</p>
+  </div>
+
+  <!-- Top3 详细分析 -->
+  <h2>四、Top 3 详细分析</h2>
+
+  <div class="card">
+    <div class="detail-head">
+      <h3>🥇 B0D7H6PN12 — AUGSUN Football Theme Iron on Patches 30pcs</h3>
+      <span class="badge pass">✅ 门槛通过 · 综合72/90</span>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted);margin:8px 0">$8.24 · 4.6★ · 1080评论 · BSR(A&C&S)约3563</p>
+    <div class="meter">
+      <div class="dim"><span class="lbl">销量基础</span><span class="bar"><i style="width:80%;background:#4f8cff"></i></span><span class="val">8</span></div>
+      <div class="dim"><span class="lbl">流量趋势</span><span class="bar"><i style="width:100%;background:#5bd0a0"></i></span><span class="val">10</span></div>
+      <div class="dim"><span class="lbl">BSR走势</span><span class="bar"><i style="width:80%;background:#5bd0a0"></i></span><span class="val">8</span></div>
+      <div class="dim"><span class="lbl">价格带</span><span class="bar"><i style="width:70%;background:#4f8cff"></i></span><span class="val">7</span></div>
+      <div class="dim"><span class="lbl">评论基础</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+      <div class="dim"><span class="lbl">季节时机</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+      <div class="dim"><span class="lbl">利润空间</span><span class="bar"><i style="width:40%;background:#f4b860"></i></span><span class="val">4</span></div>
+      <div class="dim"><span class="lbl">综合动量</span><span class="bar"><i style="width:100%;background:#5bd0a0"></i></span><span class="val">10</span></div>
+      <div class="dim"><span class="lbl">库存充足</span><span class="bar"><i style="width:70%;background:#5bd0a0"></i></span><span class="val">7</span></div>
+    </div>
+    <ul class="tight" style="margin-top:12px">
+      <li><b>推荐理由：</b>SIF 30天流量 <code>sharp_growth</code>，6周总分从0.89万→1.61万爬升。「Football」主题叠加9-12月美式足球赛季 + iron on patches 全行业旺季，双重季节红利；库存3.23月充足，能承受秒杀增量不断货。</li>
+      <li><b>风险提示：</b>价格为$8.24（$8-10区间）、评论1080条已过基础线但低于Top3中track spikes 的1500+；秒杀价后利润率需复核。建议秒杀价≤$6.99拉足转化，秒杀后评估是否追补货。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="detail-head">
+      <h3>🥈 B093GC1P2Q — AUGSUN Track & Cross Country Spikes 20pcs</h3>
+      <span class="badge pass">✅ 门槛通过 · 综合68/90</span>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted);margin:8px 0">$6.03 · 4.6★ · 1445评论 · BSR(A&C&S)约13556</p>
+    <div class="meter">
+      <div class="dim"><span class="lbl">销量基础</span><span class="bar"><i style="width:40%;background:#f4b860"></i></span><span class="val">4</span></div>
+      <div class="dim"><span class="lbl">流量趋势</span><span class="bar"><i style="width:100%;background:#5bd0a0"></i></span><span class="val">10</span></div>
+      <div class="dim"><span class="lbl">BSR走势</span><span class="bar"><i style="width:80%;background:#5bd0a0"></i></span><span class="val">8</span></div>
+      <div class="dim"><span class="lbl">价格带</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+      <div class="dim"><span class="lbl">评论基础</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+      <div class="dim"><span class="lbl">季节时机</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+      <div class="dim"><span class="lbl">利润空间</span><span class="bar"><i style="width:30%;background:#e07a5f"></i></span><span class="val">3</span></div>
+      <div class="dim"><span class="lbl">综合动量</span><span class="bar"><i style="width:100%;background:#5bd0a0"></i></span><span class="val">10</span></div>
+      <div class="dim"><span class="lbl">库存充足</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+    </div>
+    <ul class="tight" style="margin-top:12px">
+      <li><b>推荐理由：</b>库存5.75月为全场最充裕，秒杀安全边际最高。<code>$6.03</code> 属于$5-8秒杀黄金价格带（折扣后约$5.1，决策门槛极低）。越野赛季关键词8月逼近历史峰值，流量 <code>sharp_growth</code>，秒杀转化预期强。</li>
+      <li><b>风险提示：</b>8月销量基数偏低(493件)，秒杀对排名拉升作用强但绝对增量有限；领星毛利率数据偏低(≈0.8%)，成本结构需重点复核，避免薄利多销反亏。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="detail-head">
+      <h3>🥉 B0DJSKJ3R9 — AUGSUN Track Spikes 120pcs Stainless Steel</h3>
+      <span class="badge pass">✅ 门槛通过 · 综合64/90</span>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted);margin:8px 0">$10.12 · 4.6★ · 1597评论 · BSR(A&C&S)约11751</p>
+    <div class="meter">
+      <div class="dim"><span class="lbl">销量基础</span><span class="bar"><i style="width:40%;background:#f4b860"></i></span><span class="val">4</span></div>
+      <div class="dim"><span class="lbl">流量趋势</span><span class="bar"><i style="width:100%;background:#5bd0a0"></i></span><span class="val">10</span></div>
+      <div class="dim"><span class="lbl">BSR走势</span><span class="bar"><i style="width:80%;background:#5bd0a0"></i></span><span class="val">8</span></div>
+      <div class="dim"><span class="lbl">价格带</span><span class="bar"><i style="width:50%;background:#f4b860"></i></span><span class="val">5</span></div>
+      <div class="dim"><span class="lbl">评论基础</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+      <div class="dim"><span class="lbl">季节时机</span><span class="bar"><i style="width:90%;background:#5bd0a0"></i></span><span class="val">9</span></div>
+      <div class="dim"><span class="lbl">利润空间</span><span class="bar"><i style="width:30%;background:#e07a5f"></i></span><span class="val">3</span></div>
+      <div class="dim"><span class="lbl">综合动量</span><span class="bar"><i style="width:100%;background:#5bd0a0"></i></span><span class="val">10</span></div>
+      <div class="dim"><span class="lbl">库存充足</span><span class="bar"><i style="width:60%;background:#5bd0a0"></i></span><span class="val">6</span></div>
+    </div>
+    <ul class="tight" style="margin-top:12px">
+      <li><b>推荐理由：</b>大包装120颗，客单价$10.12 略高但单位单价更低、复购囤货性更强（越野高峰期耗件），评论1597条最多。与B093GC1P2Q同属越野赛道，可二选一或错峰。</li>
+      <li><b>风险提示：</b>库存2.95月刚好达标(<code>✅</code>)但不如前两个充裕，秒杀后需密切跟进补货；$10+价格带对冲动秒杀转化略弱，建议折扣力度 ≥20%。</li>
+    </ul>
+  </div>
+
+  <!-- 数据可视化 -->
+  <h2>五、数据可视化</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>8月销量 vs FBA可售（门槛5.75月 vs 临界 vs 不足）</h3>
+      <div id="chartInvVol" class="chartbox"></div>
+    </div>
+    <div class="card">
+      <h3>评分 vs 库销比（气泡 = 门槛）</h3>
+      <div id="chartScoreRatio" class="chartbox"></div>
+    </div>
+  </div>
+
+  <!-- 未通过门槛 -->
+  <h2>六、未通过门槛 ASIN 简析（不建议本周秒杀）</h2>
+  <div class="card">
+    <ul class="tight">
+      <li><b style="color:#d97706">B0GHPVZGLX</b>（Fuse Beads Pegboards $13.90）— 库销比 1.24月，严重过短。库存仅1,850件但秒杀需 3,725 件，秒杀必断货。<b>先补货再考虑。</b></li>
+      <li><b style="color:#d97706">B08XPRYKLX</b>（Swivel Clasps 100pcs $9.95）— 库销比 1.88月，略微不足，秒杀需3,635件。常青配件品类，可等下次补货到货后再排期。</li>
+      <li><b style="color:#d97706">B08MW3X2MG</b>（Acrylic Clay Roller $6.85）— 库销比 1.29月，过短。黏土工具非季节爆点，不值得为秒杀冒险断货。</li>
+      <li><b style="color:#d97706">B07XDJ2DVH</b>（Dreadlock Crochet Hook $8.67）— 库销比 1.74月，且当前流量/B市况一般，秒杀性价比低。</li>
+    </ul>
+  </div>
+
+  <!-- 方法论 -->
+  <h2>七、方法论说明</h2>
+  <div class="method">
+    <div class="step"><span class="n">1</span><div><b>数据源</b>：领星ERP（销售+库存，catalogVersion lingxing-mcp-20260909-v2，当日直连）+ SIF（产品档案/流量趋势/关键词季节性，数据至2026-09-08）+ Sorftime（未取到则利润维度基准分）。</div></div>
+    <div class="step"><span class="n">2</span><div><b>库存门槛</b>：库销比 = FBA可售 ÷ 8月销量；库销比 ≥2.5月 ✅、2.0-2.5月 ⚠、&lt;2.0月 ❌ 不参与排名。秒杀需量 = 月销×2.5。</div></div>
+    <div class="step"><span class="n">3</span><div><b>9维评分</b>：销量基础/流量趋势/BSR走势/价格带/评论基础/季节时机/利润空间/综合动量/库存充足，各0-10分，总分90。</div></div>
+    <div class="step"><span class="n">4</span><div><b>季节性</b>：通过SIF词根12个月搜索量趋势判定旺季/常青/淡季；旺季爬坡期做秒杀转化率倍增，淡季拉不动。</div></div>
+    <div class="step"><span class="n">5</span><div><b>局限性</b>：毛利率为领星口径，秒杀前建议复核真实采购+头程成本；SIF当周数据含T+1延迟；BSR基线为单次快照，排名走势为方向性估计。</div></div>
+  </div>
+
+  <!-- 行动建议 -->
+  <h2>八、行动建议（按优先级）</h2>
+  <div class="card">
+    <ul class="tight">
+      <li><b>① 立即锁定 B0D7H6PN12</b> 作为本周主推秒杀（Lightning Deal），秒杀价建议 ≤$6.99，充分借势Football+绣章双旺季。确认秒杀资格与库容。</li>
+      <li><b>② 从 B093GC1P2Q / B0DJSKJ3R9 二选一</b> 作为第二场（越野赛道高峰期，两场错峰避免互抢流量）。优先 B093GC1P2Q（库存5.75月更稳、价格带$6.03更优）。</li>
+      <li><b>③ 复核毛利率</b>：对3个Top ASIN，用真实采购单价+头程+FBA费+佣金重算秒杀价利润率，确认 ≥20% 再提交。</li>
+      <li><b>④ 已入库临界项</b>（B0DD3R6LK5 / B0CJ4SPFGZ / B08ZYLT7VR）建议本轮暂时排后，分别跟进补货或确认非开学/非玉米季窗口后再评估。</li>
+      <li><b>⑤ 4个未达标ASIN</b>：先补货；其中 B0GHPVZGLX、B08MW3X2MG 断货风险最高，优先排补货。</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <p>数据来源：领星ERP MCP（当日直连，未见失真） · SIF MCP（market_get_asin_profile / ops_get_asin_traffic_trend / market_get_keyword_root_trend）· 评分依据 pre-flash-sale-analysis skill 9维度细则。</p>
+    <p>SIF 验证链接（render_footer）：cross country spikes 词根趋势数据更新至 2026-09-08；iron on patches 词根趋势数据更新至 2026-09-08；SIF流量趋势 data_notice: "Data updated through 2026-09-08 (refreshes daily, 1-day delay)"。</p>
+    <p>本报告为预秒杀可行性参考，不构成交易决策保证。实际秒杀需结合当日广告预算、类目竞争与账号秒杀资格。</p>
+  </div>
+
+</div>
+
+<script>
+const axisStyle={axisLabel:{color:'#93a0bd'},axisLine:{lineStyle:{color:'#2a3350'}},splitLine:{lineStyle:{color:'#1f2840'}}};
+
+// Season spikes
+echarts.init(document.getElementById('chartSeasonSpikes')).setOption({
+  backgroundColor:'transparent',textStyle:{color:'#e8ecf5'},tooltip:{trigger:'axis'},
+  grid:{left:46,right:16,top:20,bottom:28},
+  xAxis:{type:'category',...axisStyle,data:['3月','4月','5月','6月','7月','8月']},
+  yAxis:{type:'value',...axisStyle},
+  series:[{name:'词根综合量(万)',type:'bar',data:[0.15,0.22,0.20,0.28,0.43,2.9],
+    itemStyle:{color:'#4f8cff',borderRadius:[5,5,0,0]},label:{show:true,color:'#c8d4ee',fontSize:11}}]
+});
+
+// Season patches
+echarts.init(document.getElementById('chartSeasonPatches')).setOption({
+  backgroundColor:'transparent',textStyle:{color:'#e8ecf5'},tooltip:{trigger:'axis'},
+  grid:{left:50,right:16,top:20,bottom:28},
+  xAxis:{type:'category',...axisStyle,data:['3月','4月','5月','6月','7月','8月']},
+  yAxis:{type:'value',...axisStyle},
+  series:[{name:'词根综合量(万)',type:'bar',data:[58.6,55.9,53.7,64.3,79.6,85.4],
+    itemStyle:{color:'#7c5bd0',borderRadius:[5,5,0,0]},label:{show:true,color:'#c8d4ee',fontSize:11}}]
+});
+
+// Inv vs Vol
+const invAsins=['B0GHPVZGLX','B0CJ4SPFGZ','B0DD3R6LK5','B0D7H6PN12','B093GC1P2Q','B0DJSKJ3R9','B08XPRYKLX','B08ZYLT7VR','B08MW3X2MG','B07XDJ2DVH'];
+const vol=[1490,1649,1468,1557,493,506,1454,2085,1001,563];
+const fba=[1850,4042,3401,5024,2833,1495,2731,4249,1296,981];
+echarts.init(document.getElementById('chartInvVol')).setOption({
+  backgroundColor:'transparent',textStyle:{color:'#e8ecf5'},tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{textStyle:{color:'#93a0bd'},top:0},
+  grid:{left:46,right:16,top:34,bottom:56},
+  xAxis:{type:'category',...axisStyle,data:invAsins,axisLabel:{color:'#93a0bd',fontSize:10,rotate:30,interval:0}},
+  yAxis:{type:'value',...axisStyle},
+  series:[
+    {name:'8月销量',type:'bar',data:vol,itemStyle:{color:'#4f8cff'},barMaxWidth:16},
+    {name:'FBA可售',type:'bar',data:fba,itemStyle:{color:'#5bd0a0'},barMaxWidth:16}
+  ]
+});
+
+// Score vs Ratio bubble
+const cand=['B0D7H6PN12','B093GC1P2Q','B0DJSKJ3R9','B0DD3R6LK5','B0CJ4SPFGZ','B08ZYLT7VR'];
+const scores=[72,68,64,48,37,49];
+const ratios=[3.23,5.75,2.95,2.32,2.45,2.04];
+const gates=['pass','pass','pass','warn','warn','warn'];
+const colors=['#1e8e5a','#1e8e5a','#1e8e5a','#d97706','#d97706','#d97706'];
+echarts.init(document.getElementById('chartScoreRatio')).setOption({
+  backgroundColor:'transparent',textStyle:{color:'#e8ecf5'},tooltip:{formatter:p=>cand[p.dataIndex]+'<br>评分：'+scores[p.dataIndex]+' · 库销比：'+ratios[p.dataIndex]+'月 · 门槛：'+gates[p.dataIndex]},
+  grid:{left:44,right:20,top:20,bottom:30},
+  xAxis:{type:'value',name:'库销比(月)',nameTextStyle:{color:'#93a0bd'},...axisStyle},
+  yAxis:{type:'value',name:'总分',nameTextStyle:{color:'#93a0bd'},min:0,max:80,...axisStyle},
+  series:[{type:'scatter',data:ratios.map((r,i)=>[r,scores[i]]),symbolSize:s=>s[0]*9+22,
+    itemStyle:{color:(p)=>colors[p.dataIndex],opacity:.85,borderColor:'#fff',borderWidth:1},
+    label:{show:true,formatter:(p)=>cand[p.dataIndex].slice(0,10),position:'top',color:'#c8d4ee',fontSize:10}}]
+});
+</script>
+</body>
+</html>

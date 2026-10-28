@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12个父ASIN子ASIN级秒杀推荐分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+  .header { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 30px; border-radius: 12px; margin-bottom: 20px; }
+  .header h1 { font-size: 24px; margin-bottom: 8px; }
+  .header .meta { font-size: 13px; opacity: 0.9; display: flex; flex-wrap: wrap; gap: 20px; }
+  .header .meta span { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .section h2 { font-size: 18px; color: #333; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #667eea; }
+  .section h3 { font-size: 15px; color: #555; margin: 16px 0 10px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 10px; }
+  .card { border-radius: 12px; padding: 20px; color: #fff; position: relative; overflow: hidden; }
+  .card.gold { background: linear-gradient(135deg, #f6d365, #fda085); }
+  .card.silver { background: linear-gradient(135deg, #a8c0ff, #3f6ee0); }
+  .card.bronze { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .card .rank { font-size: 14px; opacity: 0.9; }
+  .card .asin { font-size: 20px; font-weight: bold; margin: 4px 0; }
+  .card .score { font-size: 36px; font-weight: bold; }
+  .card .score-label { font-size: 12px; opacity: 0.8; }
+  .card .tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .card .tags span { background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+  .card .reason { font-size: 12px; margin-top: 8px; opacity: 0.9; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f5f7fa; padding: 10px 8px; text-align: center; color: #555; font-weight: 600; border-bottom: 2px solid #e8e8e8; position: sticky; top: 0; }
+  td { padding: 8px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+  tr:hover { background: #f9f9fc; }
+  .badge { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge-pass { background: #e6f7ed; color: #52c41a; }
+  .badge-warn { background: #fff7e6; color: #faad14; }
+  .badge-fail { background: #fff1f0; color: #ff4d4f; }
+  .badge-gold { background: #fffbe6; color: #faad14; }
+  .badge-season { background: #f0f5ff; color: #1890ff; }
+  .parent-rank { display: flex; align-items: center; gap: 8px; }
+  .parent-rank .num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; color: #fff; }
+  .chart-box { width: 100%; height: 400px; }
+  .chart-box-sm { width: 100%; height: 320px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .summary-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .stat-box { background: #f5f7fa; border-radius: 8px; padding: 16px; text-align: center; }
+  .stat-box .num { font-size: 28px; font-weight: bold; color: #667eea; }
+  .stat-box .label { font-size: 12px; color: #888; margin-top: 4px; }
+  .action-list { list-style: none; }
+  .action-list li { padding: 10px 12px; margin-bottom: 6px; border-radius: 8px; display: flex; align-items: start; gap: 8px; font-size: 13px; }
+  .action-list li.priority1 { background: #fff7e6; border-left: 4px solid #faad14; }
+  .action-list li.priority2 { background: #f0f5ff; border-left: 4px solid #1890ff; }
+  .action-list li.priority3 { background: #f6ffed; border-left: 4px solid #52c41a; }
+  .action-list .step { min-width: 24px; height: 24px; border-radius: 50%; background: #667eea; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; flex-shrink: 0; }
+  .methodology { font-size: 12px; color: #888; line-height: 1.8; }
+  .methodology ul { padding-left: 20px; }
+  .methodology li { margin-bottom: 4px; }
+  .footer { text-align: center; padding: 20px; font-size: 12px; color: #999; }
+  .risk-tag { color: #ff4d4f; font-size: 11px; margin-left: 4px; }
+  @media (max-width: 768px) { .cards { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } .summary-stats { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 报告头部 -->
+<div class="header">
+  <h1>12个父ASIN子ASIN级秒杀推荐分析报告</h1>
+  <div class="meta">
+    <span>数据源：领星ERP + SIF MCP</span>
+    <span>评估目标：14天秒杀资格（10月8日开始）</span>
+    <span>拉取时间：2026-09-29</span>
+    <span>子ASIN总数：163</span>
+    <span>9维度评分 = 90分制</span>
+  </div>
+</div>
+
+<!-- 汇总统计 -->
+<div class="section">
+  <h2>总览统计</h2>
+  <div class="summary-stats">
+    <div class="stat-box"><div class="num">163</div><div class="label">子ASIN总数</div></div>
+    <div class="stat-box"><div class="num" style="color:#52c41a">52</div><div class="label">通过门槛（PASS）</div></div>
+    <div class="stat-box"><div class="num" style="color:#faad14">8</div><div class="label">临界（WARN）</div></div>
+    <div class="stat-box"><div class="num" style="color:#ff4d4f">34</div><div class="label">不通过（FAIL）</div></div>
+  </div>
+  <div class="summary-stats">
+    <div class="stat-box"><div class="num">69</div><div class="label">零销量子ASIN</div></div>
+    <div class="stat-box"><div class="num">16</div><div class="label">参与排名子ASIN</div></div>
+    <div class="stat-box"><div class="num">12</div><div class="label">父ASIN数量</div></div>
+    <div class="stat-box"><div class="num">6</div><div class="label">父ASIN排名</div></div>
+  </div>
+</div>
+
+<!-- Top 3 推荐 -->
+<div class="section">
+  <h2>Top 3 推荐子ASIN</h2>
+  <div class="cards">
+    <div class="card gold">
+      <div class="rank">金牌推荐</div>
+      <div class="asin">B07W4G51XR</div>
+      <div class="score">67<span style="font-size:14px">/90</span></div>
+      <div class="score-label">9维度总分</div>
+      <div class="tags">
+        <span>父ASIN: B08PTXQRRX</span>
+        <span>月销1820</span>
+        <span>库销比2.86</span>
+        <span>BSR #75</span>
+        <span>$5.51</span>
+      </div>
+      <div class="reason">贴片耳环核心款，销量最高且BSR #75排名优秀，价格$5.51属秒杀黄金价格带，库存663件余量可覆盖秒杀期</div>
+    </div>
+    <div class="card silver">
+      <div class="rank">银牌推荐</div>
+      <div class="asin">B08H24W1TT</div>
+      <div class="score">66<span style="font-size:14px">/90</span></div>
+      <div class="score-label">9维度总分</div>
+      <div class="tags">
+        <span>父ASIN: B0CQ4QYWL3</span>
+        <span>月销83</span>
+        <span>库销比7.9</span>
+        <span>圣诞贴片</span>
+        <span>旺季时机9分</span>
+      </div>
+      <div class="reason">圣诞烫贴，旺季时机评分9分，库销比7.9月库存充裕，评论4746+4.5星基础好<span class="risk-tag">注意：毛利率-16.8%，秒杀亏本但提升排名</span></div>
+    </div>
+    <div class="card bronze">
+      <div class="rank">铜牌推荐</div>
+      <div class="asin">B0GY3QG2KB</div>
+      <div class="score">62<span style="font-size:14px">/90</span></div>
+      <div class="score-label">9维度总分</div>
+      <div class="tags">
+        <span>父ASIN: B08PTXQRRX</span>
+        <span>月销130</span>
+        <span>库销比4.46</span>
+        <span>BSR #10</span>
+        <span>$5.71</span>
+      </div>
+      <div class="reason">万圣节贴片耳环，BSR #10极高排名，10月旺季时机，库存4.46月达标，$5.71价格带优秀</div>
+    </div>
+  </div>
+</div>
+
+<!-- 父ASIN秒杀价值排名 -->
+<div class="section">
+  <h2>父ASIN秒杀价值排名</h2>
+  <p style="font-size:12px;color:#888;margin-bottom:12px">综合因子ASIN通过率(30%)、评分均值(25%)、通过销量(20%)、季节性时机(15%)、变体集中度(10%)</p>
+  <table id="parentTable">
+    <thead>
+      <tr>
+        <th>排名</th>
+        <th>父ASIN</th>
+        <th>产品类别</th>
+        <th>子ASIN总数</th>
+        <th>通过数</th>
+        <th>通过率</th>
+        <th>评分均值</th>
+        <th>通过销量</th>
+        <th>季节性</th>
+        <th>综合得分</th>
+        <th>建议</th>
+      </tr>
+    </thead>
+    <tbody id="parentBody"></tbody>
+  </table>
+</div>
+
+<!-- 9维度评分矩阵 -->
+<div class="section">
+  <h2>Top 16 子ASIN 9维度评分矩阵</h2>
+  <table id="scoreTable">
+    <thead>
+      <tr>
+        <th>排名</th>
+        <th>子ASIN</th>
+        <th>父ASIN</th>
+        <th>月销</th>
+        <th>FBA可售</th>
+        <th>库销比</th>
+        <th>门槛</th>
+        <th>销量<br>基础</th>
+        <th>流量<br>趋势</th>
+        <th>BSR<br>走势</th>
+        <th>价格<br>带</th>
+        <th>评论<br>基础</th>
+        <th>季节<br>时机</th>
+        <th>利润<br>空间</th>
+        <th>综合<br>动量</th>
+        <th>库存<br>充足</th>
+        <th>总分</th>
+      </tr>
+    </thead>
+    <tbody id="scoreBody"></tbody>
+  </table>
+</div>
+
+<!-- 月度销量趋势 -->
+<div class="section">
+  <h2>父ASIN月度销量趋势（2026年2月-9月）</h2>
+  <div id="trendChart" class="chart-box"></div>
+</div>
+
+<!-- 库存vs销量 -->
+<div class="section">
+  <h2>子ASIN 库存 vs 销量 散点图</h2>
+  <p style="font-size:12px;color:#888;margin-bottom:8px">气泡大小=库销比，颜色=门槛判定（绿=PASS/黄=WARN/红=FAIL）</p>
+  <div id="scatterChart" class="chart-box"></div>
+</div>
+
+<!-- 评分vs库销比 -->
+<div class="section">
+  <h2>评分 vs 库销比 分布</h2>
+  <div id="scoreRatioChart" class="chart-box"></div>
+</div>
+
+<!-- 9维度雷达图 -->
+<div class="section">
+  <h2>Top 3 子ASIN 9维度雷达对比</h2>
+  <div id="radarChart" class="chart-box"></div>
+</div>
+
+<!-- 门槛分布 -->
+<div class="section">
+  <h2>各父ASIN子ASIN门槛分布</h2>
+  <div id="stackBar" class="chart-box"></div>
+</div>
+
+<!-- WARN子ASIN -->
+<div class="section">
+  <h2>临界（WARN）子ASIN - 可参与秒杀但需关注库存</h2>
+  <table>
+    <thead>
+      <tr><th>子ASIN</th><th>父ASIN</th><th>月销</th><th>FBA可售</th><th>库销比</th><th>秒杀需量</th><th>库存缺口</th><th>建议</th></tr>
+    </thead>
+    <tbody id="warnBody"></tbody>
+  </table>
+</div>
+
+<!-- FAIL高销量ASIN -->
+<div class="section">
+  <h2>不通过（FAIL）高销量子ASIN - 需补货后方可秒杀</h2>
+  <p style="font-size:12px;color:#888;margin-bottom:8px">仅列出月销>100的FAIL子ASIN，按月销量降序</p>
+  <table>
+    <thead>
+      <tr><th>子ASIN</th><th>父ASIN</th><th>月销</th><th>FBA可售</th><th>库销比</th><th>秒杀需量</th><th>库存缺口</th><th>补货建议</th></tr>
+    </thead>
+    <tbody id="failBody"></tbody>
+  </table>
+</div>
+
+<!-- 行动建议 -->
+<div class="section">
+  <h2>行动建议（按优先级排序）</h2>
+  <ul class="action-list">
+    <li class="priority1"><span class="step">1</span><div><strong>立即提报 B08PTXQRRX（贴片耳环）</strong>：子ASIN B07W4G51XR 月销1820、BSR #75、评分67分排名第一，库销比2.86月库存达标，价格$5.51属秒杀黄金带，10月8日提报可借助Q4旺季流量。</div></li>
+    <li class="priority1"><span class="step">2</span><div><strong>同步提报 B0CQ4QYWL3（万圣节/圣诞贴片）</strong>：多个子ASIN评分58-66分，旺季时机评分8-9分。B08H24W1TT（圣诞贴片）库销比7.9月库存充裕；B0D8BCMJLR（万圣节贴片）库销比14.05月极度充裕。10月是万圣节+圣诞采购高峰，秒杀转化率预期较高<span class="risk-tag">B08H24W1TT毛利率-16.8%，需控制广告预算</span></div></li>
+    <li class="priority2"><span class="step">3</span><div><strong>评估 B08MKWRZ3W（脏辫钩针）</strong>：B0897CZMCY 评分59分，月销441、BSR #1058、毛利率29.8%接近30%门槛，库销比2.6月刚达标。建议补货后参与秒杀。</div></li>
+    <li class="priority2"><span class="step">4</span><div><strong>关注 B0D849XTR9</strong>：B07TVWD15T 月销601但库销比2.34为WARN状态，B0D4DNJHMW 库销比5.76达标但销量较低（29），建议选择B0D4DNJHMW作为秒杀主推。</div></li>
+    <li class="priority3"><span class="step">5</span><div><strong>补货计划</strong>：B07XDJ3HGK（B08MKWRZ3W）月销3142但库销比仅1.11月，缺口4354件；B0F6N8BQYV（B08PTXQRRX）月销1330库销比1.45月，缺口1391件。如需这些高销量ASIN参与秒杀，需在10月8日前完成补货。</div></li>
+    <li class="priority3"><span class="step">6</span><div><strong>放弃提报</strong>：B0GHPVZGLX（脏辫工具）和B0987J7WDB（头发护理）的子ASIN均大面积FAIL，库销比<1.5月，不建议参与本轮秒杀。</div></li>
+  </ul>
+</div>
+
+<!-- 方法论 -->
+<div class="section">
+  <h2>方法论说明</h2>
+  <div class="methodology">
+    <ul>
+      <li><strong>数据源</strong>：领星ERP（销量/库存/毛利率/评论数）+ SIF MCP（BSR排名/价格/流量趋势）+ 月度趋势数据（8个月季节性验证）</li>
+      <li><strong>库销比计算</strong>：FBA可售库存 ÷ 当月月销量。秒杀需量 = 月销量 × 2.5（覆盖2周秒杀期3-5倍日销 + 2周常规销售）</li>
+      <li><strong>门槛规则</strong>：≥5.0月=充裕(PASS)、2.5-5.0月=达标(PASS)、2.0-2.5月=临界(WARN)、&lt;2.0月=不足(FAIL)</li>
+      <li><strong>9维度评分</strong>：销量基础(10)、流量趋势(10)、BSR走势(10)、价格带(10)、评论基础(10)、季节时机(10)、利润空间(10)、综合动量(10)、库存充足度(10) = 满分90分</li>
+      <li><strong>父ASIN排名公式</strong>：子ASIN通过率×30% + 评分均值×25% + 通过销量×20% + 季节性时机×15% + 变体集中度×10%</li>
+      <li><strong>BSR走势</strong>：采用SIF实时BSR数据。&lt;100=10分、100-5000=7-8分、5000-10000=5-6分、10000-50000=3-4分、&gt;50000=1-2分</li>
+      <li><strong>季节时机</strong>：B0CQ4QYWL3万圣节/圣诞贴片10月旺季爬坡=9分；B08PTXQRRX/B08MKWRZ3W常青品类=6分</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <p>本报告由 pre-flash-sale-analysis 技能自动生成 | 数据拉取时间：2026-09-29 | 领星ERP catalogVersion 已校验</p>
+</div>
+
+</div>
+
+<script>
+// ====== 数据定义 ======
+
+// Top 16 子ASIN评分数据
+const scoreData = [
+  {rank:1, asin:"B07W4G51XR", parent:"B08PTXQRRX", vol:1820, fba:5213, ratio:2.86, threshold:"PASS", scores:[9,7,10,10,8,6,3,8,6], total:67, title:"贴片耳环"},
+  {rank:2, asin:"B08H24W1TT", parent:"B0CQ4QYWL3", vol:83, fba:656, ratio:7.9, threshold:"PASS", scores:[2,8,7,10,10,9,3,7,10], total:66, title:"圣诞烫贴"},
+  {rank:3, asin:"B0GY3QG2KB", parent:"B08PTXQRRX", vol:130, fba:580, ratio:4.46, threshold:"PASS", scores:[3,7,10,10,8,6,3,7,8], total:62, title:"万圣节贴片耳环"},
+  {rank:4, asin:"B07L4HZ29V", parent:"B08PTXQRRX", vol:434, fba:2366, ratio:5.45, threshold:"PASS", scores:[5,7,7,10,8,6,3,6,10], total:62, title:"贴片耳环"},
+  {rank:5, asin:"B0D7Q7HPW9", parent:"B0CQ4QYWL3", vol:75, fba:472, ratio:6.29, threshold:"PASS", scores:[2,7,7,10,8,8,3,6,10], total:61, title:"秋季感恩节贴片"},
+  {rank:6, asin:"B0D7VCGJ9P", parent:"B0CQ4QYWL3", vol:55, fba:1126, ratio:20.47, threshold:"PASS", scores:[2,7,10,5,8,8,3,7,10], total:60, title:"乳腺癌关怀贴片"},
+  {rank:7, asin:"B0897CZMCY", parent:"B08MKWRZ3W", vol:441, fba:1147, ratio:2.6, threshold:"PASS", scores:[5,6,7,7,10,6,6,6,6], total:59, title:"脏辫钩针"},
+  {rank:8, asin:"B0FH41BFXT", parent:"B0CQ4QYWL3", vol:38, fba:119, ratio:3.13, threshold:"PASS", scores:[2,7,10,5,8,8,3,7,8], total:58, title:"啤酒节贴片"},
+  {rank:9, asin:"B0FF4CQNWF", parent:"B0CQ4QYWL3", vol:33, fba:133, ratio:4.03, threshold:"PASS", scores:[2,7,7,7,10,8,3,6,8], total:58, title:"万圣节贴片"},
+  {rank:10, asin:"B0D8BCMJLR", parent:"B0CQ4QYWL3", vol:142, fba:1995, ratio:14.05, threshold:"PASS", scores:[3,8,7,5,4,9,3,8,10], total:57, title:"万圣节烫贴"},
+  {rank:11, asin:"B0FFN1SK48", parent:"B0DD3R6LK5", vol:37, fba:256, ratio:6.92, threshold:"PASS", scores:[2,6,5,5,10,6,8,5,10], total:57, title:"秋季感恩节烫贴"},
+  {rank:12, asin:"B09KZYGHMC", parent:"B08PTXQRRX", vol:67, fba:183, ratio:2.73, threshold:"PASS", scores:[2,6,7,10,8,6,6,5,6], total:56, title:"贴片耳环"},
+  {rank:13, asin:"B0DD3BBXBB", parent:"B0DD3R6LK5", vol:31, fba:242, ratio:7.81, threshold:"PASS", scores:[2,6,5,5,10,6,6,5,10], total:55, title:"烫贴合集"},
+  {rank:14, asin:"B0DF2JM4V6", parent:"B0CQ4QYWL3", vol:25, fba:156, ratio:6.24, threshold:"PASS", scores:[2,7,7,7,3,8,6,5,10], total:55, title:"万圣节贴片"},
+  {rank:15, asin:"B088JXSQBT", parent:"B0DD3R6LK5", vol:227, fba:816, ratio:3.59, threshold:"PASS", scores:[4,6,5,7,8,6,3,5,8], total:52, title:"混合烫贴"},
+  {rank:16, asin:"B0CS66ZQ54", parent:"B09PB9NWZB", vol:261, fba:1325, ratio:5.08, threshold:"PASS", scores:[4,6,1,7,10,6,3,5,10], total:52, title:"教师耳环"}
+];
+
+// 父ASIN排名数据
+const parentData = [
+  {rank:1, asin:"B08PTXQRRX", name:"贴片耳环", total:10, pass:5, rate:50, avgScore:60, passVol:2546, season:"常青", seasonScore:6, score:27.95, suggest:"强烈推荐"},
+  {rank:2, asin:"B0CQ4QYWL3", name:"万圣节/季节贴片", total:40, pass:12, rate:30, avgScore:58, passVol:593, season:"旺季爬坡", seasonScore:9, score:26.70, suggest:"强烈推荐(旺季)"},
+  {rank:3, asin:"B08MKWRZ3W", name:"脏辫工具", total:3, pass:1, rate:33, avgScore:59, passVol:441, season:"常青", seasonScore:6, score:26.25, suggest:"推荐"},
+  {rank:4, asin:"B0DD3R6LK5", name:"烫贴合集", total:15, pass:7, rate:47, avgScore:54, passVol:540, season:"常青", seasonScore:6, score:24.40, suggest:"可考虑"},
+  {rank:5, asin:"B09PB9NWZB", name:"教师耳环", total:10, pass:3, rate:30, avgScore:52, passVol:261, season:"常青", seasonScore:6, score:23.20, suggest:"可考虑"},
+  {rank:6, asin:"B0DHL5X1XM", name:"贴片耳环(新品)", total:12, pass:5, rate:42, avgScore:49, passVol:120, season:"常青", seasonScore:6, score:22.25, suggest:"谨慎"},
+  {rank:7, asin:"B0D849XTR9", name:"脏辫产品", total:2, pass:1, rate:50, avgScore:48, passVol:29, season:"常青", seasonScore:6, score:20.50, suggest:"谨慎"},
+  {rank:8, asin:"B0CJ4SPFGZ", name:"运动/活动贴片", total:15, pass:6, rate:40, avgScore:47, passVol:341, season:"常青", seasonScore:6, score:20.00, suggest:"谨慎"},
+  {rank:9, asin:"B0987J7WDB", name:"头发护理", total:3, pass:0, rate:0, avgScore:0, passVol:0, season:"常青", seasonScore:6, score:15.00, suggest:"不推荐"},
+  {rank:10, asin:"B08XPRYKLX", name:"钩针套装", total:3, pass:0, rate:0, avgScore:0, passVol:0, season:"常青", seasonScore:6, score:14.50, suggest:"不推荐"},
+  {rank:11, asin:"B0GHPVZGLX", name:"脏辫工具(新品)", total:2, pass:0, rate:0, avgScore:0, passVol:0, season:"常青", seasonScore:6, score:14.00, suggest:"不推荐"},
+  {rank:12, asin:"B09PB8ND32", name:"教师耳环(新品)", total:10, pass:2, rate:20, avgScore:45, passVol:71, season:"常青", seasonScore:6, score:13.50, suggest:"不推荐"}
+];
+
+// WARN数据
+const warnData = [
+  {asin:"B0D25BQGCL", parent:"B0DHL5X1XM", vol:361, fba:900, ratio:2.49, flashNeed:902, gap:-2, suggest:"缺口仅2件，补货后可PASS"},
+  {asin:"B091GR5HZW", parent:"B08MKWRZ3W", vol:383, fba:812, ratio:2.12, flashNeed:958, gap:-146, suggest:"缺口146件，需紧急补货"},
+  {asin:"B07TVWD15T", parent:"B0D849XTR9", vol:601, fba:1406, ratio:2.34, flashNeed:1502, gap:-96, suggest:"缺口96件，补货后可参与"},
+  {asin:"B097GN9VCB", parent:"B0987J7WDB", vol:702, fba:1604, ratio:2.28, flashNeed:1755, gap:-151, suggest:"缺口151件，父ASIN整体不推荐"},
+  {asin:"B09P7ZZ2LY", parent:"B08XPRYKLX", vol:310, fba:722, ratio:2.33, flashNeed:775, gap:-53, suggest:"缺口53件，补货后可考虑"},
+  {asin:"B0DF2HKW5N", parent:"B0DD3R6LK5", vol:176, fba:414, ratio:2.35, flashNeed:440, gap:-26, suggest:"缺口26件，小批量补货即可"},
+  {asin:"B0DJ8GKWHF", parent:"B0CQ4QYWL3", vol:59, fba:126, ratio:2.14, flashNeed:148, gap:-22, suggest:"缺口22件，补货后旺季可秒杀"},
+  {asin:"B0H7B18ZYB", parent:"B0CQ4QYWL3", vol:80, fba:195, ratio:2.44, flashNeed:200, gap:-5, suggest:"缺口仅5件，几乎达标"}
+];
+
+// FAIL高销量数据
+const failData = [
+  {asin:"B07XDJ3HGK", parent:"B08MKWRZ3W", vol:3142, fba:3501, ratio:1.11, flashNeed:7855, gap:-4354, suggest:"缺口4354件，需大批量补货"},
+  {asin:"B07W6BZNT3", parent:"B0987J7WDB", vol:1850, fba:1653, ratio:0.89, flashNeed:4625, gap:-2972, suggest:"缺口2972件，不建议本轮秒杀"},
+  {asin:"B07WFN5WSM", parent:"B0GHPVZGLX", vol:1489, fba:1779, ratio:1.19, flashNeed:3722, gap:-1943, suggest:"缺口1943件，不建议本轮秒杀"},
+  {asin:"B0F6N8BQYV", parent:"B08PTXQRRX", vol:1330, fba:1934, ratio:1.45, flashNeed:3325, gap:-1391, suggest:"缺口1391件，补货后可秒杀"},
+  {asin:"B0DT4B9JV3", parent:"B0CJ4SPFGZ", vol:1109, fba:1131, ratio:1.02, flashNeed:2772, gap:-1641, suggest:"缺口1641件，不建议本轮秒杀"},
+  {asin:"B08LQ642ZT", parent:"B08XPRYKLX", vol:781, fba:1217, ratio:1.56, flashNeed:1952, gap:-735, suggest:"缺口735件，补货后可考虑"},
+  {asin:"B0CVXLJ531", parent:"B0987J7WDB", vol:525, fba:510, ratio:0.97, flashNeed:1312, gap:-802, suggest:"缺口802件，不建议本轮秒杀"},
+  {asin:"B0D8HWZPD4", parent:"B0CQ4QYWL3", vol:599, fba:614, ratio:1.03, flashNeed:1498, gap:-884, suggest:"缺口884件，旺季补货后可秒杀"},
+  {asin:"B0D46V9DNP", parent:"B0CQ4QYWL3", vol:449, fba:263, ratio:0.59, flashNeed:1122, gap:-859, suggest:"缺口859件，旺季补货后可秒杀"},
+  {asin:"B0D46QBZ7T", parent:"B0DD3R6LK5", vol:390, fba:751, ratio:1.93, flashNeed:975, gap:-224, suggest:"缺口224件，补货后可参与"},
+  {asin:"B08V5FLCHD", parent:"B08XPRYKLX", vol:363, fba:584, ratio:1.61, flashNeed:908, gap:-324, suggest:"缺口324件，补货后可考虑"},
+  {asin:"B0DXKM7C8X", parent:"B0DD3R6LK5", vol:299, fba:577, ratio:1.93, flashNeed:748, gap:-171, suggest:"缺口171件，补货后可参与"}
+];
+
+// 月度趋势数据
+const months = ["2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"];
+const monthlyTrends = {
+  "B08PTXQRRX": [3158,4687,3654,3542,3480,3451,4017,3603],
+  "B0CQ4QYWL3": [2228,1953,2762,3683,4368,2397,3423,2592],
+  "B08MKWRZ3W": [2728,2590,2609,2829,3817,3473,3966,3615],
+  "B0DD3R6LK5": [1134,826,1364,1178,1335,1259,1468,1218],
+  "B0CJ4SPFGZ": [434,537,652,685,719,528,1649,1036],
+  "B0DHL5X1XM": [240,328,486,679,878,342,564,447],
+  "B0D849XTR9": [745,593,668,424,280,603,630,617],
+  "B09PB9NWZB": [315,123,230,441,247,193,319,316],
+  "B0987J7WDB": [470,490,812,2302,3461,3449,3077,1435],
+  "B08XPRYKLX": [1697,1888,1591,1154,1793,2190,1454,1300],
+  "B0GHPVZGLX": [1275,1214,1065,1576,1733,1624,1489,1164],
+  "B09PB8ND32": [177,122,78,193,40,73,79,50]
+};
+
+// 父ASIN名称映射
+const parentNames = {
+  "B08PTXQRRX": "贴片耳环",
+  "B0CQ4QYWL3": "万圣节贴片",
+  "B08MKWRZ3W": "脏辫钩针",
+  "B0DD3R6LK5": "烫贴合集",
+  "B0CJ4SPFGZ": "运动贴片",
+  "B0DHL5X1XM": "贴片耳环(新品)",
+  "B0D849XTR9": "脏辫产品",
+  "B09PB9NWZB": "教师耳环",
+  "B0987J7WDB": "头发护理",
+  "B08XPRYKLX": "钩针套装",
+  "B0GHPVZGLX": "脏辫工具(新品)",
+  "B09PB8ND32": "教师耳环(新品)"
+};
+
+// ====== 渲染父ASIN表格 ======
+const parentColors = ["#f6d365","#a8c0ff","#f093fb","#d4edda","#fff3cd","#cce5ff","#d1ecf1","#fff3cd","#f8d7da","#f8d7da","#f8d7da","#f8d7da"];
+const parentBody = document.getElementById("parentBody");
+parentData.forEach((p, i) => {
+  const color = parentColors[i] || "#f8d7da";
+  const suggestBadge = p.suggest.includes("强烈") ? "badge-gold" : p.suggest.includes("推荐") ? "badge-pass" : p.suggest.includes("可考虑") ? "badge-warn" : "badge-fail";
+  parentBody.innerHTML += `<tr>
+    <td><div class="parent-rank"><div class="num" style="background:${color}">${p.rank}</div></div></td>
+    <td><strong>${p.asin}</strong></td>
+    <td>${p.name}</td>
+    <td>${p.total}</td>
+    <td>${p.pass}</td>
+    <td>${p.rate}%</td>
+    <td>${p.avgScore || "-"}</td>
+    <td>${p.passVol || 0}</td>
+    <td>${p.season}</td>
+    <td><strong>${p.score.toFixed(2)}</strong></td>
+    <td><span class="badge ${suggestBadge}">${p.suggest}</span></td>
+  </tr>`;
+});
+
+// ====== 渲染评分矩阵 ======
+const scoreBody = document.getElementById("scoreBody");
+scoreData.forEach(s => {
+  const badge = s.threshold === "PASS" ? "badge-pass" : "badge-warn";
+  scoreBody.innerHTML += `<tr>
+    <td><strong>${s.rank}</strong></td>
+    <td><strong>${s.asin}</strong></td>
+    <td>${s.parent}</td>
+    <td>${s.vol}</td>
+    <td>${s.fba}</td>
+    <td>${s.ratio}</td>
+    <td><span class="badge ${badge}">${s.threshold}</span></td>
+    ${s.scores.map(sc => `<td>${sc}</td>`).join('')}
+    <td><strong>${s.total}</strong></td>
+  </tr>`;
+});
+
+// ====== 渲染WARN表格 ======
+const warnBody = document.getElementById("warnBody");
+warnData.forEach(w => {
+  warnBody.innerHTML += `<tr>
+    <td><strong>${w.asin}</strong></td>
+    <td>${w.parent}</td>
+    <td>${w.vol}</td>
+    <td>${w.fba}</td>
+    <td>${w.ratio}</td>
+    <td>${w.flashNeed}</td>
+    <td style="color:#faad14">${w.gap}</td>
+    <td style="font-size:12px">${w.suggest}</td>
+  </tr>`;
+});
+
+// ====== 渲染FAIL表格 ======
+const failBody = document.getElementById("failBody");
+failData.forEach(f => {
+  failBody.innerHTML += `<tr>
+    <td><strong>${f.asin}</strong></td>
+    <td>${f.parent}</td>
+    <td>${f.vol}</td>
+    <td>${f.fba}</td>
+    <td style="color:#ff4d4f">${f.ratio}</td>
+    <td>${f.flashNeed}</td>
+    <td style="color:#ff4d4f">${f.gap}</td>
+    <td style="font-size:12px">${f.suggest}</td>
+  </tr>`;
+});
+
+// ====== 月度趋势图 ======
+const trendChart = echarts.init(document.getElementById("trendChart"));
+const trendSeries = Object.entries(monthlyTrends).map(([asin, data], i) => ({
+  name: `${asin} (${parentNames[asin]})`,
+  type: "line",
+  data: data,
+  smooth: true,
+  symbolSize: 6,
+  lineStyle: { width: 2 },
+  emphasis: { focus: "series" }
+}));
+trendChart.setOption({
+  tooltip: { trigger: "axis", axisPointer: { type: "cross" } },
+  legend: { type: "scroll", bottom: 0, textStyle: { fontSize: 11 } },
+  grid: { left: 60, right: 30, top: 30, bottom: 80 },
+  xAxis: { type: "category", data: months, axisLabel: { fontSize: 11 } },
+  yAxis: { type: "value", name: "月销量", axisLabel: { fontSize: 11 } },
+  dataZoom: [{ type: "inside" }, { type: "slider", height: 20, bottom: 40 }],
+  series: trendSeries
+});
+
+// ====== 库存vs销量散点图 ======
+const scatterChart = echarts.init(document.getElementById("scatterChart"));
+const allChildData = [
+  ...scoreData.map(s => ({...s, type:"PASS"})),
+  ...warnData.map(w => ({asin:w.asin, parent:w.parent, vol:w.vol, fba:w.fba, ratio:w.ratio, type:"WARN"})),
+  ...failData.map(f => ({asin:f.asin, parent:f.parent, vol:f.vol, fba:f.fba, ratio:f.ratio, type:"FAIL"}))
+];
+const scatterSeries = {
+  PASS: { name: "PASS", color: "#52c41a", data: [] },
+  WARN: { name: "WARN", color: "#faad14", data: [] },
+  FAIL: { name: "FAIL", color: "#ff4d4f", data: [] }
+};
+allChildData.forEach(d => {
+  scatterSeries[d.type].data.push({
+    value: [d.vol, d.fba, d.ratio],
+    name: d.asin
+  });
+});
+scatterChart.setOption({
+  tooltip: {
+    trigger: "item",
+    formatter: p => `${p.name}<br/>月销: ${p.value[0]}<br/>FBA: ${p.value[1]}<br/>库销比: ${p.value[2]}月`
+  },
+  legend: { bottom: 10 },
+  grid: { left: 60, right: 30, top: 30, bottom: 60 },
+  xAxis: { name: "月销量", nameLocation: "middle", nameGap: 30, type: "value" },
+  yAxis: { name: "FBA可售库存", type: "value" },
+  series: Object.values(scatterSeries).map(s => ({
+    name: s.name,
+    type: "scatter",
+    data: s.data,
+    itemStyle: { color: s.color },
+    symbolSize: d => Math.max(8, Math.min(40, d[2] * 2))
+  }))
+});
+
+// ====== 评分vs库销比图 ======
+const scoreRatioChart = echarts.init(document.getElementById("scoreRatioChart"));
+scoreRatioChart.setOption({
+  tooltip: {
+    trigger: "item",
+    formatter: p => `${p.name}<br/>评分: ${p.value[0]}<br/>库销比: ${p.value[1]}月<br/>月销: ${p.value[2]}`
+  },
+  grid: { left: 60, right: 30, top: 30, bottom: 60 },
+  xAxis: { name: "9维度总分", nameLocation: "middle", nameGap: 30, type: "value", min: 40, max: 70 },
+  yAxis: { name: "库销比（月）", type: "value" },
+  series: [{
+    type: "scatter",
+    data: scoreData.map(s => ({ value: [s.total, s.ratio, s.vol], name: s.asin })),
+    symbolSize: d => Math.max(10, Math.min(40, d[2] / 50)),
+    itemStyle: {
+      color: (p) => {
+        const c = ["#f6d365","#a8c0ff","#f093fb","#52c41a","#1890ff","#ff7a45","#13c2c2","#722ed1","#eb2f96","#faad14","#a0d911","#2f54eb"];
+        return c[p.dataIndex % c.length];
+      }
+    },
+    label: { show: true, position: "right", formatter: p => p.name.substring(2), fontSize: 10 },
+    labelLayout: { hideOverlap: true }
+  }]
+});
+
+// ====== Top 3 雷达图 ======
+const radarChart = echarts.init(document.getElementById("radarChart"));
+radarChart.setOption({
+  tooltip: { trigger: "item" },
+  legend: { bottom: 10, data: ["B07W4G51XR (67分)", "B08H24W1TT (66分)", "B0GY3QG2KB (62分)"] },
+  radar: {
+    indicator: [
+      { name: "销量基础", max: 10 },
+      { name: "流量趋势", max: 10 },
+      { name: "BSR走势", max: 10 },
+      { name: "价格带", max: 10 },
+      { name: "评论基础", max: 10 },
+      { name: "季节时机", max: 10 },
+      { name: "利润空间", max: 10 },
+      { name: "综合动量", max: 10 },
+      { name: "库存充足", max: 10 }
+    ],
+    radius: "65%",
+    splitArea: { areaStyle: { color: ["#f5f7fa","#fff"] } }
+  },
+  series: [{
+    type: "radar",
+    data: [
+      { value: scoreData[0].scores, name: "B07W4G51XR (67分)", itemStyle: { color: "#f6d365" }, areaStyle: { opacity: 0.2 } },
+      { value: scoreData[1].scores, name: "B08H24W1TT (66分)", itemStyle: { color: "#a8c0ff" }, areaStyle: { opacity: 0.2 } },
+      { value: scoreData[2].scores, name: "B0GY3QG2KB (62分)", itemStyle: { color: "#f093fb" }, areaStyle: { opacity: 0.2 } }
+    ]
+  }]
+});
+
+// ====== 门槛堆叠柱状图 ======
+const stackBar = echarts.init(document.getElementById("stackBar"));
+const parentList = Object.keys(parentNames);
+const passCounts = parentList.map(p => {
+  const pd = parentData.find(d => d.asin === p);
+  return pd ? pd.pass : 0;
+});
+const warnCounts = parentList.map(p => {
+  return warnData.filter(w => w.parent === p).length;
+});
+const failCounts = parentList.map(p => {
+  const pd = parentData.find(d => d.asin === p);
+  return pd ? (pd.total - pd.pass - warnCounts[parentList.indexOf(p)]) : 0;
+});
+const zeroCounts = parentList.map((p, i) => {
+  const pd = parentData.find(d => d.asin === p);
+  return pd ? Math.max(0, pd.total - pd.pass - warnCounts[i] - Math.max(0, pd.total - pd.pass - warnCounts[i])) : 0;
+});
+stackBar.setOption({
+  tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+  legend: { bottom: 10, data: ["PASS", "WARN", "FAIL/零销量"] },
+  grid: { left: 50, right: 30, top: 30, bottom: 80 },
+  xAxis: {
+    type: "category",
+    data: parentList.map(p => p.substring(0, 10)),
+    axisLabel: { fontSize: 10, rotate: 30 }
+  },
+  yAxis: { name: "子ASIN数量", type: "value" },
+  series: [
+    { name: "PASS", type: "bar", stack: "total", data: passCounts, itemStyle: { color: "#52c41a" } },
+    { name: "WARN", type: "bar", stack: "total", data: warnCounts, itemStyle: { color: "#faad14" } },
+    { name: "FAIL/零销量", type: "bar", stack: "total", data: failCounts.map((f, i) => Math.max(0, (parentData.find(d => d.asin === parentList[i])?.total || 0) - passCounts[i] - warnCounts[i])), itemStyle: { color: "#ff4d4f" } }
+  ]
+});
+
+// 响应式
+window.addEventListener("resize", () => {
+  trendChart.resize();
+  scatterChart.resize();
+  scoreRatioChart.resize();
+  radarChart.resize();
+  stackBar.resize();
+});
+</script>
+</body>
+</html>

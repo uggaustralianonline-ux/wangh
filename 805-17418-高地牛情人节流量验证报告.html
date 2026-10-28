@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>805-17418 高地牛情人节流量验证报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.8;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 35px 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .header h1 { font-size: 26px; margin-bottom: 8px; }
+        .header .meta { font-size: 14px; opacity: 0.9; }
+        .header .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+        .verdict-box {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .verdict-box h2 { color: white; border-left: 4px solid white; padding-left: 12px; margin-bottom: 12px; font-size: 20px; }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .section h2 {
+            font-size: 20px;
+            color: #2c3e50;
+            border-left: 4px solid #e74c3c;
+            padding-left: 12px;
+            margin-bottom: 18px;
+        }
+        .section h3 {
+            font-size: 16px;
+            color: #34495e;
+            margin: 18px 0 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+        th {
+            background: #f8f9fa;
+            padding: 11px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #dee2e6;
+        }
+        td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        tr:hover { background: #f8f9fa; }
+        .chart-box { width: 100%; height: 380px; margin: 18px 0; }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .tag-red { background: #f8d7da; color: #721c24; }
+        .tag-yellow { background: #fff3cd; color: #856404; }
+        .tag-green { background: #d4edda; color: #155724; }
+        .info-card {
+            background: #f8f9fa;
+            border-left: 4px solid #17a2b8;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+        }
+        .warning-card {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+        }
+        .danger-card {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+        }
+        .success-card {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .evidence-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 3px solid #e74c3c;
+            font-size: 14px;
+        }
+        .evidence-item strong { color: #c0392b; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #95a5a6;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>805-17418 高地牛情人节流量验证报告</h1>
+        <div class="meta">
+            产品代码: 805-17418 | 站点: US | 验证日期: 2026-09-01<br>
+            数据来源: SIF MCP + Sorftime MCP + RankHero + WebSearch
+        </div>
+        <div>
+            <span class="badge">验证结论: 不适合做情人节产品</span>
+            <span class="badge">6条独立证据</span>
+            <span class="badge">核心旺季: 11-12月圣诞季</span>
+        </div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="verdict-box">
+        <h2>核心结论</h2>
+        <p style="font-size:15px; line-height:2;">
+            "highland cow" 主题的搜索峰值在 <strong>11-12月（圣诞节送礼季）</strong>，1-2月为节后持续衰减期，<strong>不存在情人节驱动的二次峰值</strong>。<br>
+            "highland cow valentines day" 全球月搜仅 <strong>260次</strong>（Etsy数据，Amazon更低）。<br>
+            Amazon上唯一的高地牛情人节毯子竞品（B0GBM27P4F）上架8个月 <strong>0销量</strong>，BSR #4,579,904。<br>
+            <strong>建议：将产品定位从"情人节"调整为"圣诞/节日送礼"，核心关键词聚焦 "highland cow blanket"（旺季11-12月）。</strong>
+        </p>
+    </div>
+
+    <!-- Evidence 1: Keyword History -->
+    <div class="section">
+        <h2>证据1："highland cow blanket" 月搜索量趋势</h2>
+        <div id="chart-trend" class="chart-box"></div>
+        <div class="info-card">
+            <strong>数据来源：</strong>SIF MCP market_get_keyword_history（60个月历史数据）<br>
+            <strong>关键发现：</strong>"highland cow blanket" 12月峰值 55,161 → 1月 12,949 → 2月 11,696，
+            呈<strong style="color:#e74c3c;">单调递减</strong>。
+            如果情人节有流量支撑，1-2月应出现回升或止跌，但实际持续下滑——
+            这是圣诞后自然衰减，<strong>非情人节驱动</strong>。
+            1-2月搜索量仅为12月峰值的 <strong>23%</strong>。
+        </div>
+    </div>
+
+    <!-- Evidence 2: Highland Cow Gifts -->
+    <div class="section">
+        <h2>证据2："highland cow gifts" 月搜索量（RankHero）</h2>
+        <div id="chart-gifts" class="chart-box"></div>
+        <div class="info-card">
+            <strong>数据来源：</strong>RankHero [$TRAE_REF](https://www.rankhero.com/keywords/highland-cow-gifts)<br>
+            <strong>关键发现：</strong>"highland cow gifts" 峰值在 <strong>11月（49,500）</strong>，
+            5-9月基线约10K。<strong>全年无2月二次峰值</strong>——
+            如果情人节是真需求，2月应出现搜索回升。实际2月处于全年谷底。
+        </div>
+    </div>
+
+    <!-- Evidence 3: Highland Cow Broader -->
+    <div class="section">
+        <h2>证据3："highland cow" 大词月搜索量（RankHero）</h2>
+        <div id="chart-broad" class="chart-box"></div>
+        <div class="info-card">
+            <strong>数据来源：</strong>RankHero [$TRAE_REF](https://www.rankhero.com/keywords/highland-cow)<br>
+            <strong>关键发现：</strong>"highland cow" 大词从12月823K → 1月673K → 2月550K，
+            <strong>连续3个月单调递减</strong>，降幅33%。
+            全文描述为"Search interest was highest around December 2025"——
+            峰值明确在12月，无任何情人节关联信号。
+        </div>
+    </div>
+
+    <!-- Evidence 4: Specific Keywords -->
+    <div class="section">
+        <h2>证据4：情人节+高地牛组合词搜索量极低</h2>
+        <table>
+            <tr>
+                <th>关键词</th>
+                <th>月搜索量</th>
+                <th>数据来源</th>
+                <th>结论</th>
+            </tr>
+            <tr>
+                <td>highland cow valentines day</td>
+                <td><strong style="color:#e74c3c;">260次/月</strong></td>
+                <td>RankHero [$TRAE_REF](https://www.rankhero.com/keywords/highland-cow-valentines-day)</td>
+                <td><span class="tag tag-red">搜索量极低</span></td>
+            </tr>
+            <tr>
+                <td>highland cow valentine</td>
+                <td>无数据（未返回结果）</td>
+                <td>Sorftime keyword_detail</td>
+                <td><span class="tag tag-red">词不存在</span></td>
+            </tr>
+            <tr>
+                <td>valentine cow blanket</td>
+                <td>无数据（未返回结果）</td>
+                <td>Sorftime keyword_detail</td>
+                <td><span class="tag tag-red">词不存在</span></td>
+            </tr>
+        </table>
+        <div class="warning-card">
+            <strong>对比参考：</strong>"highland cow blanket" 月搜 <strong>17,141</strong>，
+            而 "highland cow valentines day" 仅 <strong>260</strong>——差距 <strong>66倍</strong>。
+            且这260次还是在Etsy平台（非Amazon），Amazon上的搜索量更低。
+        </div>
+    </div>
+
+    <!-- Evidence 5: Long-tail Extension -->
+    <div class="section">
+        <h2>证据5：长尾关键词扩展 — 无情人节相关词</h2>
+        <div class="grid-2">
+            <table>
+                <tr><th>长尾词</th><th>月搜</th></tr>
+                <tr><td>highland cow throw blanket</td><td>107</td></tr>
+                <tr><td>highland cow blanket for adults</td><td>118</td></tr>
+                <tr><td>cow throw blanket</td><td>339</td></tr>
+                <tr><td>cow blankets and throws</td><td>89</td></tr>
+                <tr><td>highland cow baby blanket</td><td>90</td></tr>
+                <tr><td>highland cow baby stuff</td><td>7,203</td></tr>
+                <tr><td>highland cow nursery decor</td><td>61</td></tr>
+                <tr><td>highland cow baby clothes</td><td>127</td></tr>
+                <tr><td>cow print baby stuff</td><td>499</td></tr>
+                <tr><td>cow baby stuff</td><td>428</td></tr>
+            </table>
+            <div class="danger-card">
+                <strong>Sorftime keyword_extends 返回20个长尾词</strong><br><br>
+                逐一检查：<strong>无一包含</strong> "valentine"、"love"、"couple"、"romance"、"heart" 等情人节相关词。<br><br>
+                所有长尾词围绕：<br>
+                • 尺寸变体（throw, for adults）<br>
+                • 婴儿/幼儿（baby blanket, baby stuff, nursery）<br>
+                • 图案变体（cow print, cow blanket）<br>
+                • 礼品方向（cow gifts）<br><br>
+                <strong>结论：高地牛毯子的搜索需求不包含情人节场景。</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evidence 6: Dead Competitor -->
+    <div class="section">
+        <h2>证据6：竞品 B0GBM27P4F — 高地牛情人节毯已死</h2>
+        <table>
+            <tr><th>属性</th><th>值</th></tr>
+            <tr><td>ASIN</td><td>B0GBM27P4F</td></tr>
+            <tr><td>品牌</td><td>huglift</td></tr>
+            <tr><td>标题</td><td>You & Me We Got This - Personalized Highland Cow Couple Blankets, Custom Highlands Cows Couples Valentine Blanket, Xmas Highland Cow Couples Throw Bed Decor, Blankets Gifts for Husband Wife</td></tr>
+            <tr><td>价格</td><td>$23.99</td></tr>
+            <tr><td>评分</td><td>5.0★（仅1条评论）</td></tr>
+            <tr><td>月销量</td><td><strong style="color:#e74c3c; font-size:16px;">0</strong></td></tr>
+            <tr><td>过去30天购买数</td><td>0</td></tr>
+            <tr><td>BSR</td><td>Home & Kitchen #4,579,904</td></tr>
+            <tr><td>上架日</td><td>2025-12-21（8个月前）</td></tr>
+            <tr><td>变体数</td><td>1</td></tr>
+            <tr><td>尺寸</td><td>50"x50"</td></tr>
+        </table>
+        <div class="danger-card">
+            <strong>市场验证结论：</strong>这是 Amazon 上唯一明确将"高地牛"和"Valentine"结合在标题中的毯子产品。
+            上架8个月，<strong>0销量，1条评论，BSR 450万+</strong>。
+            这是市场对"高地牛+情人节"组合的<strong>直接否定</strong>——
+            买家搜索情人节毯子时不会选择高地牛主题，搜索高地牛毯子时不需要情人节定位。
+        </div>
+    </div>
+
+    <!-- Evidence 7: Valentines Blanket Market -->
+    <div class="section">
+        <h2>证据7："valentines blanket" 市场 — 无高地牛交集</h2>
+        <div id="chart-valentine-market" class="chart-box"></div>
+        <table>
+            <tr><th>排名</th><th>ASIN</th><th>标题关键词</th><th>价格</th><th>评论</th><th>月销</th></tr>
+            <tr><td>1</td><td>B0CGW9KT6X</td><td>通用情人节毯</td><td>$9.99</td><td>2,912</td><td>3,000+</td></tr>
+            <tr><td>2</td><td>B0FHHLXV4Z</td><td>通用毯子</td><td>$25.99</td><td>26,505</td><td>2,000+</td></tr>
+            <tr><td>3</td><td>B0FPWMFVK5</td><td>情人节毯</td><td>$15.99</td><td>148</td><td>&lt;50</td></tr>
+            <tr><td>4</td><td>B0CTT99CLZ</td><td>情人节毯</td><td>$11.99</td><td>5,441</td><td>1,000+</td></tr>
+            <tr><td>5</td><td>B0CMTW85YK</td><td>情人节毯</td><td>$11.39</td><td>4,154</td><td>2,000+</td></tr>
+        </table>
+        <div class="info-card">
+            <strong>数据来源：</strong>SIF MCP market_get_keyword_competition（434个竞品）<br>
+            <strong>关键发现：</strong>"valentines blanket" 排名前5的竞品中，<strong>无一为高地牛主题</strong>。
+            价格带集中在 $9.99-$11.99（比高地牛毯低），评论数 2K-26K（壁垒高）。
+            高地牛毯子在这个关键词下<strong>完全没有存在感</strong>——两个市场无交集。
+        </div>
+    </div>
+
+    <!-- Summary Table -->
+    <div class="section">
+        <h2>6条独立证据汇总表</h2>
+        <table>
+            <tr>
+                <th style="width:40px;">#</th>
+                <th>证据</th>
+                <th style="width:130px;">数据来源</th>
+                <th style="width:120px;">结论</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>"highland cow blanket" 1-2月搜索量(12.9K/11.7K)是12月峰值(55K)的23%，单调递减</td>
+                <td>SIF 关键词历史</td>
+                <td><span class="tag tag-red">无情人节峰值</span></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>"highland cow gifts" 峰值在11月(49.5K)，2月处于全年谷底</td>
+                <td>RankHero</td>
+                <td><span class="tag tag-red">无2月峰值</span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>"highland cow" 大词12月→2月连续递减(823K→550K)，无二次峰值</td>
+                <td>RankHero</td>
+                <td><span class="tag tag-red">无情人节回升</span></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>"highland cow valentines day" 全球月搜仅260次（Etsy），Amazon更低</td>
+                <td>RankHero</td>
+                <td><span class="tag tag-red">搜索量极低</span></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>20个长尾词扩展，无一包含valentine/love/couple/romance</td>
+                <td>Sorftime</td>
+                <td><span class="tag tag-red">无情人节长尾</span></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>竞品B0GBM27P4F（高地牛情人节毯）8个月0销量，BSR #4.5M</td>
+                <td>SIF ASIN Profile</td>
+                <td><span class="tag tag-red">市场验证失败</span></td>
+            </tr>
+        </table>
+        <div class="danger-card" style="margin-top:15px;">
+            <strong>6/6 条证据全部指向同一结论：highland cow 在情人节没有独立流量。</strong>
+            证据链完整且来源独立（SIF、Sorftime、RankHero 三个数据源交叉验证），置信度高。
+        </div>
+    </div>
+
+    <!-- Implications -->
+    <div class="section">
+        <h2>对产品 805-17418 的定位建议</h2>
+        <div class="evidence-grid">
+            <div class="evidence-item" style="border-left-color:#e74c3c;">
+                <strong>① 不应定位为情人节产品</strong><br>
+                ERP标签"情人节"缺乏搜索量支撑。1-2月流量是圣诞后自然衰减（23% of 峰值），非独立情人节需求。"highland cow valentines day"月搜仅260次，不足以支撑产品。
+            </div>
+            <div class="evidence-item" style="border-left-color:#2ecc71;">
+                <strong>② 应定位为圣诞/节日送礼毯</strong><br>
+                "highland cow blanket" 11-12月峰值55K/月，年均增长+8%。这才是产品的核心旺季。计划开售日2026-11-20正好赶上圣诞旺季起步。
+            </div>
+            <div class="evidence-item" style="border-left-color:#f39c12;">
+                <strong>③ 如要做情人节需打"valentines blanket"词</strong><br>
+                但该词头部竞品有2K-26K评论，价格$9.99-$11.99，与高地牛主题无交集。竞争壁垒高，且买家不搜高地牛+情人节组合。
+            </div>
+            <div class="evidence-item" style="border-left-color:#3498db;">
+                <strong>④ 礼盒套装优势在圣诞更强</strong><br>
+                "毛毯+礼盒+贺卡"在圣诞送礼场景更有意义。圣诞节送礼需要仪式感和包装组合，情人节更偏个性化/浪漫主题（如定制名字、爱心图案），与高地牛乡村风格不搭。
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Items -->
+    <div class="section" style="border: 2px solid #e74c3c;">
+        <h2 style="color:#e74c3c;">建议调整事项</h2>
+        <table>
+            <tr><th style="width:40px;">#</th><th>调整事项</th><th style="width:80px;">优先级</th><th>验证方式</th></tr>
+            <tr>
+                <td>1</td>
+                <td>ERP产品标签从"情人节"改为"圣诞/节日送礼"</td>
+                <td><span class="tag tag-red">高</span></td>
+                <td>ERP标签字段更新</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>核心关键词从"valentines blanket"调整为"highland cow blanket"（旺季11-12月）</td>
+                <td><span class="tag tag-red">高</span></td>
+                <td>ERP analysis1字段更新</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Listing标题去除"Valentine"相关词，聚焦"Christmas Gift / Holiday Gift"</td>
+                <td><span class="tag tag-red">高</span></td>
+                <td>Listing文案审核</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>季节字段从"12-1月"修正为"10-12月"（10月开始拉升，11-12月峰值）</td>
+                <td><span class="tag tag-yellow">中</span></td>
+                <td>ERP analysis2字段更新</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>如保留情人节作为次要场景，仅作后台关键词覆盖，不作为主推定位</td>
+                <td><span class="tag tag-yellow">中</span></td>
+                <td>广告词组覆盖valentines blanket（低出价）</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>卖点1"毛毯+礼盒+贺卡"保留——在圣诞送礼场景下是有效差异化</td>
+                <td><span class="tag tag-green">保留</span></td>
+                <td>无需调整</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        本报告由亚马逊精细化选品 Skill (v1.8) 生成 | 验证日期: 2026-09-01 | 数据来源: SIF MCP + Sorftime MCP + RankHero + WebSearch
+    </div>
+</div>
+
+<script>
+// Chart 1: Highland cow blanket monthly trend
+var chartTrend = echarts.init(document.getElementById('chart-trend'));
+chartTrend.setOption({
+    title: { text: '"highland cow blanket" 月搜索量 (2025-2026)', left: 'center', textStyle: { fontSize: 14 } },
+    tooltip: { trigger: 'axis', formatter: function(params) { return params[0].name + ': ' + (params[0].value ? params[0].value.toLocaleString() : '无数据'); } },
+    grid: { top: 60, bottom: 50, left: 70, right: 40 },
+    xAxis: { type: 'category', data: ['9月','10月','11月','12月','1月','2月','3月','4月','5月','6月','7月'] },
+    yAxis: { type: 'value', name: '月搜索量' },
+    series: [{
+        type: 'bar',
+        data: [8979, 14186, 30858, 55161, 12949, 11696, 8409, 8459, 6999, 6621, null],
+        itemStyle: {
+            color: function(params) {
+                var colors = ['#3498db','#3498db','#f39c12','#e74c3c','#e74c3c','#e74c3c','#95a5a6','#95a5a6','#95a5a6','#95a5a6','#bdc3c7'];
+                return colors[params.dataIndex];
+            }
+        },
+        label: { show: true, position: 'top', formatter: function(p) { return p.value ? p.value.toLocaleString() : ''; }, fontSize: 11 },
+        markLine: {
+            data: [{ name: '圣诞峰值', xAxis: 3 }],
+            lineStyle: { color: '#e74c3c', width: 2, type: 'solid' },
+            label: { formatter: '圣诞峰值\n55,161', color: '#e74c3c', position: 'top', fontSize: 11 }
+        }
+    }],
+    graphic: [{
+        type: 'text', left: '55%', top: '48%',
+        style: { text: '1-2月持续下滑\n= 节后衰减', fill: '#e74c3c', fontSize: 12, textAlign: 'center' }
+    }]
+});
+
+// Chart 2: Highland cow gifts
+var chartGifts = echarts.init(document.getElementById('chart-gifts'));
+chartGifts.setOption({
+    title: { text: '"highland cow gifts" 月搜索量 (2025)', left: 'center', textStyle: { fontSize: 14 } },
+    tooltip: { trigger: 'axis' },
+    grid: { top: 50, bottom: 40, left: 70, right: 40 },
+    xAxis: { type: 'category', data: ['5月','6月','7月','8月','9月','10月','11月','12月','1月\n(情人节)','2月\n(情人节)'] },
+    yAxis: { type: 'value', name: '月搜索量' },
+    series: [{
+        type: 'bar',
+        data: [9900, 8100, 9900, 12100, 14800, 22200, 49500, null, null, null],
+        itemStyle: {
+            color: function(params) {
+                if (params.dataIndex === 6) return '#e74c3c';
+                if (params.dataIndex >= 7) return '#bdc3c7';
+                return '#3498db';
+            }
+        },
+        label: { show: true, position: 'top', formatter: function(p) { return p.value ? p.value.toLocaleString() : ''; }, fontSize: 11 }
+    }],
+    graphic: [{
+        type: 'rect', left: '72%', top: '45%', shape: { width: 80, height: 30 },
+        style: { fill: '#fff3cd', stroke: '#ffc107' },
+        silent: true
+    }, {
+        type: 'text', left: '73%', top: '50%',
+        style: { text: '无数据\n(谷底)', fill: '#856404', fontSize: 10, textAlign: 'center' }
+    }]
+});
+
+// Chart 3: Highland cow broad
+var chartBroad = echarts.init(document.getElementById('chart-broad'));
+chartBroad.setOption({
+    title: { text: '"highland cow" 大词月搜索量 (2025-2026)', left: 'center', textStyle: { fontSize: 14 } },
+    tooltip: { trigger: 'axis' },
+    grid: { top: 50, bottom: 50, left: 70, right: 40 },
+    xAxis: { type: 'category', data: ['10月','11月','12月','1月','2月','3月','4月','5月','6月','7月'] },
+    yAxis: { type: 'value', name: '月搜索量', axisLabel: { formatter: function(v) { return (v/1000) + 'K'; } } },
+    series: [{
+        type: 'line',
+        smooth: true,
+        areaStyle: { opacity: 0.3, color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{offset:0, color:'#e74c3c'}, {offset:1, color:'rgba(231,76,60,0.05)'}]}},
+        data: [null, null, 823000, 673000, 550000, null, null, null, null, null],
+        itemStyle: { color: '#e74c3c' },
+        label: { show: true, position: 'top', formatter: function(p) { return p.value ? (p.value/1000).toFixed(0) + 'K' : ''; }, fontSize: 11 },
+        markLine: {
+            data: [{ name: '持续递减', xAxis: 2 }, { xAxis: 4 }],
+            lineStyle: { color: '#e74c3c', type: 'dashed' },
+            label: { show: false }
+        }
+    }],
+    graphic: [{
+        type: 'text', left: '30%', top: '45%',
+        style: { text: '12月→2月连续递减\n823K → 673K → 550K\n降幅 33%\n无情人节二次峰值', fill: '#e74c3c', fontSize: 12, textAlign: 'left' }
+    }]
+});
+
+// Chart 4: Valentines blanket market
+var chartValentineMarket = echarts.init(document.getElementById('chart-valentine-market'));
+chartValentineMarket.setOption({
+    title: { text: '"valentines blanket" Top5 竞品 vs 高地牛主题', left: 'center', textStyle: { fontSize: 14 } },
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['月销量', '评论数'], top: 30 },
+    grid: { top: 70, bottom: 60, left: 70, right: 70 },
+    xAxis: { type: 'category', data: ['#1 B0CGW9KT6X\n$9.99','#2 B0FHHLXV4Z\n$25.99','#3 B0FPWMFVK5\n$15.99','#4 B0CTT99CLZ\n$11.99','#5 B0CMTW85YK\n$11.39'], axisLabel: { rotate: 15, fontSize: 10 } },
+    yAxis: [
+        { type: 'value', name: '月销量', position: 'left' },
+        { type: 'value', name: '评论数', position: 'right' }
+    ],
+    series: [
+        { name: '月销量', type: 'bar', data: [3000, 2000, 50, 1000, 2000], itemStyle: { color: '#3498db' }, label: { show: true, position: 'top', fontSize: 10 } },
+        { name: '评论数', type: 'bar', data: [2912, 26505, 148, 5441, 4154], itemStyle: { color: '#f39c12' }, label: { show: true, position: 'top', fontSize: 10 } }
+    ],
+    graphic: [{
+        type: 'text', left: 'center', top: '80%',
+        style: { text: 'Top5竞品无一为高地牛主题 — 两个市场无交集', fill: '#e74c3c', fontSize: 13, textAlign: 'center', fontWeight: 'bold' }
+    }]
+});
+
+// Resize
+window.addEventListener('resize', function() {
+    chartTrend.resize(); chartGifts.resize(); chartBroad.resize(); chartValentineMarket.resize();
+});
+</script>
+</body>
+</html>

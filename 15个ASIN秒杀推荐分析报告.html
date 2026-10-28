@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>15个ASIN 14天秒杀推荐分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+:root{--bg:#0e1320;--panel:#171e30;--panel2:#1d2540;--line:#2a3350;--txt:#e8ecf4;--sub:#97a3bd;
+--gold:#f5b60b;--silver:#b9bcc9;--bronze:#cd7f32;--green:#2fd07a;--yellow:#f0b429;--red:#f4576a;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(160deg,#0b0f1a,#0e1320 50%,#0a0d16);color:var(--txt);font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.6;padding:32px 22px;}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:26px;font-weight:800;letter-spacing:.5px}
+h2{font-size:19px;margin:34px 0 14px;padding-left:12px;border-left:4px solid var(--gold);}
+h3{font-size:15px;margin:16px 0 8px;color:#cfd8ea}
+p{color:var(--sub);font-size:14px;margin:8px 0}
+.b{color:#fff;font-weight:700}
+.mono{font-family:'Consolas',monospace;font-size:12.5px}
+.r{text-align:right} .c{text-align:center}
+.pos{color:var(--green)} .neg{color:var(--red)} .mark{font-weight:800}
+.small{font-size:12px;color:#7f8ba6}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.meta .chip{background:var(--panel);border:1px solid var(--line);padding:7px 13px;border-radius:10px;font-size:12.5px;color:#c3cddf}
+.grid{display:grid;gap:14px}
+.alert{background:linear-gradient(135deg,rgba(240,180,41,.14),rgba(240,180,41,.05));border:1px solid rgba(240,180,41,.4);border-radius:12px;padding:14px 16px;font-size:13.5px;margin-top:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.t3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:800px){.t3{grid-template-columns:1fr}}
+.t3card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;position:relative;overflow:hidden}
+.t3card .medal{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px}
+.gold .medal{background:rgba(245,182,11,.18);color:var(--gold)} .silver .medal{background:rgba(185,188,201,.18);color:var(--silver)} .bronze .medal{background:rgba(205,127,50,.18);color:var(--bronze)}
+.t3card .num{font-size:34px;font-weight:900;margin:6px 0;color:#fff}
+.t3card .lbl{font-size:12px;color:#7f8ba6;text-transform:uppercase;letter-spacing:1px}
+.t3card.gold .num{color:var(--gold)} .t3card.silver .num{color:var(--silver)} .t3card.bronze .num{color:var(--bronze)}
+.t3card.tag{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{background:var(--panel2);border:1px solid var(--line);padding:2px 9px;border-radius:12px;font-size:11px;color:#c3cddf}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--panel);border-radius:12px;overflow:hidden}
+th{background:var(--panel2);color:#c3cddf;text-align:center;padding:10px 8px;font-weight:600;font-size:12px}
+td{padding:8px 8px;border-top:1px solid var(--line);text-align:center;color:var(--txt)}
+tr:hover td{background:rgba(255,255,255,.03)}
+tr.top3 td{background:rgba(245,182,11,.08)}
+.td3{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.td3h{font-size:16px;font-weight:800;margin-bottom:8px}
+.td3 .medal{display:inline-block;font-size:12px;font-weight:800;padding:2px 10px;border-radius:16px;background:rgba(245,182,11,.16);color:var(--gold);margin-right:8px}
+.td3 .risk{color:#f4a6b0}
+.fail{background:rgba(244,87,106,.06);border:1px solid rgba(244,87,106,.3);border-radius:12px;padding:13px 15px;margin:10px 0}
+.failh{font-weight:700;margin-bottom:4px}
+.chart{width:100%;height:320px;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-top:10px}
+.chart2{width:100%;height:340px;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-top:10px}
+.footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:#7f8ba6}
+ol.act{margin-left:20px} ol.act li{margin:6px 0;color:var(--sub)}
+.step{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.badge{font-size:12px;font-weight:800;padding:2px 9px;border-radius:12px;background:var(--green);color:#06281a}
+</style></head><body><div class="wrap">
+
+<h1>亚马逊预秒杀可行性分析 · 15个ASIN / 未来14天</h1>
+<div class="meta">
+<div class="chip">📡 领星ERP数据：2026-09-22 17:33 (最新完整月=8月)</div>
+<div class="chip">🔍 SIF数据：更新至 2026-09-21</div>
+<div class="chip">💡 评估目标：挑选适合14天内秒杀的父ASIN</div>
+</div>
+
+<div class="alert">⚠ 数据声明：领星ERP MCP 连接正常(code:1)，数据刷新于 <b>2026-09-22 17:33</b>，内部月度趋势合理(D分布各不相同，非缓存)。SIF周粒度序列<b>最后一周(2026-09-14~20)因跨当前周未出完整</b>，已避免将其纳入涨跌计算，改用SIF服务端 `recent_change` 判定。B09PB9NWZB(教师耳环)领星毛利率为 <b>负(-31.5%)</b>，秒杀必亏损，建议排除；其余数据质量 A 级。</div>
+
+<h2>🏆 Top 3 推荐</h2>
+<div class="t3">
+<div class="t3card gold"><div><span class="medal">🥇 金牌</span> <span class="mono">B0CN856K37</span></div><div class="num">68<span style="font-size:15px;color:#7f8ba6">/90</span></div>
+<div class="lbl">德式啤酒节耳环 · 库存✅</div><div class="tag" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag">旺季峰值</span><span class="tag">流量↑</span><span class="tag">BSR+50%</span><span class="tag">库销比3.96月</span></div></div>
+<div class="t3card silver"><div><span class="medal">🥈 银牌</span> <span class="mono">B08PTXQRRX</span></div><div class="num">63<span style="font-size:15px;color:#7f8ba6">/90</span></div>
+<div class="lbl">240Pcs贴纸耳环 · 库存⚠临界</div><div class="tag" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag">高销量4,017</span><span class="tag">价格$6.35</span><span class="tag">评论5,409</span><span class="tag">常青</span></div></div>
+<div class="t3card bronze"><div><span class="medal">🥉 铜牌</span> <span class="mono">B0CQ4QYWL3</span></div><div class="num">62<span style="font-size:15px;color:#7f8ba6">/90</span></div>
+<div class="lbl">万圣节熨烫补丁 · 库存⚠临界</div><div class="tag" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag">万圣节旺季</span><span class="tag">高销量3,423</span><span class="tag">评论4.8★</span><span class="tag">流量↑</span></div></div>
+</div>
+
+<h2>📊 领星ERP 库存 + 销售总览 (15个ASIN)</h2>
+<p class="small">口径说明：8月销量为最新完整月；FBA可售为当前快照；秒杀需量=8月销量×2.5(覆盖2周秒杀3-5倍日销+2周常规)；库存余量=FBA可售-秒杀需量。库销比=可售÷8月销量。</p>
+<div style="overflow-x:auto"><table>
+<tr><th>ASIN</th><th>产品</th><th>8月销量</th><th>FBA可售</th><th>秒杀需量(×2.5)</th><th>库销比(月)</th><th>库存余量</th><th>毛利率</th><th>评论/星级</th><th>门槛</th></tr>
+<tr>
+        <td class="mono">B07XDJ2DVH</td><td style="text-align:left">8Pcs 脏辫钩针工具</td>
+        <td class="r">562</td><td class="r">1,042</td>
+        <td class="r">1,405</td>
+        <td class="r b">1.85</td>
+        <td class="r neg">-363</td>
+        <td class="gm">14.24%</td>
+        <td class="r">6,965 · 4.6★</td>
+        <td class="c mark">18441</td></tr><tr>
+        <td class="mono">B07Z5YLGXL</td><td style="text-align:left">18Pcs 领夹麦夹套装</td>
+        <td class="r">426</td><td class="r">401</td>
+        <td class="r">1,065</td>
+        <td class="r b">0.94</td>
+        <td class="r neg">-664</td>
+        <td class="gm">7.91%</td>
+        <td class="r">1,870 · 4.4★</td>
+        <td class="c mark">2000</td></tr><tr>
+        <td class="mono">B08MKWRZ3W</td><td style="text-align:left">脏辫钩针工具0.75mm</td>
+        <td class="r">3,966</td><td class="r">5,513</td>
+        <td class="r">9,915</td>
+        <td class="r b">1.39</td>
+        <td class="r neg">-4,402</td>
+        <td class="gm">16.14%</td>
+        <td class="r">8,214 · 4.6★</td>
+        <td class="c mark">1637</td></tr><tr>
+        <td class="mono">B08PTXQRRX</td><td style="text-align:left">240Pcs 贴纸耳环</td>
+        <td class="r">4,017</td><td class="r">9,811</td>
+        <td class="r">10,042</td>
+        <td class="r b">2.44</td>
+        <td class="r neg">-232</td>
+        <td class="gm">19.16%</td>
+        <td class="r">5,409 · 4.3★</td>
+        <td class="c mark">1999</td></tr><tr>
+        <td class="mono">B08XPRYKLX</td><td style="text-align:left">100Pcs 金色旋转龙虾扣</td>
+        <td class="r">1,454</td><td class="r">3,383</td>
+        <td class="r">3,635</td>
+        <td class="r b">2.33</td>
+        <td class="r neg">-252</td>
+        <td class="gm">22.28%</td>
+        <td class="r">4,199 · 4.7★</td>
+        <td class="c mark">4969</td></tr><tr>
+        <td class="mono">B0987J7WDB</td><td style="text-align:left">18Pcs 不锈钢玉米夹</td>
+        <td class="r">3,077</td><td class="r">3,698</td>
+        <td class="r">7,692</td>
+        <td class="r b">1.20</td>
+        <td class="r neg">-3,994</td>
+        <td class="gm">11.12%</td>
+        <td class="r">4,734 · 4.6★</td>
+        <td class="c mark">2805</td></tr><tr>
+        <td class="mono">B09G9MJR5J</td><td style="text-align:left">400Pcs 开口跳环珠宝扣</td>
+        <td class="r">376</td><td class="r">341</td>
+        <td class="r">940</td>
+        <td class="r b">0.91</td>
+        <td class="r neg">-599</td>
+        <td class="gm">6.35%</td>
+        <td class="r">975 · 4.6★</td>
+        <td class="c mark">20480</td></tr><tr>
+        <td class="mono">B09PB9NWZB</td><td style="text-align:left">9双 教师人造革耳环</td>
+        <td class="r">319</td><td class="r">2,538</td>
+        <td class="r">798</td>
+        <td class="r b">7.96</td>
+        <td class="r pos">+1,740</td>
+        <td class="gm">-31.49%</td>
+        <td class="r">1,356 · 4.5★</td>
+        <td class="c mark">131035</td></tr><tr>
+        <td class="mono">B09S9NB8YN</td><td style="text-align:left">9Pcs 5mm 方形拼豆板</td>
+        <td class="r">342</td><td class="r">1,098</td>
+        <td class="r">855</td>
+        <td class="r b">3.21</td>
+        <td class="r pos">+243</td>
+        <td class="gm">12.02%</td>
+        <td class="r">1,267 · 4.4★</td>
+        <td class="c mark">23896</td></tr><tr>
+        <td class="mono">B0CJ4SPFGZ</td><td style="text-align:left">9双 返校教师耳钉</td>
+        <td class="r">1,649</td><td class="r">4,165</td>
+        <td class="r">4,122</td>
+        <td class="r b">2.53</td>
+        <td class="r pos">+42</td>
+        <td class="gm">13.6%</td>
+        <td class="r">383 · 3.8★</td>
+        <td class="c mark">40009</td></tr><tr>
+        <td class="mono">B0CN856K37</td><td style="text-align:left">8双 德式啤酒节耳环</td>
+        <td class="r">1,295</td><td class="r">5,126</td>
+        <td class="r">3,238</td>
+        <td class="r b">3.96</td>
+        <td class="r pos">+1,888</td>
+        <td class="gm">17.68%</td>
+        <td class="r">787 · 4.6★</td>
+        <td class="c mark">57820</td></tr><tr>
+        <td class="mono">B0CQ4QYWL3</td><td style="text-align:left">36Pcs 万圣节熨烫补丁</td>
+        <td class="r">3,423</td><td class="r">8,027</td>
+        <td class="r">8,558</td>
+        <td class="r b">2.35</td>
+        <td class="r neg">-530</td>
+        <td class="gm">12.99%</td>
+        <td class="r">1,818 · 4.8★</td>
+        <td class="c mark">2092</td></tr><tr>
+        <td class="mono">B0DD3R6LK5</td><td style="text-align:left">60Pcs 粉色刺绣补丁</td>
+        <td class="r">1,468</td><td class="r">3,630</td>
+        <td class="r">3,670</td>
+        <td class="r b">2.47</td>
+        <td class="r neg">-40</td>
+        <td class="gm">16.52%</td>
+        <td class="r">2,896 · 4.7★</td>
+        <td class="c mark">5085</td></tr><tr>
+        <td class="mono">B0DHL5X1XM</td><td style="text-align:left">12Pcs 万圣节熨烫补丁</td>
+        <td class="r">564</td><td class="r">1,899</td>
+        <td class="r">1,410</td>
+        <td class="r b">3.37</td>
+        <td class="r pos">+489</td>
+        <td class="gm">7.36%</td>
+        <td class="r">287 · 4.9★</td>
+        <td class="c mark">16918</td></tr><tr>
+        <td class="mono">B0GHPVZGLX</td><td style="text-align:left">20Pcs 拼豆板5mm</td>
+        <td class="r">1,489</td><td class="r">2,374</td>
+        <td class="r">3,722</td>
+        <td class="r b">1.59</td>
+        <td class="r neg">-1,348</td>
+        <td class="gm">21.65%</td>
+        <td class="r">3,673 · 4.7★</td>
+        <td class="c mark">4631</td></tr>
+</table></div>
+<p class="small">门槛：✅通过(≥2.5月) / ⚠临界(2.0~2.5月) / ❌不通过(&lt;2.0月)。未通过门槛的ASIN不参与推荐排名。</p>
+
+<h2>📈 季节性分析 · SIF关键词趋势 + 领星月度销量</h2>
+<h3>SIF关键词根搜索量（近12周）</h3>
+<div id="kw" class="chart"></div>
+<div class="row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div><h3>Top候选 · 领星月度销量趋势（1-9月）</h3><div id="vol" class="chart2" style="background:var(--panel)"></div></div>
+<div><h3>库存 vs 秒杀需量（10个可评估ASIN）</h3><div id="stock" class="chart2" style="background:var(--panel)"></div></div>
+</div>
+<p class="small">奥克托节耳环(B0CN856K37)搜索处于年度峰值0.2万/周，9月销量1,869件为全年最高 → 正值需求爬坡中段，秒杀时机最佳。万圣节补丁(B0CQ4QYWL3)词根从8月0.1万爬至9月0.5万，朝向10月峰值2.2万 → 爬坡期做秒杀边际最划算。返校教师耳环、教师人造革耳环旺季已过(8月峰值、9月下滑)，不宜秒杀。</p>
+
+<h2>🧮 9维度评分矩阵（90分制，仅参与排名的9个ASIN）</h2>
+<div style="overflow-x:auto"><table>
+<tr><th>排名</th><th>ASIN</th><th>产品</th>
+<th>销量<br>10</th><th>流量<br>10</th><th>BSR<br>10</th><th>价格<br>10</th><th>评论<br>10</th><th>季节<br>10</th><th>利润<br>10</th><th>动量<br>10</th><th>库存<br>10</th>
+<th>门槛</th><th>总分</th></tr>
+<tr class="top3">
+        <td class="rank">#1 ⭐</td>
+        <td class="mono">B0CN856K37</td><td style="text-align:left;max-width:120px">8双 德式啤酒节耳环</td>
+        <td class="r">7</td><td class="r">10</td><td class="r">8</td><td class="r">7</td><td class="r">8</td><td class="r">9</td><td class="r">3</td><td class="r">9</td><td class="r">7</td>
+        <td class="c mark">✅</td><td><b>68</b>/90</td></tr><tr class="top3">
+        <td class="rank">#2 ⭐</td>
+        <td class="mono">B08PTXQRRX</td><td style="text-align:left;max-width:120px">240Pcs 贴纸耳环</td>
+        <td class="r">10</td><td class="r">8</td><td class="r">7</td><td class="r">9</td><td class="r">8</td><td class="r">6</td><td class="r">3</td><td class="r">8</td><td class="r">4</td>
+        <td class="c mark">⚠</td><td><b>63</b>/90</td></tr><tr class="top3">
+        <td class="rank">#3 ⭐</td>
+        <td class="mono">B0CQ4QYWL3</td><td style="text-align:left;max-width:120px">36Pcs 万圣节熨烫补丁</td>
+        <td class="r">10</td><td class="r">10</td><td class="r">4</td><td class="r">7</td><td class="r">9</td><td class="r">8</td><td class="r">3</td><td class="r">7</td><td class="r">4</td>
+        <td class="c mark">⚠</td><td><b>62</b>/90</td></tr><tr class="">
+        <td class="rank">#4</td>
+        <td class="mono">B0DD3R6LK5</td><td style="text-align:left;max-width:120px">60Pcs 粉色刺绣补丁</td>
+        <td class="r">7</td><td class="r">4</td><td class="r">4</td><td class="r">5</td><td class="r">10</td><td class="r">7</td><td class="r">3</td><td class="r">3</td><td class="r">4</td>
+        <td class="c mark">⚠</td><td><b>47</b>/90</td></tr><tr class="">
+        <td class="rank">#5</td>
+        <td class="mono">B08XPRYKLX</td><td style="text-align:left;max-width:120px">100Pcs 金色旋转龙虾扣</td>
+        <td class="r">7</td><td class="r">4</td><td class="r">2</td><td class="r">7</td><td class="r">10</td><td class="r">6</td><td class="r">5</td><td class="r">1</td><td class="r">4</td>
+        <td class="c mark">⚠</td><td><b>46</b>/90</td></tr><tr class="">
+        <td class="rank">#6</td>
+        <td class="mono">B0DHL5X1XM</td><td style="text-align:left;max-width:120px">12Pcs 万圣节熨烫补丁</td>
+        <td class="r">5</td><td class="r">2</td><td class="r">4</td><td class="r">9</td><td class="r">6</td><td class="r">7</td><td class="r">1</td><td class="r">4</td><td class="r">7</td>
+        <td class="c mark">✅</td><td><b>45</b>/90</td></tr><tr class="">
+        <td class="rank">#7</td>
+        <td class="mono">B09PB9NWZB</td><td style="text-align:left;max-width:120px">9双 教师人造革耳环</td>
+        <td class="r">4</td><td class="r">4</td><td class="r">4</td><td class="r">7</td><td class="r">9</td><td class="r">3</td><td class="r">1</td><td class="r">4</td><td class="r">9</td>
+        <td class="c mark">✅</td><td><b>45</b>/90</td></tr><tr class="">
+        <td class="rank">#8</td>
+        <td class="mono">B09S9NB8YN</td><td style="text-align:left;max-width:120px">9Pcs 5mm 方形拼豆板</td>
+        <td class="r">4</td><td class="r">4</td><td class="r">6</td><td class="r">5</td><td class="r">7</td><td class="r">6</td><td class="r">3</td><td class="r">2</td><td class="r">7</td>
+        <td class="c mark">✅</td><td><b>44</b>/90</td></tr><tr class="">
+        <td class="rank">#9</td>
+        <td class="mono">B0CJ4SPFGZ</td><td style="text-align:left;max-width:120px">9双 返校教师耳钉</td>
+        <td class="r">9</td><td class="r">2</td><td class="r">2</td><td class="r">7</td><td class="r">2</td><td class="r">3</td><td class="r">3</td><td class="r">5</td><td class="r">6</td>
+        <td class="c mark">✅</td><td><b>39</b>/90</td></tr>
+</table></div>
+
+<h2>🔎 Top 3 详细分析</h2>
+<div class="td3" style="border-left:4px solid #f5b60b">
+        <div class="td3h"><span class="medal">金牌</span> <span class="mono">B0CN856K37</span> · 8双 德式啤酒节耳环</div>
+        <p><b>推荐理由：</b>全组总评分最高(68分)且库存门槛达标。德式啤酒节耳环正处于年度旺季窗口——SIF『oktoberfest earrings』词根搜索量当前0.2万/周，处于历史峰值(2025-09 0.2万)同一量级回调段，且9月单月销量已冲至1869件(环比8月+44%)，等于踩在需求爬坡最陡处。BSR从57,820升至28,997(改善49.8%)，流量SIF判定sharp_growth，三项动量共振向上。库销比3.96月，可售5,126件，足以支撑2周秒杀并保留常规补货缓冲。</p>
+        <p class="risk"><b>风险提示：</b>9月为响应当季而冲高，需警惕10月上中旬后需求回落；评论基数787条(500-1000档)偏低，4.6星可接受；毛利率17.7%，85折秒杀后单件利润被压缩，建议控量秒杀避免大幅让利。</p></div><div class="td3" style="border-left:4px solid #b9bcc9">
+        <div class="td3h"><span class="medal">银牌</span> <span class="mono">B08PTXQRRX</span> · 240Pcs 贴纸耳环</div>
+        <p><b>推荐理由：</b>全组第二高分(63分)。贴纸耳环为常青高销量品，8月销量4,017件居2档之最，价格$6.35处于秒杀黄金价格带(决策门槛低)。SIF流量mild_growth、BSR小幅改善(+10.7%)，9月月销量2,782件仍高企。评论5,409条+4.3星，基础扎实，属于『跑量保排名』型秒杀标的。</p>
+        <p class="risk"><b>风险提示：</b>库存为⚠临界：库销比仅2.44月，FBA可售9,811件 vs 秒杀+2周需量约10,042件，缺口约232件。若2周秒杀量超预期存在中途断货风险，需确保入库在途补货到位后再开秒杀。</p></div><div class="td3" style="border-left:4px solid #cd7f32">
+        <div class="td3h"><span class="medal">铜牌</span> <span class="mono">B0CQ4QYWL3</span> · 36Pcs 万圣节熨烫补丁</div>
+        <p><b>推荐理由：</b>全组第三高分(62分)，且是季节性上行空间最大的标的。万圣节熨烫补丁正当预售旺季——SIF『halloween patches』词根从8月0.1万一路爬升至9月0.5万，朝向10月年度峰值(2.2万)冲刺，SIF流量sharp_growth。8月销量3,423件、1846-1800评论4.8星，评论与转化基础优秀，秒杀折扣可放大旺季订单量。</p>
+        <p class="risk"><b>风险提示：</b>库存ⓐ临界：库销比2.35月，8,027件可售 vs 约8,558件需求，缺口约530件(组内最大)，且9月部分月销量回落至1,835件。库存是最大瓶颈——若在途补货(139件)不足，强烈建议搭配限量秒杀或等补货后再上，避免旺季断货排名下滑。</p></div>
+
+<h2>❌ 未通过库存门槛的ASIN简析（6个）</h2>
+<div class="fail"><div class="failh"><span class="mono">B08MKWRZ3W</span> · 脏辫钩针(月销3,966件 · 库销比 <b class="r2">1.39</b></div>
+        <p>月销近4,000件的高流量品但可售仅5,513件，库销比1.39月严重不足。秒杀至少需9,900件，缺口达4,400件。切勿秒杀；优先头程加急补货，目标≥2.5月库销比后再评估</p></div><div class="fail"><div class="failh"><span class="mono">B0987J7WDB</span> · 玉米夹(月销3,077件 · 库销比 <b class="r2">1.2</b></div>
+        <p>旺季(夏末烧烤季)已过、销量9月回落至1,199件，库存仅3,698件。库销比1.20月不达标；建议先清库存去化，不做秒杀</p></div><div class="fail"><div class="failh"><span class="mono">B0GHPVZGLX</span> · 拼豆板(月销1,489件 · 库销比 <b class="r2">1.59</b></div>
+        <p>可售2,374件，秒杀缺口1,348件。库销比1.59月不达标；建议补货至≥3月后再列入秒杀计划</p></div><div class="fail"><div class="failh"><span class="mono">B07XDJ2DVH</span> · 脏辫钩针(月销562件 · 库销比 <b class="r2">1.85</b></div>
+        <p>库销比1.85月处于临界以下，可售1,042件无法支撑秒杀需求。建议补货或择机做小量活动</p></div><div class="fail"><div class="failh"><span class="mono">B07Z5YLGXL</span> · 领夹麦夹(月销426件 · 库销比 <b class="r2">0.94</b></div>
+        <p>库销比仅0.94月，严重缺货，且毛利7.9%偏低。完全不建议秒杀，先补货</p></div><div class="fail"><div class="failh"><span class="mono">B09G9MJR5J</span> · 跳环扣(月销376件 · 库销比 <b class="r2">0.91</b></div>
+        <p>库销比0.91月最低，可售仅341件，且毛利6.4%极低。秒杀必然亏本+断货，直接排除</p></div>
+
+<h2>📌 行动建议（按优先级）</h2>
+<div class="step"><span class="badge">优先上线</span><p><b>1. B0CN856K37</b> — 最稳妥首选。立即在1-2天内提交秒杀(建议LD价减15%左右)，卡住9月底-10月上啤酒节需求峰值。秒杀前确认后续补货按时到位，秒杀后1周内补库。</p></div>
+<div class="step"><span class="badge">评估后上线</span><p><b>2. B08PTXQRRX</b> — 高跑量常青款，价格带极佳。当前可售9,811件、秒杀+2周需量约10,042件，缺口约232件，且在途入库仅5件：若补货预计2周内到则上；否则改报<b>仅覆盖可售量的限量秒杀</b>或延后，避免中途断货。</p></div>
+<div class="step"><span class="badge">高潜但需慎</span><p><b>3. B0CQ4QYWL3</b> — 万圣季节性上行空间最大，但缺约530件。强烈建议<b>等待在途139件+确认后续头程</b>，或在秒杀期间同步控价防超卖；若库存无法保障，掉级为常规促销而非卡点秒杀。</p></div>
+<div class="step"><span class="badge">暂不推荐</span><p><b>4-9</b> — B0DD3R6LK5/B08XPRYKLX(动量向下)、B0DHL5X1XM/B09PB9NWZB(利润过低/负)、B09S9NB8YN(低位盘整)、B0CJ4SPFGZ(返校旺季已过、3.8星评论薄弱)，本档期不建议作为秒杀主攻。</p></div>
+<div class="step"><span class="badge">补货后再议</span><p><b>6个未过门槛</b> — 优先对 B08MKWRZ3W、B0GHPVZGLX、B07XDJ2DVH 补充头程，目标库销比≥3月后再纳入下一轮秒杀评估；B0987J7WDB 旺季已过建议去库存；B07Z5YLGXL、B09G9MJR5J 缺口大且毛利低，直接跳过。</p></div>
+
+<h2>🧭 方法论说明</h2>
+<div class="card"><p><b>数据源：</b>领星ERP(真实销售+库存+毛利)、SIF(ASIN流量趋势+关键词季节)、评估时间2026-09-22。评分维度=销量/流量/BSR/价格/评论/季节/利润/动量/库存 共9维×10分=90分制，详见技能评分细则。<br>
+<b>门槛规则：</b>库销比(可售÷月销)≥2.5月可秒杀(✅)、2.0~2.5月临界(⚠)参与排名但标注风险、&lt;2.0月(❌)不参与推荐；秒杀需量=月销×2.5覆盖2周。<br>
+<b>推荐原则：</b>综合评分优先，容量为硬约束。Top3中B0CN856K37为唯一库存达标+高分双满足标的；B08PTXQRRX与B0CQ4QYWL3评分高但库存临界，仅建议在补货可覆盖时上线。</p></div>
+
+<div class="footer">本报告基于领星ERP(2026-09-22)与SIF(2026-09-21)数据自动生成，供秒杀选品参考，非业绩承诺。SIF流量序列末周跨当前周未出完整，趋势判定采用服务端 recent_change。产品名、评分、排名等来自BA系统/领星/SIF，实际以Amazon页面为准。</div>
+</div>
+
+<script>
+const dimShort=["销量", "流量", "BSR", "价格", "评论", "季节", "利润", "动量", "库存"];
+const order=["B0CN856K37", "B08PTXQRRX", "B0CQ4QYWL3", "B0DD3R6LK5", "B08XPRYKLX", "B0DHL5X1XM", "B09PB9NWZB", "B09S9NB8YN", "B0CJ4SPFGZ"];
+const scores={"B0CN856K37": [7, 10, 8, 7, 8, 9, 3, 9, 7, "\u2705"], "B08PTXQRRX": [10, 8, 7, 9, 8, 6, 3, 8, 4, "\u26a0"], "B0CQ4QYWL3": [10, 10, 4, 7, 9, 8, 3, 7, 4, "\u26a0"], "B0DD3R6LK5": [7, 4, 4, 5, 10, 7, 3, 3, 4, "\u26a0"], "B08XPRYKLX": [7, 4, 2, 7, 10, 6, 5, 1, 4, "\u26a0"], "B0DHL5X1XM": [5, 2, 4, 9, 6, 7, 1, 4, 7, "\u2705"], "B09PB9NWZB": [4, 4, 4, 7, 9, 3, 1, 4, 9, "\u2705"], "B09S9NB8YN": [4, 4, 6, 5, 7, 6, 3, 2, 7, "\u2705"], "B0CJ4SPFGZ": [9, 2, 2, 7, 2, 3, 3, 5, 6, "\u2705"]};
+const names={"B08PTXQRRX": "240Pcs 贴纸耳环", "B08MKWRZ3W": "脏辫钩针工具0.75mm", "B0CQ4QYWL3": "36Pcs 万圣节熨烫补丁", "B0987J7WDB": "18Pcs 不锈钢玉米夹", "B08PTXQRRXL": "–", "B0DD3R6LK5": "60Pcs 粉色刺绣补丁", "B0GHPVZGLX": "20Pcs 拼豆板5mm", "B08XPRYKLX": "100Pcs 金色旋转龙虾扣", "B0CN856K37": "8双 德式啤酒节耳环", "B0CJ4SPFGZ": "9双 返校教师耳钉", "B07XDJ2DVH": "8Pcs 脏辫钩针工具", "B0DHL5X1XM": "12Pcs 万圣节熨烫补丁", "B07Z5YLGXL": "18Pcs 领夹麦夹套装", "B09G9MJR5J": "400Pcs 开口跳环珠宝扣", "B09S9NB8YN": "9Pcs 5mm 方形拼豆板", "B09PB9NWZB": "9双 教师人造革耳环"};
+// --- 关键词趋势 ---
+(function(){
+const s1=[0,0,0,0,0,0,0,0,0,0,161,277,404,646,1146];
+const s2=[146,181,242,207,297,338,419,393,590,737,808,893,1106,1469,1646];
+const catNames=['oktoberfest earrings','halloween patches'];
+const chart=echarts.init(document.getElementById('kw'));
+chart.setOption({
+  tooltip:{trigger:'axis'},
+  legend:{data:catNames,textStyle:{color:'#97a3bd'},top:8},
+  grid:{left:50,right:20,top:44,bottom:34},
+  xAxis:{type:'category',data:['6/28','7/5','7/12','7/19','7/26','8/2','8/9','8/16','8/23','8/30','9/6','9/13','9/20','9/27','10/4'],axisLabel:{color:'#7f8ba6'}},
+  yAxis:{type:'value',name:'搜索量',axisLabel:{color:'#7f8ba6'},splitLine:{lineStyle:{color:'#222a44'}}},
+  series:[
+    {name:'oktoberfest earrings',type:'line',data:s1,smooth:true,itemStyle:{color:'#f5b60b'},lineStyle:{width:3}},
+    {name:'halloween patches',type:'line',data:s2,smooth:true,itemStyle:{color:'#f4576a'},lineStyle:{width:3}}
+  ],backgroundColor:'#171e30'
+});
+})();
+// --- 月度销量 ---
+(function(){
+const monthly={"B0CN856K37": [726, 1085, 701, 1062, 575, 1427, 712, 1295, 1869], "B08PTXQRRX": [2911, 3158, 4687, 3654, 3542, 3480, 3451, 4017, 2782], "B0CQ4QYWL3": [2453, 2228, 1953, 2762, 3683, 4368, 2397, 3423, 1835], "B0DD3R6LK5": [1153, 1134, 826, 1364, 1178, 1335, 1259, 1468, 901], "B0DHL5X1XM": [179, 240, 328, 486, 679, 878, 342, 564, 324], "B08XPRYKLX": [2229, 1697, 1888, 1591, 1154, 1793, 2190, 1454, 920]};
+const mw=["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708"];
+const asins=Object.keys(monthly);
+const series=asins.map(a=>({name:a,type:'line',smooth:true,data:monthly[a]}));
+const chart=echarts.init(document.getElementById('vol'));
+chart.setOption({
+ tooltip:{trigger:'axis'},legend:{textStyle:{color:'#97a3bd'},type:'scroll',top:8},
+ grid:{left:50,right:16,top:44,bottom:30},
+ xAxis:{type:'category',data:mw,axisLabel:{color:'#7f8ba6'}},
+ yAxis:{type:'value',axisLabel:{color:'#7f8ba6'},splitLine:{lineStyle:{color:'#222a44'}}},
+ series,backgroundColor:'#171e30'
+});
+})();
+// --- 库存 vs 需量柱状图 ---
+(function(){
+const stockData={"B0CN856K37": [5126, 3238], "B08PTXQRRX": [9811, 10042], "B0CQ4QYWL3": [8027, 8558], "B0DD3R6LK5": [3630, 3670], "B08XPRYKLX": [3383, 3635], "B0DHL5X1XM": [1899, 1410], "B09PB9NWZB": [2538, 798], "B09S9NB8YN": [1098, 855], "B0CJ4SPFGZ": [4165, 4122]}; // asin -> [fba, need]
+const asins=Object.keys(stockData);
+const chart=echarts.init(document.getElementById('stock'));
+chart.setOption({
+ tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},legend:{textStyle:{color:'#97a3bd'},top:8},
+ grid:{left:50,right:16,top:44,bottom:50},
+ xAxis:{type:'category',data:asins,axisLabel:{color:'#7f8ba6',rotate:28,fontSize:10}},
+ yAxis:{type:'value',axisLabel:{color:'#7f8ba6'},splitLine:{lineStyle:{color:'#222a44'}}},
+ series:[
+ {name:'FBA可售',type:'bar',data:asins.map(a=>stockData[a][0]),itemStyle:{color:'#3b82f6'}},
+ {name:'秒杀需量(×2.5)',type:'bar',data:asins.map(a=>stockData[a][1]),itemStyle:{color:'#f4576a'}}
+ ],backgroundColor:'#171e30'
+});
+})();
+</script>
+</body></html>

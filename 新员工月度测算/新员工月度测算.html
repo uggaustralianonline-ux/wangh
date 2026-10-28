@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>新员工月度销售额与毛利测算</title>
+<style>
+ body{font-family:Segoe UI,'Microsoft YaHei',Arial,sans-serif;color:#1f2937;background:#f7f8fa;margin:0;padding:24px}
+ .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:20px 24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+ h1{font-size:22px;margin:0 0 4px} h2{font-size:16px;margin:18px 0 8px;color:#374151}
+ .sub{color:#6b7280;font-size:13px}
+ table{border-collapse:collapse;width:100%;font-size:13px}
+ th,td{border:1px solid #e5e7eb;padding:6px 8px;text-align:right}
+ th{background:#f3f4f6;color:#374151;position:sticky;top:0}
+ td:first-child,th:first-child{text-align:center}
+ .scroll{max-height:420px;overflow:auto}
+ .kv{display:flex;flex-wrap:wrap;gap:10px}
+ .stat{flex:1;min-width:150px;background:#f9fafb;border:1px solid #eef0f3;border-radius:8px;padding:10px 12px}
+ .stat b{display:block;font-size:18px;color:#111827} .stat span{font-size:12px;color:#6b7280}
+ .assump{font-size:12.5px;color:#4b5563;line-height:1.7}
+ .assump li{margin:2px 0}
+ .pos{color:#16a34a} .neg{color:#dc2626}
+</style></head><body>
+<h1>亚马逊新员工 · 月度销售额与毛利测算</h1>
+<div class="sub">开发节奏：每月开发 10 个 → 成功率 60% → 每月成功上架 6 个 SKU（节日 3.6 / 常规 2.4）｜测算区间：入职后 36 个月</div>
+
+<div class="card">
+  <h2>逐月趋势（销售额 vs 毛利）</h2>
+  
+<svg viewBox="0 0 780 360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="780" height="360" fill="#ffffff"/>
+  <line x1="64" y1="316.0" x2="756" y2="316.0" stroke="#e3e7ee"/><text x="56" y="320.0" text-anchor="end" font-size="10" fill="#6b7280">$0.0k</text><line x1="64" y1="244.0" x2="756" y2="244.0" stroke="#e3e7ee"/><text x="56" y="248.0" text-anchor="end" font-size="10" fill="#6b7280">$30.5k</text><line x1="64" y1="172.0" x2="756" y2="172.0" stroke="#e3e7ee"/><text x="56" y="176.0" text-anchor="end" font-size="10" fill="#6b7280">$61.0k</text><line x1="64" y1="100.0" x2="756" y2="100.0" stroke="#e3e7ee"/><text x="56" y="104.0" text-anchor="end" font-size="10" fill="#6b7280">$91.5k</text><line x1="64" y1="28.0" x2="756" y2="28.0" stroke="#e3e7ee"/><text x="56" y="32.0" text-anchor="end" font-size="10" fill="#6b7280">$122.0k</text><line x1="281.5" y1="28" x2="281.5" y2="316" stroke="#dfe3ea" stroke-dasharray="4 3"/><text x="281.5" y="338" text-anchor="middle" font-size="10" fill="#6b7280">第1年末</text><line x1="518.7" y1="28" x2="518.7" y2="316" stroke="#dfe3ea" stroke-dasharray="4 3"/><text x="518.7" y="338" text-anchor="middle" font-size="10" fill="#6b7280">第2年末</text><line x1="756.0" y1="28" x2="756.0" y2="316" stroke="#dfe3ea" stroke-dasharray="4 3"/><text x="756.0" y="338" text-anchor="middle" font-size="10" fill="#6b7280">第3年末</text>
+  <polyline fill="none" stroke="#2563eb" stroke-width="2" points="64.0,314.6 83.8,313.2 103.5,311.7 123.3,310.3 143.1,296.2 162.9,282.0 182.6,280.6 202.4,279.2 222.2,277.7 241.9,276.3 261.7,274.9 281.5,273.5 301.3,216.8 321.0,213.3 340.8,209.7 360.6,206.2 380.3,170.8 400.1,135.3 419.9,131.8 439.7,128.3 459.4,124.7 479.2,121.2 499.0,117.6 518.7,114.1 538.5,130.7 558.3,127.2 578.1,123.6 597.8,120.1 617.6,84.7 637.4,49.3 657.1,45.7 676.9,42.2 696.7,38.6 716.5,35.1 736.2,31.5 756.0,28.0"/>
+  <polyline fill="none" stroke="#16a34a" stroke-width="2" points="64.0,315.6 83.8,315.2 103.5,314.8 123.3,314.4 143.1,310.5 162.9,306.6 182.6,306.3 202.4,305.9 222.2,305.5 241.9,305.1 261.7,304.7 281.5,304.3 301.3,288.7 321.0,287.7 340.8,286.8 360.6,285.8 380.3,276.1 400.1,266.3 419.9,265.3 439.7,264.4 459.4,263.4 479.2,262.4 499.0,261.4 518.7,260.5 538.5,265.1 558.3,264.1 578.1,263.1 597.8,262.1 617.6,252.4 637.4,242.6 657.1,241.7 676.9,240.7 696.7,239.7 716.5,238.7 736.2,237.8 756.0,236.8"/>
+  <text x="64.0" y="352" text-anchor="middle" font-size="10" fill="#6b7280">M1</text><text x="162.9" y="352" text-anchor="middle" font-size="10" fill="#6b7280">M6</text><text x="281.5" y="352" text-anchor="middle" font-size="10" fill="#6b7280">M12</text><text x="400.1" y="352" text-anchor="middle" font-size="10" fill="#6b7280">M18</text><text x="518.7" y="352" text-anchor="middle" font-size="10" fill="#6b7280">M24</text><text x="637.4" y="352" text-anchor="middle" font-size="10" fill="#6b7280">M30</text><text x="756.0" y="352" text-anchor="middle" font-size="10" fill="#6b7280">M36</text>
+  <rect x="64" y="6" width="14" height="10" fill="#2563eb"/>
+  <text x="84" y="15" font-size="11" fill="#374151">月销售额 (USD)</text>
+  <rect x="214" y="6" width="14" height="10" fill="#16a34a"/>
+  <text x="234" y="15" font-size="11" fill="#374151">月毛利@27.5% (USD)</text>
+</svg>
+</div>
+
+<div class="card">
+  <h2>分布统计（36 个月）</h2>
+  <div class="kv">
+    <div class="stat"><span>月销售额 最低</span><b>$600</b></div>
+    <div class="stat"><span>月销售额 中位数</span><b>$77,250</b></div>
+    <div class="stat"><span>月销售额 平均</span><b>$60,450</b></div>
+    <div class="stat"><span>月销售额 最高</span><b>$121,950</b></div>
+    <div class="stat"><span>月毛利@27.5% 平均</span><b>$16,624</b></div>
+    <div class="stat"><span>月毛利@27.5% 最高</span><b>$33,536</b></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>年度汇总</h2>
+  <table><thead><tr><th>年度</th><th>年销售额</th><th>年毛利@27.5%</th><th>月均销售额</th><th>月均毛利</th></tr></thead>
+  <tbody><tr><td>第1年</td><td>$127,800</td><td>$35,145</td><td>$10,650</td><td>$2,929</td></tr><tr><td>第2年</td><td>$805,500</td><td>$221,512</td><td>$67,125</td><td>$18,459</td></tr><tr><td>第3年</td><td>$1,242,900</td><td>$341,798</td><td>$103,575</td><td>$28,483</td></tr></tbody></table>
+  <div class="sub" style="margin-top:8px">说明：第 2 年备货量提升 2.5×（2~3 倍中值），第 3 年维持稳定；每年年末淘汰 10% 老产品。</div>
+</div>
+
+<div class="card">
+  <h2>逐月明细（36 个月）</h2>
+  <div class="scroll"><table><thead><tr><th>月份</th><th>活跃SKU</th><th>销量(件)</th><th>销售额</th><th>毛利@27.5%</th><th>毛利区间(25%~30%)</th></tr></thead>
+  <tbody><tr><td>1</td><td>6.0</td><td>60</td><td>$600</td><td>$165</td><td>$150~$180</td></tr><tr><td>2</td><td>12.0</td><td>120</td><td>$1,200</td><td>$330</td><td>$300~$360</td></tr><tr><td>3</td><td>18.0</td><td>180</td><td>$1,800</td><td>$495</td><td>$450~$540</td></tr><tr><td>4</td><td>24.0</td><td>240</td><td>$2,400</td><td>$660</td><td>$600~$720</td></tr><tr><td>5</td><td>30.0</td><td>840</td><td>$8,400</td><td>$2,310</td><td>$2,100~$2,520</td></tr><tr><td>6</td><td>36.0</td><td>1,440</td><td>$14,400</td><td>$3,960</td><td>$3,600~$4,320</td></tr><tr><td>7</td><td>42.0</td><td>1,500</td><td>$15,000</td><td>$4,125</td><td>$3,750~$4,500</td></tr><tr><td>8</td><td>48.0</td><td>1,560</td><td>$15,600</td><td>$4,290</td><td>$3,900~$4,680</td></tr><tr><td>9</td><td>54.0</td><td>1,620</td><td>$16,200</td><td>$4,455</td><td>$4,050~$4,860</td></tr><tr><td>10</td><td>60.0</td><td>1,680</td><td>$16,800</td><td>$4,620</td><td>$4,200~$5,040</td></tr><tr><td>11</td><td>66.0</td><td>1,740</td><td>$17,400</td><td>$4,785</td><td>$4,350~$5,220</td></tr><tr><td>12</td><td>72.0</td><td>1,800</td><td>$18,000</td><td>$4,950</td><td>$4,500~$5,400</td></tr><tr><td>13</td><td>70.8</td><td>4,200</td><td>$42,000</td><td>$11,550</td><td>$10,500~$12,600</td></tr><tr><td>14</td><td>76.8</td><td>4,350</td><td>$43,500</td><td>$11,962</td><td>$10,875~$13,050</td></tr><tr><td>15</td><td>82.8</td><td>4,500</td><td>$45,000</td><td>$12,375</td><td>$11,250~$13,500</td></tr><tr><td>16</td><td>88.8</td><td>4,650</td><td>$46,500</td><td>$12,788</td><td>$11,625~$13,950</td></tr><tr><td>17</td><td>94.8</td><td>6,150</td><td>$61,500</td><td>$16,912</td><td>$15,375~$18,450</td></tr><tr><td>18</td><td>100.8</td><td>7,650</td><td>$76,500</td><td>$21,038</td><td>$19,125~$22,950</td></tr><tr><td>19</td><td>106.8</td><td>7,800</td><td>$78,000</td><td>$21,450</td><td>$19,500~$23,400</td></tr><tr><td>20</td><td>112.8</td><td>7,950</td><td>$79,500</td><td>$21,862</td><td>$19,875~$23,850</td></tr><tr><td>21</td><td>118.8</td><td>8,100</td><td>$81,000</td><td>$22,275</td><td>$20,250~$24,300</td></tr><tr><td>22</td><td>124.8</td><td>8,250</td><td>$82,500</td><td>$22,688</td><td>$20,625~$24,750</td></tr><tr><td>23</td><td>130.8</td><td>8,400</td><td>$84,000</td><td>$23,100</td><td>$21,000~$25,200</td></tr><tr><td>24</td><td>136.8</td><td>8,550</td><td>$85,500</td><td>$23,512</td><td>$21,375~$25,650</td></tr><tr><td>25</td><td>129.1</td><td>7,845</td><td>$78,450</td><td>$21,574</td><td>$19,612~$23,535</td></tr><tr><td>26</td><td>135.1</td><td>7,995</td><td>$79,950</td><td>$21,986</td><td>$19,988~$23,985</td></tr><tr><td>27</td><td>141.1</td><td>8,145</td><td>$81,450</td><td>$22,399</td><td>$20,362~$24,435</td></tr><tr><td>28</td><td>147.1</td><td>8,295</td><td>$82,950</td><td>$22,811</td><td>$20,738~$24,885</td></tr><tr><td>29</td><td>153.1</td><td>9,795</td><td>$97,950</td><td>$26,936</td><td>$24,488~$29,385</td></tr><tr><td>30</td><td>159.1</td><td>11,295</td><td>$112,950</td><td>$31,061</td><td>$28,238~$33,885</td></tr><tr><td>31</td><td>165.1</td><td>11,445</td><td>$114,450</td><td>$31,474</td><td>$28,612~$34,335</td></tr><tr><td>32</td><td>171.1</td><td>11,595</td><td>$115,950</td><td>$31,886</td><td>$28,988~$34,785</td></tr><tr><td>33</td><td>177.1</td><td>11,745</td><td>$117,450</td><td>$32,299</td><td>$29,362~$35,235</td></tr><tr><td>34</td><td>183.1</td><td>11,895</td><td>$118,950</td><td>$32,711</td><td>$29,738~$35,685</td></tr><tr><td>35</td><td>189.1</td><td>12,045</td><td>$120,450</td><td>$33,124</td><td>$30,112~$36,135</td></tr><tr><td>36</td><td>195.1</td><td>12,195</td><td>$121,950</td><td>$33,536</td><td>$30,488~$36,585</td></tr></tbody></table></div>
+</div>
+
+<div class="card">
+  <h2>模型假设与口径</h2>
+  <ul class="assump">
+    <li>开发节奏：每月开发 <b>10</b> 个新品，成功率 <b>60%</b> → 每月成功上架 <b>6</b> 个（节日 3.6 / 常规 2.4）。</li>
+    <li>客单价 <b>$10</b>；首年首批备货 <b>300</b> 件/ SKU。</li>
+    <li>备货爬坡：第 1 年 ×1.0（300 件），第 2 年 ×<b>2.5</b>（750 件，2~3 倍取中值），第 3 年维持 <b>2.5</b>（稳定，之后逐年下降）。</li>
+    <li>结构：节日 60% / 常规 40%。节日产品销售期 <b>2 个月</b>/年（每月 150 件），每年同期重现；常规产品全年均匀（每月 25 件）。</li>
+    <li>节日提前 <b>4~5 个月</b>开品（取中值 4）：SKU 在上市后第 5~6 个月进入销售窗口，之后每年同期重现。</li>
+    <li>淘汰：每年年末淘汰 <b>10%</b> 老产品（活跃计数 ×0.9）。</li>
+    <li>毛利：按毛利率 <b>25%~30%</b> 计（取中值 27.5% 作主线，区间列于表末列）。此为<b>毛利</b>，未扣除广告/仓储/头程/退货/汇率等费用。</li>
+    <li>SKU 以小数计数表示期望值；实际落地会有波动，建议按 ±15% 做敏感性预留。</li>
+  </ul>
+</div>
+</body></html>

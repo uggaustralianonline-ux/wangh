@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>子ASIN级秒杀推荐分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+:root {
+  --bg: #0f1419;
+  --card: #1a2332;
+  --border: #2a3a4a;
+  --text: #e0e6ed;
+  --text-dim: #8b9bb0;
+  --accent: #4fc3f7;
+  --gold: #ffd700;
+  --silver: #c0c0c0;
+  --bronze: #cd7f32;
+  --green: #4caf50;
+  --yellow: #ffc107;
+  --red: #f44336;
+  --blue: #2196f3;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  padding: 20px;
+  line-height: 1.6;
+}
+h1 { font-size: 1.8em; margin-bottom: 8px; }
+h2 { font-size: 1.3em; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 30px 0 15px; }
+h3 { font-size: 1.1em; color: var(--text-dim); margin: 15px 0 8px; }
+.meta { color: var(--text-dim); font-size: 0.85em; margin-bottom: 20px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.medal-card {
+  display: inline-block;
+  width: 32%;
+  vertical-align: top;
+  border-radius: 12px;
+  padding: 20px;
+  margin-right: 1%;
+  min-height: 280px;
+}
+.medal-gold { background: linear-gradient(135deg, #3d3520, #2a2415); border: 2px solid var(--gold); }
+.medal-silver { background: linear-gradient(135deg, #2a2e35, #1e2228); border: 2px solid var(--silver); }
+.medal-bronze { background: linear-gradient(135deg, #2e2418, #221a10); border: 2px solid var(--bronze); }
+.medal-icon { font-size: 2em; margin-bottom: 8px; }
+.medal-score { font-size: 2.2em; font-weight: bold; }
+.medal-gold .medal-score { color: var(--gold); }
+.medal-silver .medal-score { color: var(--silver); }
+.medal-bronze .medal-score { color: var(--bronze); }
+.medal-name { font-size: 1em; font-weight: 600; margin: 8px 0; }
+.medal-detail { font-size: 0.8em; color: var(--text-dim); }
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75em;
+  margin: 2px;
+}
+.tag-green { background: rgba(76,175,80,0.2); color: #81c784; }
+.tag-yellow { background: rgba(255,193,7,0.2); color: #ffd54f; }
+.tag-red { background: rgba(244,67,54,0.2); color: #ef9a9a; }
+.tag-blue { background: rgba(33,150,243,0.2); color: #64b5f6; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82em;
+  margin-bottom: 15px;
+}
+th {
+  background: #1e2a3a;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  white-space: nowrap;
+}
+td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+tr:hover { background: rgba(79,195,247,0.05); }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.score-bar {
+  display: inline-block;
+  width: 60px;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.score-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.chart-container { width: 100%; height: 400px; margin: 15px 0; }
+.chart-container-tall { width: 100%; height: 500px; margin: 15px 0; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.badge { font-size: 0.75em; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+.badge-pass { background: rgba(76,175,80,0.3); color: #81c784; }
+.badge-warn { background: rgba(255,193,7,0.3); color: #ffd54f; }
+.badge-fail { background: rgba(244,67,54,0.3); color: #ef9a9a; }
+.summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+.summary-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+}
+.summary-num { font-size: 1.8em; font-weight: bold; color: var(--accent); }
+.summary-label { font-size: 0.8em; color: var(--text-dim); margin-top: 4px; }
+.scroll-table { max-height: 600px; overflow-y: auto; }
+.alert-box {
+  background: rgba(244,67,54,0.1);
+  border-left: 3px solid var(--red);
+  padding: 12px 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+.info-box {
+  background: rgba(79,195,247,0.08);
+  border-left: 3px solid var(--accent);
+  padding: 12px 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+.section-desc { color: var(--text-dim); font-size: 0.88em; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<h1>子ASIN级秒杀可行性分析报告</h1>
+<div class="meta">
+  数据源：领星ERP（lingxing-mcp-20260914-v1）+ SIF市场趋势 + SIF产品属性<br>
+  拉取时间：2026-09-14 | 分析对象：13个父ASIN下的179个子ASIN | 报告类型：子ASIN级精细分析<br>
+  评估目标：2026年9月下旬-10月秒杀可行性（Lightning Deal / Best Deal）
+</div>
+
+<div class="alert-box">
+  <strong>分析口径变更：</strong>应卖家要求，本报告以子ASIN为核心分析对象。父ASIN合并数据会掩盖单个子ASIN的库存和销量差异（如B08MKWRZ3W父级库销比1.39月，但其子ASIN B07XDJ3HGK库销比仅1.11月而B0897CZMCY达2.6月）。
+</div>
+
+<div class="summary-grid">
+  <div class="summary-box"><div class="summary-num">179</div><div class="summary-label">子ASIN总数</div></div>
+  <div class="summary-box"><div class="summary-num">79</div><div class="summary-label">通过库存门槛</div></div>
+  <div class="summary-box"><div class="summary-num">13</div><div class="summary-label">父ASIN分组</div></div>
+  <div class="summary-box"><div class="summary-num">72</div><div class="summary-label">最高评分</div></div>
+</div>
+
+<!-- Top 3 -->
+<h2>Top 3 子ASIN推荐</h2>
+<div>
+  <div class="medal-card medal-gold">
+    <div class="medal-icon">🥇</div>
+    <div class="medal-score">72</div>
+    <div class="medal-name">B08X6SMJ47 — Track Spikes 1/4" 20pc</div>
+    <div class="medal-detail">
+      父ASIN: B093GC1P2Q | $5.99 | 4.6★ 1449评<br>
+      8月销量: 375 | FBA: 2570 | 库销比: 6.85月<br>
+      流量: growing + sharp_growth<br>
+      季节: 田径赛季9月开始爬坡，2-3月达峰<br>
+      <span class="tag tag-green">库存充裕</span>
+      <span class="tag tag-blue">流量猛增</span>
+      <span class="tag tag-green">赛季临近</span>
+    </div>
+  </div>
+  <div class="medal-card medal-silver">
+    <div class="medal-icon">🥈</div>
+    <div class="medal-score">71</div>
+    <div class="medal-name">B0CR35LZSJ — Teacher Acrylic Earrings 8pr</div>
+    <div class="medal-detail">
+      父ASIN: B0CN856K37 | $7.64 | 4.6★ 782评<br>
+      8月销量: 318 | FBA: 1452 | 库销比: 4.57月<br>
+      流量: growing + sharp_growth<br>
+      季节: 教师节耳环8月达峰，当前旺季<br>
+      <span class="tag tag-green">库存达标</span>
+      <span class="tag tag-blue">流量猛增</span>
+      <span class="tag tag-yellow">旺季峰值</span>
+    </div>
+  </div>
+  <div class="medal-card medal-bronze">
+    <div class="medal-icon">🥉</div>
+    <div class="medal-score">61</div>
+    <div class="medal-name">B0FG7P3PD5 — Halloween Acrylic Earrings 8pr</div>
+    <div class="medal-detail">
+      父ASIN: B0CN856K37 | $9.99 | 4.6★ 782评<br>
+      8月销量: 150 | FBA: 719 | 库销比: 4.79月<br>
+      流量: 同组growing趋势<br>
+      季节: 万圣节10月达峰，9月爬坡期<br>
+      <span class="tag tag-green">库存达标</span>
+      <span class="tag tag-yellow">旺季爬坡</span>
+      <span class="tag tag-green">评分优秀</span>
+    </div>
+  </div>
+</div>
+
+<!-- Parent ASIN Grouping -->
+<h2>父ASIN子ASIN分布概览</h2>
+<div class="section-desc">13个父ASIN下共179个子ASIN，其中B0CQ4QYWL3有51个子ASIN（最大变体组），B08MKWRZ3W虽仅4个子ASIN但总销量最高（3966件）。</div>
+<div class="card">
+<table id="parentTable">
+  <thead>
+    <tr>
+      <th>父ASIN</th><th>子ASIN数</th><th>8月总销量</th><th>通过门槛数</th>
+      <th>最高销量子ASIN</th><th>通过率</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>B0CQ4QYWL3</td><td class="text-center">51</td><td class="text-right">3,452</td><td class="text-center">31</td><td>B0D8HWZPD4 (601)</td><td class="text-center">60.8%</td></tr>
+    <tr><td>B0CN856K37</td><td class="text-center">35</td><td class="text-right">1,770</td><td class="text-center">18</td><td>B0CR35LZSJ (318)</td><td class="text-center">51.4%</td></tr>
+    <tr><td>B0CJ4SPFGZ</td><td class="text-center">23</td><td class="text-right">1,727</td><td class="text-center">12</td><td>B0DT4B9JV3 (1,109)</td><td class="text-center">52.2%</td></tr>
+    <tr><td>B0DD3R6LK5</td><td class="text-center">19</td><td class="text-right">1,486</td><td class="text-center">11</td><td>B0D46QBZ7T (390)</td><td class="text-center">57.9%</td></tr>
+    <tr><td>B08MKWRZ3W</td><td class="text-center">4</td><td class="text-right">3,966</td><td class="text-center">1</td><td>B07XDJ3HGK (3,142)</td><td class="text-center">25.0%</td></tr>
+    <tr><td>B0DHL5X1XM</td><td class="text-center">14</td><td class="text-right">581</td><td class="text-center">10</td><td>B0D25BQGCL (361)</td><td class="text-center">71.4%</td></tr>
+    <tr><td>B09PB9NWZB</td><td class="text-center">15</td><td class="text-right">345</td><td class="text-center">8</td><td>B0CS66ZQ54 (261)</td><td class="text-center">53.3%</td></tr>
+    <tr><td>B093GC1P2Q</td><td class="text-center">6</td><td class="text-right">494</td><td class="text-center">5</td><td>B08X6SMJ47 (375)</td><td class="text-center">83.3%</td></tr>
+    <tr><td>B0BCQ8GDY8</td><td class="text-center">4</td><td class="text-right">453</td><td class="text-center">4</td><td>B07YDDMSPX (224)</td><td class="text-center">100%</td></tr>
+    <tr><td>B08XPRYKLX</td><td class="text-center">3</td><td class="text-right">1,454</td><td class="text-center">0</td><td>B08LQ642ZT (781)</td><td class="text-center">0%</td></tr>
+    <tr><td>B0GHPVZGLX</td><td class="text-center">2</td><td class="text-right">1,489</td><td class="text-center">0</td><td>B07WFN5WSM (1,489)</td><td class="text-center">0%</td></tr>
+    <tr><td>B09S9NB8YN</td><td class="text-center">2</td><td class="text-right">342</td><td class="text-center">2</td><td>B0882T9BZ8 (291)</td><td class="text-center">100%</td></tr>
+    <tr><td>B07XDJ2DVH</td><td class="text-center">1</td><td class="text-right">562</td><td class="text-center">0</td><td>B07XDJ2DVH (562)</td><td class="text-center">0%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Critical Alerts -->
+<h2>库存预警 — 高销量子ASIN库存不足</h2>
+<div class="alert-box">
+  以下子ASIN销量高但库存不足（库销比 < 2.0月），做秒杀有断货风险。建议先补货再做秒杀。
+</div>
+<div class="card">
+<table>
+  <thead>
+    <tr><th>子ASIN</th><th>父ASIN</th><th>产品</th><th>8月销量</th><th>FBA可售</th><th>库销比</th><th>门槛</th><th>建议</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>B07XDJ3HGK</td><td>B08MKWRZ3W</td><td>Dreadlock Crochet Hook 0.75mm</td><td class="text-right">3,142</td><td class="text-right">3,501</td><td class="text-right">1.11月</td><td><span class="badge badge-fail">不足</span></td><td>紧急补货，需至少4,700件</td></tr>
+    <tr><td>B07WFN5WSM</td><td>B0GHPVZGLX</td><td>Fuse Beads Pegboards 20pc</td><td class="text-right">1,489</td><td class="text-right">1,779</td><td class="text-right">1.19月</td><td><span class="badge badge-fail">不足</span></td><td>补货至5,600件以上</td></tr>
+    <tr><td>B0DT4B9JV3</td><td>B0CJ4SPFGZ</td><td>Teacher Stud Earrings 9pr</td><td class="text-right">1,109</td><td class="text-right">1,131</td><td class="text-right">1.02月</td><td><span class="badge badge-fail">不足</span></td><td>补货至3,300件以上</td></tr>
+    <tr><td>B08LQ642ZT</td><td>B08XPRYKLX</td><td>Gold Swivel Clasps 100pc</td><td class="text-right">781</td><td class="text-right">1,217</td><td class="text-right">1.56月</td><td><span class="badge badge-fail">不足</span></td><td>补货至2,340件以上</td></tr>
+    <tr><td>B0D8HWZPD4</td><td>B0CQ4QYWL3</td><td>Back to School Patches 36pc</td><td class="text-right">601</td><td class="text-right">614</td><td class="text-right">1.02月</td><td><span class="badge badge-fail">不足</span></td><td>补货至1,800件以上</td></tr>
+    <tr><td>B0D46V9DNP</td><td>B0CQ4QYWL3</td><td>Pink Patches 36pc</td><td class="text-right">449</td><td class="text-right">263</td><td class="text-right">0.59月</td><td><span class="badge badge-fail">不足</span></td><td>库存严重不足，紧急补货</td></tr>
+    <tr><td>B0D46QBZ7T</td><td>B0DD3R6LK5</td><td>Pink Patches 60pc</td><td class="text-right">390</td><td class="text-right">751</td><td class="text-right">1.93月</td><td><span class="badge badge-fail">不足</span></td><td>接近临界，建议补货</td></tr>
+    <tr><td>B091GR5HZW</td><td>B08MKWRZ3W</td><td>Dreadlock Crochet Hook 1.0mm</td><td class="text-right">383</td><td class="text-right">812</td><td class="text-right">2.12月</td><td><span class="badge badge-warn">临界</span></td><td>可做秒杀但需监控库存</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Inventory + Sales Overview -->
+<h2>子ASIN库存与销量总览（Top 40 by 销量）</h2>
+<div class="card scroll-table">
+<table id="childAsinTable">
+  <thead>
+    <tr>
+      <th>#</th><th>子ASIN</th><th>父ASIN</th><th>产品名称</th>
+      <th>8月销量</th><th>FBA可售</th><th>入库中</th><th>库销比</th><th>门槛</th>
+    </tr>
+  </thead>
+  <tbody id="childAsinBody"></tbody>
+</table>
+</div>
+
+<!-- Score Matrix -->
+<h2>9维度评分矩阵 — 通过门槛子ASIN</h2>
+<div class="section-desc">90分制（9维度×10分），库存维度<4分不参与推荐排名。仅展示得分≥45的子ASIN。</div>
+<div class="card scroll-table">
+<table id="scoreTable">
+  <thead>
+    <tr>
+      <th>排名</th><th>子ASIN</th><th>产品</th>
+      <th>销量</th><th>流量</th><th>BSR</th><th>价格</th><th>评论</th><th>季节</th><th>利润</th><th>动量</th><th>库存</th>
+      <th>总分</th>
+    </tr>
+  </thead>
+  <tbody id="scoreBody"></tbody>
+</table>
+</div>
+
+<!-- Seasonal Analysis -->
+<h2>季节性关键词趋势分析</h2>
+<div class="section-desc">万圣节耳环和田径鞋钉具有明显季节性，9月正处于万圣节爬坡期和田径赛季启动期。熨烫贴片和教师节耳环呈结构性增长趋势。</div>
+
+<div class="card">
+<h3>1. Halloween Earrings — 万圣节耳环（强季节性）</h3>
+<div class="info-box">
+  当前(8月)搜索量5.2万，正在爬坡中。2025年10月峰值达33.9万（精确词）。9月做秒杀可承接爬坡流量，10月秒杀可吃峰值流量。
+</div>
+<div id="chart_halloween" class="chart-container"></div>
+</div>
+
+<div class="card">
+<h3>2. Track Spikes — 田径鞋钉（强季节性）</h3>
+<div class="info-box">
+  当前(8月)搜索量0.5万（淡季低谷），但9月开始爬坡。历史峰值48.4万（2026年3月）。9月秒杀可提前布局排名，转化率偏低但竞争也低。
+</div>
+<div id="chart_track" class="chart-container"></div>
+</div>
+
+<div class="card">
+<h3>3. Iron on Patches — 熨烫贴片（结构性增长·常青）</h3>
+<div class="info-box">
+  词根综合量从66.7万增长至85.4万，品类需求在抬升。长尾需求占75%，适合系统性布局。全年波动不大，当前接近历史高位。
+</div>
+<div id="chart_patches" class="chart-container"></div>
+</div>
+
+<div class="card">
+<h3>4. Teacher Earrings — 教师节耳环（增长+季节性）</h3>
+<div class="info-box">
+  当前(8月)搜索量5.2万，接近2025年8月峰值5.9万。4-5月和7-8月为高峰期（教师感谢季），9月做秒杀可收尾季流量。
+</div>
+<div id="chart_teacher" class="chart-container"></div>
+</div>
+
+<!-- Visualizations -->
+<h2>数据可视化</h2>
+
+<div class="card">
+<h3>Top 20子ASIN — 库存 vs 销量对比</h3>
+<div id="chart_inventory" class="chart-container-tall"></div>
+</div>
+
+<div class="card">
+<h3>评分 vs 库销比 — 散点图</h3>
+<div id="chart_scatter" class="chart-container"></div>
+</div>
+
+<div class="card">
+<h3>Top 5子ASIN — 9维度雷达图</h3>
+<div id="chart_radar" class="chart-container"></div>
+</div>
+
+<div class="card">
+<h3>父ASIN销量贡献 — 饼图</h3>
+<div id="chart_pie" class="chart-container"></div>
+</div>
+
+<!-- Top 3 Detail -->
+<h2>Top 3 详细分析与风险提示</h2>
+
+<div class="card">
+<h3>🥇 B08X6SMJ47 — Track Spikes 1/4" 20pc（72分）</h3>
+<table>
+  <tr><th style="width:30%">维度</th><th>详情</th></tr>
+  <tr><td>推荐理由</td><td>库存充裕（6.85月，2570件FBA），流量近3周sharp_growth（从898飙升至3746），价格$5.99处于秒杀黄金价格带，评论基础优秀（1449条4.6★），BSR #8 Golf Spikes</td></tr>
+  <tr><td>季节时机</td><td>田径赛季9月开始爬坡（2025年9月1.0万→11月3.0万→3月48.4万），9月秒杀可提前抢排名，10月转化率会显著提升</td></tr>
+  <tr><td>风险提示</td><td>当前处于淡季，秒杀转化率可能偏低（搜索量仅0.5万）；秒杀后需配合广告投放维持排名；利润空间未验证（$5.99低价可能利润薄）</td></tr>
+  <tr><td>建议秒杀时段</td><td>9月下旬或10月中旬（配合赛季爬坡节奏）</td></tr>
+  <tr><td>预计秒杀增量</td><td>月销375 × 2.5 = 938件，当前FBA 2570件可覆盖</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🥈 B0CR35LZSJ — Teacher Acrylic Earrings 8pr（71分）</h3>
+<table>
+  <tr><th style="width:30%">维度</th><th>详情</th></tr>
+  <tr><td>推荐理由</td><td>流量growing+sharp_growth（近3周从6187飙至23079），教师节旺季正当时，价格$7.64秒杀友好，782条评论4.6★基础扎实，BSR #27 Drop&Dangle Earrings</td></tr>
+  <tr><td>季节时机</td><td>教师节耳环8月搜索量5.2万（接近去年峰值5.9万），9月仍有余温（4.7万），秒杀时机佳</td></tr>
+  <tr><td>风险提示</td><td>库销比4.57月略偏低，秒杀后库存可能降至1.5月左右，需关注补货；B0CN856K37变体组35个子ASIN，需确保选对子ASIN</td></tr>
+  <tr><td>建议秒杀时段</td><td>9月下旬（教师节返校季收尾冲刺）</td></tr>
+  <tr><td>预计秒杀增量</td><td>月销318 × 2.5 = 795件，当前FBA 1452件可覆盖</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🥉 B0FG7P3PD5 — Halloween Acrylic Earrings 8pr（61分）</h3>
+<table>
+  <tr><th style="width:30%">维度</th><th>详情</th></tr>
+  <tr><td>推荐理由</td><td>万圣节旺季10月峰值，9月正是爬坡期（搜索量5.2万→10月33.9万），库销比4.79月达标，价格$9.99适合秒杀，782条评论4.6★</td></tr>
+  <tr><td>季节时机</td><td>万圣节耳环9月搜索量5.2万爬坡中，10月将达33.9万（精确词），9月秒杀可承接流量上涨红利</td></tr>
+  <tr><td>风险提示</td><td>销量基础偏低（150件/月），秒杀后排名提升效果可能有限；需配合广告投放扩大曝光；利润空间未验证</td></tr>
+  <tr><td>建议秒杀时段</td><td>9月底至10月初（万圣节前4-5周，最大化承接搜索量增长）</td></tr>
+  <tr><td>预计秒杀增量</td><td>月销150 × 2.5 = 375件，当前FBA 719件可覆盖</td></tr>
+</table>
+</div>
+
+<!-- Action Plan -->
+<h2>行动建议（按优先级排序）</h2>
+<div class="card">
+<table>
+  <thead><tr><th style="width:5%">#</th><th style="width:15%">优先级</th><th style="width:25%">子ASIN</th><th>行动</th><th style="width:15%">时间窗口</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><span class="badge badge-pass">立即</span></td><td>B08X6SMJ47</td><td>安排9月下旬Lightning Deal，配合$50-80/天SP广告（关键词：track spikes, cross country spikes）</td><td>9/20-9/30</td></tr>
+    <tr><td>2</td><td><span class="badge badge-pass">立即</span></td><td>B0CR35LZSJ</td><td>安排9月下旬Lightning Deal，配合教师节关键词广告（teacher earrings, teacher gifts）</td><td>9/20-9/30</td></tr>
+    <tr><td>3</td><td><span class="badge badge-pass">立即</span></td><td>B0FG7P3PD5</td><td>安排10月初Lightning Deal，配合万圣节关键词广告（halloween earrings, halloween jewelry）</td><td>10/1-10/10</td></tr>
+    <tr><td>4</td><td><span class="badge badge-warn">关注</span></td><td>B0D8BCMJLR</td><td>万圣节贴片36pc，库存14.05月充裕，9月底秒杀可承接万圣节流量</td><td>9/25-10/5</td></tr>
+    <tr><td>5</td><td><span class="badge badge-warn">关注</span></td><td>B0D7VCGJ9P</td><td>乳腺癌关注月贴片（10月），流量growing/stable，库存16.13月极充裕</td><td>10/1-10/15</td></tr>
+    <tr><td>6</td><td><span class="badge badge-warn">关注</span></td><td>B08H24W1TT</td><td>圣诞贴片36pc，$5.99低价+817评+7.9月库存，11月初秒杀最佳</td><td>11月初</td></tr>
+    <tr><td>7</td><td><span class="badge badge-fail">补货</span></td><td>B07XDJ3HGK</td><td>Dreadlock Crochet Hook 0.75mm月销3142件但库销比仅1.11月，补货后再做秒杀</td><td>先补货</td></tr>
+    <tr><td>8</td><td><span class="badge badge-fail">补货</span></td><td>B0D46V9DNP</td><td>Pink Patches 36pc库销比0.59月，库存严重不足，紧急补货</td><td>先补货</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Methodology -->
+<h2>方法论说明</h2>
+<div class="card">
+<h3>数据来源</h3>
+<table>
+  <tr><th style="width:20%">数据源</th><th>用途</th><th style="width:25%">版本/时间</th></tr>
+  <tr><td>领星ERP MCP</td><td>子ASIN级8月销量、FBA可售库存、入库中数量、预留量</td><td>lingxing-mcp-20260914-v1</td></tr>
+  <tr><td>SIF MCP</td><td>ASIN产品属性（价格/评分/评论/BSR）、30天流量趋势（week粒度）</td><td>更新至2026-09-13</td></tr>
+  <tr><td>SIF关键词趋势</td><td>4个核心关键词的24个月搜索量趋势（month粒度）</td><td>更新至2026-09-13</td></tr>
+</table>
+
+<h3>库存门槛规则</h3>
+<table>
+  <tr><th>库销比</th><th>门槛判定</th><th>标记</th></tr>
+  <tr><td>≥ 5.0月</td><td>库存充裕</td><td>✅ 通过</td></tr>
+  <tr><td>2.5-5.0月</td><td>库存达标</td><td>✅ 通过</td></tr>
+  <tr><td>2.0-2.5月</td><td>临界</td><td>⚠ 临界</td></tr>
+  <tr><td>< 2.0月</td><td>不足</td><td>❌ 不通过</td></tr>
+</table>
+<p style="font-size:0.85em;color:var(--text-dim);margin-top:8px">
+  秒杀预估增量 = 月销量 × 2.5（覆盖2周秒杀期3-5倍日销 + 2周常规销售）<br>
+  库销比 = FBA可售库存 ÷ 当月月销量
+</p>
+
+<h3>9维度评分标准</h3>
+<table>
+  <tr><th>维度</th><th>数据源</th><th>评分要点</th></tr>
+  <tr><td>销量基础(10)</td><td>领星ERP</td><td>>1500=9-10, 800-1500=7-8, 300-800=4-6, <300=1-3</td></tr>
+  <tr><td>流量趋势(10)</td><td>SIF</td><td>sharp_growth=10, mild_growth=8, stable=6, decline=3</td></tr>
+  <tr><td>BSR走势(10)</td><td>SIF</td><td>改善>50%=10, 改善20-50%=8, 持平=6, 下滑=3</td></tr>
+  <tr><td>价格带(10)</td><td>SIF</td><td>$5-8=9-10, $8-10=7-8, $10-15=4-5, >$15=2-3</td></tr>
+  <tr><td>评论基础(10)</td><td>SIF</td><td>>1000+≥4.5=10, 500-1000+≥4.3=8, 100-500=5-6, <100=3-4</td></tr>
+  <tr><td>季节时机(10)</td><td>SIF关键词</td><td>旺季爬坡=8-10, 常青=6-7, 淡季=3-5</td></tr>
+  <tr><td>利润空间(10)</td><td>Sorftime/领星</td><td>>40%=10, 30-40%=8, 20-30%=6, <20%=3, 无数据=5</td></tr>
+  <tr><td>综合动量(10)</td><td>综合</td><td>流量+BSR+销量三者综合趋势</td></tr>
+  <tr><td>库存充足度(10)</td><td>领星ERP</td><td>≥5月=10, 3-5月=7-8, 2.5-3月=6, <2.5月=3-5</td></tr>
+</table>
+</div>
+
+<div style="text-align:center;color:var(--text-dim);font-size:0.8em;margin-top:30px;padding:15px;border-top:1px solid var(--border);">
+  SIF验证链接：数据更新至 2026-09-13 | 领星ERP版本：lingxing-mcp-20260914-v1<br>
+  报告生成：2026-09-14 | 子ASIN级分析（179个子ASIN）
+</div>
+
+<script>
+// ========== Child ASIN Data (Top 40) ==========
+const childData = [
+  {asin:"B07XDJ3HGK",parent:"B08MKWRZ3W",name:"Dreadlock Crochet Hook 0.75mm",vol:3142,fba:3501,inbound:617,ratio:1.11,thr:"fail"},
+  {asin:"B07WFN5WSM",parent:"B0GHPVZGLX",name:"Fuse Beads Pegboards 20pc",vol:1489,fba:1779,inbound:12,ratio:1.19,thr:"fail"},
+  {asin:"B0DT4B9JV3",parent:"B0CJ4SPFGZ",name:"Teacher Stud Earrings 9pr",vol:1109,fba:1131,inbound:46,ratio:1.02,thr:"fail"},
+  {asin:"B08LQ642ZT",parent:"B08XPRYKLX",name:"Gold Swivel Clasps 100pc",vol:781,fba:1217,inbound:2,ratio:1.56,thr:"fail"},
+  {asin:"B0D8HWZPD4",parent:"B0CQ4QYWL3",name:"Back to School Patches 36pc",vol:601,fba:614,inbound:0,ratio:1.02,thr:"fail"},
+  {asin:"B07XDJ2DVH",parent:"B07XDJ2DVH",name:"Dreadlock Crochet Hook Kit",vol:562,fba:1360,inbound:250,ratio:2.42,thr:"warn"},
+  {asin:"B0D46V9DNP",parent:"B0CQ4QYWL3",name:"Pink Patches 36pc",vol:449,fba:263,inbound:0,ratio:0.59,thr:"fail"},
+  {asin:"B0897CZMCY",parent:"B08MKWRZ3W",name:"Dreadlock Crochet Hook 0.5mm",vol:441,fba:1147,inbound:11,ratio:2.60,thr:"pass"},
+  {asin:"B0D46QBZ7T",parent:"B0DD3R6LK5",name:"Pink Patches 60pc",vol:390,fba:751,inbound:0,ratio:1.93,thr:"fail"},
+  {asin:"B091GR5HZW",parent:"B08MKWRZ3W",name:"Dreadlock Crochet Hook 1.0mm",vol:383,fba:812,inbound:11,ratio:2.12,thr:"warn"},
+  {asin:"B08X6SMJ47",parent:"B093GC1P2Q",name:"Track Spikes 1/4in 20pc",vol:375,fba:2570,inbound:0,ratio:6.85,thr:"pass"},
+  {asin:"B08V5FLCHD",parent:"B08XPRYKLX",name:"Silver Swivel Snap Hooks 100pc",vol:363,fba:584,inbound:1,ratio:1.61,thr:"fail"},
+  {asin:"B0D25BQGCL",parent:"B0DHL5X1XM",name:"Back to School Patches 12pc",vol:361,fba:900,inbound:0,ratio:2.49,thr:"warn"},
+  {asin:"B0CR35LZSJ",parent:"B0CN856K37",name:"Teacher Acrylic Earrings 8pr",vol:318,fba:1452,inbound:4,ratio:4.57,thr:"pass"},
+  {asin:"B09P7ZZ2LY",parent:"B08XPRYKLX",name:"Multicolor Swivel Clasps 100pc",vol:310,fba:722,inbound:1,ratio:2.33,thr:"warn"},
+  {asin:"B0DXKM7C8X",parent:"B0DD3R6LK5",name:"Back to School Patches 60pc",vol:299,fba:577,inbound:0,ratio:1.93,thr:"fail"},
+  {asin:"B0882T9BZ8",parent:"B09S9NB8YN",name:"Large Square Fuse Beads Pegboards",vol:291,fba:623,inbound:2,ratio:2.14,thr:"warn"},
+  {asin:"B0FCFK472V",parent:"B0CJ4SPFGZ",name:"Teacher Earrings 9pr Apple",vol:285,fba:344,inbound:0,ratio:1.21,thr:"fail"},
+  {asin:"B0FGQ58JWG",parent:"B0CN856K37",name:"Halloween Acrylic Earrings 8pr",vol:271,fba:592,inbound:0,ratio:2.18,thr:"warn"},
+  {asin:"B0CS66ZQ54",parent:"B09PB9NWZB",name:"Teacher Faux Leather Earrings 9pr",vol:261,fba:1325,inbound:0,ratio:5.08,thr:"pass"},
+  {asin:"B0GJZ6FHJ4",parent:"B0CQ4QYWL3",name:"Camping Patches 36pc",vol:233,fba:111,inbound:2,ratio:0.48,thr:"fail"},
+  {asin:"B088JXSQBT",parent:"B0DD3R6LK5",name:"Random Assorted Patches 60pc",vol:227,fba:816,inbound:1,ratio:3.59,thr:"pass"},
+  {asin:"B07YDDMSPX",parent:"B0BCQ8GDY8",name:"Butterfly Patches 20pc",vol:224,fba:823,inbound:0,ratio:3.67,thr:"pass"},
+  {asin:"B0FY6BH7T2",parent:"B0CQ4QYWL3",name:"Oktoberfest Patches 36pc",vol:219,fba:140,inbound:30,ratio:0.64,thr:"fail"},
+  {asin:"B0GXK8TWBN",parent:"B0CN856K37",name:"Halloween Acrylic Earrings B",vol:219,fba:217,inbound:0,ratio:0.99,thr:"fail"},
+  {asin:"B0DQXYV8ZT",parent:"B0CQ4QYWL3",name:"Sports Patches 36pc",vol:201,fba:394,inbound:0,ratio:1.96,thr:"fail"},
+  {asin:"B0DF2HKW5N",parent:"B0DD3R6LK5",name:"Halloween Patches 60pc",vol:176,fba:414,inbound:2,ratio:2.35,thr:"warn"},
+  {asin:"B0G48BFKBD",parent:"B0CQ4QYWL3",name:"Christmas Patches 36pc",vol:171,fba:205,inbound:1,ratio:1.20,thr:"fail"},
+  {asin:"B0D8BCMJLR",parent:"B0CQ4QYWL3",name:"Halloween Patches 36pc",vol:142,fba:1995,inbound:140,ratio:14.05,thr:"pass"},
+  {asin:"B0FG7P3PD5",parent:"B0CN856K37",name:"Halloween Acrylic Earrings 8pr",vol:150,fba:719,inbound:0,ratio:4.79,thr:"pass"},
+  {asin:"B0DXPZZQJ5",parent:"B0CQ4QYWL3",name:"Ball Sports Patches 36pc",vol:142,fba:405,inbound:1,ratio:2.85,thr:"pass"},
+  {asin:"B0DXL14RKJ",parent:"B0CJ4SPFGZ",name:"Teacher Earrings 9pr Pencil",vol:136,fba:578,inbound:0,ratio:4.25,thr:"pass"},
+  {asin:"B0DFLTN1KC",parent:"B0CQ4QYWL3",name:"Oktoberfest Patches 36pc",vol:130,fba:94,inbound:0,ratio:0.72,thr:"fail"},
+  {asin:"B07WS8Z6JN",parent:"B0BCQ8GDY8",name:"Butterfly Patches 20pc Small",vol:129,fba:66,inbound:100,ratio:0.51,thr:"fail"},
+  {asin:"B0DMSS4GLZ",parent:"B0CQ4QYWL3",name:"Patches 36pc B",vol:114,fba:222,inbound:30,ratio:1.95,thr:"fail"},
+  {asin:"B0DGXH3DLP",parent:"B0DD3R6LK5",name:"Pink Patches 60pc B",vol:114,fba:145,inbound:140,ratio:1.27,thr:"fail"},
+  {asin:"B0F9PBZL2N",parent:"B0CN856K37",name:"Halloween Earrings 8pr B",vol:114,fba:134,inbound:0,ratio:1.18,thr:"fail"},
+  {asin:"B0FLP2C7FG",parent:"B0CN856K37",name:"Halloween Earrings 8pr C",vol:98,fba:234,inbound:0,ratio:2.39,thr:"warn"},
+  {asin:"B08H24W1TT",parent:"B0CQ4YWL3",name:"Christmas Patches 36pc",vol:83,fba:656,inbound:0,ratio:7.90,thr:"pass"},
+];
+
+// Render child ASIN table
+const thrMap = {pass:'<span class="badge badge-pass">✅通过</span>',warn:'<span class="badge badge-warn">⚠临界</span>',fail:'<span class="badge badge-fail">❌不足</span>'};
+childData.forEach((d,i) => {
+  document.getElementById('childAsinBody').innerHTML += `<tr>
+    <td>${i+1}</td><td><a href="https://www.amazon.com/dp/${d.asin}" target="_blank" style="color:var(--accent)">${d.asin}</a></td>
+    <td>${d.parent}</td><td>${d.name}</td>
+    <td class="text-right">${d.vol.toLocaleString()}</td>
+    <td class="text-right">${d.fba.toLocaleString()}</td>
+    <td class="text-right">${d.inbound}</td>
+    <td class="text-right">${d.ratio.toFixed(2)}月</td>
+    <td>${thrMap[d.thr]}</td>
+  </tr>`;
+});
+
+// ========== Score Data ==========
+const scoreData = [
+  {rank:1,asin:"B08X6SMJ47",name:"Track Spikes 1/4in 20pc",scores:[5,10,8,10,10,6,5,8,10],total:72},
+  {rank:2,asin:"B0CR35LZSJ",name:"Teacher Acrylic Earrings 8pr",scores:[5,10,8,9,8,8,5,8,8],total:71},
+  {rank:3,asin:"B0FG7P3PD5",name:"Halloween Acrylic Earrings 8pr",scores:[3,7,7,7,8,10,5,6,8],total:61},
+  {rank:4,asin:"B0D8BCMJLR",name:"Halloween Patches 36pc",scores:[3,7,8,7,4,10,5,6,10],total:60},
+  {rank:5,asin:"B0CS66ZQ54",name:"Teacher Faux Leather Earrings 9pr",scores:[4,5,6,7,10,8,5,5,10],total:60},
+  {rank:6,asin:"B0897CZMCY",name:"Dreadlock Crochet Hook 0.5mm",scores:[5,6,6,7,10,7,5,6,6],total:58},
+  {rank:7,asin:"B08H24W1TT",name:"Christmas Patches 36pc",scores:[2,6,6,10,8,7,5,4,10],total:58},
+  {rank:8,asin:"B0D7VCGJ9P",name:"Breast Cancer Patches 36pc",scores:[2,7,7,7,4,10,5,5,10],total:57},
+  {rank:9,asin:"B088JXSQBT",name:"Random Patches 60pc",scores:[4,4,6,7,10,7,5,5,8],total:56},
+  {rank:10,asin:"B0FJ835PJ8",name:"Halloween Patches 12pc",scores:[2,6,6,9,4,10,5,4,10],total:56},
+  {rank:11,asin:"B07YDDMSPX",name:"Butterfly Patches 20pc",scores:[4,4,4,9,10,7,5,4,8],total:55},
+  {rank:12,asin:"B0D7Q7HPW9",name:"Fall Autumn Patches 36pc",scores:[2,6,6,9,3,8,5,4,10],total:53},
+  {rank:13,asin:"B0DXL14RKJ",name:"Teacher Earrings 9pr Pencil",scores:[3,5,7,7,4,8,5,5,8],total:52},
+  {rank:14,asin:"B0FH4XM8X1",name:"Hispanic Heritage Earrings 8pr",scores:[2,6,6,7,4,9,5,4,8],total:51},
+  {rank:15,asin:"B0DXPZZQJ5",name:"Sports Patches 36pc",scores:[3,6,6,7,4,7,5,5,6],total:49},
+];
+
+const dims = ['销量','流量','BSR','价格','评论','季节','利润','动量','库存'];
+scoreData.forEach(d => {
+  const cells = d.scores.map(s => `<td class="text-center">${s}</td>`).join('');
+  const color = d.total >= 65 ? '#81c784' : d.total >= 55 ? '#ffd54f' : '#ef9a9a';
+  document.getElementById('scoreBody').innerHTML += `<tr>
+    <td class="text-center"><strong>${d.rank}</strong></td>
+    <td><a href="https://www.amazon.com/dp/${d.asin}" target="_blank" style="color:var(--accent)">${d.asin}</a></td>
+    <td>${d.name}</td>${cells}
+    <td class="text-center"><strong style="color:${color};font-size:1.1em">${d.total}</strong></td>
+  </tr>`;
+});
+
+// ========== Charts ==========
+// 1. Halloween earrings keyword trend
+const halloweenDates = ["2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08"];
+const halloweenExact = [161315,288387,5570,4712,1868,1873,2267,2681,3565,5813,19404,59666,161327,338951,5843,4530,2272,2333,3060,3176,4237,6151,18575,52287];
+const halloweenExt = [320705,639175,9433,6964,1868,1873,2267,2681,3565,7287,26974,95169,275728,714056,9125,6474,2272,2333,3060,3176,4237,7555,25084,79562];
+
+echarts.init(document.getElementById('chart_halloween')).setOption({
+  tooltip:{trigger:'axis'},
+  legend:{data:['精确词搜索量','词根综合搜索量'],textStyle:{color:'#8b9bb0'}},
+  xAxis:{type:'category',data:halloweenDates,axisLabel:{color:'#8b9bb0',rotate:45}},
+  yAxis:{type:'value',axisLabel:{color:'#8b9bb0'}},
+  series:[
+    {name:'精确词搜索量',type:'line',data:halloweenExact,smooth:true,itemStyle:{color:'#ff9800'},areaStyle:{color:'rgba(255,152,0,0.1)'}},
+    {name:'词根综合搜索量',type:'line',data:halloweenExt,smooth:true,itemStyle:{color:'#4fc3f7'},areaStyle:{color:'rgba(79,195,247,0.1)'}}
+  ],
+  grid:{left:'8%',right:'5%',bottom:'15%'}
+});
+
+// 2. Track spikes keyword trend
+const trackDates = halloweenDates;
+const trackExact = [7025,8146,18818,20611,30868,71005,128290,64853,19696,8984,6737,4808,7419,8565,15954,19257,27292,114430,197812,138175,37111,14777,6666,5116];
+const trackExt = [9423,13488,37693,46899,74676,206333,338182,179087,48444,21108,11337,7848,10474,13261,30043,41181,72921,279593,484015,303912,77807,30991,8812,7520];
+
+echarts.init(document.getElementById('chart_track')).setOption({
+  tooltip:{trigger:'axis'},
+  legend:{data:['精确词搜索量','词根综合搜索量'],textStyle:{color:'#8b9bb0'}},
+  xAxis:{type:'category',data:trackDates,axisLabel:{color:'#8b9bb0',rotate:45}},
+  yAxis:{type:'value',axisLabel:{color:'#8b9bb0'}},
+  series:[
+    {name:'精确词搜索量',type:'line',data:trackExact,smooth:true,itemStyle:{color:'#4caf50'},areaStyle:{color:'rgba(76,175,80,0.1)'}},
+    {name:'词根综合搜索量',type:'line',data:trackExt,smooth:true,itemStyle:{color:'#4fc3f7'},areaStyle:{color:'rgba(79,195,247,0.1)'}}
+  ],
+  grid:{left:'8%',right:'5%',bottom:'15%'}
+});
+
+// 3. Iron on patches keyword trend
+const patchesExact = [176854,225169,211733,210236,178169,138769,164248,164757,176769,175181,230466,233781,183939,212387,211357,214121,215909,162763,203424,196545,189903,211303,234581,215187];
+const patchesExt = [667434,791215,652775,583856,584490,478698,483069,508370,515457,484994,667438,824749,644367,743007,587642,546354,627849,488101,585747,558763,536806,642822,795808,854499];
+
+echarts.init(document.getElementById('chart_patches')).setOption({
+  tooltip:{trigger:'axis'},
+  legend:{data:['精确词搜索量','词根综合搜索量'],textStyle:{color:'#8b9bb0'}},
+  xAxis:{type:'category',data:halloweenDates,axisLabel:{color:'#8b9bb0',rotate:45}},
+  yAxis:{type:'value',axisLabel:{color:'#8b9bb0'}},
+  series:[
+    {name:'精确词搜索量',type:'line',data:patchesExact,smooth:true,itemStyle:{color:'#e91e63'},areaStyle:{color:'rgba(233,30,99,0.1)'}},
+    {name:'词根综合搜索量',type:'line',data:patchesExt,smooth:true,itemStyle:{color:'#4fc3f7'},areaStyle:{color:'rgba(79,195,247,0.1)'}}
+  ],
+  grid:{left:'8%',right:'5%',bottom:'15%'}
+});
+
+// 4. Teacher earrings keyword trend
+const teacherExact = [30479,16737,19691,33934,12419,14277,14146,27141,39737,15292,41303,58510,22702,14131,16984,29196,12303,15782,18525,34777,37242,14161,35742,51580];
+const teacherExt = [45029,24327,30538,52191,16575,19529,19095,36099,56388,21130,59004,87230,31777,19085,22691,41226,15651,19276,22186,45947,50817,17817,46706,70144];
+
+echarts.init(document.getElementById('chart_teacher')).setOption({
+  tooltip:{trigger:'axis'},
+  legend:{data:['精确词搜索量','词根综合搜索量'],textStyle:{color:'#8b9bb0'}},
+  xAxis:{type:'category',data:halloweenDates,axisLabel:{color:'#8b9bb0',rotate:45}},
+  yAxis:{type:'value',axisLabel:{color:'#8b9bb0'}},
+  series:[
+    {name:'精确词搜索量',type:'line',data:teacherExact,smooth:true,itemStyle:{color:'#9c27b0'},areaStyle:{color:'rgba(156,39,176,0.1)'}},
+    {name:'词根综合搜索量',type:'line',data:teacherExt,smooth:true,itemStyle:{color:'#4fc3f7'},areaStyle:{color:'rgba(79,195,247,0.1)'}}
+  ],
+  grid:{left:'8%',right:'5%',bottom:'15%'}
+});
+
+// 5. Inventory vs Sales bar chart
+const top20 = childData.slice(0,20);
+echarts.init(document.getElementById('chart_inventory')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['8月销量','FBA可售库存'],textStyle:{color:'#8b9bb0'}},
+  xAxis:{type:'category',data:top20.map(d=>d.asin),axisLabel:{color:'#8b9bb0',rotate:45}},
+  yAxis:{type:'value',axisLabel:{color:'#8b9bb0'}},
+  series:[
+    {name:'8月销量',type:'bar',data:top20.map(d=>d.vol),itemStyle:{color:'#ef9a9a'}},
+    {name:'FBA可售库存',type:'bar',data:top20.map(d=>d.fba),itemStyle:{color:'#81c784'}}
+  ],
+  grid:{left:'8%',right:'5%',bottom:'20%'}
+});
+
+// 6. Scatter: score vs ratio
+echarts.init(document.getElementById('chart_scatter')).setOption({
+  tooltip:{
+    trigger:'item',
+    formatter: function(p) { return `${p.data[2]}<br/>评分: ${p.data[0]}<br/>库销比: ${p.data[1]}月`; }
+  },
+  xAxis:{type:'value',name:'评分',nameTextStyle:{color:'#8b9bb0'},axisLabel:{color:'#8b9bb0'},min:45,max:75},
+  yAxis:{type:'value',name:'库销比(月)',nameTextStyle:{color:'#8b9bb0'},axisLabel:{color:'#8b9bb0'}},
+  series:[{
+    type:'scatter',
+    data: scoreData.map(d => [d.total, childData.find(c=>c.asin===d.asin)?.ratio || 0, d.asin]),
+    symbolSize: function(d) { return Math.max(10, d[0]-40); },
+    itemStyle:{
+      color: function(d) {
+        return d.data[0] >= 65 ? '#81c784' : d.data[0] >= 55 ? '#ffd54f' : '#ef9a9a';
+      }
+    },
+    label:{show:true,formatter: function(p) { return p.data[2].substr(-6); },color:'#8b9bb0',position:'top'}
+  }],
+  grid:{left:'10%',right:'5%',bottom:'10%'}
+});
+
+// 7. Radar chart for top 5
+echarts.init(document.getElementById('chart_radar')).setOption({
+  tooltip:{trigger:'item'},
+  legend:{data:scoreData.slice(0,5).map(d=>d.asin),textStyle:{color:'#8b9bb0'},bottom:0},
+  radar:{
+    indicator: dims.map(d => ({name:d,max:10})),
+    axisName:{color:'#8b9bb0'},
+    splitLine:{lineStyle:{color:'#2a3a4a'}},
+    splitArea:{areaStyle:{color:['rgba(42,58,74,0.3)','rgba(42,58,74,0.1)']}}
+  },
+  series:[{
+    type:'radar',
+    data: scoreData.slice(0,5).map((d,i) => ({
+      value: d.scores,
+      name: d.asin,
+      itemStyle:{color:['#ffd700','#c0c0c0','#cd7f32','#4fc3f7','#4caf50'][i]},
+      areaStyle:{opacity:0.1}
+    }))
+  }]
+});
+
+// 8. Parent ASIN pie chart
+echarts.init(document.getElementById('chart_pie')).setOption({
+  tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+  legend:{type:'scroll',bottom:0,textStyle:{color:'#8b9bb0'}},
+  series:[{
+    type:'pie',
+    radius:['30%','65%'],
+    data:[
+      {value:3966,name:'B08MKWRZ3W (4子ASIN)'},
+      {value:3452,name:'B0CQ4QYWL3 (51子ASIN)'},
+      {value:1727,name:'B0CJ4SPFGZ (23子ASIN)'},
+      {value:1770,name:'B0CN856K37 (35子ASIN)'},
+      {value:1489,name:'B0GHPVZGLX (2子ASIN)'},
+      {value:1486,name:'B0DD3R6LK5 (19子ASIN)'},
+      {value:1454,name:'B08XPRYKLX (3子ASIN)'},
+      {value:562,name:'B07XDJ2DVH (1子ASIN)'},
+      {value:581,name:'B0DHL5X1XM (14子ASIN)'},
+      {value:494,name:'B093GC1P2Q (6子ASIN)'},
+      {value:453,name:'B0BCQ8GDY8 (4子ASIN)'},
+      {value:345,name:'B09PB9NWZB (15子ASIN)'},
+      {value:342,name:'B09S9NB8YN (2子ASIN)'}
+    ],
+    itemStyle:{borderColor:'#0f1419',borderWidth:2}
+  }]
+});
+
+// Resize handler
+window.addEventListener('resize', () => {
+  document.querySelectorAll('[id^="chart_"]').forEach(el => {
+    echarts.getInstanceByDom(el)?.resize();
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,731 @@
+{
+ "326-N4121": {
+  "gross_profit": 522.62,
+  "spend": 1177.96,
+  "ad_sales_amount": 3614.22,
+  "amount": 6919.15,
+  "volume": 461.0,
+  "gross_margin": "0.0755",
+  "net_gross_margin": "0.0756"
+ },
+ "326-N4118": {
+  "gross_profit": 387.17,
+  "spend": 1392.7,
+  "ad_sales_amount": 5123.37,
+  "amount": 7035.98,
+  "volume": 460.0,
+  "gross_margin": "0.0550",
+  "net_gross_margin": "0.0551"
+ },
+ "168-11595-N": {
+  "gross_profit": 475.36,
+  "spend": 233.67,
+  "ad_sales_amount": 862.56,
+  "amount": 2419.06,
+  "volume": 406.0,
+  "gross_margin": "0.1965",
+  "net_gross_margin": "0.1965"
+ },
+ "125-N2690": {
+  "gross_profit": 647.77,
+  "spend": 372.69,
+  "ad_sales_amount": 1362.93,
+  "amount": 3841.75,
+  "volume": 389.0,
+  "gross_margin": "0.1686",
+  "net_gross_margin": "0.1688"
+ },
+ "168-9808-N": {
+  "gross_profit": 753.66,
+  "spend": 422.36,
+  "ad_sales_amount": 1427.34,
+  "amount": 3100.74,
+  "volume": 346.0,
+  "gross_margin": "0.2431",
+  "net_gross_margin": "0.2435"
+ },
+ "340-N5656": {
+  "gross_profit": -125.16,
+  "spend": 370.73,
+  "ad_sales_amount": 665.24,
+  "amount": 1833.65,
+  "volume": 312.0,
+  "gross_margin": "-0.0683",
+  "net_gross_margin": "-0.0683"
+ },
+ "340-N5657": {
+  "gross_profit": 463.75,
+  "spend": 385.33,
+  "ad_sales_amount": 1195.73,
+  "amount": 2146.35,
+  "volume": 310.0,
+  "gross_margin": "0.2161",
+  "net_gross_margin": "0.2161"
+ },
+ "328-N5691": {
+  "gross_profit": -1174.94,
+  "spend": 1271.89,
+  "ad_sales_amount": 2416.69,
+  "amount": 2252.62,
+  "volume": 282.0,
+  "gross_margin": "-0.5216",
+  "net_gross_margin": "-0.5221"
+ },
+ "235-N2509": {
+  "gross_profit": 245.36,
+  "spend": 838.38,
+  "ad_sales_amount": 3106.03,
+  "amount": 4381.26,
+  "volume": 274.0,
+  "gross_margin": "0.0560",
+  "net_gross_margin": "0.0561"
+ },
+ "168-14478-N": {
+  "gross_profit": 811.77,
+  "spend": 450.67,
+  "ad_sales_amount": 1911.23,
+  "amount": 3266.7,
+  "volume": 266.0,
+  "gross_margin": "0.2485",
+  "net_gross_margin": "0.2488"
+ },
+ "89-11199-N": {
+  "gross_profit": 560.42,
+  "spend": 247.47,
+  "ad_sales_amount": 982.0,
+  "amount": 2482.67,
+  "volume": 253.0,
+  "gross_margin": "0.2257",
+  "net_gross_margin": "0.2265"
+ },
+ "168-7213-N": {
+  "gross_profit": 434.77,
+  "spend": 267.84,
+  "ad_sales_amount": 731.89,
+  "amount": 2005.32,
+  "volume": 248.0,
+  "gross_margin": "0.2168",
+  "net_gross_margin": "0.2168"
+ },
+ "168-10773-N": {
+  "gross_profit": 166.66,
+  "spend": 220.3,
+  "ad_sales_amount": 635.55,
+  "amount": 1367.99,
+  "volume": 220.0,
+  "gross_margin": "0.1218",
+  "net_gross_margin": "0.1218"
+ },
+ "125-14816-N": {
+  "gross_profit": 309.89,
+  "spend": 491.12,
+  "ad_sales_amount": 1345.35,
+  "amount": 2191.98,
+  "volume": 220.0,
+  "gross_margin": "0.1414",
+  "net_gross_margin": "0.1416"
+ },
+ "494-14499-N": {
+  "gross_profit": 674.17,
+  "spend": 507.21,
+  "ad_sales_amount": 1824.56,
+  "amount": 2774.52,
+  "volume": 211.0,
+  "gross_margin": "0.2430",
+  "net_gross_margin": "0.2430"
+ },
+ "12-N2614": {
+  "gross_profit": 346.22,
+  "spend": 176.63,
+  "ad_sales_amount": 1190.8,
+  "amount": 2364.2,
+  "volume": 200.0,
+  "gross_margin": "0.1464",
+  "net_gross_margin": "0.1465"
+ },
+ "168-10774-N": {
+  "gross_profit": 17.31,
+  "spend": 355.78,
+  "ad_sales_amount": 763.0,
+  "amount": 1299.56,
+  "volume": 199.0,
+  "gross_margin": "0.0133",
+  "net_gross_margin": "0.0133"
+ },
+ "168-9815-N": {
+  "gross_profit": 211.8,
+  "spend": 272.12,
+  "ad_sales_amount": 614.89,
+  "amount": 1438.53,
+  "volume": 182.0,
+  "gross_margin": "0.1472",
+  "net_gross_margin": "0.1472"
+ },
+ "168-10995-N": {
+  "gross_profit": 419.38,
+  "spend": 191.06,
+  "ad_sales_amount": 724.49,
+  "amount": 1430.54,
+  "volume": 180.0,
+  "gross_margin": "0.2932",
+  "net_gross_margin": "0.2933"
+ },
+ "125-7172-N": {
+  "gross_profit": 378.52,
+  "spend": 219.62,
+  "ad_sales_amount": 555.17,
+  "amount": 1584.58,
+  "volume": 170.0,
+  "gross_margin": "0.2389",
+  "net_gross_margin": "0.2389"
+ },
+ "168-N4842": {
+  "gross_profit": 110.71,
+  "spend": 212.82,
+  "ad_sales_amount": 641.16,
+  "amount": 1179.17,
+  "volume": 155.0,
+  "gross_margin": "0.0939",
+  "net_gross_margin": "0.0939"
+ },
+ "389-14650-N": {
+  "gross_profit": 414.57,
+  "spend": 135.25,
+  "ad_sales_amount": 564.56,
+  "amount": 2084.11,
+  "volume": 154.0,
+  "gross_margin": "0.1989",
+  "net_gross_margin": "0.1989"
+ },
+ "494-15004-N": {
+  "gross_profit": 685.31,
+  "spend": 309.58,
+  "ad_sales_amount": 1386.66,
+  "amount": 2352.69,
+  "volume": 146.0,
+  "gross_margin": "0.2913",
+  "net_gross_margin": "0.2913"
+ },
+ "168-14477-N": {
+  "gross_profit": -23.52,
+  "spend": 387.86,
+  "ad_sales_amount": 932.32,
+  "amount": 1177.29,
+  "volume": 145.0,
+  "gross_margin": "-0.0200",
+  "net_gross_margin": "-0.0200"
+ },
+ "168-14847-N": {
+  "gross_profit": 277.96,
+  "spend": 117.61,
+  "ad_sales_amount": 300.93,
+  "amount": 1033.71,
+  "volume": 143.0,
+  "gross_margin": "0.2689",
+  "net_gross_margin": "0.2689"
+ },
+ "389-10386-N": {
+  "gross_profit": 117.93,
+  "spend": 482.09,
+  "ad_sales_amount": 1199.4,
+  "amount": 1758.51,
+  "volume": 140.0,
+  "gross_margin": "0.0671",
+  "net_gross_margin": "0.0671"
+ },
+ "89-7426-N": {
+  "gross_profit": 217.41,
+  "spend": 248.6,
+  "ad_sales_amount": 937.37,
+  "amount": 1765.68,
+  "volume": 136.0,
+  "gross_margin": "0.1231",
+  "net_gross_margin": "0.1234"
+ },
+ "12-N2497N": {
+  "gross_profit": 134.4,
+  "spend": 196.09,
+  "ad_sales_amount": 582.69,
+  "amount": 1056.7,
+  "volume": 136.0,
+  "gross_margin": "0.1272",
+  "net_gross_margin": "0.1272"
+ },
+ "168-9806-N": {
+  "gross_profit": -145.82,
+  "spend": 220.32,
+  "ad_sales_amount": 504.45,
+  "amount": 737.71,
+  "volume": 119.0,
+  "gross_margin": "-0.1977",
+  "net_gross_margin": "-0.1977"
+ },
+ "12-N2613": {
+  "gross_profit": 79.99,
+  "spend": 189.6,
+  "ad_sales_amount": 597.2,
+  "amount": 1022.2,
+  "volume": 104.0,
+  "gross_margin": "0.0783",
+  "net_gross_margin": "0.0783"
+ },
+ "168-6484-N": {
+  "gross_profit": -59.72,
+  "spend": 241.62,
+  "ad_sales_amount": 562.83,
+  "amount": 793.44,
+  "volume": 100.0,
+  "gross_margin": "-0.0753",
+  "net_gross_margin": "-0.0753"
+ },
+ "168-11566-N": {
+  "gross_profit": 183.05,
+  "spend": 75.12,
+  "ad_sales_amount": 207.26,
+  "amount": 795.29,
+  "volume": 100.0,
+  "gross_margin": "0.2302",
+  "net_gross_margin": "0.2302"
+ },
+ "79-9110-N": {
+  "gross_profit": 61.8,
+  "spend": 238.56,
+  "ad_sales_amount": 365.23,
+  "amount": 871.05,
+  "volume": 97.0,
+  "gross_margin": "0.0709",
+  "net_gross_margin": "0.0710"
+ },
+ "328-12722-N": {
+  "gross_profit": 73.76,
+  "spend": 62.94,
+  "ad_sales_amount": 247.76,
+  "amount": 959.04,
+  "volume": 96.0,
+  "gross_margin": "0.0769",
+  "net_gross_margin": "0.0769"
+ },
+ "326-14781-N": {
+  "gross_profit": 342.85,
+  "spend": 96.24,
+  "ad_sales_amount": 284.34,
+  "amount": 1534.56,
+  "volume": 96.0,
+  "gross_margin": "0.2234",
+  "net_gross_margin": "0.2234"
+ },
+ "12-N2612": {
+  "gross_profit": -46.3,
+  "spend": 218.27,
+  "ad_sales_amount": 391.23,
+  "amount": 641.85,
+  "volume": 93.0,
+  "gross_margin": "-0.0721",
+  "net_gross_margin": "-0.0721"
+ },
+ "79-N2770": {
+  "gross_profit": -104.22,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 704.83,
+  "volume": 92.0,
+  "gross_margin": "-0.1479",
+  "net_gross_margin": "-0.1541"
+ },
+ "89-7430-N": {
+  "gross_profit": 99.35,
+  "spend": 170.93,
+  "ad_sales_amount": 496.52,
+  "amount": 868.85,
+  "volume": 87.0,
+  "gross_margin": "0.1143",
+  "net_gross_margin": "0.1145"
+ },
+ "amzn.gr.125-6556-N-z_hW7JAHspCfjp_05D-VG": {
+  "gross_profit": 208.34,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 865.71,
+  "volume": 87.0,
+  "gross_margin": "0.2407",
+  "net_gross_margin": "0.2407"
+ },
+ "125-N3050": {
+  "gross_profit": 110.96,
+  "spend": 95.5,
+  "ad_sales_amount": 263.82,
+  "amount": 856.26,
+  "volume": 87.0,
+  "gross_margin": "0.1296",
+  "net_gross_margin": "0.1297"
+ },
+ "168-14926-N": {
+  "gross_profit": 126.08,
+  "spend": 80.59,
+  "ad_sales_amount": 140.8,
+  "amount": 581.88,
+  "volume": 85.0,
+  "gross_margin": "0.2167",
+  "net_gross_margin": "0.2168"
+ },
+ "389-13540-N": {
+  "gross_profit": 173.88,
+  "spend": 214.48,
+  "ad_sales_amount": 673.92,
+  "amount": 1076.22,
+  "volume": 83.0,
+  "gross_margin": "0.1616",
+  "net_gross_margin": "0.1616"
+ },
+ "125-N2888": {
+  "gross_profit": 212.19,
+  "spend": 66.04,
+  "ad_sales_amount": 303.32,
+  "amount": 824.23,
+  "volume": 83.0,
+  "gross_margin": "0.2574",
+  "net_gross_margin": "0.2576"
+ },
+ "89-N3397": {
+  "gross_profit": -1004.63,
+  "spend": 129.13,
+  "ad_sales_amount": 125.9,
+  "amount": 876.79,
+  "volume": 79.0,
+  "gross_margin": "-1.1458",
+  "net_gross_margin": "-1.1499"
+ },
+ "652-14754-N": {
+  "gross_profit": 5.05,
+  "spend": 114.62,
+  "ad_sales_amount": 306.04,
+  "amount": 609.91,
+  "volume": 77.0,
+  "gross_margin": "0.0083",
+  "net_gross_margin": "0.0083"
+ },
+ "328-N5692": {
+  "gross_profit": 193.86,
+  "spend": 1.11,
+  "ad_sales_amount": 0.0,
+  "amount": 1048.69,
+  "volume": 75.0,
+  "gross_margin": "0.1849",
+  "net_gross_margin": "0.1850"
+ },
+ "168-7294-N": {
+  "gross_profit": 269.54,
+  "spend": 3.36,
+  "ad_sales_amount": 29.83,
+  "amount": 695.38,
+  "volume": 70.0,
+  "gross_margin": "0.3876",
+  "net_gross_margin": "0.3876"
+ },
+ "168-N4768": {
+  "gross_profit": 5.47,
+  "spend": 236.79,
+  "ad_sales_amount": 541.34,
+  "amount": 679.04,
+  "volume": 68.0,
+  "gross_margin": "0.0081",
+  "net_gross_margin": "0.0081"
+ },
+ "168-14064-N": {
+  "gross_profit": 163.85,
+  "spend": 96.54,
+  "ad_sales_amount": 366.31,
+  "amount": 607.65,
+  "volume": 68.0,
+  "gross_margin": "0.2696",
+  "net_gross_margin": "0.2696"
+ },
+ "168-N2649": {
+  "gross_profit": 10.43,
+  "spend": 186.46,
+  "ad_sales_amount": 347.47,
+  "amount": 519.21,
+  "volume": 65.0,
+  "gross_margin": "0.0201",
+  "net_gross_margin": "0.0201"
+ },
+ "79-N2773": {
+  "gross_profit": -99.82,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 438.41,
+  "volume": 63.0,
+  "gross_margin": "-0.2277",
+  "net_gross_margin": "-0.2341"
+ },
+ "168-N5187": {
+  "gross_profit": 57.85,
+  "spend": 21.89,
+  "ad_sales_amount": 21.97,
+  "amount": 428.43,
+  "volume": 61.0,
+  "gross_margin": "0.1350",
+  "net_gross_margin": "0.1350"
+ },
+ "125-N4717": {
+  "gross_profit": 174.7,
+  "spend": 81.32,
+  "ad_sales_amount": 212.78,
+  "amount": 609.27,
+  "volume": 61.0,
+  "gross_margin": "0.2867",
+  "net_gross_margin": "0.2874"
+ },
+ "125-N4741": {
+  "gross_profit": 40.91,
+  "spend": 133.92,
+  "ad_sales_amount": 346.34,
+  "amount": 538.84,
+  "volume": 60.0,
+  "gross_margin": "0.0759",
+  "net_gross_margin": "0.0759"
+ },
+ "652-14963-N": {
+  "gross_profit": -96.97,
+  "spend": 164.38,
+  "ad_sales_amount": 241.49,
+  "amount": 528.61,
+  "volume": 59.0,
+  "gross_margin": "-0.1834",
+  "net_gross_margin": "-0.1834"
+ },
+ "168-N2330": {
+  "gross_profit": -4.0,
+  "spend": 109.28,
+  "ad_sales_amount": 245.99,
+  "amount": 466.53,
+  "volume": 59.0,
+  "gross_margin": "-0.0086",
+  "net_gross_margin": "-0.0086"
+ },
+ "79-9295-N": {
+  "gross_profit": 24.25,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 230.7,
+  "volume": 58.0,
+  "gross_margin": "0.1051",
+  "net_gross_margin": "0.1053"
+ },
+ "amzn.gr.89-11198-N-gFLfPp7lLqAeuWFmW4-LN": {
+  "gross_profit": 28.21,
+  "spend": 170.17,
+  "ad_sales_amount": 486.8,
+  "amount": 697.45,
+  "volume": 55.0,
+  "gross_margin": "0.0405",
+  "net_gross_margin": "0.0405"
+ },
+ "389-13927-N": {
+  "gross_profit": 160.75,
+  "spend": 45.77,
+  "ad_sales_amount": 159.84,
+  "amount": 547.35,
+  "volume": 55.0,
+  "gross_margin": "0.2937",
+  "net_gross_margin": "0.2953"
+ },
+ "125-6841-N": {
+  "gross_profit": -113.34,
+  "spend": 159.53,
+  "ad_sales_amount": 306.48,
+  "amount": 415.2,
+  "volume": 53.0,
+  "gross_margin": "-0.2730",
+  "net_gross_margin": "-0.2730"
+ },
+ "amzn.gr.168-9602-N-QV-MEaay8KV6IQZwCA-LN": {
+  "gross_profit": 30.84,
+  "spend": 216.31,
+  "ad_sales_amount": 575.33,
+  "amount": 831.12,
+  "volume": 52.0,
+  "gross_margin": "0.0371",
+  "net_gross_margin": "0.0371"
+ },
+ "168-14524-N": {
+  "gross_profit": 67.38,
+  "spend": 47.12,
+  "ad_sales_amount": 156.55,
+  "amount": 416.98,
+  "volume": 48.0,
+  "gross_margin": "0.1616",
+  "net_gross_margin": "0.1616"
+ },
+ "125-N2689": {
+  "gross_profit": 73.48,
+  "spend": 80.25,
+  "ad_sales_amount": 114.71,
+  "amount": 468.69,
+  "volume": 47.0,
+  "gross_margin": "0.1568",
+  "net_gross_margin": "0.1568"
+ },
+ "303-N3053-N": {
+  "gross_profit": 169.86,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 413.0,
+  "volume": 46.0,
+  "gross_margin": "0.4113",
+  "net_gross_margin": "0.4113"
+ },
+ "168-14844-N": {
+  "gross_profit": 126.79,
+  "spend": 21.57,
+  "ad_sales_amount": 119.61,
+  "amount": 346.52,
+  "volume": 44.0,
+  "gross_margin": "0.3659",
+  "net_gross_margin": "0.3659"
+ },
+ "79-9302-N": {
+  "gross_profit": 20.67,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 171.49,
+  "volume": 43.0,
+  "gross_margin": "0.1205",
+  "net_gross_margin": "0.1205"
+ },
+ "168-11000-N": {
+  "gross_profit": 114.29,
+  "spend": 13.08,
+  "ad_sales_amount": 60.66,
+  "amount": 370.21,
+  "volume": 43.0,
+  "gross_margin": "0.3087",
+  "net_gross_margin": "0.3087"
+ },
+ "125-N5908": {
+  "gross_profit": 68.71,
+  "spend": 57.99,
+  "ad_sales_amount": 79.78,
+  "amount": 418.18,
+  "volume": 42.0,
+  "gross_margin": "0.1643",
+  "net_gross_margin": "0.1646"
+ },
+ "168-9812-N": {
+  "gross_profit": 17.01,
+  "spend": 32.06,
+  "ad_sales_amount": 43.9,
+  "amount": 286.03,
+  "volume": 41.0,
+  "gross_margin": "0.0595",
+  "net_gross_margin": "0.0595"
+ },
+ "125-7100-N": {
+  "gross_profit": -4.52,
+  "spend": 36.91,
+  "ad_sales_amount": 189.59,
+  "amount": 350.61,
+  "volume": 39.0,
+  "gross_margin": "-0.0129",
+  "net_gross_margin": "-0.0129"
+ },
+ "89-N2731": {
+  "gross_profit": 27.83,
+  "spend": 5.35,
+  "ad_sales_amount": 25.98,
+  "amount": 485.92,
+  "volume": 38.0,
+  "gross_margin": "0.0573",
+  "net_gross_margin": "0.0573"
+ },
+ "79-9307-N": {
+  "gross_profit": -39.34,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 147.43,
+  "volume": 38.0,
+  "gross_margin": "-0.2668",
+  "net_gross_margin": "-0.2668"
+ },
+ "168-10997-N": {
+  "gross_profit": -1.15,
+  "spend": 57.61,
+  "ad_sales_amount": 131.78,
+  "amount": 227.26,
+  "volume": 38.0,
+  "gross_margin": "-0.0050",
+  "net_gross_margin": "-0.0050"
+ },
+ "89-N2910": {
+  "gross_profit": 26.87,
+  "spend": 18.18,
+  "ad_sales_amount": 72.82,
+  "amount": 294.82,
+  "volume": 37.0,
+  "gross_margin": "0.0911",
+  "net_gross_margin": "0.0911"
+ },
+ "494-14552-N": {
+  "gross_profit": 200.71,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 545.13,
+  "volume": 37.0,
+  "gross_margin": "0.3682",
+  "net_gross_margin": "0.3682"
+ },
+ "415-7868-N": {
+  "gross_profit": 108.62,
+  "spend": -0.0,
+  "ad_sales_amount": 0.0,
+  "amount": 331.73,
+  "volume": 37.0,
+  "gross_margin": "0.3274",
+  "net_gross_margin": "0.3274"
+ },
+ "168-N2280": {
+  "gross_profit": 31.13,
+  "spend": 3.73,
+  "ad_sales_amount": 0.0,
+  "amount": 256.53,
+  "volume": 37.0,
+  "gross_margin": "0.1214",
+  "net_gross_margin": "0.1214"
+ },
+ "168-10925-N": {
+  "gross_profit": 38.3,
+  "spend": 38.86,
+  "ad_sales_amount": 63.5,
+  "amount": 285.68,
+  "volume": 36.0,
+  "gross_margin": "0.1341",
+  "net_gross_margin": "0.1341"
+ },
+ "389-11796-N": {
+  "gross_profit": 33.83,
+  "spend": 31.84,
+  "ad_sales_amount": 52.94,
+  "amount": 279.65,
+  "volume": 35.0,
+  "gross_margin": "0.1210",
+  "net_gross_margin": "0.1215"
+ },
+ "326-9334-N": {
+  "gross_profit": 86.42,
+  "spend": 12.43,
+  "ad_sales_amount": 41.94,
+  "amount": 237.45,
+  "volume": 35.0,
+  "gross_margin": "0.3640",
+  "net_gross_margin": "0.3640"
+ },
+ "amzn.gr.125-N4621-9p8dhdwSGXf1WlDfH4Z-LN": {
+  "gross_profit": 102.69,
+  "spend": 5.98,
+  "ad_sales_amount": 44.95,
+  "amount": 312.85,
+  "volume": 35.0,
+  "gross_margin": "0.3282",
+  "net_gross_margin": "0.3282"
+ }
+}

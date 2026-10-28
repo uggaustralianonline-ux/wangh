@@ -1,0 +1,50 @@
+[
+  {
+    "query": "分析这几个ASIN哪个适合做秒杀",
+    "should_trigger": true
+  },
+  {
+    "query": "预秒杀分析",
+    "should_trigger": true
+  },
+  {
+    "query": "秒杀推荐分析",
+    "should_trigger": true
+  },
+  {
+    "query": "这几个产品能不能做秒杀",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我看看这批ASIN哪些适合做接下来的秒杀",
+    "should_trigger": true
+  },
+  {
+    "query": "flash sale analysis",
+    "should_trigger": true
+  },
+  {
+    "query": "秒杀效果怎么样",
+    "should_trigger": false
+  },
+  {
+    "query": "补货建议",
+    "should_trigger": false
+  },
+  {
+    "query": "广告怎么投",
+    "should_trigger": false
+  },
+  {
+    "query": "分析这个ASIN的竞品",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我写个listing",
+    "should_trigger": false
+  },
+  {
+    "query": "关键词排名怎么样了",
+    "should_trigger": false
+  }
+]

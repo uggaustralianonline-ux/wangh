@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>B-US · 推广人 AI推广 · 85 个 ASIN 未来 5 个月销量预估（v1.2.3）</title>
+<style>
+:root{--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--blue:#4a7ebb;--red:#c0392b;--bg:#f6f8fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+.hero{background:linear-gradient(135deg,#22354e,#3f6b9e);color:#fff;border-radius:14px;padding:26px 30px;margin-bottom:20px}
+.hero h1{margin:0 0 6px;font-size:24px}
+.hero .sub{opacity:.85;font-size:13px}
+.chips{margin-top:12px}
+.chip{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:4px 12px;font-size:12px;margin:4px 8px 0 0}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.kpi .l{font-size:12px;color:var(--muted)} .kpi .v{font-size:26px;font-weight:700;margin-top:4px} .kpi .d{font-size:12px;color:var(--muted);margin-top:2px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:16px 0}
+h2{font-size:17px;margin:0 0 12px;padding-left:10px;border-left:4px solid var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f3f6fa;color:#374151;font-weight:600;position:sticky;top:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums} td.b{font-weight:700} td.m{max-width:300px;color:#374151}
+tr.risk td{background:#fff7f5}
+.scroll{max-height:620px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.note{font-size:12.5px;color:var(--muted)} .legend{font-size:12px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 12px;vertical-align:middle}
+ul{margin:6px 0 0 18px;padding:0} li{margin:4px 0;font-size:13px}
+.split{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.acards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.acard{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.ah{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:13px}
+.ah a{font-weight:700;color:#2f5f94;text-decoration:none}
+.ah .catx{background:#eef3f9;color:#3f6b9e;border-radius:4px;padding:1px 6px;font-size:11px}
+.ah .msk{font-size:11px;color:#8a8a8a} .ah .amt{margin-left:auto;font-weight:700;color:#c0392b}
+.ah .fix{background:#fff1e6;color:#c05621;border-radius:4px;padding:1px 6px;font-size:11px}
+.an{font-size:12px;color:#4b5563;margin:4px 0 6px}
+.mini{width:100%;font-size:11.5px;border-collapse:collapse;margin:2px 0 6px}
+.mini th{text-align:left;color:#8a8a8a;font-weight:400;padding:1px 4px;background:none;position:static;border:none}
+.mini td{padding:1px 4px;border:none;color:#374151}
+.am{font-size:11.5px;color:#374151;background:#f7f9fc;border-radius:6px;padding:4px 8px;margin-bottom:6px}
+.aj{font-size:12px;line-height:1.55;color:#374151}
+.chg td{font-size:12px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.acards{grid-template-columns:1fr}}
+footer{margin-top:24px;font-size:11.5px;color:#9ca3af}
+</style></head><body><div class="wrap">
+<div class="hero">
+  <h1>B-US 店铺 · 推广人「AI推广」ASIN 销量预估</h1>
+  <div class="sub">预测区间 2026-11 ~ 2027-03（5 个自然月）· 三维加权模型 · 计算口径 v1.2.3（已修复窗口尖峰/形态漂移/校准方向三缺陷）</div>
+  <div class="chips"><span class="chip">店铺 B-US（sid 4653）</span><span class="chip">推广人 AI推广</span>
+  <span class="chip">覆盖 85 个 ASIN / 87 个 MSKU</span><span class="chip">重算日期 2026-10-21</span></div>
+</div>
+<div class="kpis">
+  <div class="kpi"><div class="l">5 个月基准预估</div><div class="v">72,162 件</div><div class="d">保守 61,265 / 乐观 90,287</div></div>
+  <div class="kpi"><div class="l">去年同期实际（同 5 个月）</div><div class="v">93,233 件</div><div class="d">同比 -22.6%</div></div>
+  <div class="kpi"><div class="l">盛途备货预估（计划口径）</div><div class="v">93,760 件</div><div class="d">模型较计划 -23.0%</div></div>
+  <div class="kpi"><div class="l">断货风险 ASIN / 建议补货</div><div class="v">56 个</div><div class="d">合计建议补货 52,969 件</div></div>
+</div>
+
+<div class="card">
+  <h2>一、本次重算的三处修正（v1.2.3）</h2>
+  <table class="chg"><thead><tr><th>ASIN</th><th>缺陷</th><th>修正前</th><th>修正后</th><th>依据</th></tr></thead><tbody>
+  <tr><td>B072B9XGZ4</td><td>7/14 天窗口未剔 10/19-20 两日尖峰（141+176 件 vs 常态 35 件/天），动量比虚高 1.49 触发动量豁免</td><td>7,958 件（+95%）</td><td class="b">5,137 件（+26%）</td><td>动量比回落 0.89；主流量词同比 +22%、累计同比 -17%</td></tr>
+  <tr><td>B07BK1R25Z</td><td>形态漂移全局切换：仅 10 月漂移却把 1~3 月也切到 2025 单年低基数系数（0.60/0.45/0.41）</td><td>5,797 件（1~3 月 876/597/595）</td><td class="b">7,802 件（1~3 月 1,386/1,307/1,398）</td><td>逐月判定 + 第三源投票，2026 年 1~3 月实际形态与 2024 一致</td></tr>
+  <tr><td>B09R4625FW</td><td>关键词校准只看市场词同比：市场 +40.7% 但自身近 90 天 -15%，仍上调 ×1.125</td><td>4,227 件（×1.125）</td><td class="b">3,685 件（×1.00）</td><td>自身方向闸门：市场涨但自身份额流失，趋势调整夹断为 0</td></tr>
+  </tbody></table>
+  <p class="note">总盘由 74,297 → <b>72,162 件</b>（其余 ASIN 因逐月漂移投票与自身方向闸门同步微调）。</p>
+</div>
+
+<div class="card">
+  <h2>二、总盘月度走势</h2>
+  <svg viewBox="0 0 860 290" width="100%" height="290" role="img"><line x1="60" y1="246" x2="840" y2="246" stroke="#d9d9d9"/><line x1="60" y1="246.0" x2="840" y2="246.0" stroke="#f0f0f0"/><text x="52" y="250.0" text-anchor="end" font-size="11" fill="#8a8a8a">0</text><line x1="60" y1="189.5" x2="840" y2="189.5" stroke="#f0f0f0"/><text x="52" y="193.5" text-anchor="end" font-size="11" fill="#8a8a8a">6,171</text><line x1="60" y1="133.0" x2="840" y2="133.0" stroke="#f0f0f0"/><text x="52" y="137.0" text-anchor="end" font-size="11" fill="#8a8a8a">12,342</text><line x1="60" y1="76.5" x2="840" y2="76.5" stroke="#f0f0f0"/><text x="52" y="80.5" text-anchor="end" font-size="11" fill="#8a8a8a">18,514</text><line x1="60" y1="20.0" x2="840" y2="20.0" stroke="#f0f0f0"/><text x="52" y="24.0" text-anchor="end" font-size="11" fill="#8a8a8a">24,685</text><rect x="68.0" y="126.2" width="43.0" height="119.8" fill="#c9d6e3" rx="2"/><rect x="114.0" y="105.0" width="43.0" height="141.0" fill="#4a7ebb" rx="2"/><rect x="160.0" y="69.5" width="43.0" height="176.5" fill="#8fb6d9" rx="2"/><line x1="68.0" y1="66.9" x2="203.0" y2="66.9" stroke="#e07b39" stroke-width="2" stroke-dasharray="4 3"/><text x="137.0" y="264" text-anchor="middle" font-size="12" fill="#444">2026年11月</text><text x="137.0" y="279" text-anchor="middle" font-size="10" fill="#8a8a8a">去年 19,568</text><rect x="222.0" y="127.7" width="43.0" height="118.3" fill="#c9d6e3" rx="2"/><rect x="268.0" y="106.7" width="43.0" height="139.3" fill="#4a7ebb" rx="2"/><rect x="314.0" y="71.9" width="43.0" height="174.1" fill="#8fb6d9" rx="2"/><line x1="222.0" y1="49.5" x2="357.0" y2="49.5" stroke="#e07b39" stroke-width="2" stroke-dasharray="4 3"/><text x="291.0" y="264" text-anchor="middle" font-size="12" fill="#444">2026年12月</text><text x="291.0" y="279" text-anchor="middle" font-size="10" fill="#8a8a8a">去年 21,466</text><rect x="376.0" y="133.6" width="43.0" height="112.4" fill="#c9d6e3" rx="2"/><rect x="422.0" y="113.6" width="43.0" height="132.4" fill="#4a7ebb" rx="2"/><rect x="468.0" y="80.3" width="43.0" height="165.7" fill="#8fb6d9" rx="2"/><line x1="376.0" y1="77.0" x2="511.0" y2="77.0" stroke="#e07b39" stroke-width="2" stroke-dasharray="4 3"/><text x="445.0" y="264" text-anchor="middle" font-size="12" fill="#444">2027年1月</text><text x="445.0" y="279" text-anchor="middle" font-size="10" fill="#8a8a8a">去年 18,461</text><rect x="530.0" y="146.4" width="43.0" height="99.6" fill="#c9d6e3" rx="2"/><rect x="576.0" y="128.5" width="43.0" height="117.5" fill="#4a7ebb" rx="2"/><rect x="622.0" y="98.8" width="43.0" height="147.2" fill="#8fb6d9" rx="2"/><line x1="530.0" y1="99.6" x2="665.0" y2="99.6" stroke="#e07b39" stroke-width="2" stroke-dasharray="4 3"/><text x="599.0" y="264" text-anchor="middle" font-size="12" fill="#444">2027年2月</text><text x="599.0" y="279" text-anchor="middle" font-size="10" fill="#8a8a8a">去年 15,991</text><rect x="684.0" y="135.2" width="43.0" height="110.8" fill="#c9d6e3" rx="2"/><rect x="730.0" y="115.6" width="43.0" height="130.4" fill="#4a7ebb" rx="2"/><rect x="776.0" y="83.0" width="43.0" height="163.0" fill="#8fb6d9" rx="2"/><line x1="684.0" y1="83.5" x2="819.0" y2="83.5" stroke="#e07b39" stroke-width="2" stroke-dasharray="4 3"/><text x="753.0" y="264" text-anchor="middle" font-size="12" fill="#444">2027年3月</text><text x="753.0" y="279" text-anchor="middle" font-size="10" fill="#8a8a8a">去年 17,747</text></svg>
+  <div class="legend"><i style="background:#c9d6e3"></i>保守 <i style="background:#4a7ebb"></i>基准 <i style="background:#8fb6d9"></i>乐观 <i style="background:#e07b39"></i>去年同期实际</div>
+  <p class="note">基准情景合计 72,162 件，较去年同期 93,233 件 -22.6%；11~12 月为 Q4 礼品季，1 月受情人节备货拉动，2~3 月进入淡季。</p>
+</div>
+
+<div class="split">
+  <div class="card"><h2>三、Top 15 ASIN 基准预估</h2><svg viewBox="0 0 860 420" width="100%" height="420" role="img"><text x="8" y="22" font-size="11" fill="#333">48pack迷你抓夹两个颜色（琥珀色、黑色）</text><rect x="300" y="10" width="530.0" height="16" fill="#4a7ebb" rx="2"/><text x="836.0" y="22" font-size="11" fill="#4a7ebb">7,802</text><text x="8" y="48" font-size="11" fill="#333">金属蝴蝶扣120pack</text><rect x="300" y="36" width="349.0" height="16" fill="#4a7ebb" rx="2"/><text x="655.0" y="48" font-size="11" fill="#4a7ebb">5,137</text><text x="8" y="74" font-size="11" fill="#333">黑色易拉扣50pack</text><rect x="300" y="62" width="343.9" height="16" fill="#4a7ebb" rx="2"/><text x="649.9" y="74" font-size="11" fill="#4a7ebb">5,062</text><text x="8" y="100" font-size="11" fill="#333">4支四色空笔杆+28支高温消除笔芯（4色）</text><rect x="300" y="88" width="250.3" height="16" fill="#4a7ebb" rx="2"/><text x="556.3" y="100" font-size="11" fill="#4a7ebb">3,685</text><text x="8" y="126" font-size="11" fill="#333">（2842数量变体）4支四色空笔杆+12支高温消除笔芯（4色）</text><rect x="300" y="114" width="208.5" height="16" fill="#4a7ebb" rx="2"/><text x="514.5" y="126" font-size="11" fill="#4a7ebb">3,070</text><text x="8" y="152" font-size="11" fill="#333">120对黑色蝴蝶帽带针</text><rect x="300" y="140" width="145.6" height="16" fill="#4a7ebb" rx="2"/><text x="451.6" y="152" font-size="11" fill="#4a7ebb">2,144</text><text x="8" y="178" font-size="11" fill="#333">金属蝴蝶帽金色*120+刺马针*120</text><rect x="300" y="166" width="139.4" height="16" fill="#4a7ebb" rx="2"/><text x="445.4" y="178" font-size="11" fill="#4a7ebb">2,052</text><text x="8" y="204" font-size="11" fill="#333">（02-B243变体）48个黑色迷你抓夹</text><rect x="300" y="192" width="130.4" height="16" fill="#4a7ebb" rx="2"/><text x="436.4" y="204" font-size="11" fill="#4a7ebb">1,919</text><text x="8" y="230" font-size="11" fill="#333">粉色蘑菇卷发器+网套</text><rect x="300" y="218" width="118.2" height="16" fill="#4a7ebb" rx="2"/><text x="424.2" y="230" font-size="11" fill="#4a7ebb">1,740</text><text x="8" y="256" font-size="11" fill="#333">30米扁蜡线（深卡其、卡其、深咖、本色、深灰、浅卡、咖啡、黑色）</text><rect x="300" y="244" width="117.5" height="16" fill="#4a7ebb" rx="2"/><text x="423.5" y="256" font-size="11" fill="#4a7ebb">1,729</text><text x="8" y="282" font-size="11" fill="#333">信封模板4片套</text><rect x="300" y="270" width="116.1" height="16" fill="#4a7ebb" rx="2"/><text x="422.1" y="282" font-size="11" fill="#4a7ebb">1,709</text><text x="8" y="308" font-size="11" fill="#333">（3696变体）40对蝴蝶扣（蝴蝶帽+针）（11*8.5cm珠光袋打</text><rect x="300" y="296" width="110.7" height="16" fill="#4a7ebb" rx="2"/><text x="416.7" y="308" font-size="11" fill="#4a7ebb">1,630</text><text x="8" y="334" font-size="11" fill="#333">30pcs黑色窗帘夹</text><rect x="300" y="322" width="103.7" height="16" fill="#4a7ebb" rx="2"/><text x="409.7" y="334" font-size="11" fill="#4a7ebb">1,526</text><text x="8" y="360" font-size="11" fill="#333">(特货) 9个3款模具+75支笔芯（25黑+25蓝+25红）</text><rect x="300" y="348" width="99.5" height="16" fill="#4a7ebb" rx="2"/><text x="405.5" y="360" font-size="11" fill="#4a7ebb">1,464</text><text x="8" y="386" font-size="11" fill="#333">（B909数量变体）10个透明彩色易拉扣</text><rect x="300" y="374" width="99.0" height="16" fill="#4a7ebb" rx="2"/><text x="405.0" y="386" font-size="11" fill="#4a7ebb">1,458</text></svg>
+    <p class="note">前 15 个 ASIN 合计 42,127 件，占总盘 58.4%。</p></div>
+  <div class="card"><h2>四、品类结构</h2>
+    <table><thead><tr><th>品类</th><th class="num">ASIN 数</th><th class="num">基准 5 个月</th><th class="num">占比</th></tr></thead><tbody><tr><td>蝴蝶扣/蝴蝶帽</td><td class="num">14</td><td class="num">18,228</td><td class="num">25.3%</td></tr><tr><td>易拉扣</td><td class="num">17</td><td class="num">13,455</td><td class="num">18.6%</td></tr><tr><td>抓夹/发夹</td><td class="num">6</td><td class="num">12,066</td><td class="num">16.7%</td></tr><tr><td>消失笔/笔芯</td><td class="num">8</td><td class="num">11,659</td><td class="num">16.2%</td></tr><tr><td>窗帘夹</td><td class="num">5</td><td class="num">4,154</td><td class="num">5.8%</td></tr><tr><td>卷发器</td><td class="num">9</td><td class="num">3,559</td><td class="num">4.9%</td></tr><tr><td>模板/贴纸</td><td class="num">6</td><td class="num">3,231</td><td class="num">4.5%</td></tr><tr><td>儿童甲片</td><td class="num">13</td><td class="num">2,564</td><td class="num">3.6%</td></tr><tr><td>手作材料</td><td class="num">2</td><td class="num">1,863</td><td class="num">2.6%</td></tr><tr><td>其他</td><td class="num">2</td><td class="num">1,115</td><td class="num">1.5%</td></tr><tr><td>过滤漏斗</td><td class="num">3</td><td class="num">268</td><td class="num">0.4%</td></tr></tbody></table></div>
+</div>
+
+<div class="card">
+  <h2>五、断货风险与补货优先级（Top 20）</h2>
+  <p class="note">总需求 = 10 月剩余 10 天 + 未来 5 个月基准预估；建议补货 = 基准总需求 − 当前库存 + 15% 安全库存。</p>
+  <table><thead><tr><th>ASIN</th><th>产品</th><th class="num">当前库存</th><th class="num">基准总需求</th><th class="num">建议补货</th><th>品类</th></tr></thead><tbody><tr><td><a href="https://www.amazon.com/dp/B07BK1R25Z" target="_blank">B07BK1R25Z</a></td><td class="m">48pack迷你抓夹两个颜色（琥珀色、黑色）</td><td class="num">1,071</td><td class="num">8,636</td><td class="num b">8,860</td><td>抓夹/发夹</td></tr><tr><td><a href="https://www.amazon.com/dp/B072B9XGZ4" target="_blank">B072B9XGZ4</a></td><td class="m">金属蝴蝶扣120pack</td><td class="num">1,793</td><td class="num">5,425</td><td class="num b">4,445</td><td>蝴蝶扣/蝴蝶帽</td></tr><tr><td><a href="https://www.amazon.com/dp/B0732Z7T8W" target="_blank">B0732Z7T8W</a></td><td class="m">黑色易拉扣50pack</td><td class="num">1,817</td><td class="num">5,387</td><td class="num b">4,378</td><td>易拉扣</td></tr><tr><td><a href="https://www.amazon.com/dp/B0FKMXKNGY" target="_blank">B0FKMXKNGY</a></td><td class="m">（2842数量变体）4支四色空笔杆+12支高温消除笔芯（4色）</td><td class="num">666</td><td class="num">3,248</td><td class="num b">3,069</td><td>消失笔/笔芯</td></tr><tr><td><a href="https://www.amazon.com/dp/B093SS61SQ" target="_blank">B093SS61SQ</a></td><td class="m">金属蝴蝶帽金色*120+刺马针*120</td><td class="num">556</td><td class="num">2,186</td><td class="num b">1,958</td><td>蝴蝶扣/蝴蝶帽</td></tr><tr><td><a href="https://www.amazon.com/dp/B09R4625FW" target="_blank">B09R4625FW</a></td><td class="m">4支四色空笔杆+28支高温消除笔芯（4色）</td><td class="num">2,658</td><td class="num">3,980</td><td class="num b">1,919</td><td>消失笔/笔芯</td></tr><tr><td><a href="https://www.amazon.com/dp/B0DHR8X5C8" target="_blank">B0DHR8X5C8</a></td><td class="m">（02-B243变体）48个黑色迷你抓夹</td><td class="num">468</td><td class="num">2,069</td><td class="num b">1,911</td><td>抓夹/发夹</td></tr><tr><td><a href="https://www.amazon.com/dp/B07436P6CD" target="_blank">B07436P6CD</a></td><td class="m">30米扁蜡线（深卡其、卡其、深咖、本色、深灰、浅卡、咖啡、黑色）</td><td class="num">294</td><td class="num">1,823</td><td class="num b">1,802</td><td>手作材料</td></tr><tr><td><a href="https://www.amazon.com/dp/B09VGSGVQM" target="_blank">B09VGSGVQM</a></td><td class="m">120对黑色蝴蝶帽带针</td><td class="num">1,023</td><td class="num">2,305</td><td class="num b">1,627</td><td>蝴蝶扣/蝴蝶帽</td></tr><tr><td><a href="https://www.amazon.com/dp/B0D1Y6D47M" target="_blank">B0D1Y6D47M</a></td><td class="m">（3696变体）40对蝴蝶扣（蝴蝶帽+针）（11*8.5cm珠光</td><td class="num">589</td><td class="num">1,817</td><td class="num b">1,500</td><td>蝴蝶扣/蝴蝶帽</td></tr><tr><td><a href="https://www.amazon.com/dp/B0FJ2CPP2Q" target="_blank">B0FJ2CPP2Q</a></td><td class="m">（B909数量变体）10个透明彩色易拉扣</td><td class="num">343</td><td class="num">1,516</td><td class="num b">1,401</td><td>易拉扣</td></tr><tr><td><a href="https://www.amazon.com/dp/B0F6T94NGQ" target="_blank">B0F6T94NGQ</a></td><td class="m">陈云艳推荐（02-B243变体）48个磨砂色迷你抓夹（磨砂黑、磨</td><td class="num">276</td><td class="num">1,444</td><td class="num b">1,385</td><td>抓夹/发夹</td></tr><tr><td><a href="https://www.amazon.com/dp/B07KVVK56K" target="_blank">B07KVVK56K</a></td><td class="m">易拉扣（袋装100个实色黑色）</td><td class="num">425</td><td class="num">1,448</td><td class="num b">1,240</td><td>易拉扣</td></tr><tr><td><a href="https://www.amazon.com/dp/B07C49CWHM" target="_blank">B07C49CWHM</a></td><td class="m">信封模板4片套</td><td class="num">905</td><td class="num">1,822</td><td class="num b">1,191</td><td>模板/贴纸</td></tr><tr><td><a href="https://www.amazon.com/dp/B0FVDNKRLL" target="_blank">B0FVDNKRLL</a></td><td class="m">（1586数量变体）12支四色（红，白，蓝，黑）空笔杆+104支</td><td class="num">379</td><td class="num">1,235</td><td class="num b">1,042</td><td>消失笔/笔芯</td></tr><tr><td><a href="https://www.amazon.com/dp/B0FJ8NN354" target="_blank">B0FJ8NN354</a></td><td class="m">（B909数量变体）10个莫兰迪易拉扣</td><td class="num">46</td><td class="num">875</td><td class="num b">960</td><td>易拉扣</td></tr><tr><td><a href="https://www.amazon.com/dp/B09W9NRBWS" target="_blank">B09W9NRBWS</a></td><td class="m">120对金色蝴蝶帽带针（针直径10MM）</td><td class="num">391</td><td class="num">1,161</td><td class="num b">944</td><td>蝴蝶扣/蝴蝶帽</td></tr><tr><td><a href="https://www.amazon.com/dp/B093BY9VJN" target="_blank">B093BY9VJN</a></td><td class="m">迷你透明抓夹*48pack+圆盒</td><td class="num">138</td><td class="num">783</td><td class="num b">763</td><td>抓夹/发夹</td></tr><tr><td><a href="https://www.amazon.com/dp/B0B3HM89JS" target="_blank">B0B3HM89JS</a></td><td class="m">30个青古铜色夹子 B342 变体</td><td class="num">480</td><td class="num">1,036</td><td class="num b">711</td><td>其他</td></tr><tr><td><a href="https://www.amazon.com/dp/B09LLHP6ST" target="_blank">B09LLHP6ST</a></td><td class="m">白色窗帘夹子30个 B342变体</td><td class="num">1,000</td><td class="num">1,458</td><td class="num b">677</td><td>窗帘夹</td></tr></tbody></table>
+</div>
+
+<div class="card">
+  <h2>六、全量 ASIN 预估明细（85 个）</h2>
+  <div class="scroll"><table><thead><tr><th class="num">#</th><th>ASIN</th><th>产品</th><th>品类</th>
+  <th class="num">11月</th><th class="num">12月</th><th class="num">1月</th><th class="num">2月</th><th class="num">3月</th>
+  <th class="num">5月基准</th><th class="num">区间</th><th class="num">库存</th><th>库存状态</th><th class="num">建议补货</th><th>口径</th><th class="num">关键词校准</th><th class="num">盛途计划</th></tr></thead>
+  <tbody><tr class="risk"><td class="num">1</td><td><a href="https://www.amazon.com/dp/B07BK1R25Z" target="_blank">B07BK1R25Z</a></td><td class="m">48pack迷你抓夹两个颜色（琥珀色、黑色）</td><td>抓夹/发夹</td><td class="num">1,888</td><td class="num">1,841</td><td class="num">1,381</td><td class="num">1,298</td><td class="num">1,394</td><td class="num b">7,802</td><td class="num">6,632 ~ 9,752</td><td class="num">1,071</td><td>断货风险</td><td class="num">8,860</td><td>季节系数</td><td class="num">1.12</td><td class="num">4,800</td></tr><tr class="risk"><td class="num">2</td><td><a href="https://www.amazon.com/dp/B072B9XGZ4" target="_blank">B072B9XGZ4</a></td><td class="m">金属蝴蝶扣120pack</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">924</td><td class="num">816</td><td class="num">1,034</td><td class="num">1,030</td><td class="num">1,333</td><td class="num b">5,137</td><td class="num">4,366 ~ 6,421</td><td class="num">1,793</td><td>断货风险</td><td class="num">4,445</td><td>季节系数</td><td class="num">1.12</td><td class="num">4,050</td></tr><tr class="risk"><td class="num">3</td><td><a href="https://www.amazon.com/dp/B0732Z7T8W" target="_blank">B0732Z7T8W</a></td><td class="m">黑色易拉扣50pack</td><td>易拉扣</td><td class="num">903</td><td class="num">755</td><td class="num">1,262</td><td class="num">1,093</td><td class="num">1,049</td><td class="num b">5,062</td><td class="num">4,302 ~ 6,326</td><td class="num">1,817</td><td>断货风险</td><td class="num">4,378</td><td>季节系数</td><td class="num">1.00</td><td class="num">5,550</td></tr><tr class="risk"><td class="num">4</td><td><a href="https://www.amazon.com/dp/B09R4625FW" target="_blank">B09R4625FW</a></td><td class="m">4支四色空笔杆+28支高温消除笔芯（4色）</td><td>消失笔/笔芯</td><td class="num">910</td><td class="num">947</td><td class="num">593</td><td class="num">629</td><td class="num">606</td><td class="num b">3,685</td><td class="num">3,132 ~ 4,606</td><td class="num">2,658</td><td>断货风险</td><td class="num">1,919</td><td>季节系数</td><td class="num">1.00</td><td class="num">5,400</td></tr><tr class="risk"><td class="num">5</td><td><a href="https://www.amazon.com/dp/B0FKMXKNGY" target="_blank">B0FKMXKNGY</a></td><td class="m">（2842数量变体）4支四色空笔杆+12支高温消除笔芯（4色）</td><td>消失笔/笔芯</td><td class="num">605</td><td class="num">455</td><td class="num">961</td><td class="num">328</td><td class="num">721</td><td class="num b">3,070</td><td class="num">2,610 ~ 3,838</td><td class="num">666</td><td>断货风险</td><td class="num">3,069</td><td>新品·同月锚点</td><td class="num">0.98</td><td class="num">5,900</td></tr><tr class="risk"><td class="num">6</td><td><a href="https://www.amazon.com/dp/B09VGSGVQM" target="_blank">B09VGSGVQM</a></td><td class="m">120对黑色蝴蝶帽带针</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">426</td><td class="num">401</td><td class="num">434</td><td class="num">421</td><td class="num">462</td><td class="num b">2,144</td><td class="num">1,823 ~ 2,680</td><td class="num">1,023</td><td>断货风险</td><td class="num">1,627</td><td>季节系数</td><td class="num">1.00</td><td class="num">1,740</td></tr><tr class="risk"><td class="num">7</td><td><a href="https://www.amazon.com/dp/B093SS61SQ" target="_blank">B093SS61SQ</a></td><td class="m">金属蝴蝶帽金色*120+刺马针*120</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">354</td><td class="num">309</td><td class="num">485</td><td class="num">443</td><td class="num">461</td><td class="num b">2,052</td><td class="num">1,743 ~ 2,563</td><td class="num">556</td><td>断货风险</td><td class="num">1,958</td><td>季节系数</td><td class="num">1.00</td><td class="num">1,120</td></tr><tr class="risk"><td class="num">8</td><td><a href="https://www.amazon.com/dp/B0DHR8X5C8" target="_blank">B0DHR8X5C8</a></td><td class="m">（02-B243变体）48个黑色迷你抓夹</td><td>抓夹/发夹</td><td class="num">291</td><td class="num">555</td><td class="num">332</td><td class="num">441</td><td class="num">300</td><td class="num b">1,919</td><td class="num">1,631 ~ 2,399</td><td class="num">468</td><td>断货风险</td><td class="num">1,911</td><td>季节系数</td><td class="num">1.12</td><td class="num">980</td></tr><tr><td class="num">9</td><td><a href="https://www.amazon.com/dp/B07D3KV6JG" target="_blank">B07D3KV6JG</a></td><td class="m">粉色蘑菇卷发器+网套</td><td>卷发器</td><td class="num">417</td><td class="num">409</td><td class="num">277</td><td class="num">270</td><td class="num">367</td><td class="num b">1,740</td><td class="num">1,480 ~ 2,175</td><td class="num">3,010</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">1.00</td><td class="num">6,000</td></tr><tr class="risk"><td class="num">10</td><td><a href="https://www.amazon.com/dp/B07436P6CD" target="_blank">B07436P6CD</a></td><td class="m">30米扁蜡线（深卡其、卡其、深咖、本色、深灰、浅卡、咖啡、黑色）</td><td>手作材料</td><td class="num">346</td><td class="num">412</td><td class="num">364</td><td class="num">307</td><td class="num">300</td><td class="num b">1,729</td><td class="num">1,469 ~ 2,159</td><td class="num">294</td><td>断货风险</td><td class="num">1,802</td><td>季节系数</td><td class="num">1.00</td><td class="num">3,650</td></tr><tr class="risk"><td class="num">11</td><td><a href="https://www.amazon.com/dp/B07C49CWHM" target="_blank">B07C49CWHM</a></td><td class="m">信封模板4片套</td><td>模板/贴纸</td><td class="num">455</td><td class="num">484</td><td class="num">233</td><td class="num">216</td><td class="num">321</td><td class="num b">1,709</td><td class="num">1,452 ~ 2,135</td><td class="num">905</td><td>断货风险</td><td class="num">1,191</td><td>季节系数</td><td class="num">1.00</td><td class="num">2,600</td></tr><tr class="risk"><td class="num">12</td><td><a href="https://www.amazon.com/dp/B0D1Y6D47M" target="_blank">B0D1Y6D47M</a></td><td class="m">（3696变体）40对蝴蝶扣（蝴蝶帽+针）（11*8.5cm珠光袋打包）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">607</td><td class="num">551</td><td class="num">133</td><td class="num">156</td><td class="num">183</td><td class="num b">1,630</td><td class="num">1,385 ~ 2,037</td><td class="num">589</td><td>断货风险</td><td class="num">1,500</td><td>季节系数</td><td class="num">1.00</td><td class="num">3,080</td></tr><tr><td class="num">13</td><td><a href="https://www.amazon.com/dp/B07FXT769J" target="_blank">B07FXT769J</a></td><td class="m">30pcs黑色窗帘夹</td><td>窗帘夹</td><td class="num">335</td><td class="num">238</td><td class="num">329</td><td class="num">308</td><td class="num">316</td><td class="num b">1,526</td><td class="num">1,297 ~ 1,907</td><td class="num">1,828</td><td>视情况</td><td class="num">48</td><td>季节系数</td><td class="num">1.00</td><td class="num">2,980</td></tr><tr><td class="num">14</td><td><a href="https://www.amazon.com/dp/B095RVR9QT" target="_blank">B095RVR9QT</a></td><td class="m">(特货) 9个3款模具+75支笔芯（25黑+25蓝+25红）</td><td>消失笔/笔芯</td><td class="num">304</td><td class="num">355</td><td class="num">235</td><td class="num">283</td><td class="num">287</td><td class="num b">1,464</td><td class="num">1,243 ~ 1,829</td><td class="num">2,537</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">0.70</td><td class="num">3,650</td></tr><tr class="risk"><td class="num">15</td><td><a href="https://www.amazon.com/dp/B0FJ2CPP2Q" target="_blank">B0FJ2CPP2Q</a></td><td class="m">（B909数量变体）10个透明彩色易拉扣</td><td>易拉扣</td><td class="num">339</td><td class="num">236</td><td class="num">224</td><td class="num">294</td><td class="num">365</td><td class="num b">1,458</td><td class="num">1,238 ~ 1,821</td><td class="num">343</td><td>断货风险</td><td class="num">1,401</td><td>新品·同月锚点</td><td class="num">1.00</td><td class="num">1,020</td></tr><tr class="risk"><td class="num">16</td><td><a href="https://www.amazon.com/dp/B07KVVK56K" target="_blank">B07KVVK56K</a></td><td class="m">易拉扣（袋装100个实色黑色）</td><td>易拉扣</td><td class="num">378</td><td class="num">183</td><td class="num">305</td><td class="num">251</td><td class="num">269</td><td class="num b">1,386</td><td class="num">1,177 ~ 1,732</td><td class="num">425</td><td>断货风险</td><td class="num">1,240</td><td>季节系数</td><td class="num">1.12</td><td class="num">1,170</td></tr><tr class="risk"><td class="num">17</td><td><a href="https://www.amazon.com/dp/B0BXKTMYYD" target="_blank">B0BXKTMYYD</a></td><td class="m">（3696变体）240对蝴蝶扣（蝴蝶帽+针）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">355</td><td class="num">154</td><td class="num">253</td><td class="num">292</td><td class="num">322</td><td class="num b">1,376</td><td class="num">1,169 ~ 1,720</td><td class="num">1,153</td><td>断货风险</td><td class="num">601</td><td>季节系数</td><td class="num">1.00</td><td class="num">1,715</td></tr><tr class="risk"><td class="num">18</td><td><a href="https://www.amazon.com/dp/B0F6T94NGQ" target="_blank">B0F6T94NGQ</a></td><td class="m">陈云艳推荐（02-B243变体）48个磨砂色迷你抓夹（磨砂黑、磨砂褐色、磨砂咖啡</td><td>抓夹/发夹</td><td class="num">146</td><td class="num">217</td><td class="num">405</td><td class="num">303</td><td class="num">303</td><td class="num b">1,374</td><td class="num">1,166 ~ 1,716</td><td class="num">276</td><td>断货风险</td><td class="num">1,385</td><td>新品·同月锚点</td><td class="num">0.98</td><td class="num">1,090</td></tr><tr class="risk"><td class="num">19</td><td><a href="https://www.amazon.com/dp/B09LLHP6ST" target="_blank">B09LLHP6ST</a></td><td class="m">白色窗帘夹子30个 B342变体</td><td>窗帘夹</td><td class="num">318</td><td class="num">215</td><td class="num">251</td><td class="num">230</td><td class="num">308</td><td class="num b">1,322</td><td class="num">1,122 ~ 1,652</td><td class="num">1,000</td><td>断货风险</td><td class="num">677</td><td>季节系数</td><td class="num">1.00</td><td class="num">2,210</td></tr><tr class="risk"><td class="num">20</td><td><a href="https://www.amazon.com/dp/B07ZQXJ9L4" target="_blank">B07ZQXJ9L4</a></td><td class="m">14色彩色易拉扣100pack</td><td>易拉扣</td><td class="num">372</td><td class="num">278</td><td class="num">224</td><td class="num">197</td><td class="num">219</td><td class="num b">1,290</td><td class="num">1,097 ~ 1,612</td><td class="num">1,172</td><td>断货风险</td><td class="num">442</td><td>季节系数</td><td class="num">1.12</td><td class="num">1,770</td></tr><tr class="risk"><td class="num">21</td><td><a href="https://www.amazon.com/dp/B0FVDNKRLL" target="_blank">B0FVDNKRLL</a></td><td class="m">（1586数量变体）12支四色（红，白，蓝，黑）空笔杆+104支高温消除笔芯（2</td><td>消失笔/笔芯</td><td class="num">115</td><td class="num">258</td><td class="num">289</td><td class="num">243</td><td class="num">289</td><td class="num b">1,194</td><td class="num">1,014 ~ 1,492</td><td class="num">379</td><td>断货风险</td><td class="num">1,042</td><td>新品·同月锚点</td><td class="num">1.12</td><td class="num">850</td></tr><tr><td class="num">22</td><td><a href="https://www.amazon.com/dp/B08KCQHVH4" target="_blank">B08KCQHVH4</a></td><td class="m">8支四色空笔杆+72支高温消除笔芯（4色）</td><td>消失笔/笔芯</td><td class="num">111</td><td class="num">183</td><td class="num">402</td><td class="num">229</td><td class="num">217</td><td class="num b">1,142</td><td class="num">971 ~ 1,427</td><td class="num">1,183</td><td>刚好够用</td><td class="num">203</td><td>季节系数</td><td class="num">—</td><td class="num">2,400</td></tr><tr class="risk"><td class="num">23</td><td><a href="https://www.amazon.com/dp/B09W9NRBWS" target="_blank">B09W9NRBWS</a></td><td class="m">120对金色蝴蝶帽带针（针直径10MM）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">201</td><td class="num">234</td><td class="num">203</td><td class="num">247</td><td class="num">205</td><td class="num b">1,090</td><td class="num">927 ~ 1,363</td><td class="num">391</td><td>断货风险</td><td class="num">944</td><td>季节系数</td><td class="num">—</td><td class="num">965</td></tr><tr class="risk"><td class="num">24</td><td><a href="https://www.amazon.com/dp/B0B3HM89JS" target="_blank">B0B3HM89JS</a></td><td class="m">30个青古铜色夹子 B342 变体</td><td>其他</td><td class="num">306</td><td class="num">183</td><td class="num">170</td><td class="num">162</td><td class="num">170</td><td class="num b">991</td><td class="num">843 ~ 1,239</td><td class="num">480</td><td>断货风险</td><td class="num">711</td><td>季节系数</td><td class="num">—</td><td class="num">780</td></tr><tr class="risk"><td class="num">25</td><td><a href="https://www.amazon.com/dp/B0B7JNVGWK" target="_blank">B0B7JNVGWK</a></td><td class="m">80对蝴蝶扣（蝴蝶帽+针）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">210</td><td class="num">229</td><td class="num">206</td><td class="num">132</td><td class="num">160</td><td class="num b">937</td><td class="num">796 ~ 1,172</td><td class="num">741</td><td>断货风险</td><td class="num">428</td><td>季节系数</td><td class="num">—</td><td class="num">420</td></tr><tr class="risk"><td class="num">26</td><td><a href="https://www.amazon.com/dp/B0B1QFTGFN" target="_blank">B0B1QFTGFN</a></td><td class="m">120对黑色蝴蝶帽带针（针直径10MM）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">153</td><td class="num">189</td><td class="num">200</td><td class="num">142</td><td class="num">217</td><td class="num b">901</td><td class="num">767 ~ 1,127</td><td class="num">523</td><td>断货风险</td><td class="num">562</td><td>季节系数</td><td class="num">—</td><td class="num">670</td></tr><tr class="risk"><td class="num">27</td><td><a href="https://www.amazon.com/dp/B0FJ8NN354" target="_blank">B0FJ8NN354</a></td><td class="m">（B909数量变体）10个莫兰迪易拉扣</td><td>易拉扣</td><td class="num">142</td><td class="num">110</td><td class="num">196</td><td class="num">221</td><td class="num">150</td><td class="num b">819</td><td class="num">695 ~ 1,023</td><td class="num">46</td><td>断货风险</td><td class="num">960</td><td>新品·同月锚点</td><td class="num">1.12</td><td class="num">555</td></tr><tr class="risk"><td class="num">28</td><td><a href="https://www.amazon.com/dp/B09W9LQ7TY" target="_blank">B09W9LQ7TY</a></td><td class="m">120对银色蝴蝶帽带针（针直径10MM）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">156</td><td class="num">144</td><td class="num">139</td><td class="num">156</td><td class="num">218</td><td class="num b">813</td><td class="num">691 ~ 1,015</td><td class="num">743</td><td>断货风险</td><td class="num">253</td><td>季节系数</td><td class="num">—</td><td class="num">810</td></tr><tr class="risk"><td class="num">29</td><td><a href="https://www.amazon.com/dp/B09VGRHPRV" target="_blank">B09VGRHPRV</a></td><td class="m">120对金银混合蝴蝶帽带针（60对金色+60对银色）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">168</td><td class="num">154</td><td class="num">151</td><td class="num">143</td><td class="num">177</td><td class="num b">793</td><td class="num">675 ~ 992</td><td class="num">357</td><td>断货风险</td><td class="num">598</td><td>季节系数</td><td class="num">—</td><td class="num">715</td></tr><tr><td class="num">30</td><td><a href="https://www.amazon.com/dp/B082SMFD5W" target="_blank">B082SMFD5W</a></td><td class="m">30个黑色易拉扣</td><td>易拉扣</td><td class="num">182</td><td class="num">201</td><td class="num">161</td><td class="num">87</td><td class="num">136</td><td class="num b">767</td><td class="num">652 ~ 958</td><td class="num">795</td><td>刚好够用</td><td class="num">130</td><td>季节系数</td><td class="num">—</td><td class="num">0</td></tr><tr class="risk"><td class="num">31</td><td><a href="https://www.amazon.com/dp/B099JF9MXN" target="_blank">B099JF9MXN</a></td><td class="m">克永窗帘夹金色 30pcs B342变体</td><td>窗帘夹</td><td class="num">162</td><td class="num">168</td><td class="num">145</td><td class="num">114</td><td class="num">161</td><td class="num b">750</td><td class="num">637 ~ 938</td><td class="num">374</td><td>断货风险</td><td class="num">530</td><td>季节系数</td><td class="num">—</td><td class="num">665</td></tr><tr class="risk"><td class="num">32</td><td><a href="https://www.amazon.com/dp/B093BY9VJN" target="_blank">B093BY9VJN</a></td><td class="m">迷你透明抓夹*48pack+圆盒</td><td>抓夹/发夹</td><td class="num">281</td><td class="num">116</td><td class="num">86</td><td class="num">94</td><td class="num">132</td><td class="num b">709</td><td class="num">603 ~ 888</td><td class="num">138</td><td>断货风险</td><td class="num">763</td><td>季节系数</td><td class="num">—</td><td class="num">525</td></tr><tr class="risk"><td class="num">33</td><td><a href="https://www.amazon.com/dp/B0B2D7DQZZ" target="_blank">B0B2D7DQZZ</a></td><td class="m">120对橡胶蝴蝶离合器带针（针直径10MM）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">127</td><td class="num">124</td><td class="num">128</td><td class="num">134</td><td class="num">164</td><td class="num b">677</td><td class="num">575 ~ 846</td><td class="num">457</td><td>断货风险</td><td class="num">356</td><td>季节系数</td><td class="num">—</td><td class="num">455</td></tr><tr class="risk"><td class="num">34</td><td><a href="https://www.amazon.com/dp/B0FJ8NXX25" target="_blank">B0FJ8NXX25</a></td><td class="m">（B909数量变体）30个透明彩色易拉扣</td><td>易拉扣</td><td class="num">81</td><td class="num">105</td><td class="num">187</td><td class="num">93</td><td class="num">116</td><td class="num b">582</td><td class="num">495 ~ 728</td><td class="num">115</td><td>断货风险</td><td class="num">584</td><td>新品·同月锚点</td><td class="num">1.12</td><td class="num">820</td></tr><tr><td class="num">35</td><td><a href="https://www.amazon.com/dp/B09WK9ND3R" target="_blank">B09WK9ND3R</a></td><td class="m">40pcs紫色蘑菇卷发器+网套</td><td>卷发器</td><td class="num">112</td><td class="num">98</td><td class="num">107</td><td class="num">107</td><td class="num">147</td><td class="num b">571</td><td class="num">487 ~ 716</td><td class="num">772</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">1,220</td></tr><tr class="risk"><td class="num">36</td><td><a href="https://www.amazon.com/dp/B092YNQFL4" target="_blank">B092YNQFL4</a></td><td class="m">3款3个圆珠笔硅胶模具+75支圆珠笔芯(黑色)</td><td>消失笔/笔芯</td><td class="num">42</td><td class="num">143</td><td class="num">148</td><td class="num">111</td><td class="num">78</td><td class="num b">522</td><td class="num">444 ~ 653</td><td class="num">47</td><td>断货风险</td><td class="num">590</td><td>季节系数</td><td class="num">—</td><td class="num">350</td></tr><tr><td class="num">37</td><td><a href="https://www.amazon.com/dp/B09N1HBW8D" target="_blank">B09N1HBW8D</a></td><td class="m">8盒儿童穿戴甲片（迷幻渐变）</td><td>儿童甲片</td><td class="num">86</td><td class="num">211</td><td class="num">79</td><td class="num">56</td><td class="num">86</td><td class="num b">518</td><td class="num">440 ~ 647</td><td class="num">532</td><td>刚好够用</td><td class="num">73</td><td>季节系数</td><td class="num">—</td><td class="num">1,380</td></tr><tr><td class="num">38</td><td><a href="https://www.amazon.com/dp/B0BM97BL98" target="_blank">B0BM97BL98</a></td><td class="m">6mm贴纸</td><td>模板/贴纸</td><td class="num">71</td><td class="num">58</td><td class="num">111</td><td class="num">139</td><td class="num">129</td><td class="num b">508</td><td class="num">432 ~ 635</td><td class="num">882</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">500</td></tr><tr class="risk"><td class="num">39</td><td><a href="https://www.amazon.com/dp/B0FJ8Q2FJB" target="_blank">B0FJ8Q2FJB</a></td><td class="m">（B909数量变体）10个黑色易拉扣</td><td>易拉扣</td><td class="num">71</td><td class="num">114</td><td class="num">144</td><td class="num">83</td><td class="num">92</td><td class="num b">504</td><td class="num">428 ~ 630</td><td class="num">7</td><td>断货风险</td><td class="num">625</td><td>新品·同月锚点</td><td class="num">0.88</td><td class="num">650</td></tr><tr><td class="num">40</td><td><a href="https://www.amazon.com/dp/B09C5DKHNW" target="_blank">B09C5DKHNW</a></td><td class="m">4盒 儿童指甲片（蓝色主题）</td><td>儿童甲片</td><td class="num">134</td><td class="num">200</td><td class="num">54</td><td class="num">45</td><td class="num">69</td><td class="num b">502</td><td class="num">425 ~ 628</td><td class="num">995</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">1,850</td></tr><tr class="risk"><td class="num">41</td><td><a href="https://www.amazon.com/dp/B09WKCMZJP" target="_blank">B09WKCMZJP</a></td><td class="m">40pcs黑色蘑菇卷发器+网套 B277变体</td><td>卷发器</td><td class="num">78</td><td class="num">88</td><td class="num">79</td><td class="num">112</td><td class="num">118</td><td class="num b">475</td><td class="num">404 ~ 595</td><td class="num">435</td><td>断货风险</td><td class="num">180</td><td>季节系数</td><td class="num">0.70</td><td class="num">1,795</td></tr><tr class="risk"><td class="num">42</td><td><a href="https://www.amazon.com/dp/B0B4RY83YX" target="_blank">B0B4RY83YX</a></td><td class="m">120对金银混合蝴蝶帽带针（60对金色+60对银色）（针直径10MM）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">96</td><td class="num">94</td><td class="num">92</td><td class="num">95</td><td class="num">88</td><td class="num b">465</td><td class="num">395 ~ 581</td><td class="num">74</td><td>断货风险</td><td class="num">497</td><td>季节系数</td><td class="num">—</td><td class="num">320</td></tr><tr class="risk"><td class="num">43</td><td><a href="https://www.amazon.com/dp/B0CQ1HZSZJ" target="_blank">B0CQ1HZSZJ</a></td><td class="m">4盒 儿童指甲片（圣诞节款式）</td><td>儿童甲片</td><td class="num">221</td><td class="num">202</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">423</td><td class="num">360 ~ 530</td><td class="num">13</td><td>断货风险</td><td class="num">481</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">720</td></tr><tr class="risk"><td class="num">44</td><td><a href="https://www.amazon.com/dp/B097MJBPQ4" target="_blank">B097MJBPQ4</a></td><td class="m">（特货）3款3个圆珠笔硅胶模具+75支圆珠笔芯(38支黑色+38支蓝色)</td><td>消失笔/笔芯</td><td class="num">40</td><td class="num">117</td><td class="num">89</td><td class="num">98</td><td class="num">66</td><td class="num b">410</td><td class="num">349 ~ 513</td><td class="num">65</td><td>断货风险</td><td class="num">434</td><td>季节系数</td><td class="num">—</td><td class="num">220</td></tr><tr class="risk"><td class="num">45</td><td><a href="https://www.amazon.com/dp/B0BY8JF7R8" target="_blank">B0BY8JF7R8</a></td><td class="m">定制（79-B3892变体）6750个星星贴纸，15种表情</td><td>模板/贴纸</td><td class="num">45</td><td class="num">55</td><td class="num">114</td><td class="num">84</td><td class="num">88</td><td class="num b">386</td><td class="num">327 ~ 481</td><td class="num">50</td><td>断货风险</td><td class="num">401</td><td>季节系数</td><td class="num">—</td><td class="num">415</td></tr><tr><td class="num">46</td><td><a href="https://www.amazon.com/dp/B07GZDJG6Z" target="_blank">B07GZDJG6Z</a></td><td class="m">3/4inch彩色圆点标签贴纸*3920pcs,14色，每色280</td><td>模板/贴纸</td><td class="num">96</td><td class="num">64</td><td class="num">70</td><td class="num">63</td><td class="num">66</td><td class="num b">359</td><td class="num">305 ~ 449</td><td class="num">501</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">880</td></tr><tr class="risk"><td class="num">47</td><td><a href="https://www.amazon.com/dp/B0B7X7ZNX7" target="_blank">B0B7X7ZNX7</a></td><td class="m">8个8款圣诞节易拉扣（鳄鱼夹）</td><td>易拉扣</td><td class="num">186</td><td class="num">155</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">341</td><td class="num">289 ~ 425</td><td class="num">43</td><td>断货风险</td><td class="num">350</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">570</td></tr><tr><td class="num">48</td><td><a href="https://www.amazon.com/dp/B0CPS21XZ2" target="_blank">B0CPS21XZ2</a></td><td class="m">4盒 儿童指甲片</td><td>儿童甲片</td><td class="num">42</td><td class="num">222</td><td class="num">13</td><td class="num">10</td><td class="num">28</td><td class="num b">315</td><td class="num">260 ~ 393</td><td class="num">872</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">2,450</td></tr><tr class="risk"><td class="num">49</td><td><a href="https://www.amazon.com/dp/B093SQRW8J" target="_blank">B093SQRW8J</a></td><td class="m">银色窗帘夹子30件</td><td>窗帘夹</td><td class="num">70</td><td class="num">52</td><td class="num">56</td><td class="num">64</td><td class="num">62</td><td class="num b">304</td><td class="num">258 ~ 381</td><td class="num">206</td><td>断货风险</td><td class="num">169</td><td>季节系数</td><td class="num">—</td><td class="num">440</td></tr><tr class="risk"><td class="num">50</td><td><a href="https://www.amazon.com/dp/B0B2RCRWFJ" target="_blank">B0B2RCRWFJ</a></td><td class="m">100个透明白色易拉扣</td><td>易拉扣</td><td class="num">76</td><td class="num">59</td><td class="num">49</td><td class="num">34</td><td class="num">77</td><td class="num b">295</td><td class="num">250 ~ 368</td><td class="num">73</td><td>断货风险</td><td class="num">303</td><td>季节系数</td><td class="num">—</td><td class="num">400</td></tr><tr class="risk"><td class="num">51</td><td><a href="https://www.amazon.com/dp/B0DNJYB6DN" target="_blank">B0DNJYB6DN</a></td><td class="m">定制：（168-3538变体）8个款 情人节爱心 易拉扣</td><td>易拉扣</td><td class="num">0</td><td class="num">40</td><td class="num">218</td><td class="num">27</td><td class="num">0</td><td class="num b">285</td><td class="num">242 ~ 356</td><td class="num">17</td><td>断货风险</td><td class="num">313</td><td>新品·同月锚点</td><td class="num">1.00</td><td class="num">400</td></tr><tr><td class="num">52</td><td><a href="https://www.amazon.com/dp/B07ZKLSZXS" target="_blank">B07ZKLSZXS</a></td><td class="m">青色蘑菇卷发器40pcs(20大+20小，蓝色）+网套</td><td>卷发器</td><td class="num">73</td><td class="num">51</td><td class="num">47</td><td class="num">54</td><td class="num">57</td><td class="num b">282</td><td class="num">240 ~ 352</td><td class="num">867</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">900</td></tr><tr><td class="num">53</td><td><a href="https://www.amazon.com/dp/B093SMVDY3" target="_blank">B093SMVDY3</a></td><td class="m">红古铜色窗帘夹子30件</td><td>窗帘夹</td><td class="num">45</td><td class="num">63</td><td class="num">56</td><td class="num">49</td><td class="num">39</td><td class="num b">252</td><td class="num">213 ~ 315</td><td class="num">395</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">540</td></tr><tr class="risk"><td class="num">54</td><td><a href="https://www.amazon.com/dp/B0CPSMQVYD" target="_blank">B0CPSMQVYD</a></td><td class="m">（125-Y2665变体）八盒儿童甲片贴 （可爱风格）</td><td>儿童甲片</td><td class="num">43</td><td class="num">129</td><td class="num">22</td><td class="num">15</td><td class="num">38</td><td class="num b">247</td><td class="num">208 ~ 307</td><td class="num">104</td><td>断货风险</td><td class="num">183</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">350</td></tr><tr class="risk"><td class="num">55</td><td><a href="https://www.amazon.com/dp/B08SMCTYPQ" target="_blank">B08SMCTYPQ</a></td><td class="m">实色白色易拉扣100pack（海运）</td><td>易拉扣</td><td class="num">63</td><td class="num">61</td><td class="num">32</td><td class="num">37</td><td class="num">29</td><td class="num b">222</td><td class="num">190 ~ 278</td><td class="num">185</td><td>断货风险</td><td class="num">94</td><td>季节系数</td><td class="num">—</td><td class="num">265</td></tr><tr class="risk"><td class="num">56</td><td><a href="https://www.amazon.com/dp/B0B1DJSFXY" target="_blank">B0B1DJSFXY</a></td><td class="m">120对玫瑰金蝴蝶帽带针（针直径4MM）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">38</td><td class="num">34</td><td class="num">39</td><td class="num">40</td><td class="num">62</td><td class="num b">213</td><td class="num">181 ~ 265</td><td class="num">129</td><td>断货风险</td><td class="num">133</td><td>季节系数</td><td class="num">—</td><td class="num">255</td></tr><tr class="risk"><td class="num">57</td><td><a href="https://www.amazon.com/dp/B0BS35FZ6N" target="_blank">B0BS35FZ6N</a></td><td class="m">（168-3538变体）定制：8个款圣帕特里克节易拉扣</td><td>易拉扣</td><td class="num">0</td><td class="num">0</td><td class="num">20</td><td class="num">151</td><td class="num">25</td><td class="num b">196</td><td class="num">167 ~ 244</td><td class="num">18</td><td>断货风险</td><td class="num">207</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">350</td></tr><tr><td class="num">58</td><td><a href="https://www.amazon.com/dp/B082SLJBD5" target="_blank">B082SLJBD5</a></td><td class="m">30个透明蓝色易拉扣</td><td>易拉扣</td><td class="num">22</td><td class="num">32</td><td class="num">64</td><td class="num">35</td><td class="num">33</td><td class="num b">186</td><td class="num">159 ~ 233</td><td class="num">445</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">290</td></tr><tr><td class="num">59</td><td><a href="https://www.amazon.com/dp/B08ZHCXH7F" target="_blank">B08ZHCXH7F</a></td><td class="m">卷发器蓝色大号*20+小号*20+粉色透明化妆品包+黑色网套</td><td>卷发器</td><td class="num">45</td><td class="num">27</td><td class="num">30</td><td class="num">30</td><td class="num">40</td><td class="num b">172</td><td class="num">146 ~ 215</td><td class="num">336</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">430</td></tr><tr class="risk"><td class="num">60</td><td><a href="https://www.amazon.com/dp/B08KDG43FW" target="_blank">B08KDG43FW</a></td><td class="m">3款3个圆珠笔硅胶模具+75支圆珠笔芯（25支黑色+25支蓝色+25支红色）</td><td>消失笔/笔芯</td><td class="num">0</td><td class="num">57</td><td class="num">78</td><td class="num">20</td><td class="num">17</td><td class="num b">172</td><td class="num">147 ~ 226</td><td class="num">61</td><td>断货风险</td><td class="num">152</td><td>季节系数</td><td class="num">—</td><td class="num">260</td></tr><tr class="risk"><td class="num">61</td><td><a href="https://www.amazon.com/dp/B0DHRB19NB" target="_blank">B0DHRB19NB</a></td><td class="m">（02-B243变体）48个透明彩色迷你抓夹</td><td>抓夹/发夹</td><td class="num">39</td><td class="num">22</td><td class="num">35</td><td class="num">31</td><td class="num">37</td><td class="num b">164</td><td class="num">141 ~ 205</td><td class="num">1</td><td>断货风险</td><td class="num">188</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">235</td></tr><tr><td class="num">62</td><td><a href="https://www.amazon.com/dp/B08DFTFDC4" target="_blank">B08DFTFDC4</a></td><td class="m">75个一次性纸过滤漏斗+赠送一个硅胶折叠漏斗</td><td>过滤漏斗</td><td class="num">20</td><td class="num">29</td><td class="num">34</td><td class="num">36</td><td class="num">37</td><td class="num b">156</td><td class="num">133 ~ 197</td><td class="num">144</td><td>库存充足</td><td class="num">42</td><td>季节系数</td><td class="num">—</td><td class="num">420</td></tr><tr class="risk"><td class="num">63</td><td><a href="https://www.amazon.com/dp/B0BMQB4158" target="_blank">B0BMQB4158</a></td><td class="m">4盒 儿童指甲片 缤纷水果（C35+C48+CM-04+CM-06）</td><td>儿童甲片</td><td class="num">42</td><td class="num">84</td><td class="num">18</td><td class="num">0</td><td class="num">11</td><td class="num b">155</td><td class="num">132 ~ 205</td><td class="num">21</td><td>断货风险</td><td class="num">160</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">200</td></tr><tr class="risk"><td class="num">64</td><td><a href="https://www.amazon.com/dp/B0CQ1SMCY2" target="_blank">B0CQ1SMCY2</a></td><td class="m">4盒 儿童指甲片 浪漫爱心（12+14+17+23）</td><td>儿童甲片</td><td class="num">37</td><td class="num">56</td><td class="num">22</td><td class="num">35</td><td class="num">0</td><td class="num b">150</td><td class="num">129 ~ 188</td><td class="num">49</td><td>断货风险</td><td class="num">126</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">255</td></tr><tr><td class="num">65</td><td><a href="https://www.amazon.com/dp/B09Y947FJV" target="_blank">B09Y947FJV</a></td><td class="m">40pcs 橙色卷发器+网套 277变体</td><td>卷发器</td><td class="num">29</td><td class="num">27</td><td class="num">19</td><td class="num">35</td><td class="num">33</td><td class="num b">143</td><td class="num">122 ~ 180</td><td class="num">473</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">370</td></tr><tr class="risk"><td class="num">66</td><td><a href="https://www.amazon.com/dp/B0CPPP8CSW" target="_blank">B0CPPP8CSW</a></td><td class="m">（79-B3892变体）6750个镭射星星贴纸，15种表情</td><td>模板/贴纸</td><td class="num">24</td><td class="num">20</td><td class="num">26</td><td class="num">33</td><td class="num">37</td><td class="num b">140</td><td class="num">120 ~ 174</td><td class="num">63</td><td>断货风险</td><td class="num">100</td><td>季节系数</td><td class="num">—</td><td class="num">240</td></tr><tr><td class="num">67</td><td><a href="https://www.amazon.com/dp/B07KPBPQKN" target="_blank">B07KPBPQKN</a></td><td class="m">30米扁蜡线24色</td><td>手作材料</td><td class="num">34</td><td class="num">20</td><td class="num">27</td><td class="num">24</td><td class="num">29</td><td class="num b">134</td><td class="num">115 ~ 166</td><td class="num">188</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">315</td></tr><tr class="risk"><td class="num">68</td><td><a href="https://www.amazon.com/dp/B0BBZZ6TTB" target="_blank">B0BBZZ6TTB</a></td><td class="m">6750个星星贴纸，15种表情</td><td>模板/贴纸</td><td class="num">10</td><td class="num">10</td><td class="num">44</td><td class="num">32</td><td class="num">33</td><td class="num b">129</td><td class="num">94 ~ 163</td><td class="num">0</td><td>断货风险</td><td class="num">149</td><td>季节系数</td><td class="num">—</td><td class="num">235</td></tr><tr class="risk"><td class="num">69</td><td><a href="https://www.amazon.com/dp/B0DXKMM4XK" target="_blank">B0DXKMM4XK</a></td><td class="m">(B315变体) 8个卡通款冰棒套</td><td>其他</td><td class="num">64</td><td class="num">60</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">124</td><td class="num">105 ~ 155</td><td class="num">0</td><td>断货风险</td><td class="num">143</td><td>新品·同月锚点</td><td class="num">1.00</td><td class="num">0</td></tr><tr><td class="num">70</td><td><a href="https://www.amazon.com/dp/B0CPSHVSVT" target="_blank">B0CPSHVSVT</a></td><td class="m">定制（125-B1318变体）4盒 儿童指甲片（3D立体）</td><td>儿童甲片</td><td class="num">30</td><td class="num">68</td><td class="num">0</td><td class="num">0</td><td class="num">13</td><td class="num b">111</td><td class="num">95 ~ 150</td><td class="num">174</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">360</td></tr><tr><td class="num">71</td><td><a href="https://www.amazon.com/dp/B07XKSM6CL" target="_blank">B07XKSM6CL</a></td><td class="m">蓝色蘑菇卷发器*80pack</td><td>卷发器</td><td class="num">53</td><td class="num">24</td><td class="num">15</td><td class="num">0</td><td class="num">12</td><td class="num b">104</td><td class="num">87 ~ 129</td><td class="num">104</td><td>刚好够用</td><td class="num">16</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">130</td></tr><tr class="risk"><td class="num">72</td><td><a href="https://www.amazon.com/dp/B0BTSPWQLN" target="_blank">B0BTSPWQLN</a></td><td class="m">迷你果冻混色抓夹*48pack+扁</td><td>抓夹/发夹</td><td class="num">26</td><td class="num">20</td><td class="num">14</td><td class="num">21</td><td class="num">17</td><td class="num b">98</td><td class="num">83 ~ 123</td><td class="num">26</td><td>断货风险</td><td class="num">93</td><td>季节系数</td><td class="num">—</td><td class="num">160</td></tr><tr><td class="num">73</td><td><a href="https://www.amazon.com/dp/B0CQ1R3P4Q" target="_blank">B0CQ1R3P4Q</a></td><td class="m">（2665变体）8盒儿童指甲片 （浮雕风格）</td><td>儿童甲片</td><td class="num">12</td><td class="num">52</td><td class="num">0</td><td class="num">11</td><td class="num">15</td><td class="num b">90</td><td class="num">67 ~ 112</td><td class="num">220</td><td>库存充足</td><td class="num">—</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">90</td></tr><tr class="risk"><td class="num">74</td><td><a href="https://www.amazon.com/dp/B0DG86K9D1" target="_blank">B0DG86K9D1</a></td><td class="m">（126-B1406变体）100个一次性纸过滤漏斗（190微米）+附赠一个硅胶漏</td><td>过滤漏斗</td><td class="num">31</td><td class="num">19</td><td class="num">10</td><td class="num">11</td><td class="num">0</td><td class="num b">71</td><td class="num">43 ~ 88</td><td class="num">47</td><td>断货风险</td><td class="num">42</td><td>季节系数</td><td class="num">—</td><td class="num">165</td></tr><tr><td class="num">75</td><td><a href="https://www.amazon.com/dp/B07XNYSVWH" target="_blank">B07XNYSVWH</a></td><td class="m">粉色蘑菇卷发器*80pack</td><td>卷发器</td><td class="num">16</td><td class="num">17</td><td class="num">0</td><td class="num">15</td><td class="num">14</td><td class="num b">62</td><td class="num">53 ~ 87</td><td class="num">262</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">290</td></tr><tr><td class="num">76</td><td><a href="https://www.amazon.com/dp/B0CYT4VWY8" target="_blank">B0CYT4VWY8</a></td><td class="m">150个一次性纸过滤漏斗（100目）+附赠一个硅胶漏斗（126-B1406变体）</td><td>过滤漏斗</td><td class="num">19</td><td class="num">22</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">41</td><td class="num">35 ~ 63</td><td class="num">60</td><td>视情况</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">240</td></tr><tr><td class="num">77</td><td><a href="https://www.amazon.com/dp/B0B8CQ31KL" target="_blank">B0B8CQ31KL</a></td><td class="m">8个8款感恩节易拉扣（鳄鱼夹）</td><td>易拉扣</td><td class="num">37</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">37</td><td class="num">32 ~ 46</td><td class="num">199</td><td>库存充足</td><td class="num">—</td><td>系数+兜底</td><td class="num">—</td><td class="num">85</td></tr><tr class="risk"><td class="num">78</td><td><a href="https://www.amazon.com/dp/B0CQ1WSG7X" target="_blank">B0CQ1WSG7X</a></td><td class="m">4盒 儿童指甲片 动物主题（CM25+CM28+CM29+CM32）</td><td>儿童甲片</td><td class="num">20</td><td class="num">15</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">35</td><td class="num">30 ~ 43</td><td class="num">2</td><td>断货风险</td><td class="num">38</td><td>零基础·同月锚点</td><td class="num">—</td><td class="num">150</td></tr><tr class="risk"><td class="num">79</td><td><a href="https://www.amazon.com/dp/B0B2NVCHQK" target="_blank">B0B2NVCHQK</a></td><td class="m">100个透明蓝色易拉扣</td><td>易拉扣</td><td class="num">0</td><td class="num">0</td><td class="num">10</td><td class="num">0</td><td class="num">15</td><td class="num b">25</td><td class="num">12 ~ 41</td><td class="num">0</td><td>断货风险</td><td class="num">32</td><td>季节系数</td><td class="num">—</td><td class="num">190</td></tr><tr class="risk"><td class="num">80</td><td><a href="https://www.amazon.com/dp/B0CQ23Z3QC" target="_blank">B0CQ23Z3QC</a></td><td class="m">4盒 儿童指甲片（万圣节款式）</td><td>儿童甲片</td><td class="num">0</td><td class="num">18</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">18</td><td class="num">16 ~ 23</td><td class="num">6</td><td>断货风险</td><td class="num">137</td><td>季节系数</td><td class="num">—</td><td class="num">0</td></tr><tr><td class="num">81</td><td><a href="https://www.amazon.com/dp/B09XQ7QKGN" target="_blank">B09XQ7QKGN</a></td><td class="m">40pcs黄色蘑菇卷发器+网套 277变体</td><td>卷发器</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">10</td><td class="num b">10</td><td class="num">0 ~ 24</td><td class="num">172</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">225</td></tr><tr><td class="num">82</td><td><a href="https://www.amazon.com/dp/B0B8CP68MC" target="_blank">B0B8CP68MC</a></td><td class="m">8个8款万圣节易拉扣（鳄鱼夹）</td><td>易拉扣</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">0</td><td class="num">0 ~ 0</td><td class="num">42</td><td>当季结束（无预估需求）</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">0</td></tr><tr><td class="num">83</td><td><a href="https://www.amazon.com/dp/B0CQ1WH8GZ" target="_blank">B0CQ1WH8GZ</a></td><td class="m">4盒 儿童指甲片（夜光 万圣节款式）</td><td>儿童甲片</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">0</td><td class="num">0 ~ 0</td><td class="num">0</td><td>当季结束（无预估需求）</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">0</td></tr><tr><td class="num">84</td><td><a href="https://www.amazon.com/dp/B0B2D9TYWS" target="_blank">B0B2D9TYWS</a></td><td class="m">120对玫瑰金蝴蝶帽带针（针直径10mm）</td><td>蝴蝶扣/蝴蝶帽</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">0</td><td class="num">0 ~ 21</td><td class="num">125</td><td>库存充足</td><td class="num">—</td><td>季节系数</td><td class="num">—</td><td class="num">100</td></tr><tr><td class="num">85</td><td><a href="https://www.amazon.com/dp/B0CQ1MMYSB" target="_blank">B0CQ1MMYSB</a></td><td class="m">8盒儿童穿戴甲片（夜光 万圣节款式）</td><td>儿童甲片</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num b">0</td><td class="num">0 ~ 0</td><td class="num">1</td><td>当季结束（无预估需求）</td><td class="num">—</td><td>系数+兜底</td><td class="num">—</td><td class="num">0</td></tr></tbody></table></div>
+</div>
+
+<div class="card">
+  <h2>七、分 ASIN 明细与关键判断（85 个，按 5 个月基准降序）</h2>
+  <p class="note">每卡含 30/90 天真实销量、去年同 5 个月实际、逐月基准预估、库存与补货，以及趋势 / 同比 / 季节 / 库存 / 关键词五项判断。</p>
+  <div class="acards"><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07BK1R25Z" target="_blank">B07BK1R25Z</a><span class="catx">抓夹/发夹</span><span class="msk">02-B243</span><span class="fix">v1.2.3 修正</span><span class="amt">7,802 件 / 5 个月</span></div>
+<div class="an">48pack迷你抓夹两个颜色（琥珀色、黑色）</div>
+<table class="mini"><tr><th>30 天</th><td>1,325</td><th>90 天</th><td>5,159</td><th>去年同 5 月</th><td>4,598</td><th>库存</th><td>1,071</td></tr></table>
+<div class="am">11月 1,888 · 12月 1,841 · 1月 1,381 · 2月 1,298 · 3月 1,394</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 1.64）；同比 <b>+70%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>11月</b>、谷底 2月。<b>库存：</b>库存 1,071 件（约 0.7 个月），建议补 <b>8,860</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B072B9XGZ4" target="_blank">B072B9XGZ4</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">12-B01S</span><span class="fix">v1.2.3 修正</span><span class="amt">5,137 件 / 5 个月</span></div>
+<div class="an">金属蝴蝶扣120pack</div>
+<table class="mini"><tr><th>30 天</th><td>1,209</td><th>90 天</th><td>3,201</td><th>去年同 5 月</th><td>4,079</td><th>库存</th><td>1,793</td></tr></table>
+<div class="am">11月 924 · 12月 816 · 1月 1,034 · 2月 1,030 · 3月 1,333</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.89）；同比 <b>+26%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>3月</b>、谷底 12月。<b>库存：</b>库存 1,793 件（约 1.7 个月），建议补 <b>4,445</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0732Z7T8W" target="_blank">B0732Z7T8W</a><span class="catx">易拉扣</span><span class="msk">12-B68N</span><span class="amt">5,062 件 / 5 个月</span></div>
+<div class="an">黑色易拉扣50pack</div>
+<table class="mini"><tr><th>30 天</th><td>1,044</td><th>90 天</th><td>3,278</td><th>去年同 5 月</th><td>5,236</td><th>库存</th><td>1,817</td></tr></table>
+<div class="am">11月 903 · 12月 755 · 1月 1,262 · 2月 1,093 · 3月 1,049</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.91）；同比 <b>-3%</b>，基本持平。<b>季节：</b>预估峰值 <b>1月</b>、谷底 12月。<b>库存：</b>库存 1,817 件（约 1.8 个月），建议补 <b>4,378</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00，市场涨但自身份额流失，未上调。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09R4625FW" target="_blank">B09R4625FW</a><span class="catx">消失笔/笔芯</span><span class="msk">168-B2842</span><span class="fix">v1.2.3 修正</span><span class="amt">3,685 件 / 5 个月</span></div>
+<div class="an">4支四色空笔杆+28支高温消除笔芯（4色）</div>
+<table class="mini"><tr><th>30 天</th><td>730</td><th>90 天</th><td>2,236</td><th>去年同 5 月</th><td>9,042</td><th>库存</th><td>2,658</td></tr></table>
+<div class="am">11月 910 · 12月 947 · 1月 593 · 2月 629 · 3月 606</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 1.20）；同比 <b>-59%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 1月。<b>库存：</b>库存 2,658 件（约 3.6 个月），建议补 <b>1,919</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00，市场涨但自身份额流失，未上调。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0FKMXKNGY" target="_blank">B0FKMXKNGY</a><span class="catx">消失笔/笔芯</span><span class="msk">168-12223-B</span><span class="amt">3,070 件 / 5 个月</span></div>
+<div class="an">（2842数量变体）4支四色空笔杆+12支高温消除笔芯（4色）</div>
+<table class="mini"><tr><th>30 天</th><td>936</td><th>90 天</th><td>4,073</td><th>去年同 5 月</th><td>2,079</td><th>库存</th><td>666</td></tr></table>
+<div class="am">11月 605 · 12月 455 · 1月 961 · 2月 328 · 3月 721</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.47），需排查断货/排名/广告；同比 <b>+48%</b>，处于增长通道。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 1月。<b>库存：</b>库存 666 件（约 1.1 个月），建议补 <b>3,069</b> 件，11 月前到仓。<b>关键词：</b>校准 ×0.98（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09VGSGVQM" target="_blank">B09VGSGVQM</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B2961</span><span class="amt">2,144 件 / 5 个月</span></div>
+<div class="an">120对黑色蝴蝶帽带针</div>
+<table class="mini"><tr><th>30 天</th><td>451</td><th>90 天</th><td>1,267</td><th>去年同 5 月</th><td>1,686</td><th>库存</th><td>1,023</td></tr></table>
+<div class="am">11月 426 · 12月 401 · 1月 434 · 2月 421 · 3月 462</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.10）；同比 <b>+27%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>3月</b>、谷底 12月。<b>库存：</b>库存 1,023 件（约 2.4 个月），建议补 <b>1,627</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B093SS61SQ" target="_blank">B093SS61SQ</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">12-B2087</span><span class="amt">2,052 件 / 5 个月</span></div>
+<div class="an">金属蝴蝶帽金色*120+刺马针*120</div>
+<table class="mini"><tr><th>30 天</th><td>371</td><th>90 天</th><td>889</td><th>去年同 5 月</th><td>1,110</td><th>库存</th><td>556</td></tr></table>
+<div class="am">11月 354 · 12月 309 · 1月 485 · 2月 443 · 3月 461</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 1.21）；同比 <b>+85%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>1月</b>、谷底 12月。<b>库存：</b>库存 556 件（约 1.4 个月），建议补 <b>1,958</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0DHR8X5C8" target="_blank">B0DHR8X5C8</a><span class="catx">抓夹/发夹</span><span class="msk">168-8525-B</span><span class="amt">1,919 件 / 5 个月</span></div>
+<div class="an">（02-B243变体）48个黑色迷你抓夹</div>
+<table class="mini"><tr><th>30 天</th><td>578</td><th>90 天</th><td>1,416</td><th>去年同 5 月</th><td>784</td><th>库存</th><td>468</td></tr></table>
+<div class="am">11月 291 · 12月 555 · 1月 332 · 2月 441 · 3月 300</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.86）；同比 <b>+145%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>12月</b>、谷底 11月。<b>库存：</b>库存 468 件（约 1.2 个月），建议补 <b>1,911</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07D3KV6JG" target="_blank">B07D3KV6JG</a><span class="catx">卷发器</span><span class="msk">02-B277X</span><span class="amt">1,740 件 / 5 个月</span></div>
+<div class="an">粉色蘑菇卷发器+网套</div>
+<table class="mini"><tr><th>30 天</th><td>634</td><th>90 天</th><td>2,003</td><th>去年同 5 月</th><td>5,768</td><th>库存</th><td>3,010</td></tr></table>
+<div class="am">11月 417 · 12月 409 · 1月 277 · 2月 270 · 3月 367</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.92）；同比 <b>-70%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 2月。<b>库存：</b>库存 3,010 件可覆盖约 8.6 个月，本季以去化为主。<b>关键词：</b>校准 ×1.00，市场涨但自身份额流失，未上调。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07436P6CD" target="_blank">B07436P6CD</a><span class="catx">手作材料</span><span class="msk">12-B85S</span><span class="amt">1,729 件 / 5 个月</span></div>
+<div class="an">30米扁蜡线（深卡其、卡其、深咖、本色、深灰、浅卡、咖啡、黑色）</div>
+<table class="mini"><tr><th>30 天</th><td>445</td><th>90 天</th><td>1,079</td><th>去年同 5 月</th><td>3,530</td><th>库存</th><td>294</td></tr></table>
+<div class="am">11月 346 · 12月 412 · 1月 364 · 2月 307 · 3月 300</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.70），需排查断货/排名/广告；同比 <b>-51%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>预估峰值 <b>12月</b>、谷底 3月。<b>库存：</b>库存 294 件（约 0.9 个月），建议补 <b>1,802</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00，市场涨但自身份额流失，未上调。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07C49CWHM" target="_blank">B07C49CWHM</a><span class="catx">模板/贴纸</span><span class="msk">02-B253X</span><span class="amt">1,709 件 / 5 个月</span></div>
+<div class="an">信封模板4片套</div>
+<table class="mini"><tr><th>30 天</th><td>404</td><th>90 天</th><td>1,188</td><th>去年同 5 月</th><td>2,349</td><th>库存</th><td>905</td></tr></table>
+<div class="am">11月 455 · 12月 484 · 1月 233 · 2月 216 · 3月 321</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.85），需排查断货/排名/广告；同比 <b>-27%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 2月。<b>库存：</b>库存 905 件（约 2.6 个月），建议补 <b>1,191</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0D1Y6D47M" target="_blank">B0D1Y6D47M</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">328-6960-B</span><span class="amt">1,630 件 / 5 个月</span></div>
+<div class="an">（3696变体）40对蝴蝶扣（蝴蝶帽+针）（11*8.5cm珠光袋打包）</div>
+<table class="mini"><tr><th>30 天</th><td>538</td><th>90 天</th><td>1,442</td><th>去年同 5 月</th><td>3,032</td><th>库存</th><td>589</td></tr></table>
+<div class="am">11月 607 · 12月 551 · 1月 133 · 2月 156 · 3月 183</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.10）；同比 <b>-46%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 1月。<b>库存：</b>库存 589 件（约 1.8 个月），建议补 <b>1,500</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00，市场涨但自身份额流失，未上调。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07FXT769J" target="_blank">B07FXT769J</a><span class="catx">窗帘夹</span><span class="msk">03-B342X</span><span class="amt">1,526 件 / 5 个月</span></div>
+<div class="an">30pcs黑色窗帘夹</div>
+<table class="mini"><tr><th>30 天</th><td>399</td><th>90 天</th><td>1,054</td><th>去年同 5 月</th><td>2,942</td><th>库存</th><td>1,828</td></tr></table>
+<div class="am">11月 335 · 12月 238 · 1月 329 · 2月 308 · 3月 316</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.85），需排查断货/排名/广告；同比 <b>-48%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 1,828 件，视广告效果决定补货。<b>关键词：</b>校准 ×1.00，市场涨但自身份额流失，未上调。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B095RVR9QT" target="_blank">B095RVR9QT</a><span class="catx">消失笔/笔芯</span><span class="msk">168-B2123</span><span class="amt">1,464 件 / 5 个月</span></div>
+<div class="an">(特货) 9个3款模具+75支笔芯（25黑+25蓝+25红）</div>
+<table class="mini"><tr><th>30 天</th><td>333</td><th>90 天</th><td>1,165</td><th>去年同 5 月</th><td>3,750</td><th>库存</th><td>2,537</td></tr></table>
+<div class="am">11月 304 · 12月 355 · 1月 235 · 2月 283 · 3月 287</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.82），需排查断货/排名/广告；同比 <b>-61%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 1月。<b>库存：</b>库存 2,537 件可覆盖约 8.7 个月，本季以去化为主。<b>关键词：</b>校准 ×0.70（需求走弱）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0FJ2CPP2Q" target="_blank">B0FJ2CPP2Q</a><span class="catx">易拉扣</span><span class="msk">168-12043-B</span><span class="amt">1,458 件 / 5 个月</span></div>
+<div class="an">（B909数量变体）10个透明彩色易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>125</td><th>90 天</th><td>798</td><th>去年同 5 月</th><td>971</td><th>库存</th><td>343</td></tr></table>
+<div class="am">11月 339 · 12月 236 · 1月 224 · 2月 294 · 3月 365</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.89）；同比 <b>+50%</b>，处于增长通道。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 3月。<b>库存：</b>库存 343 件（约 1.2 个月），建议补 <b>1,401</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07KVVK56K" target="_blank">B07KVVK56K</a><span class="catx">易拉扣</span><span class="msk">02-B498</span><span class="amt">1,386 件 / 5 个月</span></div>
+<div class="an">易拉扣（袋装100个实色黑色）</div>
+<table class="mini"><tr><th>30 天</th><td>411</td><th>90 天</th><td>1,201</td><th>去年同 5 月</th><td>965</td><th>库存</th><td>425</td></tr></table>
+<div class="am">11月 378 · 12月 183 · 1月 305 · 2月 251 · 3月 269</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.49），需排查断货/排名/广告；同比 <b>+44%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 425 件（约 1.5 个月），建议补 <b>1,240</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0BXKTMYYD" target="_blank">B0BXKTMYYD</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">328-B4475N</span><span class="amt">1,376 件 / 5 个月</span></div>
+<div class="an">（3696变体）240对蝴蝶扣（蝴蝶帽+针）</div>
+<table class="mini"><tr><th>30 天</th><td>358</td><th>90 天</th><td>1,390</td><th>去年同 5 月</th><td>1,626</td><th>库存</th><td>1,153</td></tr></table>
+<div class="am">11月 355 · 12月 154 · 1月 253 · 2月 292 · 3月 322</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.09）；同比 <b>-15%</b>，基本持平。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 1,153 件（约 4.2 个月），建议补 <b>601</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0F6T94NGQ" target="_blank">B0F6T94NGQ</a><span class="catx">抓夹/发夹</span><span class="msk">168-10991-B</span><span class="amt">1,374 件 / 5 个月</span></div>
+<div class="an">陈云艳推荐（02-B243变体）48个磨砂色迷你抓夹（磨砂黑、磨砂褐色、磨砂咖啡色、磨砂卡其色、磨砂米白</div>
+<table class="mini"><tr><th>30 天</th><td>303</td><th>90 天</th><td>842</td><th>去年同 5 月</th><td>930</td><th>库存</th><td>276</td></tr></table>
+<div class="am">11月 146 · 12月 217 · 1月 405 · 2月 303 · 3月 303</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.72），需排查断货/排名/广告；同比 <b>+48%</b>，处于增长通道。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 1月。<b>库存：</b>库存 276 件（约 1.0 个月），建议补 <b>1,385</b> 件，11 月前到仓。<b>关键词：</b>校准 ×0.98（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09LLHP6ST" target="_blank">B09LLHP6ST</a><span class="catx">窗帘夹</span><span class="msk">01-B2595</span><span class="amt">1,322 件 / 5 个月</span></div>
+<div class="an">白色窗帘夹子30个 B342变体</div>
+<table class="mini"><tr><th>30 天</th><td>473</td><th>90 天</th><td>1,282</td><th>去年同 5 月</th><td>2,097</td><th>库存</th><td>1,000</td></tr></table>
+<div class="am">11月 318 · 12月 215 · 1月 251 · 2月 230 · 3月 308</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.91）；同比 <b>-37%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 1,000 件（约 3.8 个月），建议补 <b>677</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00，市场涨但自身份额流失，未上调。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07ZQXJ9L4" target="_blank">B07ZQXJ9L4</a><span class="catx">易拉扣</span><span class="msk">12-B814</span><span class="amt">1,290 件 / 5 个月</span></div>
+<div class="an">14色彩色易拉扣100pack</div>
+<table class="mini"><tr><th>30 天</th><td>405</td><th>90 天</th><td>1,144</td><th>去年同 5 月</th><td>1,642</td><th>库存</th><td>1,172</td></tr></table>
+<div class="am">11月 372 · 12月 278 · 1月 224 · 2月 197 · 3月 219</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.86）；同比 <b>-21%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 2月。<b>库存：</b>库存 1,172 件（约 4.5 个月），建议补 <b>442</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0FVDNKRLL" target="_blank">B0FVDNKRLL</a><span class="catx">消失笔/笔芯</span><span class="msk">168-13337-B</span><span class="amt">1,194 件 / 5 个月</span></div>
+<div class="an">（1586数量变体）12支四色（红，白，蓝，黑）空笔杆+104支高温消除笔芯（26支玫红+26支米白色+</div>
+<table class="mini"><tr><th>30 天</th><td>143</td><th>90 天</th><td>473</td><th>去年同 5 月</th><td>707</td><th>库存</th><td>379</td></tr></table>
+<div class="am">11月 115 · 12月 258 · 1月 289 · 2月 243 · 3月 289</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.83），需排查断货/排名/广告；同比 <b>+69%</b>，处于增长通道。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 1月。<b>库存：</b>库存 379 件（约 1.6 个月），建议补 <b>1,042</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B08KCQHVH4" target="_blank">B08KCQHVH4</a><span class="catx">消失笔/笔芯</span><span class="msk">168-1586-B</span><span class="amt">1,142 件 / 5 个月</span></div>
+<div class="an">8支四色空笔杆+72支高温消除笔芯（4色）</div>
+<table class="mini"><tr><th>30 天</th><td>208</td><th>90 天</th><td>641</td><th>去年同 5 月</th><td>2,543</td><th>库存</th><td>1,183</td></tr></table>
+<div class="am">11月 111 · 12月 183 · 1月 402 · 2月 229 · 3月 217</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.90）；同比 <b>-55%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>1月</b>、谷底 11月。<b>库存：</b>库存 1,183 件与需求基本匹配，备应急补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09W9NRBWS" target="_blank">B09W9NRBWS</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B3019</span><span class="amt">1,090 件 / 5 个月</span></div>
+<div class="an">120对金色蝴蝶帽带针（针直径10MM）</div>
+<table class="mini"><tr><th>30 天</th><td>194</td><th>90 天</th><td>659</td><th>去年同 5 月</th><td>911</td><th>库存</th><td>391</td></tr></table>
+<div class="am">11月 201 · 12月 234 · 1月 203 · 2月 247 · 3月 205</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.03）；同比 <b>+20%</b>，基本持平。<b>季节：</b>预估峰值 <b>2月</b>、谷底 11月。<b>库存：</b>库存 391 件（约 1.8 个月），建议补 <b>944</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B3HM89JS" target="_blank">B0B3HM89JS</a><span class="catx">其他</span><span class="msk">01-B3412</span><span class="amt">991 件 / 5 个月</span></div>
+<div class="an">30个青古铜色夹子 B342 变体</div>
+<table class="mini"><tr><th>30 天</th><td>149</td><th>90 天</th><td>442</td><th>去年同 5 月</th><td>756</td><th>库存</th><td>480</td></tr></table>
+<div class="am">11月 306 · 12月 183 · 1月 170 · 2月 162 · 3月 170</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.91）；同比 <b>+31%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>11月</b>、谷底 2月。<b>库存：</b>库存 480 件（约 2.4 个月），建议补 <b>711</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B7JNVGWK" target="_blank">B0B7JNVGWK</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">328-B3696N</span><span class="amt">937 件 / 5 个月</span></div>
+<div class="an">80对蝴蝶扣（蝴蝶帽+针）</div>
+<table class="mini"><tr><th>30 天</th><td>222</td><th>90 天</th><td>505</td><th>去年同 5 月</th><td>989</td><th>库存</th><td>741</td></tr></table>
+<div class="am">11月 210 · 12月 229 · 1月 206 · 2月 132 · 3月 160</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 1.22）；同比 <b>-5%</b>，基本持平。<b>季节：</b>预估峰值 <b>12月</b>、谷底 2月。<b>库存：</b>库存 741 件（约 4.0 个月），建议补 <b>428</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B1QFTGFN" target="_blank">B0B1QFTGFN</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B3275N</span><span class="amt">901 件 / 5 个月</span></div>
+<div class="an">120对黑色蝴蝶帽带针（针直径10MM）</div>
+<table class="mini"><tr><th>30 天</th><td>122</td><th>90 天</th><td>417</td><th>去年同 5 月</th><td>640</td><th>库存</th><td>523</td></tr></table>
+<div class="am">11月 153 · 12月 189 · 1月 200 · 2月 142 · 3月 217</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.97）；同比 <b>+41%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>3月</b>、谷底 2月。<b>库存：</b>库存 523 件（约 2.9 个月），建议补 <b>562</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0FJ8NN354" target="_blank">B0FJ8NN354</a><span class="catx">易拉扣</span><span class="msk">168-12044-B</span><span class="amt">819 件 / 5 个月</span></div>
+<div class="an">（B909数量变体）10个莫兰迪易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>211</td><th>90 天</th><td>515</td><th>去年同 5 月</th><td>485</td><th>库存</th><td>46</td></tr></table>
+<div class="am">11月 142 · 12月 110 · 1月 196 · 2月 221 · 3月 150</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.87）；同比 <b>+69%</b>，处于增长通道。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 2月。<b>库存：</b>库存 46 件（约 0.3 个月），建议补 <b>960</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09W9LQ7TY" target="_blank">B09W9LQ7TY</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B3018</span><span class="amt">813 件 / 5 个月</span></div>
+<div class="an">120对银色蝴蝶帽带针（针直径10MM）</div>
+<table class="mini"><tr><th>30 天</th><td>204</td><th>90 天</th><td>650</td><th>去年同 5 月</th><td>1,010</td><th>库存</th><td>743</td></tr></table>
+<div class="am">11月 156 · 12月 144 · 1月 139 · 2月 156 · 3月 218</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.76），需排查断货/排名/广告；同比 <b>-20%</b>，基本持平。<b>季节：</b>预估峰值 <b>3月</b>、谷底 1月。<b>库存：</b>库存 743 件（约 4.6 个月），建议补 <b>253</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09VGRHPRV" target="_blank">B09VGRHPRV</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B2966</span><span class="amt">793 件 / 5 个月</span></div>
+<div class="an">120对金银混合蝴蝶帽带针（60对金色+60对银色）</div>
+<table class="mini"><tr><th>30 天</th><td>125</td><th>90 天</th><td>403</td><th>去年同 5 月</th><td>738</td><th>库存</th><td>357</td></tr></table>
+<div class="am">11月 168 · 12月 154 · 1月 151 · 2月 143 · 3月 177</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.88）；同比 <b>+7%</b>，基本持平。<b>季节：</b>预估峰值 <b>3月</b>、谷底 2月。<b>库存：</b>库存 357 件（约 2.3 个月），建议补 <b>598</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B082SMFD5W" target="_blank">B082SMFD5W</a><span class="catx">易拉扣</span><span class="msk">12-B909</span><span class="amt">767 件 / 5 个月</span></div>
+<div class="an">30个黑色易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>181</td><th>90 天</th><td>593</td><th>去年同 5 月</th><td>833</td><th>库存</th><td>795</td></tr></table>
+<div class="am">11月 182 · 12月 201 · 1月 161 · 2月 87 · 3月 136</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.59），需排查断货/排名/广告；同比 <b>-8%</b>，基本持平。<b>季节：</b>预估峰值 <b>12月</b>、谷底 2月。<b>库存：</b>库存 795 件与需求基本匹配，备应急补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B099JF9MXN" target="_blank">B099JF9MXN</a><span class="catx">窗帘夹</span><span class="msk">01-B2261</span><span class="amt">750 件 / 5 个月</span></div>
+<div class="an">克永窗帘夹金色 30pcs B342变体</div>
+<table class="mini"><tr><th>30 天</th><td>131</td><th>90 天</th><td>495</td><th>去年同 5 月</th><td>694</td><th>库存</th><td>374</td></tr></table>
+<div class="am">11月 162 · 12月 168 · 1月 145 · 2月 114 · 3月 161</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.73），需排查断货/排名/广告；同比 <b>+8%</b>，基本持平。<b>季节：</b>预估峰值 <b>12月</b>、谷底 2月。<b>库存：</b>库存 374 件（约 2.5 个月），建议补 <b>530</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B093BY9VJN" target="_blank">B093BY9VJN</a><span class="catx">抓夹/发夹</span><span class="msk">12-B2070N</span><span class="amt">709 件 / 5 个月</span></div>
+<div class="an">迷你透明抓夹*48pack+圆盒</div>
+<table class="mini"><tr><th>30 天</th><td>230</td><th>90 天</th><td>425</td><th>去年同 5 月</th><td>543</td><th>库存</th><td>138</td></tr></table>
+<div class="am">11月 281 · 12月 116 · 1月 86 · 2月 94 · 3月 132</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 1.20）；同比 <b>+31%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>11月</b>、谷底 1月。<b>库存：</b>库存 138 件（约 1.0 个月），建议补 <b>763</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B2D7DQZZ" target="_blank">B0B2D7DQZZ</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-3315-B</span><span class="amt">677 件 / 5 个月</span></div>
+<div class="an">120对橡胶蝴蝶离合器带针（针直径10MM）</div>
+<table class="mini"><tr><th>30 天</th><td>152</td><th>90 天</th><td>350</td><th>去年同 5 月</th><td>449</td><th>库存</th><td>457</td></tr></table>
+<div class="am">11月 127 · 12月 124 · 1月 128 · 2月 134 · 3月 164</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.68），需排查断货/排名/广告；同比 <b>+51%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>3月</b>、谷底 12月。<b>库存：</b>库存 457 件（约 3.4 个月），建议补 <b>356</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0FJ8NXX25" target="_blank">B0FJ8NXX25</a><span class="catx">易拉扣</span><span class="msk">168-12045-B</span><span class="amt">582 件 / 5 个月</span></div>
+<div class="an">（B909数量变体）30个透明彩色易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>189</td><th>90 天</th><td>444</td><th>去年同 5 月</th><td>345</td><th>库存</th><td>115</td></tr></table>
+<div class="am">11月 81 · 12月 105 · 1月 187 · 2月 93 · 3月 116</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.46），需排查断货/排名/广告；同比 <b>+69%</b>，处于增长通道。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 1月。<b>库存：</b>库存 115 件（约 1.0 个月），建议补 <b>584</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.12（主流量词同比为正）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09WK9ND3R" target="_blank">B09WK9ND3R</a><span class="catx">卷发器</span><span class="msk">01-B3049</span><span class="amt">571 件 / 5 个月</span></div>
+<div class="an">40pcs紫色蘑菇卷发器+网套</div>
+<table class="mini"><tr><th>30 天</th><td>207</td><th>90 天</th><td>566</td><th>去年同 5 月</th><td>1,177</td><th>库存</th><td>772</td></tr></table>
+<div class="am">11月 112 · 12月 98 · 1月 107 · 2月 107 · 3月 147</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.77），需排查断货/排名/广告；同比 <b>-51%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>3月</b>、谷底 12月。<b>库存：</b>库存 772 件可覆盖约 6.8 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B092YNQFL4" target="_blank">B092YNQFL4</a><span class="catx">消失笔/笔芯</span><span class="msk">168-B2053</span><span class="amt">522 件 / 5 个月</span></div>
+<div class="an">3款3个圆珠笔硅胶模具+75支圆珠笔芯(黑色)</div>
+<table class="mini"><tr><th>30 天</th><td>109</td><th>90 天</th><td>283</td><th>去年同 5 月</th><td>221</td><th>库存</th><td>47</td></tr></table>
+<div class="am">11月 42 · 12月 143 · 1月 148 · 2月 111 · 3月 78</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.94）；同比 <b>+136%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>1月</b>、谷底 11月。<b>库存：</b>库存 47 件（约 0.5 个月），建议补 <b>590</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09N1HBW8D" target="_blank">B09N1HBW8D</a><span class="catx">儿童甲片</span><span class="msk">125-B2665</span><span class="amt">518 件 / 5 个月</span></div>
+<div class="an">8盒儿童穿戴甲片（迷幻渐变）</div>
+<table class="mini"><tr><th>30 天</th><td>37</td><th>90 天</th><td>287</td><th>去年同 5 月</th><td>1,274</td><th>库存</th><td>532</td></tr></table>
+<div class="am">11月 86 · 12月 211 · 1月 79 · 2月 56 · 3月 86</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.37），需排查断货/排名/广告；同比 <b>-59%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 2月。<b>库存：</b>库存 532 件与需求基本匹配，备应急补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0BM97BL98" target="_blank">B0BM97BL98</a><span class="catx">模板/贴纸</span><span class="msk">02-B392N</span><span class="amt">508 件 / 5 个月</span></div>
+<div class="an">6mm贴纸</div>
+<table class="mini"><tr><th>30 天</th><td>68</td><th>90 天</th><td>374</td><th>去年同 5 月</th><td>1,283</td><th>库存</th><td>882</td></tr></table>
+<div class="am">11月 71 · 12月 58 · 1月 111 · 2月 139 · 3月 129</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.03）；同比 <b>-60%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>2月</b>、谷底 12月。<b>库存：</b>库存 882 件可覆盖约 8.7 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0FJ8Q2FJB" target="_blank">B0FJ8Q2FJB</a><span class="catx">易拉扣</span><span class="msk">168-12042-B</span><span class="amt">504 件 / 5 个月</span></div>
+<div class="an">（B909数量变体）10个黑色易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>216</td><th>90 天</th><td>470</td><th>去年同 5 月</th><td>384</td><th>库存</th><td>7</td></tr></table>
+<div class="am">11月 71 · 12月 114 · 1月 144 · 2月 83 · 3月 92</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.73），需排查断货/排名/广告；同比 <b>+31%</b>，处于增长通道。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 1月。<b>库存：</b>库存 7 件（约 0.1 个月），建议补 <b>625</b> 件，11 月前到仓。<b>关键词：</b>校准 ×0.88（需求走弱）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09C5DKHNW" target="_blank">B09C5DKHNW</a><span class="catx">儿童甲片</span><span class="msk">125-B2339</span><span class="amt">502 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片（蓝色主题）</div>
+<table class="mini"><tr><th>30 天</th><td>104</td><th>90 天</th><td>310</td><th>去年同 5 月</th><td>1,848</td><th>库存</th><td>995</td></tr></table>
+<div class="am">11月 134 · 12月 200 · 1月 54 · 2月 45 · 3月 69</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.78），需排查断货/排名/广告；同比 <b>-73%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 2月。<b>库存：</b>库存 995 件可覆盖约 9.9 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09WKCMZJP" target="_blank">B09WKCMZJP</a><span class="catx">卷发器</span><span class="msk">01-B3051</span><span class="amt">475 件 / 5 个月</span></div>
+<div class="an">40pcs黑色蘑菇卷发器+网套 B277变体</div>
+<table class="mini"><tr><th>30 天</th><td>264</td><th>90 天</th><td>748</td><th>去年同 5 月</th><td>1,755</td><th>库存</th><td>435</td></tr></table>
+<div class="am">11月 78 · 12月 88 · 1月 79 · 2月 112 · 3月 118</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.70），需排查断货/排名/广告；同比 <b>-73%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>3月</b>、谷底 11月。<b>库存：</b>库存 435 件（约 4.6 个月），建议补 <b>180</b> 件，11 月前到仓。<b>关键词：</b>校准 ×0.70（需求走弱）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B4RY83YX" target="_blank">B0B4RY83YX</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B3433</span><span class="amt">465 件 / 5 个月</span></div>
+<div class="an">120对金银混合蝴蝶帽带针（60对金色+60对银色）（针直径10MM）</div>
+<table class="mini"><tr><th>30 天</th><td>94</td><th>90 天</th><td>270</td><th>去年同 5 月</th><td>287</td><th>库存</th><td>74</td></tr></table>
+<div class="am">11月 96 · 12月 94 · 1月 92 · 2月 95 · 3月 88</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.09）；同比 <b>+62%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>11月</b>、谷底 3月。<b>库存：</b>库存 74 件（约 0.8 个月），建议补 <b>497</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CQ1HZSZJ" target="_blank">B0CQ1HZSZJ</a><span class="catx">儿童甲片</span><span class="msk">125-2337-B</span><span class="amt">423 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片（圣诞节款式）</div>
+<table class="mini"><tr><th>30 天</th><td>12</td><th>90 天</th><td>15</td><th>去年同 5 月</th><td>612</td><th>库存</th><td>13</td></tr></table>
+<div class="am">11月 221 · 12月 202 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-31%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>当期接近零，同月锚点口径，峰值 11月。<b>库存：</b>库存 13 件（约 0.2 个月），建议补 <b>481</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B097MJBPQ4" target="_blank">B097MJBPQ4</a><span class="catx">消失笔/笔芯</span><span class="msk">168-B2197</span><span class="amt">410 件 / 5 个月</span></div>
+<div class="an">（特货）3款3个圆珠笔硅胶模具+75支圆珠笔芯(38支黑色+38支蓝色)</div>
+<table class="mini"><tr><th>30 天</th><td>60</td><th>90 天</th><td>166</td><th>去年同 5 月</th><td>176</td><th>库存</th><td>65</td></tr></table>
+<div class="am">11月 40 · 12月 117 · 1月 89 · 2月 98 · 3月 66</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 1.23）；同比 <b>+133%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>12月</b>、谷底 11月。<b>库存：</b>库存 65 件（约 0.8 个月），建议补 <b>434</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0BY8JF7R8" target="_blank">B0BY8JF7R8</a><span class="catx">模板/贴纸</span><span class="msk">79-B4478</span><span class="amt">386 件 / 5 个月</span></div>
+<div class="an">定制（79-B3892变体）6750个星星贴纸，15种表情</div>
+<table class="mini"><tr><th>30 天</th><td>46</td><th>90 天</th><td>301</td><th>去年同 5 月</th><td>405</td><th>库存</th><td>50</td></tr></table>
+<div class="am">11月 45 · 12月 55 · 1月 114 · 2月 84 · 3月 88</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.25），需排查断货/排名/广告；同比 <b>-5%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>预估峰值 <b>1月</b>、谷底 11月。<b>库存：</b>库存 50 件（约 0.6 个月），建议补 <b>401</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07GZDJG6Z" target="_blank">B07GZDJG6Z</a><span class="catx">模板/贴纸</span><span class="msk">02-B393X</span><span class="amt">359 件 / 5 个月</span></div>
+<div class="an">3/4inch彩色圆点标签贴纸*3920pcs,14色，每色280</div>
+<table class="mini"><tr><th>30 天</th><td>171</td><th>90 天</th><td>575</td><th>去年同 5 月</th><td>862</td><th>库存</th><td>501</td></tr></table>
+<div class="am">11月 96 · 12月 64 · 1月 70 · 2月 63 · 3月 66</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.54），需排查断货/排名/广告；同比 <b>-58%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 2月。<b>库存：</b>库存 501 件可覆盖约 7.0 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B7X7ZNX7" target="_blank">B0B7X7ZNX7</a><span class="catx">易拉扣</span><span class="msk">168-B3538</span><span class="amt">341 件 / 5 个月</span></div>
+<div class="an">8个8款圣诞节易拉扣（鳄鱼夹）</div>
+<table class="mini"><tr><th>30 天</th><td>1</td><th>90 天</th><td>1</td><th>去年同 5 月</th><td>486</td><th>库存</th><td>43</td></tr></table>
+<div class="am">11月 186 · 12月 155 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-30%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>当期接近零，同月锚点口径，峰值 11月。<b>库存：</b>库存 43 件（约 0.6 个月），建议补 <b>350</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CPS21XZ2" target="_blank">B0CPS21XZ2</a><span class="catx">儿童甲片</span><span class="msk">125-1318-B</span><span class="amt">315 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片</div>
+<table class="mini"><tr><th>30 天</th><td>32</td><th>90 天</th><td>66</td><th>去年同 5 月</th><td>2,688</td><th>库存</th><td>872</td></tr></table>
+<div class="am">11月 42 · 12月 222 · 1月 13 · 2月 10 · 3月 28</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 2.58）；同比 <b>-88%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 2月。<b>库存：</b>库存 872 件可覆盖约 13.8 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B093SQRW8J" target="_blank">B093SQRW8J</a><span class="catx">窗帘夹</span><span class="msk">01-B2089</span><span class="amt">304 件 / 5 个月</span></div>
+<div class="an">银色窗帘夹子30件</div>
+<table class="mini"><tr><th>30 天</th><td>95</td><th>90 天</th><td>272</td><th>去年同 5 月</th><td>451</td><th>库存</th><td>206</td></tr></table>
+<div class="am">11月 70 · 12月 52 · 1月 56 · 2月 64 · 3月 62</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.75），需排查断货/排名/广告；同比 <b>-33%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 206 件（约 3.4 个月），建议补 <b>169</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B2RCRWFJ" target="_blank">B0B2RCRWFJ</a><span class="catx">易拉扣</span><span class="msk">168-B3336</span><span class="amt">295 件 / 5 个月</span></div>
+<div class="an">100个透明白色易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>74</td><th>90 天</th><td>312</td><th>去年同 5 月</th><td>389</td><th>库存</th><td>73</td></tr></table>
+<div class="am">11月 76 · 12月 59 · 1月 49 · 2月 34 · 3月 77</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.07）；同比 <b>-24%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>预估峰值 <b>3月</b>、谷底 2月。<b>库存：</b>库存 73 件（约 1.2 个月），建议补 <b>303</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0DNJYB6DN" target="_blank">B0DNJYB6DN</a><span class="catx">易拉扣</span><span class="msk">168-8878-B</span><span class="amt">285 件 / 5 个月</span></div>
+<div class="an">定制：（168-3538变体）8个款 情人节爱心 易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>3</td><th>90 天</th><td>6</td><th>去年同 5 月</th><td>416</td><th>库存</th><td>17</td></tr></table>
+<div class="am">11月 0 · 12月 40 · 1月 218 · 2月 27 · 3月 0</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 2.14）；同比 <b>-31%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 1月。<b>库存：</b>库存 17 件（约 0.3 个月），建议补 <b>313</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07ZKLSZXS" target="_blank">B07ZKLSZXS</a><span class="catx">卷发器</span><span class="msk">12-B806</span><span class="amt">282 件 / 5 个月</span></div>
+<div class="an">青色蘑菇卷发器40pcs(20大+20小，蓝色）+网套</div>
+<table class="mini"><tr><th>30 天</th><td>131</td><th>90 天</th><td>369</td><th>去年同 5 月</th><td>1,220</td><th>库存</th><td>867</td></tr></table>
+<div class="am">11月 73 · 12月 51 · 1月 47 · 2月 54 · 3月 57</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.98）；同比 <b>-77%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 1月。<b>库存：</b>库存 867 件可覆盖约 15.4 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B093SMVDY3" target="_blank">B093SMVDY3</a><span class="catx">窗帘夹</span><span class="msk">01-B2088</span><span class="amt">252 件 / 5 个月</span></div>
+<div class="an">红古铜色窗帘夹子30件</div>
+<table class="mini"><tr><th>30 天</th><td>63</td><th>90 天</th><td>273</td><th>去年同 5 月</th><td>525</td><th>库存</th><td>395</td></tr></table>
+<div class="am">11月 45 · 12月 63 · 1月 56 · 2月 49 · 3月 39</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.66），需排查断货/排名/广告；同比 <b>-52%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 3月。<b>库存：</b>库存 395 件可覆盖约 7.8 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CPSMQVYD" target="_blank">B0CPSMQVYD</a><span class="catx">儿童甲片</span><span class="msk">125-4361-B</span><span class="amt">247 件 / 5 个月</span></div>
+<div class="an">（125-Y2665变体）八盒儿童甲片贴 （可爱风格）</div>
+<table class="mini"><tr><th>30 天</th><td>8</td><th>90 天</th><td>38</td><th>去年同 5 月</th><td>352</td><th>库存</th><td>104</td></tr></table>
+<div class="am">11月 43 · 12月 129 · 1月 22 · 2月 15 · 3月 38</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-30%</b>，明显下滑，建议控制备货。<b>季节：</b>当期接近零，同月锚点口径，峰值 12月。<b>库存：</b>库存 104 件（约 2.1 个月），建议补 <b>183</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B08SMCTYPQ" target="_blank">B08SMCTYPQ</a><span class="catx">易拉扣</span><span class="msk">12-B1837</span><span class="amt">222 件 / 5 个月</span></div>
+<div class="an">实色白色易拉扣100pack（海运）</div>
+<table class="mini"><tr><th>30 天</th><td>89</td><th>90 天</th><td>176</td><th>去年同 5 月</th><td>189</td><th>库存</th><td>185</td></tr></table>
+<div class="am">11月 63 · 12月 61 · 1月 32 · 2月 37 · 3月 29</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 1.01）；同比 <b>+17%</b>，基本持平。<b>季节：</b>预估峰值 <b>11月</b>、谷底 3月。<b>库存：</b>库存 185 件（约 4.2 个月），建议补 <b>94</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B1DJSFXY" target="_blank">B0B1DJSFXY</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B3296</span><span class="amt">213 件 / 5 个月</span></div>
+<div class="an">120对玫瑰金蝴蝶帽带针（针直径4MM）</div>
+<table class="mini"><tr><th>30 天</th><td>53</td><th>90 天</th><td>194</td><th>去年同 5 月</th><td>245</td><th>库存</th><td>129</td></tr></table>
+<div class="am">11月 38 · 12月 34 · 1月 39 · 2月 40 · 3月 62</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.79），需排查断货/排名/广告；同比 <b>-13%</b>，基本持平。<b>季节：</b>预估峰值 <b>3月</b>、谷底 12月。<b>库存：</b>库存 129 件（约 3.0 个月），建议补 <b>133</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0BS35FZ6N" target="_blank">B0BS35FZ6N</a><span class="catx">易拉扣</span><span class="msk">168-B4314</span><span class="amt">196 件 / 5 个月</span></div>
+<div class="an">（168-3538变体）定制：8个款圣帕特里克节易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>0</td><th>90 天</th><td>0</td><th>去年同 5 月</th><td>284</td><th>库存</th><td>18</td></tr></table>
+<div class="am">11月 0 · 12月 0 · 1月 20 · 2月 151 · 3月 25</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-31%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>当期接近零，同月锚点口径，峰值 2月。<b>库存：</b>库存 18 件（约 0.5 个月），建议补 <b>207</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B082SLJBD5" target="_blank">B082SLJBD5</a><span class="catx">易拉扣</span><span class="msk">12-B908</span><span class="amt">186 件 / 5 个月</span></div>
+<div class="an">30个透明蓝色易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>53</td><th>90 天</th><td>141</td><th>去年同 5 月</th><td>287</td><th>库存</th><td>445</td></tr></table>
+<div class="am">11月 22 · 12月 32 · 1月 64 · 2月 35 · 3月 33</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.81），需排查断货/排名/广告；同比 <b>-35%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>1月</b>、谷底 11月。<b>库存：</b>库存 445 件可覆盖约 12.0 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B08ZHCXH7F" target="_blank">B08ZHCXH7F</a><span class="catx">卷发器</span><span class="msk">12-B1973</span><span class="amt">172 件 / 5 个月</span></div>
+<div class="an">卷发器蓝色大号*20+小号*20+粉色透明化妆品包+黑色网套</div>
+<table class="mini"><tr><th>30 天</th><td>51</td><th>90 天</th><td>161</td><th>去年同 5 月</th><td>446</td><th>库存</th><td>336</td></tr></table>
+<div class="am">11月 45 · 12月 27 · 1月 30 · 2月 30 · 3月 40</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.84），需排查断货/排名/广告；同比 <b>-61%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 336 件可覆盖约 9.8 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B08KDG43FW" target="_blank">B08KDG43FW</a><span class="catx">消失笔/笔芯</span><span class="msk">168-B1547</span><span class="amt">172 件 / 5 个月</span></div>
+<div class="an">3款3个圆珠笔硅胶模具+75支圆珠笔芯（25支黑色+25支蓝色+25支红色）</div>
+<table class="mini"><tr><th>30 天</th><td>56</td><th>90 天</th><td>169</td><th>去年同 5 月</th><td>214</td><th>库存</th><td>61</td></tr></table>
+<div class="am">11月 0 · 12月 57 · 1月 78 · 2月 20 · 3月 17</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.71），需排查断货/排名/广告；同比 <b>-20%</b>，基本持平。<b>季节：</b>预估峰值 <b>1月</b>、谷底 11月。<b>库存：</b>库存 61 件（约 1.8 个月），建议补 <b>152</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0DHRB19NB" target="_blank">B0DHRB19NB</a><span class="catx">抓夹/发夹</span><span class="msk">168-8526-B</span><span class="amt">164 件 / 5 个月</span></div>
+<div class="an">（02-B243变体）48个透明彩色迷你抓夹</div>
+<table class="mini"><tr><th>30 天</th><td>2</td><th>90 天</th><td>81</td><th>去年同 5 月</th><td>235</td><th>库存</th><td>1</td></tr></table>
+<div class="am">11月 39 · 12月 22 · 1月 35 · 2月 31 · 3月 37</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-30%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>当期接近零，同月锚点口径，峰值 11月。<b>库存：</b>库存 1 件（约 0.0 个月），建议补 <b>188</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B08DFTFDC4" target="_blank">B08DFTFDC4</a><span class="catx">过滤漏斗</span><span class="msk">126-B1406</span><span class="amt">156 件 / 5 个月</span></div>
+<div class="an">75个一次性纸过滤漏斗+赠送一个硅胶折叠漏斗</div>
+<table class="mini"><tr><th>30 天</th><td>39</td><th>90 天</th><td>112</td><th>去年同 5 月</th><td>582</td><th>库存</th><td>144</td></tr></table>
+<div class="am">11月 20 · 12月 29 · 1月 34 · 2月 36 · 3月 37</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.55），需排查断货/排名/广告；同比 <b>-73%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>3月</b>、谷底 11月。<b>库存：</b>库存 144 件可覆盖约 4.6 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0BMQB4158" target="_blank">B0BMQB4158</a><span class="catx">儿童甲片</span><span class="msk">125-B1705N</span><span class="amt">155 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片 缤纷水果（C35+C48+CM-04+CM-06）</div>
+<table class="mini"><tr><th>30 天</th><td>7</td><th>90 天</th><td>19</td><th>去年同 5 月</th><td>234</td><th>库存</th><td>21</td></tr></table>
+<div class="am">11月 42 · 12月 84 · 1月 18 · 2月 0 · 3月 11</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-34%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>当期接近零，同月锚点口径，峰值 12月。<b>库存：</b>库存 21 件（约 0.7 个月），建议补 <b>160</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CQ1SMCY2" target="_blank">B0CQ1SMCY2</a><span class="catx">儿童甲片</span><span class="msk">125-1741-B</span><span class="amt">150 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片 浪漫爱心（12+14+17+23）</div>
+<table class="mini"><tr><th>30 天</th><td>4</td><th>90 天</th><td>13</td><th>去年同 5 月</th><td>221</td><th>库存</th><td>49</td></tr></table>
+<div class="am">11月 37 · 12月 56 · 1月 22 · 2月 35 · 3月 0</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-32%</b>，明显下滑，建议控制备货。<b>季节：</b>当期接近零，同月锚点口径，峰值 12月。<b>库存：</b>库存 49 件（约 1.6 个月），建议补 <b>126</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09Y947FJV" target="_blank">B09Y947FJV</a><span class="catx">卷发器</span><span class="msk">01-B3141</span><span class="amt">143 件 / 5 个月</span></div>
+<div class="an">40pcs 橙色卷发器+网套 277变体</div>
+<table class="mini"><tr><th>30 天</th><td>49</td><th>90 天</th><td>162</td><th>去年同 5 月</th><td>331</td><th>库存</th><td>473</td></tr></table>
+<div class="am">11月 29 · 12月 27 · 1月 19 · 2月 35 · 3月 33</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.98）；同比 <b>-57%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>2月</b>、谷底 1月。<b>库存：</b>库存 473 件可覆盖约 16.5 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CPPP8CSW" target="_blank">B0CPPP8CSW</a><span class="catx">模板/贴纸</span><span class="msk">79-B5928</span><span class="amt">140 件 / 5 个月</span></div>
+<div class="an">（79-B3892变体）6750个镭射星星贴纸，15种表情</div>
+<table class="mini"><tr><th>30 天</th><td>56</td><th>90 天</th><td>184</td><th>去年同 5 月</th><td>305</td><th>库存</th><td>63</td></tr></table>
+<div class="am">11月 24 · 12月 20 · 1月 26 · 2月 33 · 3月 37</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.10），需排查断货/排名/广告；同比 <b>-54%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>3月</b>、谷底 12月。<b>库存：</b>库存 63 件（约 2.2 个月），建议补 <b>100</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07KPBPQKN" target="_blank">B07KPBPQKN</a><span class="catx">手作材料</span><span class="msk">02-B486X</span><span class="amt">134 件 / 5 个月</span></div>
+<div class="an">30米扁蜡线24色</div>
+<table class="mini"><tr><th>30 天</th><td>20</td><th>90 天</th><td>106</td><th>去年同 5 月</th><td>303</td><th>库存</th><td>188</td></tr></table>
+<div class="am">11月 34 · 12月 20 · 1月 27 · 2月 24 · 3月 29</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.54），需排查断货/排名/广告；同比 <b>-56%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 188 件可覆盖约 7.0 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0BBZZ6TTB" target="_blank">B0BBZZ6TTB</a><span class="catx">模板/贴纸</span><span class="msk">79-B3892</span><span class="amt">129 件 / 5 个月</span></div>
+<div class="an">6750个星星贴纸，15种表情</div>
+<table class="mini"><tr><th>30 天</th><td>20</td><th>90 天</th><td>206</td><th>去年同 5 月</th><td>196</td><th>库存</th><td>0</td></tr></table>
+<div class="am">11月 10 · 12月 10 · 1月 44 · 2月 32 · 3月 33</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.05），需排查断货/排名/广告；同比 <b>-34%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>预估峰值 <b>1月</b>、谷底 11月。<b>库存：</b>库存 0 件（约 0.0 个月），建议补 <b>149</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0DXKMM4XK" target="_blank">B0DXKMM4XK</a><span class="catx">其他</span><span class="msk">168-10105-B</span><span class="amt">124 件 / 5 个月</span></div>
+<div class="an">(B315变体) 8个卡通款冰棒套</div>
+<table class="mini"><tr><th>30 天</th><td>1</td><th>90 天</th><td>28</td><th>去年同 5 月</th><td>181</td><th>库存</th><td>0</td></tr></table>
+<div class="am">11月 64 · 12月 60 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.00），需排查断货/排名/广告；同比 <b>-31%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>上市不足两基年，同月锚点口径（置信度低），峰值 11月。<b>库存：</b>库存 0 件（约 0.0 个月），建议补 <b>143</b> 件，11 月前到仓。<b>关键词：</b>校准 ×1.00（中性）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CPSHVSVT" target="_blank">B0CPSHVSVT</a><span class="catx">儿童甲片</span><span class="msk">125-4360-B</span><span class="amt">111 件 / 5 个月</span></div>
+<div class="an">定制（125-B1318变体）4盒 儿童指甲片（3D立体）</div>
+<table class="mini"><tr><th>30 天</th><td>15</td><th>90 天</th><td>39</td><th>去年同 5 月</th><td>400</td><th>库存</th><td>174</td></tr></table>
+<div class="am">11月 30 · 12月 68 · 1月 0 · 2月 0 · 3月 13</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 2.37）；同比 <b>-72%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 1月。<b>库存：</b>库存 174 件可覆盖约 7.8 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07XKSM6CL" target="_blank">B07XKSM6CL</a><span class="catx">卷发器</span><span class="msk">12-B736</span><span class="amt">104 件 / 5 个月</span></div>
+<div class="an">蓝色蘑菇卷发器*80pack</div>
+<table class="mini"><tr><th>30 天</th><td>2</td><th>90 天</th><td>14</td><th>去年同 5 月</th><td>157</td><th>库存</th><td>104</td></tr></table>
+<div class="am">11月 53 · 12月 24 · 1月 15 · 2月 0 · 3月 12</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-34%</b>，明显下滑，建议控制备货。<b>季节：</b>当期接近零，同月锚点口径，峰值 11月。<b>库存：</b>库存 104 件与需求基本匹配，备应急补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0BTSPWQLN" target="_blank">B0BTSPWQLN</a><span class="catx">抓夹/发夹</span><span class="msk">12-B2071X</span><span class="amt">98 件 / 5 个月</span></div>
+<div class="an">迷你果冻混色抓夹*48pack+扁</div>
+<table class="mini"><tr><th>30 天</th><td>42</td><th>90 天</th><td>107</td><th>去年同 5 月</th><td>148</td><th>库存</th><td>26</td></tr></table>
+<div class="am">11月 26 · 12月 20 · 1月 14 · 2月 21 · 3月 17</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.51），需排查断货/排名/广告；同比 <b>-34%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>预估峰值 <b>11月</b>、谷底 1月。<b>库存：</b>库存 26 件（约 1.3 个月），建议补 <b>93</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CQ1R3P4Q" target="_blank">B0CQ1R3P4Q</a><span class="catx">儿童甲片</span><span class="msk">125-4938-B</span><span class="amt">90 件 / 5 个月</span></div>
+<div class="an">（2665变体）8盒儿童指甲片 （浮雕风格）</div>
+<table class="mini"><tr><th>30 天</th><td>6</td><th>90 天</th><td>18</td><th>去年同 5 月</th><td>87</td><th>库存</th><td>220</td></tr></table>
+<div class="am">11月 12 · 12月 52 · 1月 0 · 2月 11 · 3月 15</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>+3%</b>，基本持平。<b>季节：</b>当期接近零，同月锚点口径，峰值 12月。<b>库存：</b>库存 220 件可覆盖约 12.2 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0DG86K9D1" target="_blank">B0DG86K9D1</a><span class="catx">过滤漏斗</span><span class="msk">468-8338-B</span><span class="amt">71 件 / 5 个月</span></div>
+<div class="an">（126-B1406变体）100个一次性纸过滤漏斗（190微米）+附赠一个硅胶漏斗</div>
+<table class="mini"><tr><th>30 天</th><td>23</td><th>90 天</th><td>53</td><th>去年同 5 月</th><td>248</td><th>库存</th><td>47</td></tr></table>
+<div class="am">11月 31 · 12月 19 · 1月 10 · 2月 11 · 3月 0</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.95）；同比 <b>-71%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 3月。<b>库存：</b>库存 47 件（约 3.3 个月），建议补 <b>42</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B07XNYSVWH" target="_blank">B07XNYSVWH</a><span class="catx">卷发器</span><span class="msk">12-B737</span><span class="amt">62 件 / 5 个月</span></div>
+<div class="an">粉色蘑菇卷发器*80pack</div>
+<table class="mini"><tr><th>30 天</th><td>38</td><th>90 天</th><td>95</td><th>去年同 5 月</th><td>328</td><th>库存</th><td>262</td></tr></table>
+<div class="am">11月 16 · 12月 17 · 1月 0 · 2月 15 · 3月 14</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.73），需排查断货/排名/广告；同比 <b>-81%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 1月。<b>库存：</b>库存 262 件可覆盖约 21.1 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CYT4VWY8" target="_blank">B0CYT4VWY8</a><span class="catx">过滤漏斗</span><span class="msk">468-6639-B-N</span><span class="amt">41 件 / 5 个月</span></div>
+<div class="an">150个一次性纸过滤漏斗（100目）+附赠一个硅胶漏斗（126-B1406变体）</div>
+<table class="mini"><tr><th>30 天</th><td>51</td><th>90 天</th><td>95</td><th>去年同 5 月</th><td>308</td><th>库存</th><td>60</td></tr></table>
+<div class="am">11月 19 · 12月 22 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.54），需排查断货/排名/广告；同比 <b>-87%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>12月</b>、谷底 1月。<b>库存：</b>库存 60 件，视广告效果决定补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B8CQ31KL" target="_blank">B0B8CQ31KL</a><span class="catx">易拉扣</span><span class="msk">168-B3536</span><span class="amt">37 件 / 5 个月</span></div>
+<div class="an">8个8款感恩节易拉扣（鳄鱼夹）</div>
+<table class="mini"><tr><th>30 天</th><td>27</td><th>90 天</th><td>40</td><th>去年同 5 月</th><td>66</td><th>库存</th><td>199</td></tr></table>
+<div class="am">11月 37 · 12月 0 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>近期动量平稳（动量比 0.97）；同比 <b>-44%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>11月</b>、谷底 12月。<b>库存：</b>库存 199 件可覆盖约 26.9 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CQ1WSG7X" target="_blank">B0CQ1WSG7X</a><span class="catx">儿童甲片</span><span class="msk">125-1703-B</span><span class="amt">35 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片 动物主题（CM25+CM28+CM29+CM32）</div>
+<table class="mini"><tr><th>30 天</th><td>0</td><th>90 天</th><td>0</td><th>去年同 5 月</th><td>52</td><th>库存</th><td>2</td></tr></table>
+<div class="am">11月 20 · 12月 15 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>当期销量接近零（受库存或淡季影响），短期动量参考意义有限；同比 <b>-33%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>当期接近零，同月锚点口径，峰值 11月。<b>库存：</b>库存 2 件（约 0.3 个月），建议补 <b>38</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B2NVCHQK" target="_blank">B0B2NVCHQK</a><span class="catx">易拉扣</span><span class="msk">168-B3338</span><span class="amt">25 件 / 5 个月</span></div>
+<div class="an">100个透明蓝色易拉扣</div>
+<table class="mini"><tr><th>30 天</th><td>21</td><th>90 天</th><td>73</td><th>去年同 5 月</th><td>182</td><th>库存</th><td>0</td></tr></table>
+<div class="am">11月 0 · 12月 0 · 1月 10 · 2月 0 · 3月 15</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.38），需排查断货/排名/广告；同比 <b>-86%</b>，但库存偏低已压制销量，真实需求可能更高。<b>季节：</b>预估峰值 <b>3月</b>、谷底 11月。<b>库存：</b>库存 0 件（约 0.0 个月），建议补 <b>32</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CQ23Z3QC" target="_blank">B0CQ23Z3QC</a><span class="catx">儿童甲片</span><span class="msk">125-2243-B</span><span class="amt">18 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片（万圣节款式）</div>
+<table class="mini"><tr><th>30 天</th><td>237</td><th>90 天</th><td>334</td><th>去年同 5 月</th><td>1</td><th>库存</th><td>6</td></tr></table>
+<div class="am">11月 0 · 12月 18 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>近期动量向上（动量比 1.97）；同比 <b>+1700%</b>，处于增长通道。<b>季节：</b>预估峰值 <b>12月</b>、谷底 11月。<b>库存：</b>库存 6 件（约 1.7 个月），建议补 <b>137</b> 件，11 月前到仓。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B09XQ7QKGN" target="_blank">B09XQ7QKGN</a><span class="catx">卷发器</span><span class="msk">01-B3142</span><span class="amt">10 件 / 5 个月</span></div>
+<div class="an">40pcs黄色蘑菇卷发器+网套 277变体</div>
+<table class="mini"><tr><th>30 天</th><td>35</td><th>90 天</th><td>95</td><th>去年同 5 月</th><td>212</td><th>库存</th><td>172</td></tr></table>
+<div class="am">11月 0 · 12月 0 · 1月 0 · 2月 0 · 3月 10</div>
+<div class="aj"><b>趋势：</b>近期动量向下（动量比 0.42），需排查断货/排名/广告；同比 <b>-95%</b>，明显下滑，建议控制备货。<b>季节：</b>预估峰值 <b>3月</b>、谷底 11月。<b>库存：</b>库存 172 件可覆盖约 86.0 个月，本季以去化为主。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B8CP68MC" target="_blank">B0B8CP68MC</a><span class="catx">易拉扣</span><span class="msk">168-B3534</span><span class="amt">0 件 / 5 个月</span></div>
+<div class="an">8个8款万圣节易拉扣（鳄鱼夹）</div>
+<table class="mini"><tr><th>30 天</th><td>53</td><th>90 天</th><td>83</td><th>去年同 5 月</th><td>3</td><th>库存</th><td>42</td></tr></table>
+<div class="am">11月 0 · 12月 0 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>旺季已过，本季无预估需求；同比不适用。<b>季节：</b>本季无预估需求（旺季已过或需求断档）。<b>库存：</b>库存 42 件，本季不补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CQ1WH8GZ" target="_blank">B0CQ1WH8GZ</a><span class="catx">儿童甲片</span><span class="msk">125-3604-B</span><span class="amt">0 件 / 5 个月</span></div>
+<div class="an">4盒 儿童指甲片（夜光 万圣节款式）</div>
+<table class="mini"><tr><th>30 天</th><td>152</td><th>90 天</th><td>204</td><th>去年同 5 月</th><td>19</td><th>库存</th><td>0</td></tr></table>
+<div class="am">11月 0 · 12月 0 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>旺季已过，本季无预估需求；同比不适用。<b>季节：</b>本季无预估需求（旺季已过或需求断档）。<b>库存：</b>库存 0 件，本季不补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0B2D9TYWS" target="_blank">B0B2D9TYWS</a><span class="catx">蝴蝶扣/蝴蝶帽</span><span class="msk">236-B3293</span><span class="amt">0 件 / 5 个月</span></div>
+<div class="an">120对玫瑰金蝴蝶帽带针（针直径10mm）</div>
+<table class="mini"><tr><th>30 天</th><td>19</td><th>90 天</th><td>43</td><th>去年同 5 月</th><td>88</td><th>库存</th><td>125</td></tr></table>
+<div class="am">11月 0 · 12月 0 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>旺季已过，本季无预估需求；同比不适用。<b>季节：</b>本季无预估需求（旺季已过或需求断档）。<b>库存：</b>库存 125 件，本季不补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div><div class="acard">
+<div class="ah"><a href="https://www.amazon.com/dp/B0CQ1MMYSB" target="_blank">B0CQ1MMYSB</a><span class="catx">儿童甲片</span><span class="msk">125-3617-B</span><span class="amt">0 件 / 5 个月</span></div>
+<div class="an">8盒儿童穿戴甲片（夜光 万圣节款式）</div>
+<table class="mini"><tr><th>30 天</th><td>239</td><th>90 天</th><td>330</td><th>去年同 5 月</th><td>11</td><th>库存</th><td>1</td></tr></table>
+<div class="am">11月 0 · 12月 0 · 1月 0 · 2月 0 · 3月 0</div>
+<div class="aj"><b>趋势：</b>旺季已过，本季无预估需求；同比不适用。<b>季节：</b>本季无预估需求（旺季已过或需求断档）。<b>库存：</b>库存 1 件，本季不补货。<b>关键词：</b>未做逐词校准（长尾低量，系数 1.0）。</div>
+</div></div>
+</div>
+
+<div class="card">
+  <h2>八、关键结论与行动建议</h2>
+  <ul>
+    <li><b>总盘：</b>基准 72,162 件（保守 61,265 / 乐观 90,287），较去年同期 -22.6%，较盛途计划 93,760 件低 23.0%，仍处于需复核区间。</li>
+    <li><b>库存：</b>56 个 ASIN 判为断货风险，合计建议补货 52,969 件；缺口最大的为 B07BK1R25Z、B072B9XGZ4、B0732Z7T8W、B0FKMXKNGY、B093SS61SQ。</li>
+    <li><b>季节性：</b>Q4 峰值集中在 11~12 月，1 月情人节相关品单独起量，2~3 月为淡季；常青款按月度节奏备货。</li>
+    <li><b>关键词侧：</b>头部 ASIN 主流量词同比普遍为正；树脂模具类需求走弱已下调至 0.70；B09R4625FW 等「市场涨、自身跌」样本已停止上调。</li>
+    <li><b>口径限制：</b>9 个上市不足两基年的 ASIN 用同月锚点口径（置信度低）；其余长尾 ASIN 未逐词校准（系数 1.0）。另有 B0CYT4VWY8、B09XQ7QKGN、B0B2D9TYWS 等低量样本，受历史单月异常系数与 P8「&lt;10 件归零」影响，预估可能偏低，建议单独复核。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>九、方法与数据说明（v1.2.3）</h2>
+  <ul>
+    <li><b>基础日销：</b>领星近 7/14/30/90 天真实销量；计算动量比前先用近 14 天逐日明细剔除一次性尖峰（单日 ≥3 倍非零日中位数），剔峰后按常态水平补齐窗口。</li>
+    <li><b>季节系数：</b>2024/2025 同月日均 ÷ 当年全年日均，默认两年均值；形态漂移<b>逐月判定</b>，仅触发月改单年口径，并用当年实际系数做<b>第三源投票</b>。</li>
+    <li><b>四道闸门：</b>去季节化前置校验、同月口径同源、水平一致性软上限（1.5×，动量 &gt;1.10 豁免至 3×）、目标月系数不足时同月锚点兜底。</li>
+    <li><b>关键词校准：</b>头部 27 个 ASIN 用 SIF 主流量词近 30 天同比 + 排名/健康度/广告依赖；新增<b>自身方向闸门</b>——市场同比 &gt;+10% 且自身落后市场 ≥20pp 时不再上调。</li>
+    <li><b>库存：</b>领星 FBA 可售 + 待调仓 + 入库中，不含预留/客户订单/FC 处理量。</li>
+    <li><b>已知限制：</b>历史月度系数中的一次性尖峰（如某月单月达常态 3 倍）因缺少对应月份的逐日明细未剔除，仅影响少数长尾 ASIN；低量样本按 P8 规则单月 &lt;10 件归零。</li>
+    <li><b>数据源：</b>领星 ERP（销售/库存）、SIF（关键词）、盛途 ERP（备货预估交叉验证）。</li>
+  </ul>
+</div>
+<footer>本报告为运营决策参考，预估为区间值而非承诺销量；节令品受备货与广告节奏影响较大，建议每月滚动复算。</footer>
+</div></body></html>

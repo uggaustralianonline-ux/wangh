@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026年11/12月销量预估 · 部门 / 推广人汇总（USD）</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--line:#e6e8ee;--txt:#1d2433;--muted:#6b7488;--brand:#2f6bff;--up:#0f9d58;--down:#d93025}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;font-size:14px}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:24px;margin:0 0 6px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:22px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.kpi .lab{color:var(--muted);font-size:12px;margin-bottom:8px}
+.kpi .val{font-size:24px;font-weight:700;letter-spacing:.5px}
+.kpi .val small{font-size:12px;font-weight:400;color:var(--muted);margin-left:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:22px}
+.card h2{font-size:16px;margin:0 0 4px}
+.card .hint{color:var(--muted);font-size:12px;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{position:sticky;top:0;background:#fafbfd;color:var(--muted);font-weight:600;z-index:1}
+td:first-child,th:first-child{text-align:left}
+tbody tr:hover{background:#f3f7ff}
+.num{font-variant-numeric:tabular-nums}
+.pos{color:var(--up)}
+.neg{color:var(--down)}
+.bar{height:6px;border-radius:3px;background:#e9eefc;position:relative;min-width:60px}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--brand)}
+.scroll{max-height:620px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;background:#eef3ff;color:#2f6bff}
+.tag.warn{background:#fff4e5;color:#b25d00}
+.note{color:var(--muted);font-size:12px;line-height:1.8}
+footer{margin-top:26px;color:var(--muted);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>2026年11月 / 12月销量预估 · 部门 / 推广人汇总（美元）</h1>
+  <div class="sub">数据源：盛途 ERP「上架产品预估销量」(备货预估 MSKU 表 PredictSales) ｜ 口径：2026-11 / 2026-12 ｜ 金额单位：美元 USD ｜ 部门归属取 2026-09 推广人档案 ｜ 生成时间：2026-10-27</div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card">
+    <h2>部门汇总（按 11+12 月合计销量降序）</h2>
+    <div class="hint">部门归属取 2026-09 推广人档案：事业一部运营部门下分推广1/2/3组，陈云艳挂运营部直属；事业三部独立。销量单位：件；金额：美元 USD。</div>
+    <div class="scroll" style="max-height:none">
+      <table id="deptTable">
+        <thead><tr><th>部门</th><th>11月销量</th><th>11月销售额(USD)</th><th>12月销量</th><th>12月销售额(USD)</th><th>销量环比</th><th>金额环比</th><th>推广人</th><th>店铺</th><th>MSKU</th><th>销量占比</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>推广人汇总（按部门分组，组内按 11+12 月合计销量降序）</h2>
+    <div class="hint">销量单位：件；金额：美元 USD（各站本币按 ERP 记账汇率折算）；环比 = 12月 ÷ 11月 − 1；覆盖店铺/M-SKU 数为该推广人名下有预估记录的店铺与 MSKU 数量。</div>
+    <div class="scroll">
+      <table id="keeperTable">
+        <thead><tr>
+          <th>推广人</th><th>部门</th><th>11月销量</th><th>11月销售额(USD)</th><th>11月MSKU</th><th>11月店铺</th>
+          <th>12月销量</th><th>12月销售额(USD)</th><th>12月MSKU</th><th>12月店铺</th><th>环比</th><th>占比</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>店铺汇总</h2>
+    <div class="hint">按 11+12 月合计销量降序；共 80 个店铺在盛途侧有 11/12 月预估记录（含仅 12 月有预估的店铺）。</div>
+    <div class="scroll">
+      <table id="shopTable">
+        <thead><tr><th>店铺</th><th>11月销量</th><th>11月销售额(USD)</th><th>12月销量</th><th>12月销售额(USD)</th><th>环比</th><th>11月MSKU</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Top 25 ASIN（11月 / 12月）</h2>
+    <div class="hint">单 ASIN 预估销量最高的 25 条记录，含店铺、推广人与产品名称。</div>
+    <div class="scroll">
+      <table id="topTable">
+        <thead><tr><th>ASIN</th><th>MSKU</th><th>店铺</th><th>推广人</th><th>产品</th><th>11月</th><th>12月</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>需要关注的点</h2>
+    <div class="note" id="notes"></div>
+  </div>
+
+  <footer>盛途 ERP · 备货预估口径，非实际销售数据；美元金额按 ERP 记账汇率折算；实际销量请以领星 ERP 为准。</footer>
+</div>
+
+<script>
+const DATA = {"totals":{"nov":{"qty":954759,"usd":9434558,"cny":63362489.89},"dec":{"qty":959698,"usd":9683848,"cny":65036722.97}},"keepers":[{"n":"丁道理","q11":99999,"u11":859367,"m11":496,"s11":8,"q12":106155,"u12":918972,"m12":501,"s12":9},{"n":"范昌娟","q11":105213,"u11":1107555,"m11":512,"s11":11,"q12":99668,"u12":1049719,"m12":531,"s12":11},{"n":"张淑珍","q11":109085,"u11":966678,"m11":555,"s11":11,"q12":95421,"u12":854787,"m12":557,"s12":11},{"n":"范雅晴","q11":68645,"u11":674625,"m11":587,"s11":18,"q12":75081,"u12":732235,"m12":588,"s12":18},{"n":"吴跃","q11":70107,"u11":719106,"m11":299,"s11":8,"q12":70092,"u12":734557,"m12":295,"s12":7},{"n":"陈云艳","q11":57245,"u11":563382,"m11":303,"s11":7,"q12":66304,"u12":720335,"m12":309,"s12":7},{"n":"袁雯丽","q11":66156,"u11":560061,"m11":337,"s11":7,"q12":52276,"u12":463340,"m12":341,"s12":7},{"n":"丁惠敏","q11":48880,"u11":454450,"m11":414,"s11":6,"q12":41324,"u12":382029,"m12":428,"s12":6},{"n":"秦书月","q11":41062,"u11":361287,"m11":536,"s11":13,"q12":40222,"u12":351791,"m12":578,"s12":15},{"n":"刘雨晴","q11":35521,"u11":341782,"m11":287,"s11":7,"q12":33826,"u12":319506,"m12":296,"s12":8},{"n":"AI推广","q11":35457,"u11":379947,"m11":264,"s11":9,"q12":33103,"u12":341855,"m12":266,"s12":9},{"n":"张颖","q11":30516,"u11":347024,"m11":227,"s11":7,"q12":30435,"u12":343464,"m12":222,"s12":7},{"n":"胡宏金","q11":30542,"u11":331969,"m11":290,"s11":7,"q12":28755,"u12":312887,"m12":281,"s12":7},{"n":"李超","q11":28035,"u11":283618,"m11":187,"s11":10,"q12":27500,"u12":293924,"m12":213,"s12":10},{"n":"吴瑶","q11":27140,"u11":286316,"m11":295,"s11":11,"q12":26091,"u12":274479,"m12":291,"s12":9},{"n":"徐叶","q11":24352,"u11":280896,"m11":286,"s11":13,"q12":23306,"u12":265882,"m12":326,"s12":14},{"n":"倪锐","q11":13020,"u11":150974,"m11":26,"s11":2,"q12":32880,"u12":377442,"m12":26,"s12":2},{"n":"程智刚","q11":17769,"u11":211428,"m11":314,"s11":12,"q12":18640,"u12":225217,"m12":315,"s12":12},{"n":"于战战","q11":16368,"u11":200683,"m11":249,"s11":17,"q12":19424,"u12":245587,"m12":272,"s12":17},{"n":"郑思璇","q11":9888,"u11":114841,"m11":160,"s11":10,"q12":9795,"u12":114493,"m12":179,"s12":11},{"n":"鲍远娇","q11":5650,"u11":52645,"m11":19,"s11":1,"q12":7560,"u12":70306,"m12":19,"s12":1},{"n":"孙莹","q11":4470,"u11":57290,"m11":11,"s11":1,"q12":8320,"u12":107153,"m12":11,"s12":1},{"n":"韦燕敏","q11":5365,"u11":69353,"m11":75,"s11":9,"q12":7230,"u12":92861,"m12":103,"s12":13},{"n":"韩咏琪","q11":3199,"u11":32046,"m11":66,"s11":5,"q12":4245,"u12":42638,"m12":72,"s12":5},{"n":"董思敏","q11":1075,"u11":27235,"m11":7,"s11":2,"q12":2045,"u12":48386,"m12":9,"s12":3}],"shops":[{"s":"D-US","q11":70885,"u11":743075,"q12":77346,"u12":880971,"m11":312},{"s":"W-US","q11":65924,"u11":696211,"q12":65682,"u12":692936,"m11":302},{"s":"F-US","q11":48067,"u11":390984,"q12":55525,"u12":446579,"m11":146},{"s":"E-US","q11":49230,"u11":402557,"q12":45925,"u12":390085,"m11":186},{"s":"M-US","q11":54591,"u11":503074,"q12":40161,"u12":384967,"m11":273},{"s":"B-US","q11":43177,"u11":345742,"q12":43003,"u12":336534,"m11":212},{"s":"A-US","q11":39155,"u11":356351,"q12":44465,"u12":396942,"m11":203},{"s":"S-US","q11":41955,"u11":370436,"q12":36022,"u12":315723,"m11":260},{"s":"G7-US","q11":36160,"u11":396490,"q12":36822,"u12":399728,"m11":234},{"s":"G11-US","q11":22800,"u11":259873,"q12":48695,"u12":558898,"m11":55},{"s":"Q-US","q11":38880,"u11":332784,"q12":31240,"u12":265246,"m11":160},{"s":"T-US","q11":29095,"u11":305654,"q12":27020,"u12":275877,"m11":114},{"s":"V-US","q11":26009,"u11":295221,"q12":29476,"u12":337360,"m11":203},{"s":"P-US","q11":28559,"u11":246226,"q12":25835,"u12":228481,"m11":146},{"s":"K-US","q11":26449,"u11":255122,"q12":21852,"u12":208222,"m11":114},{"s":"G13-US","q11":21460,"u11":245685,"q12":22897,"u12":276565,"m11":157},{"s":"L-US","q11":21060,"u11":198835,"q12":22232,"u12":209118,"m11":111},{"s":"N-US","q11":20070,"u11":213843,"q12":20715,"u12":231155,"m11":128},{"s":"Y-US","q11":19471,"u11":192681,"q12":16819,"u12":166573,"m11":116},{"s":"Z-US","q11":13558,"u11":164977,"q12":15662,"u12":192581,"m11":144},{"s":"W-UK","q11":11755,"u11":138254,"q12":13290,"u12":155543,"m11":120},{"s":"B-UK","q11":11795,"u11":94701,"q12":11485,"u12":93177,"m11":97},{"s":"G14-US","q11":10974,"u11":99076,"q12":12006,"u12":132922,"m11":65},{"s":"B-CA","q11":11362,"u11":90895,"q12":10022,"u12":79967,"m11":149},{"s":"D-CA","q11":8987,"u11":100473,"q12":7870,"u12":88482,"m11":171},{"s":"A-CA","q11":8432,"u11":84321,"q12":8136,"u12":80583,"m11":135},{"s":"Q-CA","q11":8770,"u11":83577,"q12":7300,"u12":68050,"m11":78},{"s":"W-CA","q11":8970,"u11":99377,"q12":6976,"u12":78929,"m11":127},{"s":"M-CA","q11":8616,"u11":64641,"q12":6875,"u12":53504,"m11":90},{"s":"C-DE","q11":7568,"u11":94448,"q12":6215,"u12":73690,"m11":87},{"s":"E-CA","q11":7221,"u11":63319,"q12":6549,"u12":57452,"m11":88},{"s":"W-JP","q11":6660,"u11":58509,"q12":6883,"u12":58497,"m11":105},{"s":"I-US","q11":6537,"u11":78915,"q12":5970,"u12":78967,"m11":65},{"s":"W-DE","q11":6390,"u11":78229,"q12":6080,"u12":75542,"m11":72},{"s":"L-DE","q11":5988,"u11":74680,"q12":6063,"u12":73562,"m11":62},{"s":"I-CA","q11":5067,"u11":47166,"q12":6219,"u12":58438,"m11":83},{"s":"T-DE","q11":4495,"u11":47315,"q12":4870,"u12":50679,"m11":81},{"s":"B-DE","q11":4790,"u11":46525,"q12":4130,"u12":40554,"m11":67},{"s":"T-UK","q11":4732,"u11":59636,"q12":4127,"u12":52842,"m11":61},{"s":"G7-CA","q11":4185,"u11":47882,"q12":4165,"u12":47748,"m11":97},{"s":"C-UK","q11":3857,"u11":59004,"q12":4111,"u12":58887,"m11":56},{"s":"K-DE","q11":2980,"u11":35266,"q12":4510,"u12":51720,"m11":41},{"s":"H-US","q11":3905,"u11":49411,"q12":3531,"u12":47262,"m11":54},{"s":"M-DE","q11":3525,"u11":35931,"q12":3815,"u12":38185,"m11":51},{"s":"D-JP","q11":3020,"u11":26097,"q12":4139,"u12":33787,"m11":35},{"s":"L-UK","q11":3746,"u11":43499,"q12":3156,"u12":36117,"m11":47},{"s":"M-UK","q11":3505,"u11":27950,"q12":2975,"u12":23523,"m11":51},{"s":"V-CA","q11":3015,"u11":32096,"q12":3425,"u12":35163,"m11":41},{"s":"P-CA","q11":3119,"u11":27884,"q12":2836,"u12":26314,"m11":54},{"s":"T-CA","q11":2881,"u11":32225,"q12":3020,"u12":34043,"m11":33},{"s":"L-CA","q11":2880,"u11":29776,"q12":2920,"u12":28675,"m11":46},{"s":"S-DE","q11":2651,"u11":29254,"q12":3016,"u12":31669,"m11":41},{"s":"W-FR","q11":3116,"u11":38528,"q12":2522,"u12":31517,"m11":41},{"s":"B-JP","q11":2195,"u11":15570,"q12":2760,"u12":16785,"m11":22},{"s":"T-JP","q11":2390,"u11":17744,"q12":2372,"u12":17848,"m11":43},{"s":"K-CA","q11":2607,"u11":25558,"q12":2140,"u12":19858,"m11":45},{"s":"G7-DE","q11":2125,"u11":28018,"q12":2532,"u12":32686,"m11":33},{"s":"S-CA","q11":2530,"u11":33985,"q12":2088,"u12":27602,"m11":73},{"s":"Y-CA","q11":2535,"u11":33866,"q12":1781,"u12":23995,"m11":36},{"s":"C-FR","q11":2193,"u11":26925,"q12":2101,"u12":27519,"m11":52},{"s":"K-FR","q11":2076,"u11":24831,"q12":2106,"u12":24516,"m11":44},{"s":"N-CA","q11":1955,"u11":20670,"q12":2110,"u12":21931,"m11":32},{"s":"G13-CA","q11":2070,"u11":33167,"q12":1941,"u12":30725,"m11":48},{"s":"S-UK","q11":1839,"u11":19155,"q12":1714,"u12":17769,"m11":44},{"s":"Y-UK","q11":1940,"u11":22730,"q12":1596,"u12":17996,"m11":25},{"s":"G10-US","q11":1415,"u11":28272,"q12":2080,"u12":40220,"m11":8},{"s":"Y-DE","q11":2000,"u11":19980,"q12":1460,"u12":14499,"m11":17},{"s":"C-ES","q11":1035,"u11":14638,"q12":2305,"u12":29665,"m11":26},{"s":"Z-CA","q11":1542,"u11":17731,"q12":1771,"u12":20428,"m11":55},{"s":"G7-UK","q11":1855,"u11":20440,"q12":1115,"u12":14944,"m11":20},{"s":"G14-CA","q11":1710,"u11":15531,"q12":1180,"u12":11306,"m11":13},{"s":"N-UK","q11":1333,"u11":15735,"q12":1510,"u12":19107,"m11":28},{"s":"V-DE","q11":1180,"u11":16614,"q12":1510,"u12":22645,"m11":12},{"s":"N-DE","q11":1090,"u11":12570,"q12":1335,"u12":15596,"m11":18},{"s":"K-UK","q11":935,"u11":11429,"q12":1145,"u12":14145,"m11":31},{"s":"B-FR","q11":979,"u11":9436,"q12":950,"u12":9348,"m11":26},{"s":"H-CA","q11":707,"u11":9209,"q12":732,"u12":9245,"m11":14},{"s":"V-UK","q11":313,"u11":3902,"q12":573,"u12":6630,"m11":13},{"s":"V-FR","q11":161,"u11":2167,"q12":160,"u12":2144,"m11":4},{"s":"G15-US","q11":0,"u11":0,"q12":30,"u12":4170,"m11":0}],"topNov":[{"a":"B08DTJZWWB","m":"79-F1411-F","s":"F-US","k":"丁道理","p":"4卷1cm宽红绿金银织带","q":12000},{"a":"B08NYDBXFX","m":"168-B1737","s":"B-US","k":"陈云艳","p":"4张280个亚克力圆形双面胶","q":10000},{"a":"B08NDSYTYF","m":"12-P1731","s":"P-US","k":"丁道理","p":"20mm黑白背胶活动眼睛200pack","q":5100},{"a":"B07X9SRV4H","m":"89-E729","s":"E-US","k":"丁道理","p":"7mm平面油漆刷*30","q":5100},{"a":"B07VH4JMMQ","m":"12-F657","s":"F-US","k":"丁道理","p":"平头卡帽","q":5100},{"a":"B0CJX433LK","m":"328-K5324","s":"K-US","k":"范昌娟","p":"16个糖果圣诞树挂件（软陶材质，6个9cm，10个6cm）","q":4900},{"a":"B07KZF3RRY","m":"12-E507","s":"E-US","k":"张淑珍","p":"活动眼睛","q":4200},{"a":"B08KG37QN1","m":"12-E1659S","s":"E-US","k":"张淑珍","p":"300个4尺寸背胶眼睛","q":4200},{"a":"B08QM9LXFD","m":"126-Q1781","s":"Q-US","k":"张淑珍","p":"理发配件（黑色理发围布+扫发刷）","q":4000},{"a":"B08MPS4WMH","m":"79-E1728-E","s":"E-US","k":"张淑珍","p":"15卷气球胶点","q":3500},{"a":"B0C3D1TWC7","m":"125-T4723","s":"T-US","k":"吴跃","p":"（125-3547 变体）1200颗 秋季色系 圆形 大马珠 ( 黄橙红棕绿 240）","q":3200},{"a":"B07W4G51XR","m":"WJ0078*240","s":"A-US","k":"范雅晴","p":"彩色耳贴","q":3200},{"a":"B092CN8XJ1","m":"89-F2002","s":"F-US","k":"丁道理","p":"7mm平刷勾线笔组合60支（平刷30+勾线30）","q":3100},{"a":"B0C6MH77WR","m":"125-4801-Y-N","s":"Y-US","k":"胡宏金","p":"定制(125-2832变体)300片秋季泡沫贴纸（150闪粉秋叶+150亚光面秋叶）","q":3000},{"a":"B0CCVQDWR3","m":"168-M4992","s":"M-US","k":"袁雯丽","p":"定制：（168-M2571变体）150个感恩节橡皮擦","q":3000},{"a":"B0DCBVNB5W","m":"89-7847-G14","s":"G14-US","k":"吴跃","p":"圣诞软陶拐杖糖饰品80件（31*12mm红白）","q":3000},{"a":"B09JBHH6QH","m":"125-W2533","s":"W-US","k":"范昌娟","p":"100张 圣诞节风格 拷贝纸 礼品包装纸（10个款式35*50cm）","q":2800},{"a":"B0824SHG24","m":"89-Q872","s":"Q-US","k":"张淑珍","p":"4寸刺绣圈16个","q":2700},{"a":"B09D7TVMJN","m":"12-F2393","s":"F-US","k":"丁道理","p":"镀镍平头卡帽*10pack 轻小商品","q":2700},{"a":"B082TYFTSX","m":"89-W912","s":"W-US","k":"范昌娟","p":"飞键套装30件","q":2600},{"a":"B07J4FK8W8","m":"04-D434N","s":"D-US","k":"吴跃","p":"700颗字母珠","q":2500},{"a":"B0CKP9JNGJ","m":"168-M5456","s":"M-US","k":"袁雯丽","p":"600根（金色+银色+红色+绿色） 圣诞节装饰品挂绳","q":2500},{"a":"B0BLMMWSG1","m":"328-MC4219","s":"M-CA","k":"袁雯丽","p":"（236-M2298变体）圣诞节夜光纹身贴20张","q":2150},{"a":"B07F23SJML","m":"04-D301N","s":"D-US","k":"陈云艳","p":"字母串珠 1400颗 5种颜色 + 50m鱼线","q":2100},{"a":"B0BK4X6DZW","m":"125-Q4140","s":"Q-US","k":"张淑珍","p":"（126-Q1122 变体） 三叶草 理发围布","q":2020}],"topDec":[{"a":"B08DTJZWWB","m":"79-F1411-F","s":"F-US","k":"丁道理","p":"4卷1cm宽红绿金银织带","q":15000},{"a":"B08NYDBXFX","m":"168-B1737","s":"B-US","k":"陈云艳","p":"4张280个亚克力圆形双面胶","q":10000},{"a":"B0D9M2CKJ8","m":"495-7684-G11","s":"G11-US","k":"倪锐","p":"优惠券书-普通款","q":7000},{"a":"B07W4G51XR","m":"WJ0078*240","s":"A-US","k":"范雅晴","p":"彩色耳贴","q":6700},{"a":"B07Z4MD5ZL","m":"79-W773","s":"W-US","k":"范昌娟","p":"圣诞节织带*（20卷）40码","q":5500},{"a":"B0D8JVJYX3","m":"495-7416-G11","s":"G11-US","k":"倪锐","p":"红色应急盒","q":5000},{"a":"B07VH4JMMQ","m":"12-F657","s":"F-US","k":"丁道理","p":"平头卡帽","q":5000},{"a":"B07X9SRV4H","m":"89-E729","s":"E-US","k":"丁道理","p":"7mm平面油漆刷*30","q":4500},{"a":"B08NDSYTYF","m":"12-P1731","s":"P-US","k":"丁道理","p":"20mm黑白背胶活动眼睛200pack","q":4300},{"a":"B08QM9LXFD","m":"126-Q1781","s":"Q-US","k":"张淑珍","p":"理发配件（黑色理发围布+扫发刷）","q":4000},{"a":"B0DCBVNB5W","m":"89-7847-G14","s":"G14-US","k":"吴跃","p":"圣诞软陶拐杖糖饰品80件（31*12mm红白）","q":3600},{"a":"B07KZF3RRY","m":"12-E507","s":"E-US","k":"张淑珍","p":"活动眼睛","q":3600},{"a":"B0FLD8TNF9","m":"495-12152-G11","s":"G11-US","k":"倪锐","p":"合板红色应急盒","q":3500},{"a":"B08MPS4WMH","m":"79-E1728-E","s":"E-US","k":"张淑珍","p":"15卷气球胶点","q":3500},{"a":"B092CN8XJ1","m":"89-F2002","s":"F-US","k":"丁道理","p":"7mm平刷勾线笔组合60支（平刷30+勾线30）","q":3400},{"a":"B0DZ6JMZK5","m":"495-8368-G11-N","s":"G11-US","k":"倪锐","p":"红色应急盒- 翻盖大款","q":3000},{"a":"B0B38T32TD","m":"89-N3397","s":"N-US","k":"李超","p":"挂球24件粉色6CM（6款）","q":3000},{"a":"B09JBHH6QH","m":"125-W2533","s":"W-US","k":"范昌娟","p":"100张 圣诞节风格 拷贝纸 礼品包装纸（10个款式35*50cm）","q":2700},{"a":"B09D7TVMJN","m":"12-F2393","s":"F-US","k":"丁道理","p":"镀镍平头卡帽*10pack 轻小商品","q":2700},{"a":"B0CDPDFPJ5","m":"125-T5104","s":"T-US","k":"吴跃","p":"（125-3547 变体）1200颗 冬季配色 大马珠(6*9mm 珠光蓝+实色蓝+闪粉蓝+珠光白+闪粉透明+银色）","q":2600},{"a":"B07WFN5WSM","m":"79-A676","s":"A-US","k":"范雅晴","p":"拼豆豆模板套件","q":2500},{"a":"B0CJX433LK","m":"328-K5324","s":"K-US","k":"范昌娟","p":"16个糖果圣诞树挂件（软陶材质，6个9cm，10个6cm）","q":2500},{"a":"B07J4FK8W8","m":"04-D434N","s":"D-US","k":"吴跃","p":"700颗字母珠","q":2500},{"a":"B0B9MKK8Q5","m":"340-T3821","s":"T-US","k":"吴跃","p":"海洋生物钻石画杯垫8pcs带支架","q":2400},{"a":"B08KG37QN1","m":"12-E1659S","s":"E-US","k":"张淑珍","p":"300个4尺寸背胶眼睛","q":2400}]};
+
+/* 部门归属：取 2026-09 推广人档案（ERP 组织架构 + 部门库销比推广人明细） */
+const DEPT = {
+  '范昌娟':'推广1组','丁惠敏':'推广1组','袁雯丽':'推广1组','张颖':'推广1组','胡宏金':'推广1组','吴瑶':'推广1组','程智刚':'推广1组','于战战':'推广1组',
+  '丁道理':'推广2组','张淑珍':'推广2组','吴跃':'推广2组','李超':'推广2组','刘雨晴':'推广2组','郑思璇':'推广2组','韦燕敏':'推广2组',
+  '范雅晴':'推广3组','秦书月':'推广3组','AI推广':'推广3组','徐叶':'推广3组','韩咏琪':'推广3组',
+  '陈云艳':'运营部直属',
+  '倪锐':'事业三部','鲍远娇':'事业三部','孙莹':'事业三部','董思敏':'事业三部'
+};
+const DEPT_ORDER = ['推广2组','推广1组','推广3组','运营部直属','事业三部'];
+const DEPT_ROWS = [
+  {d:'推广2组',q11:358000,u11:3354745,q12:350019,u12:3329101,kp:7,sh:33,ms:2059},
+  {d:'推广1组',q11:342584,u11:3499486,q12:316613,u12:3296722,kp:8,sh:39,ms:2631},
+  {d:'推广3组',q11:172715,u11:1728801,q12:175957,u12:1734402,kp:5,sh:43,ms:1715},
+  {d:'运营部直属',q11:57245,u11:563382,q12:66304,u12:720335,kp:1,sh:7,ms:303},
+  {d:'事业三部',q11:24215,u11:288144,q12:50805,u12:603288,kp:4,sh:2,ms:63}
+];
+
+const fmt = n => (n||0).toLocaleString('zh-CN', {maximumFractionDigits:0});
+const usd = n => '$' + (n||0).toLocaleString('en-US', {maximumFractionDigits:0});
+const pct = (a,b) => b ? ((a-b)/b*100) : null;
+
+/* KPI */
+const tQ11 = DATA.totals.nov.qty, tQ12 = DATA.totals.dec.qty;
+const tU11 = DATA.totals.nov.usd, tU12 = DATA.totals.dec.usd;
+const kpis = [
+  {lab:'11月 预估销量（全部店铺）', val:fmt(tQ11), unit:'件'},
+  {lab:'11月 预估销售额', val:usd(tU11), unit:'USD'},
+  {lab:'12月 预估销量（全部店铺）', val:fmt(tQ12), unit:'件'},
+  {lab:'12月 预估销售额', val:usd(tU12), unit:'USD'},
+  {lab:'12月 vs 11月 销量变化', val:((tQ12/tQ11-1)*100).toFixed(1)+'%', unit:'环比'},
+  {lab:'12月 vs 11月 销售额变化', val:((tU12/tU11-1)*100).toFixed(1)+'%', unit:'环比'},
+  {lab:'涉及推广人 / 店铺', val:DATA.keepers.length+' / '+DATA.shops.length, unit:''}
+];
+document.getElementById('kpis').innerHTML = kpis.map(k=>`<div class="kpi"><div class="lab">${k.lab}</div><div class="val">${k.val}<small>${k.unit}</small></div></div>`).join('');
+
+/* dept */
+const totalDept = DEPT_ROWS.reduce((s,d)=>s+d.q11+d.q12,0);
+const maxDept = Math.max(...DEPT_ROWS.map(d=>d.q11+d.q12));
+document.querySelector('#deptTable tbody').innerHTML = DEPT_ROWS.map(d=>{
+  const cq = pct(d.q12,d.q11), cu = pct(d.u12,d.u11);
+  const clsQ = cq===null?'':(cq>=0?'pos':'neg');
+  const clsU = cu===null?'':(cu>=0?'pos':'neg');
+  return `<tr><td><b>${d.d}</b></td>
+    <td class="num">${fmt(d.q11)}</td><td class="num">${usd(d.u11)}</td>
+    <td class="num">${fmt(d.q12)}</td><td class="num">${usd(d.u12)}</td>
+    <td class="num ${clsQ}">${(cq>0?'+':'')+cq.toFixed(1)}%</td>
+    <td class="num ${clsU}">${(cu>0?'+':'')+cu.toFixed(1)}%</td>
+    <td class="num">${d.kp}</td><td class="num">${d.sh}</td><td class="num">${d.ms}</td>
+    <td><div class="bar"><i style="width:${((d.q11+d.q12)/maxDept*100).toFixed(1)}%"></i></div><span class="num" style="font-size:11px;color:#6b7488">${((d.q11+d.q12)/totalDept*100).toFixed(1)}%</span></td>
+  </tr>`;
+}).join('');
+
+/* keepers */
+const sortedKeepers = [...DATA.keepers].sort((a,b)=>{
+  const ia=DEPT_ORDER.indexOf(DEPT[a.n]), ib=DEPT_ORDER.indexOf(DEPT[b.n]);
+  if(ia!==ib) return ia-ib;
+  return (b.q11+b.q12)-(a.q11+a.q12);
+});
+const totalAll = DATA.keepers.reduce((s,k)=>s+k.q11+k.q12,0);
+const maxQ = Math.max(...DATA.keepers.map(k=>k.q11+k.q12));
+document.querySelector('#keeperTable tbody').innerHTML = sortedKeepers.map(k=>{
+  const chg = pct(k.q12,k.q11);
+  const cls = chg===null?'':(chg>=0?'pos':'neg');
+  const share = ((k.q11+k.q12)/totalAll*100).toFixed(1);
+  return `<tr>
+    <td><b>${k.n}</b>${k.n==='AI推广'?' <span class="tag">批量账号</span>':''}</td>
+    <td><span class="tag">${DEPT[k.n]||'未归属'}</span></td>
+    <td class="num">${fmt(k.q11)}</td><td class="num">${usd(k.u11)}</td><td class="num">${k.m11}</td><td class="num">${k.s11}</td>
+    <td class="num">${fmt(k.q12)}</td><td class="num">${usd(k.u12)}</td><td class="num">${k.m12}</td><td class="num">${k.s12}</td>
+    <td class="num ${cls}">${chg===null?'—':(chg>0?'+':'')+chg.toFixed(1)+'%'}</td>
+    <td><div class="bar"><i style="width:${((k.q11+k.q12)/maxQ*100).toFixed(1)}%"></i></div><span class="num" style="font-size:11px;color:#6b7488">${share}%</span></td>
+  </tr>`;
+}).join('');
+
+/* shops */
+const maxS = Math.max(...DATA.shops.map(s=>s.q11+s.q12));
+document.querySelector('#shopTable tbody').innerHTML = DATA.shops.map(s=>{
+  const chg = pct(s.q12,s.q11);
+  const cls = chg===null?'':(chg>=0?'pos':'neg');
+  return `<tr><td><b>${s.s}</b></td>
+    <td class="num">${fmt(s.q11)}</td><td class="num">${usd(s.u11)}</td>
+    <td class="num">${fmt(s.q12)}</td><td class="num">${usd(s.u12)}</td>
+    <td class="num ${cls}">${chg===null?'—':(chg>0?'+':'')+chg.toFixed(1)+'%'}</td>
+    <td class="num">${s.m11}</td></tr>`;
+}).join('');
+
+/* top asins */
+const decMap = {};
+DATA.topDec.forEach(r=>{decMap[r.a+'|'+r.s]=r.q;});
+document.querySelector('#topTable tbody').innerHTML = DATA.topNov.map(r=>{
+  const q12 = decMap[r.a+'|'+r.s];
+  return `<tr><td><b>${r.a}</b></td><td>${r.m}</td><td>${r.s}</td><td>${r.k}</td>
+    <td style="text-align:left;max-width:360px;white-space:normal">${r.p||''}</td>
+    <td class="num">${fmt(r.q)}</td><td class="num">${q12!==undefined?fmt(q12):'—'}</td></tr>`;
+}).join('');
+
+/* notes */
+const bigDrop = DATA.shops.filter(s=>s.q11>3000 && s.q12 < s.q11*0.8);
+const bigRise = DATA.shops.filter(s=>s.q11>3000 && s.q12 > s.q11*1.3);
+const keeperRise = DATA.keepers.filter(k=>k.q11>=5000 && k.q12 > k.q11*1.3);
+const notes = [];
+notes.push(`<b>总量：</b>11月 ${fmt(tQ11)} 件 / ${usd(tU11)}，12月 ${fmt(tQ12)} 件 / ${usd(tU12)}；销量环比 ${((tQ12/tQ11-1)*100).toFixed(1)}%，销售额环比 ${((tU12/tU11-1)*100).toFixed(1)}%（销量基本持平，金额上升，主要来自单价更高的品放量）。`);
+notes.push(`<b>部门：</b>` + DEPT_ROWS.map(d=>`${d.d} 两月 ${fmt(d.q11+d.q12)} 件 / ${usd(d.u11+d.u12)}，12月环比 销量 ${((d.q12/d.q11-1)*100).toFixed(1)}%、金额 ${((d.u12/d.u11-1)*100).toFixed(1)}%`).join('；') + '。事业三部 12 月翻倍（+110%），几乎全部来自倪锐的优惠券书/应急盒新品；推广1组 12 月销量 −7.6% 但金额持平（结构向高价品迁移）。');
+if(keeperRise.length) notes.push(`<b>推广人环比大增（≥30%）：</b>${keeperRise.map(k=>`${k.n}（${fmt(k.q11)}→${fmt(k.q12)} 件，${usd(k.u11)}→${usd(k.u12)}，+${((k.q12/k.q11-1)*100).toFixed(0)}%）`).join('、')}。其中「倪锐」主要由 G11-US 优惠券书/应急盒等新品拉动，建议核对产能与库存是否支撑。`);
+if(bigDrop.length) notes.push(`<b>店铺环比下滑明显：</b>${bigDrop.map(s=>`${s.s}（${fmt(s.q11)}→${fmt(s.q12)} 件，${((s.q12/s.q11-1)*100).toFixed(0)}%）`).join('、')}。`);
+if(bigRise.length) notes.push(`<b>店铺环比上升明显：</b>${bigRise.map(s=>`${s.s}（${fmt(s.q11)}→${fmt(s.q12)} 件，+${((s.q12/s.q11-1)*100).toFixed(0)}%）`).join('、')}。`);
+notes.push(`<b>美元折算口径：</b>金额 = 各站本币预估销售额按 ERP 记账汇率折美元（ERP 配置 1 USD = 6.716 CNY；GBP 8.9505、EUR 7.5047、CAD 4.7732、JPY 0.0427）。ERP 汇率低于市场汇率，若改按市场汇率 7.10 折算，整体美元金额约缩小 5.4%。`);
+notes.push(`<b>口径说明：</b>本报告为盛途 ERP「备货预估」计划值，不是实际已售销量；盛途侧没有 ASIN 级历史实际销量，无法对全部 6,800+ 条 MSKU 做逐条模型回算。若需要按领星实际销量重算 11/12 月，请指定店铺范围（全量 ASIN 逐条拉取接口单次返回量小，数千条需要数十小时量级的调用，不具备可操作性）。`);
+document.getElementById('notes').innerHTML = notes.map(n=>`<p>${n}</p>`).join('');
+</script>
+</body>
+</html>

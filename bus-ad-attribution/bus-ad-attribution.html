@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B-US 近30天广告效果归因与预算重分配</title>
+<style>
+  @font-face { font-family:'InstrumentSans'; src:url('./_shared/fonts/InstrumentSans-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'InstrumentSans'; src:url('./_shared/fonts/InstrumentSans-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+  @font-face { font-family:'IBMPlexMono'; src:url('./_shared/fonts/IBMPlexMono-Regular.ttf') format('truetype'); font-weight:400; font-display:swap; }
+
+  :root{
+    --bg:#f7f8fa; --bg2:#ffffff; --ink:#1a2332; --muted:#6b7785; --rule:#e2e6ec;
+    --accent:#2563eb; --accent2:#f59e0b; --danger:#dc2626; --success:#16a34a; --warn:#ea580c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'InstrumentSans',-apple-system,'Microsoft YaHei',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;}
+  .container{max-width:1000px;margin:0 auto;padding:0 24px;}
+  .mono{font-family:'IBMPlexMono',monospace;}
+
+  .report-header{background:linear-gradient(135deg,#1a2332 0%,#2d3a52 100%);color:#fff;padding:48px 24px 40px;}
+  .report-header .container{padding:0;}
+  .report-header .label{font-family:'IBMPlexMono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+  .report-header h1{font-size:32px;font-weight:700;line-height:1.3;margin-bottom:16px;}
+  .report-header .meta{font-size:14px;color:rgba(255,255,255,.7);display:flex;flex-wrap:wrap;gap:20px;}
+  .report-header .meta span::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--accent2);margin-right:8px;vertical-align:middle;}
+
+  section{padding:36px 0;border-bottom:1px solid var(--rule);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-size:22px;font-weight:700;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--accent);display:inline-block;}
+  h3{font-size:17px;font-weight:700;margin:26px 0 12px;}
+  h4{font-size:15px;font-weight:700;margin:16px 0 8px;color:var(--accent);}
+  p{margin-bottom:12px;}
+  mark.key{background:none;color:var(--accent);font-weight:600;}
+  mark.bad{background:none;color:var(--danger);font-weight:600;}
+  mark.good{background:none;color:var(--success);font-weight:600;}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0;}
+  .kpi{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;}
+  .kpi .k{font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:6px;}
+  .kpi .v{font-family:'IBMPlexMono',monospace;font-size:24px;font-weight:700;line-height:1.2;}
+  .kpi .d{font-size:12px;color:var(--muted);margin-top:4px;}
+  .kpi.danger .v{color:var(--danger);}
+  .kpi.good .v{color:var(--success);}
+  .kpi.warn .v{color:var(--warn);}
+
+  .callout{border-left:4px solid var(--accent);background:#eff4ff;padding:16px 20px;border-radius:0 6px 6px 0;margin:18px 0;}
+  .callout.danger{border-left-color:var(--danger);background:#fef2f2;}
+  .callout.good{border-left-color:var(--success);background:#f0fdf4;}
+  .callout .t{font-weight:700;margin-bottom:6px;}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;background:var(--bg2);}
+  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--rule);}
+  th{background:#f1f3f7;font-weight:700;font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;}
+  td.num{font-family:'IBMPlexMono',monospace;}
+  tbody tr:hover{background:#fafbfd;}
+  tr.tot{background:#f1f3f7;font-weight:700;}
+  tr.tot td{border-top:2px solid var(--ink);}
+  .neg{color:var(--danger);}
+  .pos{color:var(--success);}
+  .tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;font-family:'IBMPlexMono',monospace;}
+  .tag.a{background:#dcfce7;color:#15803d;}
+  .tag.b{background:#fef3c7;color:#b45309;}
+  .tag.c{background:#fee2e2;color:#b91c1c;}
+
+  .chart{width:100%;height:340px;background:var(--bg2);border:1px solid var(--rule);border-radius:8px;margin:16px 0;}
+  .chart-sm{height:300px;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .note{font-size:12.5px;color:var(--muted);margin-top:6px;}
+  ul,ol{margin:10px 0 14px 22px;}
+  li{margin-bottom:6px;}
+  .footer{padding:28px 0 48px;color:var(--muted);font-size:12.5px;}
+  @media(max-width:860px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.two{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="container">
+    <div class="label">Amazon Ads Attribution · B-US</div>
+    <h1>B-US 近 30 天广告效果归因<br>与预算重分配方案</h1>
+    <div class="meta">
+      <span>数据窗口 2026-07-08 ~ 2026-08-06</span>
+      <span>数据源 领星 ERP（广告报表 + 订单利润）</span>
+      <span>Profile 415169050384855</span>
+      <span>币种 USD</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ============ 1. 结论 ============ -->
+<section>
+  <h2>一、核心结论</h2>
+
+  <div class="callout danger">
+    <div class="t">整体 ACOS 30.90% 已经击穿保本线 22.73%，广告板块本身是亏的。</div>
+    全店近 30 天扣除退款、FBA 配送费、佣金、采购成本、头程、仓储等<strong>一切非广告成本</strong>后，每 $1 销售额只剩 <strong>22.73 美分</strong>可用于支付广告并留存利润。这就是这个店的<strong>盈亏平衡 ACOS = 22.73%</strong>。实际 ACOS 30.90%，意味着广告直接产出的 $137,530 销售额，扣完变动成本后只贡献 $31,260 毛利池，却花掉了 $42,501 广告费——<strong>广告口径净亏 $11,240</strong>。全店还能剩 10.33% 毛利率，完全靠占比 59.87% 的自然单在补贴广告。
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="k">广告花费</div><div class="v">$42,501</div><div class="d">环比 +3.74%</div></div>
+    <div class="kpi"><div class="k">广告销售额</div><div class="v">$137,530</div><div class="d">环比 −2.28%</div></div>
+    <div class="kpi danger"><div class="k">ACOS</div><div class="v">30.90%</div><div class="d">保本线 22.73% · 超 8.17pp</div></div>
+    <div class="kpi"><div class="k">TACOS</div><div class="v">12.40%</div><div class="d">环比 −0.24pp</div></div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="k">全店销售额</div><div class="v">$342,827</div><div class="d">环比 +5.77%</div></div>
+    <div class="kpi warn"><div class="k">毛利 / 毛利率</div><div class="v">10.33%</div><div class="d">$35,412 · 已扣广告费</div></div>
+    <div class="kpi danger"><div class="k">广告净贡献毛利</div><div class="v">−$11,240</div><div class="d">广告销售额×22.73% − 花费</div></div>
+    <div class="kpi good"><div class="k">自然单占比</div><div class="v">57.08%</div><div class="d">21,238 / 37,208 单</div></div>
+  </div>
+
+  <h3>三句话版本</h3>
+  <ol>
+    <li><strong>钱花在了错的地方，不是花多了。</strong> 70.76% 的预算（$30,075）落在 ACOS &gt; 27.3% 的低效活动上，这批活动净亏 $12,838；而真正赚钱的高效活动只拿到 6.64% 预算。</li>
+    <li><strong>边际效率在恶化。</strong> 环比多花 $1,532 广告费，广告销售额反而<strong>少了 $3,213</strong>；广告 CVR 从 17.61% 掉到 17.06%，自然 CVR 却从 17.14% 升到 20.07%——广告正在买越来越差的流量。</li>
+    <li><strong>自然单增长不依赖这批低效广告。</strong> 自然订单环比 +14.66%（+2,716 单），自然销售额 +$21,904，而同期广告直接产出是负增长。削减低效投放的自然流量风险远低于直觉。</li>
+  </ol>
+</section>
+
+<!-- ============ 2. 保本线推导 ============ -->
+<section>
+  <h2>二、保本 ACOS 是怎么算出来的</h2>
+  <p>把广告花费关联到利润板块，必须先算清「广告前贡献毛利率」——即每 $1 销售额在扣掉所有非广告变动成本后，还剩多少钱能拿去投广告。</p>
+
+  <table>
+    <thead><tr><th>利润科目</th><th>金额 (USD)</th><th>占销售额</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>销售额</td><td class="num">342,827.17</td><td class="num">100.00%</td><td>含 B2B $46,897</td></tr>
+      <tr><td>退款</td><td class="num neg">−11,228.99</td><td class="num">−3.28%</td><td>退货率 3.69%</td></tr>
+      <tr><td>FBA 配送费</td><td class="num neg">−130,096.89</td><td class="num">−37.95%</td><td>低客单($8.14)结构性痛点</td></tr>
+      <tr><td>平台佣金</td><td class="num neg">−48,207.50</td><td class="num">−14.06%</td><td></td></tr>
+      <tr><td>采购成本</td><td class="num neg">−60,475.97</td><td class="num">−17.64%</td><td></td></tr>
+      <tr><td>头程物流</td><td class="num neg">−15,785.47</td><td class="num">−4.60%</td><td></td></tr>
+      <tr><td>仓储费</td><td class="num neg">−2,188.85</td><td class="num">−0.64%</td><td>含长期仓储 $378</td></tr>
+      <tr><td>促销 / 其他</td><td class="num neg">−1,189.88</td><td class="num">−0.35%</td><td></td></tr>
+      <tr><td>亚马逊配送补贴等</td><td class="num pos">+9,301.65</td><td class="num">+2.71%</td><td>shipping credit</td></tr>
+      <tr class="tot"><td>广告前贡献毛利</td><td class="num">77,912.31</td><td class="num">22.73%</td><td><strong>= 保本 ACOS</strong></td></tr>
+      <tr><td>广告费（SP+SB+SBV+SD）</td><td class="num neg">−42,500.53</td><td class="num">−12.40%</td><td>= TACOS</td></tr>
+      <tr class="tot"><td>毛利</td><td class="num">35,411.78</td><td class="num">10.33%</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="t">口径校验（自洽性检查）</div>
+    广告销售额 $137,530 × 22.73% − 广告费 $42,501 = <strong>−$11,240</strong>（广告板块）<br>
+    自然销售额 $205,297 × 22.73% = <strong>+$46,664</strong>（自然板块）<br>
+    合计 = <strong>$35,424</strong> ≈ 实际毛利 $35,412 ✓ 误差 0.03%，模型成立。
+  </div>
+
+  <p class="note">注：FBA 配送费占比 37.95% 是这个店保本 ACOS 只有 22.73% 的根本原因。平均客单价 $8.14 属于低价小件，配送费刚性摊薄了广告承受力。这是产品/定价层面的问题，本报告只在广告层做优化，但需要提示：<strong>如果不解决客单价，广告优化的天花板就锁死在这里。</strong></p>
+</section>
+
+<!-- ============ 3. 投放类型拆解 ============ -->
+<section>
+  <h2>三、按投放类型 / 投放方式拆解</h2>
+
+  <div class="chart" id="chartType"></div>
+
+  <table>
+    <thead><tr><th>广告类型</th><th>活动数</th><th>花费</th><th>预算占比</th><th>广告销售额</th><th>订单</th><th>ACOS</th><th>ROAS</th><th>净贡献毛利</th></tr></thead>
+    <tbody>
+      <tr><td>SP 商品推广</td><td class="num">671</td><td class="num">40,281</td><td class="num">94.8%</td><td class="num">129,234</td><td class="num">15,039</td><td class="num neg">31.17%</td><td class="num">3.21</td><td class="num neg">−10,906</td></tr>
+      <tr><td>SB / SBV 品牌推广</td><td class="num">28</td><td class="num">1,761</td><td class="num">4.1%</td><td class="num">6,272</td><td class="num">736</td><td class="num neg">28.08%</td><td class="num">3.56</td><td class="num neg">−335</td></tr>
+      <tr><td>SD 展示型推广</td><td class="num">1</td><td class="num">77</td><td class="num">0.2%</td><td class="num">106</td><td class="num">2</td><td class="num neg">72.52%</td><td class="num">1.38</td><td class="num neg">−53</td></tr>
+      <tr><td>长尾微量活动</td><td class="num">1,910</td><td class="num">382</td><td class="num">0.9%</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num neg">≈−300</td></tr>
+      <tr class="tot"><td>合计</td><td class="num">2,610</td><td class="num">42,501</td><td class="num">100%</td><td class="num">137,530</td><td class="num">15,970</td><td class="num">30.90%</td><td class="num">3.24</td><td class="num neg">−11,240</td></tr>
+    </tbody>
+  </table>
+
+  <div class="two">
+    <div>
+      <h4>按投放方式</h4>
+      <table>
+        <thead><tr><th>方式</th><th>活动</th><th>花费</th><th>ACOS</th><th>净贡献</th></tr></thead>
+        <tbody>
+          <tr><td>手动 manual</td><td class="num">593</td><td class="num">35,627</td><td class="num neg">31.67%</td><td class="num neg">−10,058</td></tr>
+          <tr><td>自动 auto</td><td class="num">107</td><td class="num">6,491</td><td class="num neg">28.08%</td><td class="num neg">−1,236</td></tr>
+        </tbody>
+      </table>
+      <p class="note">反直觉信号：<strong>自动投放的 ACOS 反而比手动低 3.6pp</strong>。说明手动关键词库存在大量高竞价低转化的词，人工选词质量低于亚马逊算法。</p>
+    </div>
+    <div>
+      <h4>SP 直接 / 间接归因</h4>
+      <table>
+        <thead><tr><th>归因</th><th>销售额</th><th>占比</th><th>ACOS/ROAS</th></tr></thead>
+        <tbody>
+          <tr><td>直接（广告 ASIN 本身）</td><td class="num">105,460</td><td class="num">76.6%</td><td class="num">直接 ACOS 40.30%</td></tr>
+          <tr><td>间接（同店其他 ASIN）</td><td class="num">32,140</td><td class="num">23.4%</td><td class="num">间接 ROAS 0.76</td></tr>
+        </tbody>
+      </table>
+      <p class="note">若只看直接归因，ACOS 高达 40.30%，远超保本线。<strong>23.4% 的间接销售额是把整体 ACOS 从 40.30% 拉回 30.90% 的唯一功臣</strong>——这部分主要来自品类关联购买，说明店铺 SKU 交叉带动有效，但不足以覆盖投放浪费。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. 三档分类 ============ -->
+<section>
+  <h2>四、三档分类：赚钱 / 保本 / 烧钱</h2>
+  <p>以保本 ACOS 22.73% 为轴，留 ±20% 缓冲带划分。<strong>净贡献毛利 = 广告销售额 × 22.73% − 广告花费</strong>，这是判断一个活动到底赚不赚钱的唯一标准。</p>
+
+  <div class="chart" id="chartTier"></div>
+
+  <table>
+    <thead><tr><th>档位</th><th>判定</th><th>活动数</th><th>花费</th><th>预算占比</th><th>广告销售额</th><th>订单</th><th>ACOS</th><th>净贡献毛利</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag a">A</span> 真正赚钱的高效投放</td><td>ACOS ≤ 18.2%</td><td class="num">81</td><td class="num">2,824</td><td class="num">6.64%</td><td class="num">19,754</td><td class="num">1,801</td><td class="num pos">14.30%</td><td class="num pos">+1,666</td></tr>
+      <tr><td><span class="tag b">B</span> 保本引流的投放</td><td>18.2% ~ 27.3%</td><td class="num">163</td><td class="num">9,220</td><td class="num">21.69%</td><td class="num">40,026</td><td class="num">4,774</td><td class="num">23.03%</td><td class="num">−122</td></tr>
+      <tr><td><span class="tag c">C</span> 纯烧钱的低效投放</td><td>ACOS &gt; 27.3% 或零单</td><td class="num">456</td><td class="num">30,075</td><td class="num neg">70.76%</td><td class="num">75,831</td><td class="num">9,202</td><td class="num neg">39.66%</td><td class="num neg">−12,838</td></tr>
+      <tr><td>长尾未覆盖</td><td>单活动花费 &lt; $4.7</td><td class="num">1,910</td><td class="num">382</td><td class="num">0.90%</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num neg">≈−300</td></tr>
+      <tr class="tot"><td>合计</td><td></td><td class="num">2,610</td><td class="num">42,501</td><td class="num">100%</td><td class="num">137,530</td><td class="num">15,970</td><td class="num">30.90%</td><td class="num neg">−11,240</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout danger">
+    <div class="t">结构性失衡：预算与效率完全倒挂</div>
+    高效档拿 6.64% 预算却是唯一正贡献；烧钱档拿走 70.76% 预算，一个月净亏 $12,838。<strong>如果把 C 档全部关掉，广告板块立刻从 −$11,240 变成 +$1,544 盈利</strong>（当然会损失 $75,831 销售额和相应排名，所以要做的是结构调整而非一刀切）。
+  </div>
+
+  <h3>C 档再细分：不是所有「烧钱」都该一刀切</h3>
+  <table>
+    <thead><tr><th>子档</th><th>判定</th><th>活动数</th><th>花费</th><th>预算占比</th><th>销售额</th><th>订单</th><th>ACOS</th><th>净亏</th><th>处置</th></tr></thead>
+    <tbody>
+      <tr><td>C1 轻度超标</td><td>27.3%~40%</td><td class="num">192</td><td class="num">18,071</td><td class="num">42.52%</td><td class="num">54,125</td><td class="num">6,484</td><td class="num">33.4%</td><td class="num neg">−5,768</td><td>结构优化，不关</td></tr>
+      <tr><td>C2 重度超标</td><td>40%~80%</td><td class="num">169</td><td class="num">9,625</td><td class="num">22.65%</td><td class="num">19,751</td><td class="num">2,467</td><td class="num">48.7%</td><td class="num neg">−5,135</td><td>预算腰斩</td></tr>
+      <tr><td>C3 极度浪费</td><td>&gt; 80%</td><td class="num">71</td><td class="num">2,085</td><td class="num">4.91%</td><td class="num">1,956</td><td class="num">251</td><td class="num neg">106.6%</td><td class="num neg">−1,641</td><td>立即暂停</td></tr>
+      <tr><td>C4 有花费零订单</td><td>627 次点击 0 单</td><td class="num">24</td><td class="num">294</td><td class="num">0.69%</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num neg">−294</td><td>立即暂停</td></tr>
+    </tbody>
+  </table>
+  <p class="note">C1 是「大而不精」——占了 42.5% 预算、贡献 6,484 单，是店铺的销量基本盘，不能关，只能靠否词、降竞价、调位置系数把 ACOS 从 33.4% 压下来。C3/C4 才是真·纯浪费，合计仅 $2,379，关掉毫无痛感。</p>
+</section>
+
+<!-- ============ 5. 关键词层 ============ -->
+<section>
+  <h2>五、关键词层归因</h2>
+  <p>关键词层覆盖 $29,280 花费（占总花费 68.9%），共 29,651 个投放词，已分析 Top 400（覆盖该层 89.18%）。</p>
+
+  <table>
+    <thead><tr><th>档位</th><th>词数</th><th>花费</th><th>该层占比</th><th>销售额</th><th>订单</th><th>ACOS</th><th>净贡献毛利</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag a">A</span> 高效 ACOS ≤ 18.2%</td><td class="num">33</td><td class="num">1,809</td><td class="num">6.18%</td><td class="num">11,100</td><td class="num">1,057</td><td class="num pos">16.3%</td><td class="num pos">+714</td></tr>
+      <tr><td><span class="tag b">B</span> 保本 18.2%~27.3%</td><td class="num">85</td><td class="num">4,179</td><td class="num">14.27%</td><td class="num">18,350</td><td class="num">2,072</td><td class="num">22.8%</td><td class="num">−8</td></tr>
+      <tr><td><span class="tag c">C</span> 低效 &gt; 27.3%</td><td class="num">274</td><td class="num">19,971</td><td class="num neg">68.21%</td><td class="num">52,326</td><td class="num">6,482</td><td class="num neg">38.2%</td><td class="num neg">−8,077</td></tr>
+      <tr><td><span class="tag c">D</span> 有点击零订单</td><td class="num">8</td><td class="num">154</td><td class="num">0.53%</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num neg">−154</td></tr>
+    </tbody>
+  </table>
+
+  <h3>最该加投的关键词 TOP 12</h3>
+  <table>
+    <thead><tr><th>关键词</th><th>花费</th><th>销售额</th><th>订单</th><th>ACOS</th><th>CVR</th><th>CPC</th><th>曝光</th><th>净贡献</th></tr></thead>
+    <tbody>
+      <tr><td>pins with backing</td><td class="num">356</td><td class="num">1,964</td><td class="num">273</td><td class="num pos">18.1%</td><td class="num">43.5%</td><td class="num">0.57</td><td class="num">57,189</td><td class="num pos">+91</td></tr>
+      <tr><td>popsicles holders</td><td class="num">156</td><td class="num">1,014</td><td class="num">71</td><td class="num pos">15.4%</td><td class="num">20.3%</td><td class="num">0.45</td><td class="num">22,878</td><td class="num pos">+75</td></tr>
+      <tr><td>curtain clips</td><td class="num">195</td><td class="num">1,136</td><td class="num">104</td><td class="num pos">17.2%</td><td class="num">19.7%</td><td class="num">0.37</td><td class="num">41,847</td><td class="num pos">+63</td></tr>
+      <tr><td>popsicle sleeve</td><td class="num">33</td><td class="num">396</td><td class="num">25</td><td class="num pos">8.4%</td><td class="num">24.3%</td><td class="num">0.32</td><td class="num">5,555</td><td class="num pos">+57</td></tr>
+      <tr><td>ice pop sleeves</td><td class="num">151</td><td class="num">858</td><td class="num">71</td><td class="num pos">17.6%</td><td class="num">23.1%</td><td class="num">0.49</td><td class="num">37,308</td><td class="num pos">+44</td></tr>
+      <tr><td>popsicle sleeves</td><td class="num">95</td><td class="num">579</td><td class="num">52</td><td class="num pos">16.4%</td><td class="num">23.4%</td><td class="num">0.43</td><td class="num">15,720</td><td class="num pos">+37</td></tr>
+      <tr><td>resin filter</td><td class="num">98</td><td class="num">540</td><td class="num">29</td><td class="num pos">18.1%</td><td class="num">34.5%</td><td class="num">1.16</td><td class="num">9,754</td><td class="num pos">+25</td></tr>
+      <tr><td>pin back</td><td class="num">74</td><td class="num">428</td><td class="num">61</td><td class="num pos">17.3%</td><td class="num">29.2%</td><td class="num">0.35</td><td class="num">21,679</td><td class="num pos">+23</td></tr>
+      <tr><td>barbie shoes for dolls</td><td class="num">25</td><td class="num">211</td><td class="num">26</td><td class="num pos">12.0%</td><td class="num">13.9%</td><td class="num">0.14</td><td class="num">9,983</td><td class="num pos">+23</td></tr>
+      <tr><td>keep at home return to school stickers</td><td class="num">63</td><td class="num">374</td><td class="num">30</td><td class="num pos">16.9%</td><td class="num">12.9%</td><td class="num">0.27</td><td class="num">15,402</td><td class="num pos">+22</td></tr>
+      <tr><td>rubber pin backs</td><td class="num">72</td><td class="num">413</td><td class="num">38</td><td class="num pos">17.5%</td><td class="num">29.5%</td><td class="num">0.56</td><td class="num">24,879</td><td class="num pos">+22</td></tr>
+      <tr><td>straws</td><td class="num">71</td><td class="num">398</td><td class="num">42</td><td class="num pos">17.7%</td><td class="num">8.4%</td><td class="num">0.14</td><td class="num">40,922</td><td class="num pos">+20</td></tr>
+    </tbody>
+  </table>
+  <p class="note">共性：CPC 普遍在 $0.14~0.57 的低位，CVR 却在 20%~43%。<strong>这类词的曝光量并不高（多在 1~5 万），说明还没吃满流量，是最干净的加投空间。</strong>建议竞价上调 15~25%，同时把 Top of Search 位置系数提到 +30%~50%。</p>
+
+  <h3>最该削减 / 否定的关键词 TOP 15</h3>
+  <table>
+    <thead><tr><th>关键词</th><th>花费</th><th>销售额</th><th>订单</th><th>ACOS</th><th>CVR</th><th>CPC</th><th>点击</th><th>净亏</th><th>动作</th></tr></thead>
+    <tbody>
+      <tr><td>badge reel</td><td class="num">1,579</td><td class="num">4,259</td><td class="num">238</td><td class="num neg">37.1%</td><td class="num">17.5%</td><td class="num neg">1.16</td><td class="num">1,363</td><td class="num neg">−611</td><td>降竞价 30%</td></tr>
+      <tr><td>sticky tack</td><td class="num">1,565</td><td class="num">4,230</td><td class="num">692</td><td class="num neg">37.0%</td><td class="num">28.8%</td><td class="num">0.65</td><td class="num">2,403</td><td class="num neg">−604</td><td>降竞价 25%</td></tr>
+      <tr><td>glue dots</td><td class="num">1,195</td><td class="num">3,314</td><td class="num">499</td><td class="num neg">36.1%</td><td class="num">29.0%</td><td class="num">0.69</td><td class="num">1,720</td><td class="num neg">−442</td><td>降竞价 25%</td></tr>
+      <tr><td>badge reels retractable</td><td class="num">837</td><td class="num">2,221</td><td class="num">114</td><td class="num neg">37.7%</td><td class="num">18.2%</td><td class="num neg">1.34</td><td class="num">625</td><td class="num neg">−332</td><td>降竞价 35%</td></tr>
+      <tr><td>waxing sticks</td><td class="num">428</td><td class="num">1,027</td><td class="num">204</td><td class="num neg">41.7%</td><td class="num">34.5%</td><td class="num">0.72</td><td class="num">591</td><td class="num neg">−194</td><td>降竞价 35%</td></tr>
+      <tr><td>double sided tape for walls</td><td class="num">298</td><td class="num">536</td><td class="num">86</td><td class="num neg">55.6%</td><td class="num">22.0%</td><td class="num">0.76</td><td class="num">391</td><td class="num neg">−176</td><td>暂停</td></tr>
+      <tr><td>sticky dots</td><td class="num">662</td><td class="num">2,186</td><td class="num">362</td><td class="num neg">30.3%</td><td class="num">34.8%</td><td class="num">0.64</td><td class="num">1,039</td><td class="num neg">−165</td><td>降竞价 15%</td></tr>
+      <tr><td>sticky dots clear double sided</td><td class="num">207</td><td class="num">291</td><td class="num">50</td><td class="num neg">71.0%</td><td class="num">25.8%</td><td class="num neg">1.06</td><td class="num">194</td><td class="num neg">−140</td><td>暂停</td></tr>
+      <tr><td>museum putty</td><td class="num">188</td><td class="num">264</td><td class="num">44</td><td class="num neg">71.1%</td><td class="num">15.7%</td><td class="num">0.67</td><td class="num">281</td><td class="num neg">−128</td><td>暂停</td></tr>
+      <tr><td>sticky dots clear double sided removable</td><td class="num">290</td><td class="num">721</td><td class="num">119</td><td class="num neg">40.2%</td><td class="num">25.9%</td><td class="num">0.63</td><td class="num">460</td><td class="num neg">−126</td><td>降竞价 35%</td></tr>
+      <tr><td>poster putty</td><td class="num">269</td><td class="num">663</td><td class="num">109</td><td class="num neg">40.6%</td><td class="num">24.6%</td><td class="num">0.61</td><td class="num">444</td><td class="num neg">−118</td><td>降竞价 35%</td></tr>
+      <tr><td>press on nails for kids</td><td class="num">158</td><td class="num">240</td><td class="num">25</td><td class="num neg">65.6%</td><td class="num neg">7.8%</td><td class="num">0.49</td><td class="num">320</td><td class="num neg">−103</td><td>否定</td></tr>
+      <tr><td>fake nails for kids</td><td class="num">160</td><td class="num">264</td><td class="num">28</td><td class="num neg">60.7%</td><td class="num neg">9.0%</td><td class="num">0.51</td><td class="num">312</td><td class="num neg">−100</td><td>否定</td></tr>
+      <tr><td>eyeglass nose pad</td><td class="num">181</td><td class="num">364</td><td class="num">26</td><td class="num neg">49.7%</td><td class="num neg">7.1%</td><td class="num">0.50</td><td class="num">364</td><td class="num neg">−98</td><td>否定</td></tr>
+      <tr><td>open when cards college</td><td class="num">137</td><td class="num">226</td><td class="num">21</td><td class="num neg">60.7%</td><td class="num neg">6.3%</td><td class="num">0.41</td><td class="num">333</td><td class="num neg">−86</td><td>否定</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="t">两类浪费要用不同手法</div>
+    <strong>高 CVR + 高 ACOS</strong>（sticky tack 28.8%、glue dots 29.0%、waxing sticks 34.5%）：转化没问题，问题在 <strong>CPC 买贵了</strong>。降竞价即可，不要否定——否掉会直接丢掉几百单。<br>
+    <strong>低 CVR + 高 ACOS</strong>（press on nails for kids 7.8%、eyeglass nose pad 7.1%、open when cards college 6.3%）：<strong>流量不精准</strong>，Listing 与搜索意图不匹配。直接加否定关键词。
+  </div>
+</section>
+
+<!-- ============ 6. 自然单带动 ============ -->
+<section>
+  <h2>六、广告对自然单的带动</h2>
+
+  <div class="chart chart-sm" id="chartNature"></div>
+
+  <table>
+    <thead><tr><th>指标</th><th>上期 06-08~07-07</th><th>本期 07-08~08-06</th><th>变化</th><th>读数</th></tr></thead>
+    <tbody>
+      <tr><td>广告花费</td><td class="num">40,968.73</td><td class="num">42,500.53</td><td class="num neg">+1,531.80 (+3.74%)</td><td>投入增加</td></tr>
+      <tr><td>广告销售额</td><td class="num">140,742.89</td><td class="num">137,530.11</td><td class="num neg">−3,212.78 (−2.28%)</td><td><strong>直接产出下降</strong></td></tr>
+      <tr><td>自然销售额</td><td class="num">183,393.53</td><td class="num">205,297.06</td><td class="num pos">+21,903.53 (+11.94%)</td><td><strong>增量全在自然侧</strong></td></tr>
+      <tr><td>广告订单</td><td class="num">15,494</td><td class="num">15,970</td><td class="num">+476 (+3.07%)</td><td>与花费同步</td></tr>
+      <tr><td>自然订单</td><td class="num">18,522</td><td class="num">21,238</td><td class="num pos">+2,716 (+14.66%)</td><td>强劲增长</td></tr>
+      <tr><td>广告 CVR</td><td class="num">17.61%</td><td class="num">17.06%</td><td class="num neg">−0.55pp</td><td>广告流量变差</td></tr>
+      <tr><td>自然 CVR</td><td class="num">17.14%</td><td class="num">20.07%</td><td class="num pos">+2.93pp</td><td>自然流量变好</td></tr>
+      <tr><td>广告销售占比 ASoAS</td><td class="num">43.44%</td><td class="num">40.13%</td><td class="num pos">−3.31pp</td><td>对广告依赖下降</td></tr>
+      <tr><td>ACOS</td><td class="num">29.11%</td><td class="num">30.90%</td><td class="num neg">+1.79pp</td><td>效率恶化</td></tr>
+      <tr><td>TACOS</td><td class="num">12.64%</td><td class="num">12.40%</td><td class="num pos">−0.24pp</td><td>整体尚可</td></tr>
+      <tr><td>广告净贡献毛利</td><td class="num neg">−9,302</td><td class="num neg">−11,240</td><td class="num neg">恶化 1,938 (+20.8%)</td><td><strong>亏损在扩大</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout danger">
+    <div class="t">边际 ROI 为负：多投的钱没换来广告单</div>
+    环比多投 $1,532，广告销售额<strong>反而少 $3,213</strong>。这是典型的「预算撞在低效活动上」信号——新增预算被 C 档吃掉，而 C 档的 ACOS 高达 39.66%。<br><br>
+    同期自然单 +14.66%，但要注意归因：广告 CVR 在跌、自然 CVR 在涨，说明自然单增长更可能来自<strong>前期积累的排名/评论（reviews 13.4 万条）与季节性</strong>，而非当期低效广告的溢出。这是削减 C 档的核心底气——<mark class="key">这批广告既没带来广告单，也不是自然单的驱动力</mark>。
+  </div>
+
+  <p class="note">保守起见，本报告在收益测算中仍预留了「自然单因广告削减下滑 3%」的敏感性情景（见第八节）。</p>
+</section>
+
+<!-- ============ 7. 加投与削减清单 ============ -->
+<section>
+  <h2>七、加投与削减清单</h2>
+
+  <h3>该加投：高效活动 TOP 12</h3>
+  <table>
+    <thead><tr><th>广告活动</th><th>类型</th><th>花费</th><th>销售额</th><th>订单</th><th>ACOS</th><th>CVR</th><th>CPC</th><th>净贡献</th><th>建议</th></tr></thead>
+    <tbody>
+      <tr><td>DeepBI_0514_B0F5BDB7JT_ASIN</td><td>SP</td><td class="num">189</td><td class="num">1,777</td><td class="num">88</td><td class="num pos">10.6%</td><td class="num">15.6%</td><td class="num">0.33</td><td class="num pos">+215</td><td>预算 ×2.5</td></tr>
+      <tr><td>DeepBI_0502_B09TSX9QY2_AUTO</td><td>SP</td><td class="num">114</td><td class="num">1,001</td><td class="num">47</td><td class="num pos">11.4%</td><td class="num">18.3%</td><td class="num">0.44</td><td class="num pos">+114</td><td>预算 ×2.5</td></tr>
+      <tr><td>DeepBI_0721_B09WYL5TBS_pins_with_backing</td><td>SP</td><td class="num">303</td><td class="num">1,771</td><td class="num">249</td><td class="num pos">17.1%</td><td class="num">47.5%</td><td class="num">0.58</td><td class="num pos">+100</td><td>预算 ×2</td></tr>
+      <tr><td>DeepBI_0721_B0F5BDB7JT_popsicles_holders</td><td>SP</td><td class="num">135</td><td class="num">957</td><td class="num">65</td><td class="num pos">14.1%</td><td class="num">21.4%</td><td class="num">0.44</td><td class="num pos">+82</td><td>预算 ×2</td></tr>
+      <tr><td>328-B4475asin</td><td>SP</td><td class="num">189</td><td class="num">1,177</td><td class="num">106</td><td class="num pos">16.1%</td><td class="num">28.6%</td><td class="num">0.51</td><td class="num pos">+78</td><td>预算 ×2</td></tr>
+      <tr><td>1737双面胶商品集</td><td>SB</td><td class="num">112</td><td class="num">804</td><td class="num">125</td><td class="num pos">13.9%</td><td class="num">40.2%</td><td class="num">0.36</td><td class="num pos">+71</td><td>预算 ×2.5</td></tr>
+      <tr><td>DeepBI_0721_B0F5BDB7JT_popsicle_sleeve</td><td>SP</td><td class="num">17</td><td class="num">312</td><td class="num">16</td><td class="num pos">5.6%</td><td class="num">25.8%</td><td class="num">0.28</td><td class="num pos">+53</td><td>预算 ×4（当前无预算）</td></tr>
+      <tr><td>DeepBI_0502_B097BFRCJM_AUTO</td><td>SP</td><td class="num">99</td><td class="num">666</td><td class="num">42</td><td class="num pos">14.9%</td><td class="num">14.6%</td><td class="num">0.34</td><td class="num pos">+52</td><td>预算 ×2</td></tr>
+      <tr><td>03-B280ASIN</td><td>SP</td><td class="num">36</td><td class="num">365</td><td class="num">16</td><td class="num pos">9.8%</td><td class="num">22.9%</td><td class="num">0.51</td><td class="num pos">+47</td><td>预算 ×3</td></tr>
+      <tr><td>DeepBI_0721_B09TSX9QY2_janyun_100_pcs_badge</td><td>SP</td><td class="num">33</td><td class="num">344</td><td class="num">14</td><td class="num pos">9.6%</td><td class="num">25.4%</td><td class="num">0.60</td><td class="num pos">+45</td><td>预算 ×3</td></tr>
+      <tr><td>DeepBI_0502_B09V1682TC_AUTO</td><td>SP</td><td class="num">81</td><td class="num">541</td><td class="num">32</td><td class="num pos">15.0%</td><td class="num">15.8%</td><td class="num">0.40</td><td class="num pos">+42</td><td>预算 ×2</td></tr>
+      <tr><td>DeepBI_0721_B0F5BDB7JT_popsicle_holder</td><td>SP</td><td class="num">60</td><td class="num">441</td><td class="num">20</td><td class="num pos">13.6%</td><td class="num">19.8%</td><td class="num">0.59</td><td class="num pos">+41</td><td>预算 ×2</td></tr>
+    </tbody>
+  </table>
+  <div class="callout good">
+    <div class="t">明显规律：DeepBI 系列自动化活动是全店效率最高的一批</div>
+    加投 TOP12 中 8 个是 DeepBI_ 前缀活动，平均 ACOS 12.4%，CPC 仅 $0.28~0.60。而人工命名的老活动（02-、168-、125- 系列）几乎全部落在 C 档。<strong>建议把预算向 DeepBI 体系倾斜，并复盘老活动的选词与竞价逻辑。</strong>另有 20 个 B 档优等生（ACOS ≤21%、订单 ≥20、合计花费 $1,403、ACOS 19.4%）可作为次级加投池。
+  </div>
+
+  <h3>该暂停：C3 极度浪费 + C4 零单</h3>
+  <table>
+    <thead><tr><th>广告活动</th><th>花费</th><th>销售额</th><th>订单</th><th>ACOS</th><th>CVR</th><th>动作</th></tr></thead>
+    <tbody>
+      <tr><td>125-B2665ASIN</td><td class="num">219</td><td class="num">228</td><td class="num">23</td><td class="num neg">96.3%</td><td class="num neg">6.2%</td><td>暂停</td></tr>
+      <tr><td>125-14891-B-SP-KW</td><td class="num">165</td><td class="num">197</td><td class="num">20</td><td class="num neg">83.9%</td><td class="num neg">5.5%</td><td>暂停</td></tr>
+      <tr><td>168-B2111</td><td class="num">157</td><td class="num">125</td><td class="num">20</td><td class="num neg">125.6%</td><td class="num">16.3%</td><td>暂停</td></tr>
+      <tr><td>DeepBI_0502_B09926KKC2_MANUAL</td><td class="num">92</td><td class="num">112</td><td class="num">18</td><td class="num neg">82.9%</td><td class="num">16.2%</td><td>暂停</td></tr>
+      <tr><td>389-10623-B-SP-KW</td><td class="num">86</td><td class="num">102</td><td class="num">10</td><td class="num neg">84.5%</td><td class="num neg">5.5%</td><td>暂停</td></tr>
+      <tr><td>DeepBI_0502_B07C49CWHM_MANUAL</td><td class="num">72</td><td class="num">83</td><td class="num">14</td><td class="num neg">86.4%</td><td class="num neg">6.8%</td><td>暂停</td></tr>
+      <tr><td>DeepBI_0514_B0CT35SQ9B_ASIN</td><td class="num">68</td><td class="num">83</td><td class="num">13</td><td class="num neg">82.0%</td><td class="num neg">6.1%</td><td>暂停</td></tr>
+      <tr><td>125-15495-B-SP-KW</td><td class="num">60</td><td class="num">40</td><td class="num">5</td><td class="num neg">150.3%</td><td class="num neg">4.3%</td><td>暂停</td></tr>
+      <tr><td>328-14867-B-SP-AUTO</td><td class="num">53</td><td class="num">29</td><td class="num">4</td><td class="num neg">182.7%</td><td class="num neg">2.9%</td><td>暂停</td></tr>
+      <tr><td>DeepBI_0721_B09V1682TC_retractable_id_badge</td><td class="num">37</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num">0%</td><td>暂停（25 点击 0 单）</td></tr>
+      <tr><td>125-14891-B-SP-AUTO</td><td class="num">31</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num">0%</td><td>暂停（68 点击 0 单）</td></tr>
+      <tr><td>326-15119-B-SP-KW</td><td class="num">24</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num">0%</td><td>暂停（56 点击 0 单）</td></tr>
+      <tr class="tot"><td>C3 + C4 合计（95 个活动）</td><td class="num">2,379</td><td class="num">1,956</td><td class="num">251</td><td class="num neg">121.6%</td><td class="num">—</td><td>释放 $2,379</td></tr>
+    </tbody>
+  </table>
+
+  <h3>该腰斩：C2 重度超标 TOP 10</h3>
+  <table>
+    <thead><tr><th>广告活动</th><th>花费</th><th>销售额</th><th>订单</th><th>ACOS</th><th>CVR</th><th>CPC</th><th>净亏</th><th>动作</th></tr></thead>
+    <tbody>
+      <tr><td>B1737精准</td><td class="num">855</td><td class="num">1,887</td><td class="num">316</td><td class="num neg">45.3%</td><td class="num">24.9%</td><td class="num">0.67</td><td class="num neg">−426</td><td>预算 −50%，竞价 −30%</td></tr>
+      <tr><td>126-B1376</td><td class="num">482</td><td class="num">1,128</td><td class="num">224</td><td class="num neg">42.7%</td><td class="num">33.6%</td><td class="num">0.72</td><td class="num neg">−226</td><td>竞价 −35%（CVR 高，别关）</td></tr>
+      <tr><td>02-B258X 眼镜修理套装</td><td class="num">436</td><td class="num">1,007</td><td class="num">72</td><td class="num neg">43.3%</td><td class="num neg">7.9%</td><td class="num">0.48</td><td class="num neg">−207</td><td>预算 −60%，查 Listing</td></tr>
+      <tr><td>125-B2665</td><td class="num">332</td><td class="num">559</td><td class="num">54</td><td class="num neg">59.4%</td><td class="num neg">8.2%</td><td class="num">0.51</td><td class="num neg">−205</td><td>预算 −70%</td></tr>
+      <tr><td>02-B424X SP-KW</td><td class="num">327</td><td class="num">780</td><td class="num">87</td><td class="num neg">41.9%</td><td class="num">15.1%</td><td class="num">0.57</td><td class="num neg">−149</td><td>预算 −50%</td></tr>
+      <tr><td>168-B1955</td><td class="num">210</td><td class="num">280</td><td class="num">51</td><td class="num neg">75.0%</td><td class="num">27.1%</td><td class="num neg">1.12</td><td class="num neg">−146</td><td>竞价 −50%（CPC 过高）</td></tr>
+      <tr><td>168-B2111自动</td><td class="num">309</td><td class="num">737</td><td class="num">126</td><td class="num neg">42.0%</td><td class="num">20.2%</td><td class="num">0.49</td><td class="num neg">−142</td><td>预算 −50%</td></tr>
+      <tr><td>02-B277X-SP-ASIN</td><td class="num">240</td><td class="num">520</td><td class="num">53</td><td class="num neg">46.1%</td><td class="num neg">8.8%</td><td class="num">0.40</td><td class="num neg">−122</td><td>预算 −60%</td></tr>
+      <tr><td>168-B2123</td><td class="num">185</td><td class="num">344</td><td class="num">35</td><td class="num neg">53.8%</td><td class="num neg">5.5%</td><td class="num">0.29</td><td class="num neg">−107</td><td>暂停</td></tr>
+      <tr><td>89-14877-B-SP-AUTO</td><td class="num">151</td><td class="num">248</td><td class="num">15</td><td class="num neg">60.7%</td><td class="num neg">3.2%</td><td class="num">0.32</td><td class="num neg">−94</td><td>暂停（CVR 3.2%）</td></tr>
+      <tr class="tot"><td>C2 合计（169 个活动）</td><td class="num">9,625</td><td class="num">19,751</td><td class="num">2,467</td><td class="num neg">48.7%</td><td class="num">—</td><td class="num neg">−5,135</td><td>释放 $4,813</td></tr>
+    </tbody>
+  </table>
+
+  <h3>该优化不该关：C1 大盘活动 TOP 8</h3>
+  <table>
+    <thead><tr><th>广告活动</th><th>花费</th><th>销售额</th><th>订单</th><th>ACOS</th><th>CVR</th><th>CPC</th><th>净亏</th><th>动作</th></tr></thead>
+    <tbody>
+      <tr><td>02-B68X</td><td class="num">2,688</td><td class="num">7,470</td><td class="num">387</td><td class="num neg">36.0%</td><td class="num">19.9%</td><td class="num neg">1.38</td><td class="num neg">−990</td><td><strong>CPC $1.38 全店最贵</strong>，竞价 −30%</td></tr>
+      <tr><td>168-B1737</td><td class="num">2,242</td><td class="num">5,838</td><td class="num">952</td><td class="num neg">38.4%</td><td class="num">28.3%</td><td class="num">0.67</td><td class="num neg">−916</td><td>CVR 优秀，纯 CPC 问题，竞价 −25%</td></tr>
+      <tr><td>SP_Colab_KT_关键词T3_CPC_B08NYDBXFX_精准</td><td class="num">860</td><td class="num">2,305</td><td class="num">383</td><td class="num neg">37.3%</td><td class="num">29.1%</td><td class="num">0.65</td><td class="num neg">−336</td><td>竞价 −25%</td></tr>
+      <tr><td>02-B243X-KW</td><td class="num">1,180</td><td class="num">3,812</td><td class="num">637</td><td class="num neg">31.0%</td><td class="num">23.3%</td><td class="num">0.43</td><td class="num neg">−314</td><td>否词清理即可，竞价 −12%</td></tr>
+      <tr><td>B343银色窗帘夹</td><td class="num">425</td><td class="num">1,096</td><td class="num">86</td><td class="num neg">38.7%</td><td class="num">13.8%</td><td class="num">0.68</td><td class="num neg">−176</td><td>竞价 −30%</td></tr>
+      <tr><td>168-12796-B-SP-KW精准</td><td class="num">298</td><td class="num">873</td><td class="num">115</td><td class="num neg">34.2%</td><td class="num">14.6%</td><td class="num">0.38</td><td class="num neg">−100</td><td>竞价 −20%</td></tr>
+      <tr><td>168-B1737-SP-ASIN art</td><td class="num">330</td><td class="num">1,113</td><td class="num">182</td><td class="num neg">29.7%</td><td class="num">27.4%</td><td class="num">0.50</td><td class="num neg">−77</td><td>竞价 −10%</td></tr>
+      <tr><td>03-B235X-SP-AUTO</td><td class="num">328</td><td class="num">1,163</td><td class="num">114</td><td class="num neg">28.2%</td><td class="num neg">8.6%</td><td class="num">0.25</td><td class="num neg">−64</td><td>加否词提 CVR</td></tr>
+      <tr class="tot"><td>C1 合计（192 个活动）</td><td class="num">18,071</td><td class="num">54,125</td><td class="num">6,484</td><td class="num neg">33.4%</td><td class="num">—</td><td class="num">—</td><td class="num neg">−5,768</td><td>释放 $3,614</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <div class="t">02-B68X 和 168-B1737 是最大的两个单点机会</div>
+    两者合计花费 $4,930（占全店 11.6%），净亏 $1,906。它们的 CVR 分别是 19.9% 和 28.3%，都不差——<strong>问题 100% 出在 CPC</strong>（$1.38 / $0.67，全店均值 $0.45）。只要把这两个活动的 ACOS 从 36~38% 压到 28%，单这一项就能挽回约 $1,100/月。
+  </div>
+</section>
+
+<!-- ============ 8. 预算重分配 ============ -->
+<section>
+  <h2>八、预算重分配方案与预期 ROI</h2>
+
+  <div class="chart" id="chartAlloc"></div>
+
+  <table>
+    <thead><tr><th>档位</th><th>动作</th><th>现预算</th><th>占比</th><th>新预算</th><th>新占比</th><th>Δ预算</th><th>预期新 ACOS</th><th>毛利池变化</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag a">A</span> 高效</td><td>加投 +112%</td><td class="num">2,824</td><td class="num">6.6%</td><td class="num">6,000</td><td class="num">17.3%</td><td class="num pos">+3,176</td><td class="num">17.0%（边际 20%）</td><td class="num pos">+434</td></tr>
+      <tr><td><span class="tag b">B</span> 保本</td><td>维持 + 否词精调</td><td class="num">9,220</td><td class="num">21.7%</td><td class="num">9,220</td><td class="num">26.6%</td><td class="num">0</td><td class="num">21.5%</td><td class="num pos">+650</td></tr>
+      <tr><td><span class="tag c">C1</span> 轻度超标</td><td>否词 + 降竞价，预算 −20%</td><td class="num">18,071</td><td class="num">42.5%</td><td class="num">14,457</td><td class="num">41.7%</td><td class="num neg">−3,614</td><td class="num">28.0%</td><td class="num pos">+3,047</td></tr>
+      <tr><td><span class="tag c">C2</span> 重度超标</td><td>预算腰斩 −50%</td><td class="num">9,625</td><td class="num">22.6%</td><td class="num">4,813</td><td class="num">13.9%</td><td class="num neg">−4,812</td><td class="num">42.0%</td><td class="num pos">+2,928</td></tr>
+      <tr><td><span class="tag c">C3+C4</span> 极度浪费</td><td>全部暂停</td><td class="num">2,379</td><td class="num">5.6%</td><td class="num">0</td><td class="num">0%</td><td class="num neg">−2,379</td><td class="num">—</td><td class="num pos">+1,934</td></tr>
+      <tr><td>长尾</td><td>清理归档</td><td class="num">382</td><td class="num">0.9%</td><td class="num">200</td><td class="num">0.6%</td><td class="num neg">−182</td><td class="num">—</td><td class="num pos">+91</td></tr>
+      <tr class="tot"><td>合计</td><td></td><td class="num">42,501</td><td class="num">100%</td><td class="num">34,690</td><td class="num">100%</td><td class="num neg">−7,811</td><td class="num">24.43%</td><td class="num pos">+9,084</td></tr>
+    </tbody>
+  </table>
+
+  <h3>预期效果</h3>
+  <div class="kpi-grid">
+    <div class="kpi good"><div class="k">ACOS</div><div class="v">24.43%</div><div class="d">30.90% → 24.43%（−6.47pp）</div></div>
+    <div class="kpi good"><div class="k">TACOS</div><div class="v">9.99%</div><div class="d">12.40% → 9.99%（−2.41pp）</div></div>
+    <div class="kpi good"><div class="k">ROAS</div><div class="v">4.09</div><div class="d">3.24 → 4.09（+26.2%）</div></div>
+    <div class="kpi good"><div class="k">毛利率</div><div class="v">12.74%</div><div class="d">10.33% → 12.74%（+2.41pp）</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>指标</th><th>现状</th><th>方案后（基准）</th><th>方案后（保守：自然单 −3%）</th></tr></thead>
+    <tbody>
+      <tr><td>广告花费</td><td class="num">42,501</td><td class="num">34,690</td><td class="num">34,690</td></tr>
+      <tr><td>广告销售额</td><td class="num">137,530</td><td class="num">142,010</td><td class="num">142,010</td></tr>
+      <tr><td>自然销售额</td><td class="num">205,297</td><td class="num">205,297</td><td class="num">199,138</td></tr>
+      <tr><td>全店销售额</td><td class="num">342,827</td><td class="num">347,307</td><td class="num">341,148</td></tr>
+      <tr><td>ACOS</td><td class="num neg">30.90%</td><td class="num pos">24.43%</td><td class="num pos">24.43%</td></tr>
+      <tr><td>TACOS</td><td class="num">12.40%</td><td class="num pos">9.99%</td><td class="num pos">10.17%</td></tr>
+      <tr><td>广告净贡献毛利</td><td class="num neg">−11,240</td><td class="num">−2,411</td><td class="num">−2,411</td></tr>
+      <tr class="tot"><td>月度毛利</td><td class="num">35,412</td><td class="num pos">44,496</td><td class="num pos">43,096</td></tr>
+      <tr class="tot"><td>毛利率</td><td class="num">10.33%</td><td class="num pos">12.81%</td><td class="num pos">12.63%</td></tr>
+      <tr class="tot"><td>月度毛利增量</td><td class="num">—</td><td class="num pos">+9,084 (+25.7%)</td><td class="num pos">+7,684 (+21.7%)</td></tr>
+      <tr class="tot"><td>年化毛利增量</td><td class="num">—</td><td class="num pos">+109,008</td><td class="num pos">+92,208</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout good">
+    <div class="t">核心 ROI 改善</div>
+    广告投入产出（毛利口径 ROI = 净贡献毛利 / 广告花费）从 <strong>−26.4%</strong> 改善到 <strong>−7.0%</strong>。即便在保守情景下，月度毛利仍增加 <strong>$7,684</strong>，年化约 <strong>$92,000</strong>。<br>
+    注意：广告板块仍未转正（−$2,411），这是 22.73% 保本线太低导致的结构性问题。<strong>要让广告真正赚钱，必须同时推进提客单价 / 降 FBA 配送费的动作。</strong>
+  </div>
+
+  <h3>执行节奏：分两步走，控风险</h3>
+  <ol>
+    <li><strong>第 1~3 天（零风险动作，释放 $2,379/月）</strong><br>
+      暂停 C3 全部 71 个活动 + C4 全部 24 个活动；否定 press on nails for kids、fake nails for kids、eyeglass nose pad、open when cards college 等低 CVR 词。</li>
+    <li><strong>第 4~7 天（释放 $4,812/月）</strong><br>
+      C2 全档预算腰斩、竞价下调 30%；168-B2123、89-14877-B-SP-AUTO 等 CVR &lt;6% 的直接暂停。</li>
+    <li><strong>第 8~14 天（观察期）</strong><br>
+      监控自然订单、BSR、Session 是否下滑。判定标准：自然订单周环比跌幅 &lt;5% 即视为安全，可继续；若跌幅 &gt;8%，回滚 C2 的 50% 预算。</li>
+    <li><strong>第 15~21 天（释放 $3,614/月）</strong><br>
+      确认安全后启动 C1 优化：02-B68X 竞价 −30%、168-B1737 竞价 −25%，全档否词清理，预算 −20%。</li>
+    <li><strong>第 8 天起同步执行（投入 $3,176/月）</strong><br>
+      A 档 12 个活动预算翻倍 + Top of Search 位置系数 +30~50%；加投关键词 pins with backing / popsicles holders / curtain clips 等竞价 +15~25%；20 个 B 档优等生作为次级加投池按需承接溢出预算。</li>
+  </ol>
+
+  <div class="callout">
+    <div class="t">测算假设（供复核）</div>
+    <ul style="margin-bottom:0;">
+      <li>保本 ACOS 22.73% 取自本期实际 P&amp;L，未考虑成本波动。</li>
+      <li>A 档加投按<strong>边际 ACOS 20%</strong>（劣于当前均值 14.30%）测算，已考虑加价后效率衰减。</li>
+      <li>C2 腰斩后 ACOS 从 48.7% 改善至 42%，仅假设砍掉最差的一半，未假设额外优化收益。</li>
+      <li>C1 优化后 ACOS 从 33.4% 改善至 28%，对应竞价平均下调 20~25% 的常见弹性。</li>
+      <li>未计入削减后可能的自然排名下滑（保守情景已单独测算 −3% 自然销售额）。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 9. 数据说明 ============ -->
+<section>
+  <h2>九、数据口径与覆盖度</h2>
+  <table>
+    <thead><tr><th>项目</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>店铺</td><td>B-US（sid 4653，Profile 415169050384855，seller A12N14GC39SHEQ，站点 ATVPDKIKX0DER）</td></tr>
+      <tr><td>时间窗口</td><td>2026-07-08 ~ 2026-08-06（30 天）；环比期 2026-06-08 ~ 2026-07-07</td></tr>
+      <tr><td>活动层覆盖</td><td>全店 2,610 个活动，已明细分析 700 个，覆盖花费 $42,119 / <strong>99.11%</strong></td></tr>
+      <tr><td>关键词层覆盖</td><td>全店 29,651 个投放词，已明细分析 Top 400，覆盖该层花费 <strong>89.18%</strong>（关键词层占总花费 68.9%）</td></tr>
+      <tr><td>广告花费口径</td><td>利润表 $42,500.53（SP 40,657.22 / SB 164.81 / SBV 1,601.85 / SD 76.65）；广告报表 $42,498.67，差异 0.004%</td></tr>
+      <tr><td>广告销售额口径</td><td>含直接 + 间接归因（同店其他 ASIN 带动）。利润表 $137,530.11 vs 广告报表 $137,600.42，差异 0.05%</td></tr>
+      <tr><td>毛利口径</td><td>领星「预估毛利润」，已扣除退款、FBA、佣金、采购、头程、仓储、广告费</td></tr>
+      <tr><td>净贡献毛利</td><td>本报告自定义 = 广告销售额 × 22.73% − 广告花费。用于判定单个活动/关键词是否真实盈利</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="footer">
+  报告生成于 2026-08-07 · 数据源：领星 ERP MCP（ad_campaign_report / ad_campaign_keyword_report / query_order_profit_list / query_product_performance_asin_lists）· 所有金额单位 USD
+</div>
+
+</div>
+
+<script src="./_shared/js/echarts.min.js"></script>
+<script>
+const AX={ink:'#1a2332',muted:'#6b7785',rule:'#e2e6ec',blue:'#2563eb',amber:'#f59e0b',red:'#dc2626',green:'#16a34a',orange:'#ea580c'};
+const baseGrid={left:70,right:60,top:50,bottom:44};
+const fontFam="'InstrumentSans','Microsoft YaHei',sans-serif";
+
+// 1. 投放类型
+(function(){
+  const c=echarts.init(document.getElementById('chartType'));
+  c.setOption({
+    textStyle:{fontFamily:fontFam},
+    title:{text:'各广告类型：花费 vs 净贡献毛利',left:'center',top:8,textStyle:{fontSize:14,color:AX.ink}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{bottom:4,data:['广告花费','广告销售额','净贡献毛利','ACOS']},
+    grid:{left:70,right:66,top:52,bottom:44},
+    xAxis:{type:'category',data:['SP 商品推广','SB/SBV 品牌推广','SD 展示型','长尾微量'],axisLine:{lineStyle:{color:AX.rule}},axisLabel:{color:AX.muted}},
+    yAxis:[
+      {type:'value',name:'USD',axisLabel:{color:AX.muted,formatter:v=>v/1000+'k'},splitLine:{lineStyle:{color:AX.rule}}},
+      {type:'value',name:'ACOS',max:80,axisLabel:{color:AX.muted,formatter:'{value}%'},splitLine:{show:false}}
+    ],
+    series:[
+      {name:'广告花费',type:'bar',data:[40281,1761,77,382],itemStyle:{color:AX.blue}},
+      {name:'广告销售额',type:'bar',data:[129234,6272,106,0],itemStyle:{color:'#93c5fd'}},
+      {name:'净贡献毛利',type:'bar',data:[-10906,-335,-53,-300],itemStyle:{color:AX.red}},
+      {name:'ACOS',type:'line',yAxisIndex:1,data:[31.17,28.08,72.52,null],itemStyle:{color:AX.orange},lineStyle:{width:2.5},symbolSize:8,
+        markLine:{silent:true,symbol:'none',data:[{yAxis:22.73,label:{formatter:'保本 22.73%',color:AX.green,fontSize:11},lineStyle:{color:AX.green,type:'dashed',width:2}}]}}
+    ]
+  });
+  window.addEventListener('resize',()=>c.resize());
+})();
+
+// 2. 三档
+(function(){
+  const c=echarts.init(document.getElementById('chartTier'));
+  c.setOption({
+    textStyle:{fontFamily:fontFam},
+    title:{text:'预算占比 vs 净贡献毛利：结构性倒挂',left:'center',top:8,textStyle:{fontSize:14,color:AX.ink}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{bottom:4,data:['预算占比','净贡献毛利','ACOS']},
+    grid:{left:66,right:66,top:52,bottom:44},
+    xAxis:{type:'category',data:['A 高效赚钱\n81个活动','B 保本引流\n163个活动','C1 轻度超标\n192个活动','C2 重度超标\n169个活动','C3 极度浪费\n71个活动','C4 零订单\n24个活动'],axisLine:{lineStyle:{color:AX.rule}},axisLabel:{color:AX.muted,fontSize:11,lineHeight:15}},
+    yAxis:[
+      {type:'value',name:'预算占比',axisLabel:{color:AX.muted,formatter:'{value}%'},splitLine:{lineStyle:{color:AX.rule}}},
+      {type:'value',name:'净贡献 USD',axisLabel:{color:AX.muted,formatter:v=>v/1000+'k'},splitLine:{show:false}}
+    ],
+    series:[
+      {name:'预算占比',type:'bar',data:[6.64,21.69,42.52,22.65,4.91,0.69],
+        itemStyle:{color:p=>[AX.green,AX.amber,AX.orange,'#f87171',AX.red,'#7f1d1d'][p.dataIndex]},
+        label:{show:true,position:'top',formatter:'{c}%',fontSize:11,color:AX.ink}},
+      {name:'净贡献毛利',type:'line',yAxisIndex:1,data:[1666,-122,-5768,-5135,-1641,-294],itemStyle:{color:AX.ink},lineStyle:{width:2.5},symbolSize:9,
+        markLine:{silent:true,symbol:'none',data:[{yAxis:0,lineStyle:{color:AX.muted,type:'dashed'}}]}}
+    ]
+  });
+  window.addEventListener('resize',()=>c.resize());
+})();
+
+// 3. 自然单带动
+(function(){
+  const c=echarts.init(document.getElementById('chartNature'));
+  c.setOption({
+    textStyle:{fontFamily:fontFam},
+    title:{text:'环比：多投的钱没换来广告单，增量全在自然侧',left:'center',top:8,textStyle:{fontSize:14,color:AX.ink}},
+    tooltip:{trigger:'axis'},
+    legend:{bottom:4,data:['上期','本期']},
+    grid:{left:80,right:40,top:52,bottom:44},
+    xAxis:{type:'category',data:['广告花费','广告销售额','自然销售额','广告订单','自然订单'],axisLine:{lineStyle:{color:AX.rule}},axisLabel:{color:AX.muted}},
+    yAxis:{type:'value',name:'指数（上期=100）',axisLabel:{color:AX.muted},splitLine:{lineStyle:{color:AX.rule}}},
+    series:[
+      {name:'上期',type:'bar',data:[100,100,100,100,100],itemStyle:{color:'#cbd5e1'},barGap:'8%'},
+      {name:'本期',type:'bar',data:[103.74,97.72,111.94,103.07,114.66],
+        itemStyle:{color:p=>[AX.blue,AX.red,AX.green,AX.blue,AX.green][p.dataIndex]},
+        label:{show:true,position:'top',formatter:p=>(p.value-100>0?'+':'')+(p.value-100).toFixed(1)+'%',fontSize:11,color:AX.ink}}
+    ]
+  });
+  window.addEventListener('resize',()=>c.resize());
+})();
+
+// 4. 预算重分配
+(function(){
+  const c=echarts.init(document.getElementById('chartAlloc'));
+  c.setOption({
+    textStyle:{fontFamily:fontFam},
+    title:{text:'预算重分配：$42,501 → $34,690',left:'center',top:8,textStyle:{fontSize:14,color:AX.ink}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:v=>'$'+v.toLocaleString()},
+    legend:{bottom:4,data:['现预算','新预算']},
+    grid:{left:74,right:40,top:52,bottom:44},
+    xAxis:{type:'category',data:['A 高效','B 保本','C1 轻度超标','C2 重度超标','C3+C4 浪费','长尾'],axisLine:{lineStyle:{color:AX.rule}},axisLabel:{color:AX.muted,fontSize:12}},
+    yAxis:{type:'value',name:'USD / 30天',axisLabel:{color:AX.muted,formatter:v=>v/1000+'k'},splitLine:{lineStyle:{color:AX.rule}}},
+    series:[
+      {name:'现预算',type:'bar',data:[2824,9220,18071,9625,2379,382],itemStyle:{color:'#cbd5e1'}},
+      {name:'新预算',type:'bar',data:[6000,9220,14457,4813,0,200],
+        itemStyle:{color:p=>[AX.green,AX.amber,AX.orange,'#f87171',AX.red,AX.muted][p.dataIndex]},
+        label:{show:true,position:'top',formatter:p=>{const o=[2824,9220,18071,9625,2379,382][p.dataIndex];const d=p.value-o;return (d>0?'+':'')+'$'+d.toLocaleString();},fontSize:11,color:AX.ink}}
+    ]
+  });
+  window.addEventListener('resize',()=>c.resize());
+})();
+</script>
+</body>
+</html>

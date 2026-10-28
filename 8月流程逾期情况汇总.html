@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>事业一部 8月流程逾期情况汇总</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", -apple-system, sans-serif; background: #f5f6fa; color: #2c3e50; padding: 30px; }
+h1 { font-size: 26px; margin-bottom: 6px; }
+.sub { color: #7f8c8d; font-size: 14px; margin-bottom: 24px; }
+.title { font-size: 18px; font-weight: 700; margin: 28px 0 14px; border-left: 4px solid #3498db; padding-left: 10px; }
+.dl { background:#fff; }
+.alert { background: #fee; color: #a00; padding: 10px 14px; border-radius: 6px; margin-bottom: 18px; font-size: 14px; }
+.kpi-wrap { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+.kpi { flex: 1; min-width: 150px; background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,.06); text-align: center; }
+.kpi .num { font-size: 34px; font-weight: 800; color: #e74c3c; }
+.kpi .lab { color: #7f8c8d; font-size: 13px; margin-top: 6px; }
+.kpi .num.blue { color: #3498db; }
+.panel { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06); margin-bottom: 20px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 7px 10px; border-bottom: 1px solid #ecf0f1; text-align: left; }
+th { background: #f8f9fb; color: #5d6d7e; font-weight: 600; }
+tr:hover td { background: #fafbfc; }
+.bar-row { display: flex; align-items: center; margin: 8px 0; gap: 10px; }
+.bar-label { width: 110px; font-size: 13px; }
+.bar { flex: 1; background: #ecf0f1; border-radius: 5px; height: 18px; overflow: hidden; }
+.bar-fill { background: #e74c3c; height: 100%; border-radius: 5px; }
+.bar-val { width: 80px; font-size: 13px; text-align: right; }
+.chart { width: 100%; height: 300px; }
+.foot { margin-top: 30px; color: #95a5a6; font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+<h1>事业一部 · 8月流程逾期情况汇总</h1>
+<div class="sub">数据来源：盛途ERP（鼎海ERP）流程逾期监控 &nbsp;|&nbsp; 统计区间：2026-08-01 ~ 2026-08-31 &nbsp;|&nbsp; 口径：开发人 + 推广人归属事业一部（开发部门 + 运营部门）&nbsp;|&nbsp; 生成时间：2026-09-15</div>
+
+<div class="alert">说明：ERP按SKU聚合的流程逾期查询接口不直接返回"部门"字段，本表通过【开发人 / 推广人】归属判断是否属于事业一部（事业一部开发部门：开发1/2/3组、产品维护、大件组、试用期组；运营部门：推广1/2/3组、运营专员组）。</div>
+
+<div class="kpi-wrap">
+  <div class="kpi"><div class="num">366</div><div class="lab">逾期SKU总数</div></div>
+  <div class="kpi"><div class="num">10</div><div class="lab">含≥2环节逾期的SKU</div></div>
+  <div class="kpi"><div class="num blue">366</div><div class="lab">逾期环节累计</div></div>
+  <div class="kpi"><div class="num blue">47</div><div class="lab">涉及店铺数</div></div>
+  <div class="kpi"><div class="num blue">18</div><div class="lab">涉及开发人</div></div>
+  <div class="kpi"><div class="num blue">8</div><div class="lab">涉及推广人</div></div>
+</div>
+
+<div class="title">一、各环节逾期分布</div>
+<div class="panel">
+  <div id="stageChart" class="chart"></div>
+</div>
+
+<div class="title">二、SKU逾期环节数分布</div>
+<div class="panel"><div class="bar-row"><span class="bar-label">逾期1个环节</span><div class="bar"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">356个SKU</span></div><div class="bar-row"><span class="bar-label">逾期2个环节</span><div class="bar"><div class="bar-fill" style="width:2%"></div></div><span class="bar-val">10个SKU</span></div><div class="bar-row"><span class="bar-label">逾期3个环节</span><div class="bar"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">0个SKU</span></div><div class="bar-row"><span class="bar-label">逾期4个环节</span><div class="bar"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">0个SKU</span></div><div class="bar-row"><span class="bar-label">逾期5个环节</span><div class="bar"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">0个SKU</span></div></div>
+
+<div class="title">三、按责任人统计</div>
+<div class="grid2">
+  <div class="panel">
+    <div style="font-weight:700;margin-bottom:12px;">开发人逾期SKU数（Top 10）</div>
+    <table>
+      <tr><th>开发人</th><th>逾期SKU</th></tr>
+      <tr><td>黄利园</td><td>53</td></tr><tr><td>李新雅</td><td>50</td></tr><tr><td>王婷婷</td><td>49</td></tr><tr><td>吴正</td><td>40</td></tr><tr><td>代焕住</td><td>36</td></tr><tr><td>车彩霞</td><td>27</td></tr><tr><td>徐亮</td><td>26</td></tr><tr><td>钱程</td><td>23</td></tr><tr><td>刘朱</td><td>12</td></tr><tr><td>贾闪闪</td><td>11</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <div style="font-weight:700;margin-bottom:12px;">推广人逾期SKU数（Top 8）</div>
+    <table>
+      <tr><th>推广人</th><th>逾期SKU</th></tr>
+      <tr><td>马善彩</td><td>69</td></tr><tr><td>左姜倩</td><td>68</td></tr><tr><td>葛月娇</td><td>56</td></tr><tr><td>金雨欣</td><td>52</td></tr><tr><td>赵诗怡</td><td>43</td></tr><tr><td>夏如梦</td><td>42</td></tr><tr><td>陈菲</td><td>25</td></tr><tr><td>未填</td><td>11</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <div style="font-weight:700;margin-bottom:12px;">各环节处理人逾期次数（Top 6）</div>
+  <div class="grid2">
+    <div>
+      <div style="font-weight:600;color:#5d6d7e;margin:8px 0;">分配店铺</div>
+      <table><tr><td>张颖</td><td>12</td></tr><tr><td>范雅晴</td><td>9</td></tr><tr><td>张淑珍</td><td>8</td></tr><tr><td>吴跃</td><td>7</td></tr><tr><td>范昌娟</td><td>6</td></tr><tr><td>刘雨晴</td><td>5</td></tr></table>
+    </div>
+    <div>
+      <div style="font-weight:600;color:#5d6d7e;margin:8px 0;">调研</div>
+      <table><tr><td>范昌娟</td><td>6</td></tr><tr><td>张颖</td><td>5</td></tr><tr><td>吴跃</td><td>3</td></tr><tr><td>胡宏金</td><td>2</td></tr><tr><td>程智刚</td><td>2</td></tr><tr><td>倪锐</td><td>1</td></tr></table>
+    </div>
+    <div>
+      <div style="font-weight:600;color:#5d6d7e;margin:8px 0;">样品审核</div>
+      <table><tr><td>李新雅</td><td>5</td></tr><tr><td>王婷婷</td><td>5</td></tr><tr><td>刘朱</td><td>4</td></tr><tr><td>黄利园</td><td>3</td></tr><tr><td>徐子强</td><td>2</td></tr><tr><td>王秀</td><td>1</td></tr></table>
+    </div>
+    <div>
+      <div style="font-weight:600;color:#5d6d7e;margin:8px 0;">图片申请</div>
+      <table><tr><td>未填</td><td>211</td></tr><tr><td>储淑霞</td><td>7</td></tr><tr><td>童瑶瑶</td><td>4</td></tr><tr><td>叶淦</td><td>4</td></tr><tr><td>程萌萌</td><td>4</td></tr><tr><td>邹云凤</td><td>3</td></tr></table>
+    </div>
+  </div>
+</div>
+
+<div class="title">四、涉及店铺逾期SKU数（Top 15）</div>
+<div class="panel">
+  <table>
+    <tr><th>店铺</th><th>逾期SKU</th></tr>
+    <tr><td>G7-US</td><td>45</td></tr><tr><td>V-US</td><td>30</td></tr><tr><td>M-US</td><td>24</td></tr><tr><td>G13-US</td><td>20</td></tr><tr><td>N-US</td><td>18</td></tr><tr><td>Z-US</td><td>17</td></tr><tr><td>K-US</td><td>15</td></tr><tr><td>S-US</td><td>12</td></tr><tr><td>W-US</td><td>12</td></tr><tr><td>Y-US</td><td>11</td></tr><tr><td>L-US</td><td>11</td></tr><tr><td>H-US</td><td>11</td></tr><tr><td>D-US</td><td>11</td></tr><tr><td>T-US</td><td>10</td></tr><tr><td>G11-US</td><td>9</td></tr>
+  </table>
+</div>
+
+<div class="foot">明细数据见 CSV 文件：8月流程逾期明细.csv（366条SKU，含各环节逾期状态/处理人/开发人/推广人）</div>
+
+<script>
+var stageChart = echarts.init(document.getElementById('stageChart'));
+stageChart.setOption({
+  tooltip: { trigger: 'axis' },
+  grid: { left: '5%', right: '5%', bottom: '10%', top: '8%', containLabel: true },
+  xAxis: { type: 'category', data: ["分配店铺", "调研", "样品审核", "文案申请", "图片申请"] },
+  yAxis: { type: 'value', name: '逾期SKU数' },
+  series: [{
+    name: '逾期SKU数',
+    type: 'bar',
+    data: [86, 19, 22, 0, 249],
+    itemStyle: { color: '#e74c3c', borderRadius: [6,6,0,0] },
+    label: { show: true, position: 'top' },
+    barWidth: '45%'
+  }]
+});
+window.addEventListener('resize', function(){ stageChart.resize(); });
+</script>
+</body>
+</html>

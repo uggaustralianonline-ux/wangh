@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>父ASIN秒杀价值排名分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+:root{--bg:#0f1419;--card:#1a2332;--border:#2a3a4a;--text:#e0e6ed;--dim:#8b9bb0;--accent:#4fc3f7;--gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;--green:#4caf50;--yellow:#ffc107;--red:#f44336}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI','Microsoft YaHei',sans-serif;padding:20px;line-height:1.6}
+h1{font-size:1.6em;margin-bottom:8px}
+h2{font-size:1.2em;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;margin:30px 0 12px}
+.meta{color:var(--dim);font-size:0.82em;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px}
+.alert{background:rgba(244,67,54,0.08);border-left:3px solid var(--red);padding:12px;border-radius:4px;margin-bottom:12px;font-size:0.85em}
+.info{background:rgba(79,195,247,0.08);border-left:3px solid var(--accent);padding:12px;border-radius:4px;margin-bottom:12px;font-size:0.85em}
+table{width:100%;border-collapse:collapse;font-size:0.8em;margin-bottom:12px}
+th{background:#1e2a3a;text-align:left;padding:6px 8px;border-bottom:2px solid var(--border);white-space:nowrap}
+td{padding:5px 8px;border-bottom:1px solid var(--border)}
+tr:hover{background:rgba(79,195,247,0.05)}
+.r{text-align:right}.c{text-align:center}
+.badge{font-size:0.72em;padding:2px 6px;border-radius:3px;font-weight:600}
+.b-pass{background:rgba(76,175,80,0.2);color:#81c784}
+.b-warn{background:rgba(255,193,7,0.2);color:#ffd54f}
+.b-fail{background:rgba(244,67,54,0.2);color:#ef9a9a}
+.chart{width:100%;height:380px;margin:12px 0}
+.medal{display:inline-block;width:32%;vertical-align:top;border-radius:12px;padding:18px;margin-right:1%;min-height:220px}
+.m-gold{background:linear-gradient(135deg,#3d3520,#2a2415);border:2px solid var(--gold)}
+.m-silver{background:linear-gradient(135deg,#2a2e35,#1e2228);border:2px solid var(--silver)}
+.m-bronze{background:linear-gradient(135deg,#2e2418,#221a10);border:2px solid var(--bronze)}
+.m-icon{font-size:1.8em;margin-bottom:6px}
+.m-score{font-size:2em;font-weight:bold}
+.m-gold .m-score{color:var(--gold)}.m-silver .m-score{color:var(--silver)}.m-bronze .m-score{color:var(--bronze)}
+.m-name{font-size:0.95em;font-weight:600;margin:6px 0}
+.m-detail{font-size:0.78em;color:var(--dim)}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.72em;margin:2px}
+.t-green{background:rgba(76,175,80,0.2);color:#81c784}
+.t-yellow{background:rgba(255,193,7,0.2);color:#ffd54f}
+.t-blue{background:rgba(33,150,243,0.2);color:#64b5f6}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.s-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.s-num{font-size:1.5em;font-weight:bold;color:var(--accent)}
+.s-label{font-size:0.75em;color:var(--dim);margin-top:2px}
+</style>
+</head>
+<body>
+
+<h1>父ASIN秒杀价值排名分析</h1>
+<div class="meta">
+  数据源：领星ERP(lingxing-mcp-20260914-v1) + SIF市场趋势 + SIF产品属性<br>
+  分析日期：2026-09-14 | 分析对象：13个父ASIN，179个子ASIN<br>
+  评估目标：以父ASIN为单位提报秒杀，从子ASIN综合表现反推父ASIN秒杀价值，实现利益最大化
+</div>
+
+<div class="alert">
+  <b>核心逻辑：</b>亚马逊秒杀以父ASIN提报，秒杀流量导入变体页面，买家可选购任一子ASIN。因此，通过库存门槛的子ASIN销量占比（"通过销量占比"）决定了秒杀流量的有效转化率——占比越高，流量浪费越少，秒杀ROI越高。
+</div>
+
+<div class="summary">
+  <div class="s-box"><div class="s-num">13</div><div class="s-label">父ASIN总数</div></div>
+  <div class="s-box"><div class="s-num">179</div><div class="s-label">子ASIN总数</div></div>
+  <div class="s-box"><div class="s-num">79</div><div class="s-label">通过库存门槛</div></div>
+  <div class="s-box"><div class="s-num">78</div><div class="s-label">最高综合分</div></div>
+</div>
+
+<!-- Top 3 -->
+<h2>Top 3 父ASIN秒杀推荐</h2>
+<div>
+  <div class="medal m-gold">
+    <div class="m-icon">🥇</div>
+    <div class="m-score">78</div>
+    <div class="m-name">B0CN856K37 — 节日耳环 8 Pairs</div>
+    <div class="m-detail">
+      35子ASIN | 总销量1,770 | 通过13个<br>
+      通过销量占比: <b style="color:#81c784">37.1%</b><br>
+      父库销比: 3.25月 | 集中度: 18%<br>
+      季节: 万圣节10月峰值，9月爬坡中<br>
+      <span class="tag t-green">旺季爬坡</span>
+      <span class="tag t-green">低集中度</span>
+      <span class="tag t-blue">35变体</span>
+    </div>
+  </div>
+  <div class="medal m-silver">
+    <div class="m-icon">🥈</div>
+    <div class="m-score">75</div>
+    <div class="m-name">B093GC1P2Q — 田径鞋钉 1/4"</div>
+    <div class="m-detail">
+      6子ASIN | 总销量494 | 通过5个<br>
+      通过销量占比: <b style="color:#81c784">96.8%</b><br>
+      父库销比: 6.78月 | 集中度: 75.9%<br>
+      季节: 9月赛季启动，3月达峰<br>
+      <span class="tag t-green">通过率83%</span>
+      <span class="tag t-yellow">高集中度</span>
+      <span class="tag t-yellow">淡季启动</span>
+    </div>
+  </div>
+  <div class="medal m-bronze">
+    <div class="m-icon">🥉</div>
+    <div class="m-score">70</div>
+    <div class="m-name">B0CQ4QYWL3 — 熨烫贴片 36Pcs</div>
+    <div class="m-detail">
+      51子ASIN | 总销量3,452 | 通过19个<br>
+      通过销量占比: <b style="color:#ef9a9a">20.8%</b><br>
+      父库销比: 2.59月 | 集中度: 17.4%<br>
+      季节: 常青增长，85.4万/周搜索量<br>
+      <span class="tag t-green">最大变体组</span>
+      <span class="tag t-green">常青品类</span>
+      <span class="tag t-yellow">通过占比低</span>
+    </div>
+  </div>
+</div>
+
+<!-- Ranking Table -->
+<h2>父ASIN综合排名</h2>
+<div class="card">
+<table>
+<thead><tr>
+  <th>#</th><th>父ASIN</th><th>品类</th><th>子ASIN</th>
+  <th>总销量</th><th>总FBA</th><th>父库销比</th>
+  <th>通过数</th><th>通过率</th><th>通过销量占比</th>
+  <th>集中度</th><th>季节时机</th><th>综合分</th>
+</tr></thead>
+<tbody>
+<tr style="background:rgba(255,215,0,0.05)"><td class="c"><b style="color:#ffd700">1</b></td><td>B0CN856K37</td><td>节日耳环</td><td class="c">35</td><td class="r">1,770</td><td class="r">5,747</td><td class="r">3.25</td><td class="c">13</td><td class="c">37.1%</td><td class="r" style="color:#81c784;font-weight:bold">37.1%</td><td class="c" style="color:#81c784">18%</td><td><span class="badge b-pass">旺季爬坡</span></td><td class="c"><b style="color:#ffd700">78</b></td></tr>
+<tr style="background:rgba(192,192,192,0.05)"><td class="c"><b style="color:#c0c0c0">2</b></td><td>B093GC1P2Q</td><td>田径鞋钉</td><td class="c">6</td><td class="r">494</td><td class="r">3,351</td><td class="r">6.78</td><td class="c">5</td><td class="c">83.3%</td><td class="r" style="color:#81c784;font-weight:bold">96.8%</td><td class="c" style="color:#ef9a9a">75.9%</td><td><span class="badge b-warn">淡季爬坡</span></td><td class="c"><b style="color:#c0c0c0">75</b></td></tr>
+<tr style="background:rgba(205,127,50,0.05)"><td class="c"><b style="color:#cd7f32">3</b></td><td>B0CQ4QYWL3</td><td>熨烫贴片36pc</td><td class="c">51</td><td class="r">3,452</td><td class="r">8,929</td><td class="r">2.59</td><td class="c">19</td><td class="c">37.3%</td><td class="r" style="color:#ef9a9a">20.8%</td><td class="c" style="color:#81c784">17.4%</td><td><span class="badge b-pass">常青增长</span></td><td class="c"><b style="color:#cd7f32">70</b></td></tr>
+<tr><td class="c">4</td><td>B0DD3R6LK5</td><td>混合贴片60pc</td><td class="c">19</td><td class="r">1,486</td><td class="r">4,302</td><td class="r">2.90</td><td class="c">10</td><td class="c">52.6%</td><td class="r">27.6%</td><td class="c">26.2%</td><td><span class="badge b-pass">常青</span></td><td class="c">66</td></tr>
+<tr><td class="c">5</td><td>B0DHL5X1XM</td><td>节日贴片12pc</td><td class="c">14</td><td class="r">581</td><td class="r">2,343</td><td class="r">4.03</td><td class="c">8</td><td class="c">57.1%</td><td class="r">27.2%</td><td class="c">62.1%</td><td><span class="badge b-pass">多节日</span></td><td class="c">63</td></tr>
+<tr><td class="c">6</td><td>B09PB9NWZB</td><td>节日耳环B</td><td class="c">15</td><td class="r">345</td><td class="r">2,833</td><td class="r">8.21</td><td class="c">7</td><td class="c">46.7%</td><td class="r">95.7%</td><td class="c">75.7%</td><td><span class="badge b-pass">旺季爬坡</span></td><td class="c">62</td></tr>
+<tr><td class="c">7</td><td>B0BCQ8GDY8</td><td>蝴蝶贴片</td><td class="c">4</td><td class="r">453</td><td class="r">1,223</td><td class="r">2.70</td><td class="c">3</td><td class="c">75%</td><td class="r">71.5%</td><td class="c">49.4%</td><td><span class="badge b-warn">常青</span></td><td class="c">60</td></tr>
+<tr><td class="c">8</td><td>B0CJ4SPFGZ</td><td>教师耳环9pr</td><td class="c">23</td><td class="r">1,727</td><td class="r">5,439</td><td class="r">3.15</td><td class="c">13</td><td class="c">56.5%</td><td class="r" style="color:#ef9a9a">19.0%</td><td class="c" style="color:#ef9a9a">64.2%</td><td><span class="badge b-warn">旺季收尾</span></td><td class="c">58</td></tr>
+<tr><td class="c">9</td><td>B08MKWRZ3W</td><td>钩针工具</td><td class="c">4</td><td class="r">3,966</td><td class="r">5,460</td><td class="r">1.38</td><td class="c">1</td><td class="c">25%</td><td class="r" style="color:#ef9a9a">11.2%</td><td class="c" style="color:#ef9a9a">79.2%</td><td><span class="badge b-fail">库存不足</span></td><td class="c">44</td></tr>
+<tr><td class="c">10</td><td>B08XPRYKLX</td><td>金属扣</td><td class="c">3</td><td class="r">1,454</td><td class="r">2,523</td><td class="r">1.74</td><td class="c">0</td><td class="c">0%</td><td class="r">0%</td><td class="c">53.7%</td><td><span class="badge b-fail">库存不足</span></td><td class="c">38</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Scoring Method -->
+<h2>评分维度与权重</h2>
+<div class="card">
+<table>
+<thead><tr><th style="width:25%">维度(权重)</th><th>评分逻辑</th></tr></thead>
+<tbody>
+<tr><td>通过销量占比(30%)</td><td>通过门槛子ASIN销量 / 父ASIN总销量。占比越高秒杀流量有效转化越多。B093GC1P2Q=96.8%(几乎不浪费)，B0CJ4SPFGZ=19%(81%流量浪费在缺货子ASIN)</td></tr>
+<tr><td>季节时机(25%)</td><td>当前是否处于品类旺季爬坡/峰值期。万圣节9月爬坡+10月峰值=最佳(9/10)；田径9月启动=次佳(6/10)；熨烫贴片常青=稳定(7/10)</td></tr>
+<tr><td>通过子FBA库存(20%)</td><td>通过门槛子ASIN的FBA库存合计。库存越多秒杀期间可售SKU越丰富。B0CQ4QYWL3=5,939件(最多)；B093GC1P2Q=3,316件</td></tr>
+<tr><td>父库销比(15%)</td><td>父ASIN总FBA / 总月销量。整体库存健康度。B09PB9NWZB=8.21月(最优)；B08MKWRZ3W=1.38月(最差)</td></tr>
+<tr><td>集中度风险(10%)</td><td>最高销量子ASIN / 总销量。集中度低=流量分散到多子ASIN=更健康。B0CN856K37=18%(最优分散)；B08MKWRZ3W=79.2%(极高风险)</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Charts -->
+<h2>关键决策图</h2>
+
+<div class="card">
+<h3>通过销量占比 vs 总销量（秒杀价值矩阵）</h3>
+<div id="chart_matrix" class="chart"></div>
+<div class="info">右上方=高通过占比+高总销量=最佳秒杀价值。圆圈大小=通过子ASIN的FBA库存。颜色=综合评分。</div>
+</div>
+
+<div class="card">
+<h3>Top 5父ASIN多维度雷达图</h3>
+<div id="chart_radar" class="chart"></div>
+</div>
+
+<div class="card">
+<h3>各父ASIN通过子ASINFBA库存 vs 通过销量</h3>
+<div id="chart_bar" class="chart"></div>
+</div>
+
+<!-- Top 3 Detail -->
+<h2>Top 3 详细分析与行动建议</h2>
+
+<div class="card" style="border-left:3px solid #ffd700">
+<h3 style="color:#ffd700">🥇 B0CN856K37 — 节日耳环 8 Pairs（78分）</h3>
+<table>
+<tr><th style="width:25%">维度</th><th>详情</th></tr>
+<tr><td>推荐理由</td><td>季节性最佳（万圣节9月搜索量5.2万→10月33.9万，6.5倍增长）+ 通过销量占比37.1%（Top 5中最高之一）+ 集中度18%（最低，流量均匀分散）+ 35个子ASIN给买家充分选择空间 + 通过子FBA合计4,132件</td></tr>
+<tr><td>通过子ASIN</td><td>B0CR35LZSJ(318件/4.57月) + B0FG7P3PD5(150件/4.79月) + B0FH4XM8X1(86件/4.13月) + B0D8S7577N(19件/14.5月) + B0F9WNSMMB(14件/47月) 等13个</td></tr>
+<tr><td>风险</td><td>B0FC2NM5C5(318件/0.97月)和B0GXK8TWBN(219件/0.99月)会断货，但占父级销量仅30%，影响可控</td></tr>
+<tr><td>季节分析</td><td>万圣节耳环9月搜索量5.2万（爬坡中），10月将达33.9万（精确词峰值）。教师节耳环8月5.2万仍有余温。双节日叠加=双重流量红利</td></tr>
+<tr><td>建议秒杀时段</td><td><b>9月下旬至10月初</b>（万圣节前4-5周，搜索量从5万爬向34万的加速期）</td></tr>
+<tr><td>预计增量</td><td>父级月销1,770 × 2.5 = 4,425件，通过子ASIN可覆盖4,132件FBA，覆盖率93%</td></tr>
+</table>
+</div>
+
+<div class="card" style="border-left:3px solid #c0c0c0">
+<h3 style="color:#c0c0c0">🥈 B093GC1P2Q — 田径鞋钉 1/4"（75分）</h3>
+<table>
+<tr><th style="width:25%">维度</th><th>详情</th></tr>
+<tr><td>推荐理由</td><td>通过率83.3%（最高）+ 通过销量占比96.8%（几乎不浪费流量）+ 父库销比6.78月（极充裕）+ 通过子FBA 3,316件。秒杀效率最高</td></tr>
+<tr><td>通过子ASIN</td><td>B08X6SMJ47(375件/6.85月) + B0922H8C26(50件/6.56月) + B09SPWM83Y(21件/13.05月) + B09V6VW1MP(20件/4.95月) + B092CQYM81(12件/3.75月)</td></tr>
+<tr><td>风险</td><td>总销量494件偏低，秒杀增量有限；集中度75.9%意味着B08X6SMJ47断货则父ASIN秒杀几乎失效；当前搜索量0.5万（淡季低谷）</td></tr>
+<tr><td>季节分析</td><td>田径鞋钉9月搜索量0.5万→11月3万→3月48.4万。9月秒杀转化率偏低但竞争也低，可提前抢排名。10-11月转化率更高</td></tr>
+<tr><td>建议秒杀时段</td><td><b>10月中下旬</b>（赛季爬坡加速期，搜索量从0.5万向3万爬升）或<b>11月</b>（搜索量达3万，转化率显著提升）</td></tr>
+<tr><td>预计增量</td><td>父级月销494 × 2.5 = 1,235件，通过子ASIN可覆盖3,316件FBA，覆盖率268%（库存极充裕）</td></tr>
+</table>
+</div>
+
+<div class="card" style="border-left:3px solid #cd7f32">
+<h3 style="color:#cd7f32">🥉 B0CQ4QYWL3 — 熨烫贴片 36Pcs（70分）</h3>
+<table>
+<tr><th style="width:25%">维度</th><th>详情</th></tr>
+<tr><td>推荐理由</td><td>总销量3,452（最高）+ 51个子ASIN（最大变体组）+ 集中度17.4%（最低，流量极分散）+ 品类常青增长（85.4万/周搜索量，历史高位）+ 通过子FBA 5,939件（最多）</td></tr>
+<tr><td>通过子ASIN</td><td>B0D8BCMJLR(142件/14月) + B0DXPZZQJ5(142件/2.85月) + B08H24W1TT(83件/7.9月) + B0D7Q7HPW9(80件/5.84月) + B0D7VCGJ9P(69件/16.13月) 等19个</td></tr>
+<tr><td>风险</td><td><b style="color:#ef9a9a">通过销量占比仅20.8%</b>——79%秒杀流量会浪费在缺货子ASIN上。Top缺货子ASIN B0D8HWZPD4(601件/1.02月)和B0D46V9DNP(449件/0.59月)占1,050件销量(30%)，秒杀时这些热门SKU会断货</td></tr>
+<tr><td>季节分析</td><td>熨烫贴片品类常青，词根综合量从66.7万增长至85.4万，全年可做。但子ASIN覆盖多节日主题（万圣节/圣诞/乳腺癌关注月），9-10月可吃到万圣节+乳腺癌关注月双流量</td></tr>
+<tr><td>建议秒杀时段</td><td><b>9月底</b>（万圣节贴片B0D8BCMJLR库存14月可承接）或<b>补货后10月</b>（先补B0D8HWZPD4和B0D46V9DNP至2.5月以上再做秒杀）</td></tr>
+<tr><td>预计增量</td><td>父级月销3,452 × 2.5 = 8,630件，通过子ASIN仅覆盖5,939件FBA，覆盖率69%（需补货2,691件才能100%覆盖）</td></tr>
+</table>
+</div>
+
+<!-- Comparison -->
+<h2>B0CN856K37 vs B093GC1P2Q — 为什么排第一？</h2>
+<div class="card">
+<table>
+<thead><tr><th style="width:20%">对比维度</th><th>B0CN856K37（78分）</th><th>B093GC1P2Q（75分）</th><th>胜者</th></tr></thead>
+<tbody>
+<tr><td>通过销量占比</td><td>37.1%</td><td><b style="color:#81c784">96.8%</b></td><td>B093GC1P2Q ✅</td></tr>
+<tr><td>总销量</td><td><b style="color:#81c784">1,770</b></td><td>494</td><td>B0CN856K37 ✅</td></tr>
+<tr><td>通过子FBA合计</td><td><b style="color:#81c784">4,132</b></td><td>3,316</td><td>B0CN856K37 ✅</td></tr>
+<tr><td>集中度</td><td><b style="color:#81c784">18%</b></td><td>75.9%</td><td>B0CN856K37 ✅</td></tr>
+<tr><td>子ASIN数</td><td><b style="color:#81c784">35</b></td><td>6</td><td>B0CN856K37 ✅</td></tr>
+<tr><td>季节时机</td><td><b style="color:#81c784">旺季爬坡中(5.2万→34万)</b></td><td>淡季刚启动(0.5万)</td><td>B0CN856K37 ✅</td></tr>
+<tr><td>父库销比</td><td>3.25月</td><td><b style="color:#81c784">6.78月</b></td><td>B093GC1P2Q ✅</td></tr>
+<tr><td>有效秒杀覆盖</td><td><b style="color:#81c784">93%</b> (4425需/4132有)</td><td><b style="color:#81c784">268%</b> (1235需/3316有)</td><td>B093GC1P2Q ✅</td></tr>
+</tbody>
+</table>
+<div class="info" style="margin-top:10px">
+  <b>结论：</b>B0CN856K37在6项中胜出4项（总销量、子ASIN数、集中度、季节时机），B093GC1P2Q在3项中胜出（通过占比、父库销比、有效覆盖率）。B0CN856K37胜出的关键：<b>季节时机</b>（万圣节搜索量正在爬坡，田径鞋钉还在淡季低谷）+ <b>低集中度</b>（18% vs 75.9%，流量分散到多子ASIN更健康）+ <b>子ASIN数</b>（35个 vs 6个，买家选择空间大3倍）。
+</div>
+</div>
+
+<!-- Action Plan -->
+<h2>秒杀提报行动建议</h2>
+<div class="card">
+<table>
+<thead><tr><th style="width:5%">#</th><th style="width:18%">父ASIN</th><th style="width:12%">优先级</th><th>行动</th><th style="width:15%">时间窗口</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>B0CN856K37</td><td><span class="badge b-pass">立即提报</span></td><td>9月下旬秒杀，配合万圣节关键词广告（halloween earrings $80/天 + teacher earrings $50/天）。35子ASIN全覆盖，流量分散风险低</td><td>9/20-10/5</td></tr>
+<tr><td>2</td><td>B093GC1P2Q</td><td><span class="badge b-warn">10月提报</span></td><td>等10月搜索量爬升至1万+后提报。当前9月淡季转化率偏低。确保B08X6SMJ47不断货（当前6.85月充足）</td><td>10/15-10/30</td></tr>
+<tr><td>3</td><td>B0CQ4QYL3</td><td><span class="badge b-warn">补货后提报</span></td><td>先补货B0D8HWZPD4(需1,800件)和B0D46V9DNP(需1,120件)至库销比2.5月+，再做秒杀。补货后通过销量占比可从20.8%升至50%+</td><td>补货后10月</td></tr>
+<tr><td>4</td><td>B09PB9NWZB</td><td><span class="badge b-warn">备选</span></td><td>节日耳环B组，通过占比95.7%+父库销比8.21月。但总销量345偏低，建议作为B0CN856K37的替补</td><td>10月初</td></tr>
+<tr><td>5</td><td>B0DD3R6LK5</td><td><span class="badge b-warn">备选</span></td><td>混合贴片60pc，通过率52.6%+常青品类。可10-11月随时提报，库存达标</td><td>10-11月</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center;color:var(--dim);font-size:0.78em;margin-top:24px;padding:12px;border-top:1px solid var(--border)">
+  数据更新至 2026-09-13 | 领星ERP版本：lingxing-mcp-20260914-v1 | SIF关键词趋势覆盖24个月<br>
+  报告生成：2026-09-14 | 父ASIN级分析（13个父ASIN，179个子ASIN）
+</div>
+
+<script>
+const parents = [
+  {name:'B0CN856K37',vol:1770,passShare:37.1,passFba:4132,score:78,cat:'节日耳环'},
+  {name:'B093GC1P2Q',vol:494,passShare:96.8,passFba:3316,score:75,cat:'田径鞋钉'},
+  {name:'B0CQ4QYWL3',vol:3452,passShare:20.8,passFba:5939,score:70,cat:'熨烫贴片'},
+  {name:'B0DD3R6LK5',vol:1486,passShare:27.6,passFba:2324,score:66,cat:'混合贴片'},
+  {name:'B0CJ4SPFGZ',vol:1727,passShare:19.0,passFba:3759,score:58,cat:'教师耳环'},
+  {name:'B0DHL5X1XM',vol:581,passShare:27.2,passFba:1348,score:63,cat:'节日贴片'},
+  {name:'B09PB9NWZB',vol:345,passShare:95.7,passFba:2777,score:62,cat:'节日耳环B'},
+  {name:'B0BCQ8GDY8',vol:453,passShare:71.5,passFba:1157,score:60,cat:'蝴蝶贴片'}
+];
+
+echarts.init(document.getElementById('chart_matrix')).setOption({
+  tooltip:{trigger:'item',formatter:p=>`<b>${p.data[3]}</b> (${p.data[5]})<br/>总销量: ${p.data[0]}<br/>通过销量占比: ${p.data[1]}%<br/>通过FBA: ${p.data[2]}件<br/>综合分: ${p.data[4]}`},
+  xAxis:{type:'value',name:'总销量',nameTextStyle:{color:'#8b9bb0'},axisLabel:{color:'#8b9bb0'},splitLine:{lineStyle:{color:'#2a3a4a'}}},
+  yAxis:{type:'value',name:'通过销量占比(%)',nameTextStyle:{color:'#8b9bb0'},axisLabel:{color:'#8b9bb0'},splitLine:{lineStyle:{color:'#2a3a4a'}},max:100},
+  series:[{
+    type:'scatter',
+    data:parents.map(p=>[p.vol,p.passShare,p.passFba,p.name,p.score,p.cat]),
+    symbolSize:p=>Math.max(15,Math.sqrt(p[2])/3),
+    itemStyle:{color:p=>p.data[4]>=75?'#ffd700':p.data[4]>=70?'#cd7f32':'#4fc3f7',opacity:0.7},
+    label:{show:true,formatter:p=>p.data[3].substr(-6),color:'#8b9bb0',position:'top',fontSize:9}
+  }],
+  grid:{left:'10%',right:'5%',bottom:'12%'}
+});
+
+echarts.init(document.getElementById('chart_radar')).setOption({
+  tooltip:{trigger:'item'},
+  legend:{data:['B0CN856K37','B093GC1P2Q','B0CQ4QYWL3','B0DD3R6LK5','B0CJ4SPFGZ'],textStyle:{color:'#8b9bb0'},bottom:0},
+  radar:{
+    indicator:[{name:'通过销量占比',max:100},{name:'季节时机',max:10},{name:'通过FBA库存',max:100},{name:'父库销比',max:10},{name:'集中度(反向)',max:100},{name:'通过率',max:100}],
+    axisName:{color:'#8b9bb0'},
+    splitLine:{lineStyle:{color:'#2a3a4a'}},
+    splitArea:{areaStyle:{color:['rgba(42,58,74,0.3)','rgba(42,58,74,0.1)']}}
+  },
+  series:[{
+    type:'radar',
+    data:[
+      {name:'B0CN856K37',value:[37,9,82,6,82,37],itemStyle:{color:'#ffd700'},areaStyle:{opacity:0.15}},
+      {name:'B093GC1P2Q',value:[97,5,66,7,24,83],itemStyle:{color:'#c0c0c0'},areaStyle:{opacity:0.15}},
+      {name:'B0CQ4QYWL3',value:[21,7,100,5,83,37],itemStyle:{color:'#cd7f32'},areaStyle:{opacity:0.15}},
+      {name:'B0DD3R6LK5',value:[28,7,46,6,74,53],itemStyle:{color:'#4fc3f7'},areaStyle:{opacity:0.15}},
+      {name:'B0CJ4SPFGZ',value:[19,5,75,6,36,57],itemStyle:{color:'#9c27b0'},areaStyle:{opacity:0.15}}
+    ]
+  }]
+});
+
+echarts.init(document.getElementById('chart_bar')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['通过子ASIN FBA合计','通过子ASIN销量'],textStyle:{color:'#8b9bb0'}},
+  xAxis:{type:'category',data:parents.map(p=>p.name),axisLabel:{color:'#8b9bb0',rotate:30}},
+  yAxis:[{type:'value',axisLabel:{color:'#8b9bb0'}},{type:'value',axisLabel:{color:'#8b9bb0'}}],
+  series:[
+    {name:'通过子ASIN FBA合计',type:'bar',data:parents.map(p=>p.passFba),itemStyle:{color:'#81c784'}},
+    {name:'通过子ASIN销量',type:'bar',data:parents.map(p=>Math.round(p.vol*p.passShare/100)),itemStyle:{color:'#4fc3f7'}}
+  ],
+  grid:{left:'8%',right:'8%',bottom:'15%'}
+});
+
+window.addEventListener('resize',()=>{document.querySelectorAll('.chart').forEach(e=>echarts.getInstanceByDom(e)?.resize())});
+</script>
+</body>
+</html>

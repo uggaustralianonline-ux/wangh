@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A-US 5 个产品销量预估（2026-11 ~ 2027-01）</title>
+<style>
+  :root{--bg:#f5f6f8;--card:#fff;--ink:#1a1d23;--sub:#5b6270;--line:#e3e6ea;--accent:#2563eb;
+    --red:#dc2626;--amber:#d97706;--green:#16a34a;--grey:#9aa1ad;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;line-height:1.6;font-size:14px}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+  h1{font-size:22px;margin:0 0 6px}
+  h2{font-size:17px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+  h3{font-size:15px;margin:22px 0 8px;padding-left:8px;border-left:3px solid var(--accent)}
+  .meta{color:var(--sub);font-size:13px;margin-bottom:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:12px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .kpi .lbl{font-size:12px;color:var(--sub)}
+  .kpi .val{font-size:20px;font-weight:700;margin-top:3px}
+  .kpi .val small{font-size:12px;font-weight:400;color:var(--sub);margin-left:3px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th,td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:right;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:#f0f2f5;color:var(--sub);font-weight:600;font-size:12px}
+  tbody tr:hover{background:#fafbfc}
+  .up{color:var(--green);font-weight:600} .down{color:var(--red);font-weight:600}
+  .tag{display:inline-block;padding:0 6px;border-radius:9px;font-size:11px;border:1px solid;margin-left:5px;white-space:nowrap}
+  .tag.g{color:var(--green);border-color:#b6e2c1;background:#effaf2}
+  .tag.r{color:var(--red);border-color:#f3b6b6;background:#fdeeee}
+  .tag.a{color:var(--amber);border-color:#f2d9a8;background:#fdf6e9}
+  .tag.o{color:#ea580c;border-color:#f6c9ab;background:#fdf1e8}
+  .tag.b{color:var(--accent);border-color:#bcd3f5;background:#eef4fd}
+  .note{background:#f6f8fa;border-left:3px solid var(--line);color:#3c4353;font-size:12.5px;padding:8px 12px;margin:8px 0;border-radius:0 6px 6px 0}
+  .verdicts{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:#3c4353}
+  .verdicts li{margin:3px 0}
+  .ptitle{font-weight:700;font-size:13px;color:var(--accent);margin:0 0 8px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:900px){.grid2{grid-template-columns:1fr}}
+  table.kv td{text-align:left;white-space:normal}
+  table.kv td:nth-child(odd){color:var(--sub);width:130px}
+  .sumrow td{background:#f0f4fb;font-weight:700}
+  .sub{color:var(--sub);font-size:11.5px}
+  ul.tight{margin:6px 0;padding-left:20px;font-size:13px}
+  ul.tight li{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>A-US 店铺 5 个产品 — 销量预估（2026-11 ~ 2027-01）</h1>
+<div class="meta">三维加权预测模型 v1.1.0（短窗加权 + 动量豁免 + 形态漂移 + 水平一致性软上限 + 系数退化兜底 + 伪信号词剔除） · 数据截至 2026-10-17 · 生成于 2026-10-17 · 领星 ERP（A-US，sid=4651）真实销量 + SIF 关键词信号 + 盛途备货预估交叉验证</div>
+
+<div class="kpis">
+<div class="kpi"><div class="lbl">基准情景合计</div><div class="val">31,812<small>件</small></div></div>
+<div class="kpi"><div class="lbl">保守情景合计</div><div class="val">27,041<small>件</small></div></div>
+<div class="kpi"><div class="lbl">乐观情景合计</div><div class="val">39,766<small>件</small></div></div>
+<div class="kpi"><div class="lbl">当前总库存</div><div class="val">11,076<small>件</small></div></div>
+<div class="kpi"><div class="lbl">建议补货合计</div><div class="val" style="color:var(--red)">30,708<small>件</small></div></div>
+</div>
+
+<h2>一、本轮口径与数据说明</h2>
+<div class="card">
+<ul class="tight">
+<li><b>样本来源</b>：A-US 店铺近 30 天销量 Top 50 中排除此前已预估样本后选定的 5 个产品，覆盖长青款（脏辫钩针、拼豆模板、树脂擀棒）、节庆款（彩色耳贴、万圣节补丁）两类形态。</li>
+<li><b>数据源</b>：基础日销与季节系数全部来自领星 ERP 真实销量（4 窗口 + 3 年月度序列 + 逐日明细）；关键词同比来自 SIF <code>market_get_keyword_demand</code> 近期口径（±2 周 vs 去年同期 ±2 周）；库存来自领星 <code>get_fba_stock_list</code>（可售+待调仓+入库中）。</li>
+<li><b>确定性计算</b>：全部公式与阈值由 <code>forecast_calc.py</code>（29 个回归用例守护）执行，四道季节系数闸门全部强制开启。</li>
+<li><b>尖峰剔除</b>：B07WFN5WSM 剔除 2024-10-08 一次性尖峰 91 件（Prime Big Deal Days 2024）；B08MW3X2MG 剔除 2024-07-02 一次性爆量 115 件；2024 Prime Day（7-16/17）尖峰为每年稳定重复的季节形态，予以保留。</li>
+<li><b>伪信号词剔除（本轮新增执行）</b>：近期同比超 +300% 的 ABA 新收录低基数词视为搜索池扩容噪声剔除。B0D8BCMJLR 的 "iron patches"（+3525%，份额 4.2%）被剔除后，校准系数由 0.984 修正为 <b>0.710</b>，11-1 月合计预估由 43 件修正为 31 件，与该万圣节产品季后淡出的形态一致。</li>
+<li><b>交叉验证</b>：盛途「备货预估」为计划口径，仅用于一致性检查；3/5 产品与内部计划偏差 ≤ 16%（一致），1 个偏差 34.7%（计划滞后建议复核），1 个为极小基数下的形式分歧（实质一致）。</li>
+<li><b>需求口径</b>：总需求 = 当月剩余销量（近 7 天日均 × 剩余 15 天）+ 未来 3 个月预估，库存状态按保守情景判定。</li>
+</ul>
+</div>
+
+<h2>二、5 个产品总表</h2>
+<div class="card">
+<table><thead><tr><th>产品</th><th>基础日销</th><th>动量比</th><th>去季节化基准</th><th>校准系数</th><th>11月基准</th><th>12月基准</th><th>1月基准</th><th>合计·保守</th><th>合计·基准</th><th>合计·乐观</th><th>当前库存</th><th>基准总需求</th><th>状态/动作</th><th>建议补货</th></tr></thead><tbody><tr><td>1. B07XDJ3HGK<br><span class='sub'>脏辫钩针5件套（Dreadlock Crochet Hook 0.75mm）</span></td><td>113.1</td><td>1.10</td><td>100.5</td><td>1.000</td><td>3,226</td><td>3,136</td><td>2,520</td><td>7,551</td><td><b>8,883</b></td><td>11,104</td><td>2,678</td><td>10,662</td><td><span class="tag r">断货风险</span><br><span class="tag r">立即补货</span></td><td><b>9,584</b></td></tr><tr><td>2. B07W4G51XR<br><span class='sub'>彩色耳贴 240 贴（Sticker Earrings）</span></td><td>59.2</td><td>1.03</td><td>75.7</td><td>0.984</td><td>3,840</td><td>8,062</td><td>1,279</td><td>11,204</td><td><b>13,181</b></td><td>16,477</td><td>3,673</td><td>14,081</td><td><span class="tag r">断货风险</span><br><span class="tag r">立即补货</span></td><td><b>12,520</b></td></tr><tr><td>3. B0D8BCMJLR<br><span class='sub'>万圣节刺绣补丁贴 36 个（Halloween Iron-on Patches）</span></td><td>43.3</td><td>1.99</td><td>5.5</td><td>0.710</td><td>16</td><td>11</td><td>3.7</td><td>26</td><td><b>31</b></td><td>39</td><td>763</td><td>895</td><td><span class="tag r">断货风险</span><br><span class="tag r">立即补货</span></td><td><b>266</b></td></tr><tr><td>4. B07WFN5WSM<br><span class='sub'>拼豆豆模板 20 片 5mm（Fuse Beads Pegboard）</span></td><td>40.2</td><td>0.90</td><td>57.9</td><td>0.984</td><td>2,001</td><td>2,842</td><td>1,654</td><td>5,522</td><td><b>6,497</b></td><td>8,121</td><td>3,166</td><td>7,069</td><td><span class="tag r">断货风险</span><br><span class="tag r">立即补货</span></td><td><b>4,964</b></td></tr><tr><td>5. B08MW3X2MG<br><span class='sub'>树脂土擀棒 20×2cm（Polymer Clay Roller）</span></td><td>28.8</td><td>0.88</td><td>30.3</td><td>1.000</td><td>1,447</td><td>740</td><td>1,033</td><td>2,738</td><td><b>3,220</b></td><td>4,026</td><td>796</td><td>3,626</td><td><span class="tag r">断货风险</span><br><span class="tag r">立即补货</span></td><td><b>3,374</b></td></tr><tr class='sumrow'><td><b>合计</b></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><b>27,041</b></td><td><b>31,812</b></td><td><b>39,766</b></td><td><b>11,076</b></td><td>—</td><td>5 个均断货风险</td><td><b>30,708</b></td></tr></tbody></table>
+</div>
+
+<h2>三、库存缺口对比</h2>
+<div class="card">
+<svg viewBox="0 0 1110 274" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><text x="202" y="28" text-anchor="end" font-size="11.5" fill="#1a1d23">B07XDJ3HGK · 脏辫钩针5件套（Dr</text><rect x="210" y="12" width="66.3" height="16" fill="#16a34a" rx="2"/><text x="282.3" y="24" font-size="10.5" fill="#166534">库存 2,678</text><rect x="625.0" y="12" width="264.0" height="16" fill="#dc2626" rx="2"/><text x="895.0" y="24" font-size="10.5" fill="#991b1b">基准总需求 10,662</text><text x="202" y="80" text-anchor="end" font-size="11.5" fill="#1a1d23">B07W4G51XR · 彩色耳贴 240 贴</text><rect x="210" y="64" width="91.0" height="16" fill="#16a34a" rx="2"/><text x="307.0" y="76" font-size="10.5" fill="#166534">库存 3,673</text><rect x="625.0" y="64" width="348.7" height="16" fill="#dc2626" rx="2"/><text x="979.7" y="76" font-size="10.5" fill="#991b1b">基准总需求 14,081</text><text x="202" y="132" text-anchor="end" font-size="11.5" fill="#1a1d23">B0D8BCMJLR · 万圣节刺绣补丁贴 3</text><rect x="210" y="116" width="18.9" height="16" fill="#16a34a" rx="2"/><text x="234.9" y="128" font-size="10.5" fill="#166534">库存 763</text><rect x="625.0" y="116" width="22.2" height="16" fill="#dc2626" rx="2"/><text x="653.2" y="128" font-size="10.5" fill="#991b1b">基准总需求 895</text><text x="202" y="184" text-anchor="end" font-size="11.5" fill="#1a1d23">B07WFN5WSM · 拼豆豆模板 20 片</text><rect x="210" y="168" width="78.4" height="16" fill="#16a34a" rx="2"/><text x="294.4" y="180" font-size="10.5" fill="#166534">库存 3,166</text><rect x="625.0" y="168" width="175.1" height="16" fill="#dc2626" rx="2"/><text x="806.1" y="180" font-size="10.5" fill="#991b1b">基准总需求 7,069</text><text x="202" y="236" text-anchor="end" font-size="11.5" fill="#1a1d23">B08MW3X2MG · 树脂土擀棒 20×2</text><rect x="210" y="220" width="19.7" height="16" fill="#16a34a" rx="2"/><text x="235.7" y="232" font-size="10.5" fill="#166534">库存 796</text><rect x="625.0" y="220" width="89.8" height="16" fill="#dc2626" rx="2"/><text x="720.8" y="232" font-size="10.5" fill="#991b1b">基准总需求 3,626</text><rect x="210" y="6" width="10" height="10" fill="#16a34a" rx="1"/><text x="225" y="15" font-size="10.5" fill="#5b6270">当前总库存</text><rect x="210" y="20" width="10" height="10" fill="#dc2626" rx="1"/><text x="225" y="29" font-size="10.5" fill="#5b6270">总需求（当月剩余 + 3 个月基准预估）</text></svg>
+<p class="note">5 个产品保守情景总需求均高于当前库存 → 全部判定「断货风险」，其中 4 个缺口超过 5,000 件量级的旺季缺口需优先处理；万圣节补丁的缺口集中在 10 月季节尾巴，按季节收尾逻辑单独处理（见详析）。</p>
+</div>
+
+<h2>四、逐产品详析</h2>
+
+<h3>1. B07XDJ3HGK — 脏辫钩针5件套（Dreadlock Crochet Hook 0.75mm） <span class="tag r">断货风险</span> <span class="tag b">校准 1.000</span></h3>
+<div class="card">
+<p class="ptitle">基本信息</p>
+<table class="kv"><tbody>
+<tr><td>ASIN / MSKU</td><td><b>B07XDJ3HGK</b> / 89-721-A</td><td>售价（US 站）</td><td>$5.99</td></tr>
+<tr><td>开发人 / 推广人</td><td>徐亮 / 范雅晴</td><td>英文标题</td><td>AUGSUN Dreadlock Crochet Hook Tool 0.75mm Hair Crochet Needl</td></tr>
+</tbody></table>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 1 步 · 基础日销（领星 A-US 真实销量）</p>
+<table><thead><tr><th>窗口</th><th>区间销量</th><th>日均</th></tr></thead><tbody>
+<tr><td>近 7 天</td><td>874</td><td>124.9</td></tr>
+<tr><td>近 14 天</td><td>1,574</td><td>112.4</td></tr>
+<tr><td>近 30 天</td><td>3,344</td><td>111.5</td></tr>
+<tr><td>近 90 天</td><td>9,322</td><td>103.6</td></tr>
+</tbody></table>
+<p class="note">短期日销 118.6、中期日销 107.5 → 基础日销 <b>113.1</b> 件/天；动量比 1.10 → flat。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 2 步 · 季节系数（相关月）</p>
+<table><thead><tr><th>月份</th><th>2024 系数</th><th>2025 系数</th><th>两年均值</th><th>相对偏离</th><th>采用系数</th></tr></thead><tbody><tr><td>10月（当月）</td><td>1.150</td><td>1.100</td><td>1.125</td><td>+4%</td><td><b>1.125</b></td></tr><tr><td>11月</td><td>1.012</td><td>1.128</td><td>1.070</td><td>+11%</td><td><b>1.070</b></td></tr><tr><td>12月</td><td>0.929</td><td>1.084</td><td>1.007</td><td>+15%</td><td><b>1.007</b></td></tr><tr><td>1月</td><td>0.813</td><td>0.805</td><td>0.809</td><td>+1%</td><td><b>0.809</b></td></tr></tbody></table><ul class="verdicts"><li>系数口径：<b>两年均值</b></li><li>去季节化闸门：当月实际日均 113.9 vs 上月 105.9，一致性比 1.076，历史同月爬坡比 0.927 → 通过，照常去季节化</li><li>水平一致性软上限：累计同比 +40.5%，累计口径水平 82.4 件/天，水平比 1.22 → 正常，不封顶</li></ul>
+</div>
+</div>
+<div class="card">
+<p class="ptitle">销量历史与预估（2024-01 ~ 2027-01）</p>
+<svg viewBox="0 0 1110 300" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="46" y1="266.0" x2="1102" y2="266.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="270.0" text-anchor="end" font-size="10" fill="#8a93a3">0</text><line x1="46" y1="206.0" x2="1102" y2="206.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="210.0" text-anchor="end" font-size="10" fill="#8a93a3">1,089</text><line x1="46" y1="146.0" x2="1102" y2="146.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="150.0" text-anchor="end" font-size="10" fill="#8a93a3">2,178</text><line x1="46" y1="86.0" x2="1102" y2="86.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="90.0" text-anchor="end" font-size="10" fill="#8a93a3">3,266</text><line x1="46" y1="26.0" x2="1102" y2="26.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="30.0" text-anchor="end" font-size="10" fill="#8a93a3">4,355</text><rect x="50.3" y="206.4" width="18.4" height="59.6" fill="#c3cfde" rx="1"/><text x="59.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/01</text><rect x="77.4" y="202.9" width="18.4" height="63.1" fill="#c3cfde" rx="1"/><rect x="104.5" y="216.6" width="18.4" height="49.4" fill="#c3cfde" rx="1"/><rect x="131.6" y="211.8" width="18.4" height="54.2" fill="#c3cfde" rx="1"/><rect x="158.6" y="189.0" width="18.4" height="77.0" fill="#c3cfde" rx="1"/><rect x="185.7" y="194.2" width="18.4" height="71.8" fill="#c3cfde" rx="1"/><rect x="212.8" y="183.8" width="18.4" height="82.2" fill="#c3cfde" rx="1"/><text x="222.0" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/07</text><rect x="239.9" y="173.3" width="18.4" height="92.7" fill="#c3cfde" rx="1"/><rect x="266.9" y="174.5" width="18.4" height="91.5" fill="#c3cfde" rx="1"/><rect x="294.0" y="181.7" width="18.4" height="84.3" fill="#c3cfde" rx="1"/><rect x="321.1" y="194.2" width="18.4" height="71.8" fill="#c3cfde" rx="1"/><rect x="348.2" y="197.9" width="18.4" height="68.1" fill="#c3cfde" rx="1"/><rect x="375.3" y="185.4" width="18.4" height="80.6" fill="#93a9c9" rx="1"/><text x="384.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/01</text><rect x="402.3" y="180.3" width="18.4" height="85.7" fill="#93a9c9" rx="1"/><rect x="429.4" y="173.7" width="18.4" height="92.3" fill="#93a9c9" rx="1"/><rect x="456.5" y="189.2" width="18.4" height="76.8" fill="#93a9c9" rx="1"/><rect x="483.6" y="179.5" width="18.4" height="86.5" fill="#93a9c9" rx="1"/><rect x="510.6" y="173.0" width="18.4" height="93.0" fill="#93a9c9" rx="1"/><rect x="537.7" y="170.2" width="18.4" height="95.8" fill="#93a9c9" rx="1"/><text x="546.9" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/07</text><rect x="564.8" y="136.2" width="18.4" height="129.8" fill="#93a9c9" rx="1"/><rect x="591.9" y="155.3" width="18.4" height="110.7" fill="#93a9c9" rx="1"/><rect x="618.9" y="155.8" width="18.4" height="110.2" fill="#93a9c9" rx="1"/><rect x="646.0" y="156.7" width="18.4" height="109.3" fill="#93a9c9" rx="1"/><rect x="673.1" y="157.4" width="18.4" height="108.6" fill="#93a9c9" rx="1"/><rect x="700.2" y="173.0" width="18.4" height="93.0" fill="#2563eb" rx="1"/><text x="709.4" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/01</text><rect x="727.3" y="156.7" width="18.4" height="109.3" fill="#2563eb" rx="1"/><rect x="754.3" y="157.6" width="18.4" height="108.4" fill="#2563eb" rx="1"/><rect x="781.4" y="158.1" width="18.4" height="107.9" fill="#2563eb" rx="1"/><rect x="808.5" y="164.9" width="18.4" height="101.1" fill="#2563eb" rx="1"/><rect x="835.6" y="103.9" width="18.4" height="162.1" fill="#2563eb" rx="1"/><rect x="862.6" y="100.0" width="18.4" height="166.0" fill="#2563eb" rx="1"/><text x="871.8" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/07</text><rect x="889.7" y="92.9" width="18.4" height="173.1" fill="#2563eb" rx="1"/><rect x="916.8" y="91.0" width="18.4" height="175.0" fill="#2563eb" rx="1"/><rect x="943.9" y="165.6" width="18.4" height="100.4" fill="#2563eb" rx="1"/><rect x="1025.1" y="88.2" width="18.4" height="177.8" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1034.3" y1="114.9" x2="1034.3" y2="43.8" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="114.9" x2="1038.3" y2="114.9" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="43.8" x2="1038.3" y2="43.8" stroke="#b45309" stroke-width="1.4"/><text x="1034.3" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/11</text><rect x="1052.2" y="93.2" width="18.4" height="172.8" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1061.4" y1="119.1" x2="1061.4" y2="49.9" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="119.1" x2="1065.4" y2="119.1" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="49.9" x2="1065.4" y2="49.9" stroke="#b45309" stroke-width="1.4"/><text x="1061.4" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/12</text><rect x="1079.3" y="127.1" width="18.4" height="138.9" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1088.5" y1="147.9" x2="1088.5" y2="92.4" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="147.9" x2="1092.5" y2="147.9" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="92.4" x2="1092.5" y2="92.4" stroke="#b45309" stroke-width="1.4"/><text x="1088.5" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">27/01</text><rect x="46" y="8" width="10" height="10" fill="#c3cfde" rx="1"/><text x="60" y="17" font-size="10.5" fill="#5b6270">2024 实际</text><rect x="141" y="8" width="10" height="10" fill="#93a9c9" rx="1"/><text x="155" y="17" font-size="10.5" fill="#5b6270">2025 实际</text><rect x="236" y="8" width="10" height="10" fill="#2563eb" rx="1"/><text x="250" y="17" font-size="10.5" fill="#5b6270">2026 实际</text><rect x="331" y="8" width="10" height="10" fill="#f59e0b" rx="1"/><text x="345" y="17" font-size="10.5" fill="#5b6270">预估（基准柱 + 保守~乐观区间）</text></svg>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 3 步 · 关键词校准（SIF 近期同比口径）</p>
+<table><thead><tr><th>关键词</th><th>释义</th><th>流量份额</th><th>近期同比</th><th>趋势</th><th>CTR 周/90天</th></tr></thead><tbody><tr><td>crochet hooks</td><td>钩针</td><td>31.5%</td><td class='up'>+11.4%</td><td>增长·加速增长</td><td>0.40 / 0.25</td></tr><tr><td>loc crochet needle</td><td>脏辫钩针</td><td>19.9%</td><td class='up'>+8.3%</td><td>平稳·稳定</td><td>0.61 / 0.38</td></tr><tr><td>interlocking tool for locs</td><td>锁发用互锁工具</td><td>15.7%</td><td class='up'>+11.2%</td><td>平稳·稳定</td><td>0.56 / 0.33</td></tr><tr><td>crochet needle for locs</td><td>适合锁发的钩针</td><td>13.7%</td><td class='down'>-17.1%</td><td>增长·见顶回落</td><td>0.42 / 0.35</td></tr><tr><td>loc tool</td><td>脏辫工具</td><td>11.4%</td><td class='up'>+58.0%</td><td>平稳·稳定</td><td>0.51 / 0.29</td></tr><tr><td>crochet needles</td><td>钩针</td><td>7.8%</td><td class='up'>+12.0%</td><td>增长·加速增长</td><td>0.54 / 0.25</td></tr></tbody></table><p class='note'>顶部词「crochet hooks」季节性：峰值月 ['01', '12', '02']，低谷月 ['05', '04', '06']，距峰值约 12 周；CTR 统计周 2026-09-27。top 词 crochet hooks 排名断档但整体平稳，无 at_risk</p><p class='note'>校准合成：加权市场同比 <b>+12.2%</b> → 趋势调整 0，结构调整 0，广告依赖折扣 ×1.000（自然流量主导），原始系数 1.000 → <b>最终校准系数 1.000</b>。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 4 步 · 三情景预估</p>
+<table><thead><tr><th>月份</th><th>季节系数</th><th>方法</th><th>保守</th><th>基准</th><th>乐观</th></tr></thead><tbody>
+<tr><td>2026-11</td><td>1.070</td><td>coef</td><td>2,742 [2,468~3,016]</td><td><b>3,226</b> [2,903~3,549]</td><td>4,032 [3,629~4,436]</td></tr><tr><td>2026-12</td><td>1.007</td><td>coef</td><td>2,666 [2,399~2,933]</td><td><b>3,136</b> [2,823~3,450]</td><td>3,920 [3,528~4,313]</td></tr><tr><td>2027-01</td><td>0.809</td><td>coef</td><td>2,142 [1,928~2,357]</td><td><b>2,520</b> [2,268~2,773]</td><td>3,151 [2,836~3,466]</td></tr>
+<tr><td><b>合计</b></td><td>—</td><td>—</td><td><b>7,551</b></td><td><b>8,883</b></td><td><b>11,104</b></td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 5 步 · 内部计划交叉验证（盛途备货预估）</p>
+<table><thead><tr><th>月份</th><th>盛途计划（件）</th><th>模型基准（件）</th><th>偏差</th></tr></thead><tbody><tr><td>2026-11</td><td>2,000</td><td>3,226</td><td class='down'>-38.0%</td></tr><tr><td>2026-12</td><td>2,000</td><td>3,136</td><td class='down'>-36.2%</td></tr><tr><td>2027-01</td><td>1,800</td><td>2,520</td><td class='down'>-28.6%</td></tr></tbody></table><p class='note'>合计：盛途计划 5,800 vs 模型基准 8,883，偏差 <b>-34.7%</b> → 偏差-建议复核。</p><p class='note'>偏差说明：内部计划仅较去年同期实际（5,415 件）高约 +7%，而今年 1-9 月累计同比 +40.5%、6-9 月销量中枢已抬升至 3,000+ 件/月；模型基准隐含同比增长 +64%，由真实爬坡数据驱动。建议复核内部计划是否滞后于今年增长，按模型基准上调。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 6 步 · 库存与备货</p>
+<table><thead><tr><th>FBA 可售</th><th>待调仓</th><th>入库中</th><th>总库存</th><th>当月剩余需求</th><th>总需求·保守</th><th>总需求·基准</th><th>总需求·乐观</th></tr></thead><tbody><tr><td>2,360</td><td>318</td><td>0</td><td><b>2,678</b></td><td>1,780</td><td>9,330</td><td><b>10,662</b></td><td>12,883</td></tr></tbody></table><p class='note'>判定：<b>断货风险</b>（保守总需求 9,330 > 当前库存 2,678）→ <b style='color:var(--red)'>立即补货</b>；建议补货量 = 基准总需求 × 1.15 − 当前库存 ≈ <b>9,584 件</b>。</p>
+</div>
+</div>
+
+<h3>2. B07W4G51XR — 彩色耳贴 240 贴（Sticker Earrings） <span class="tag r">断货风险</span> <span class="tag b">校准 0.984</span></h3>
+<div class="card">
+<p class="ptitle">基本信息</p>
+<table class="kv"><tbody>
+<tr><td>ASIN / MSKU</td><td><b>B07W4G51XR</b> / WJ0078*240</td><td>售价（US 站）</td><td>$5.36</td></tr>
+<tr><td>开发人 / 推广人</td><td>开发部产品维护 / 范雅晴</td><td>英文标题</td><td>AUGSUN 240 Pieces Sticker Earrings, Stick on Earring for Gir</td></tr>
+</tbody></table>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 1 步 · 基础日销（领星 A-US 真实销量）</p>
+<table><thead><tr><th>窗口</th><th>区间销量</th><th>日均</th></tr></thead><tbody>
+<tr><td>近 7 天</td><td>418</td><td>59.7</td></tr>
+<tr><td>近 14 天</td><td>843</td><td>60.2</td></tr>
+<tr><td>近 30 天</td><td>1,759</td><td>58.6</td></tr>
+<tr><td>近 90 天</td><td>5,241</td><td>58.2</td></tr>
+</tbody></table>
+<p class="note">短期日销 60.0、中期日销 58.4 → 基础日销 <b>59.2</b> 件/天；动量比 1.03 → flat。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 2 步 · 季节系数（相关月）</p>
+<table><thead><tr><th>月份</th><th>2024 系数</th><th>2025 系数</th><th>两年均值</th><th>相对偏离</th><th>采用系数</th></tr></thead><tbody><tr><td>10月（当月）</td><td>0.814</td><td>0.782</td><td>0.798</td><td>+4%</td><td><b>0.782</b></td></tr><tr><td>11月</td><td>1.259</td><td>1.717</td><td>1.488</td><td>+31%</td><td><b>1.717</b></td></tr><tr><td>12月</td><td>2.363</td><td>3.489</td><td>2.926</td><td>+38%</td><td><b>3.489</b></td></tr><tr><td>1月</td><td>0.844</td><td>0.553</td><td>0.699</td><td>+42%</td><td><b>0.553</b></td></tr></tbody></table><ul class="verdicts"><li>系数口径：<b>最近一年（形态漂移）</b></li><li>去季节化闸门：当月实际日均 58.9 vs 上月 55.9，一致性比 1.053，历史同月爬坡比 1.095 → 豁免（系统性爬坡月），照常去季节化</li><li>水平一致性软上限：累计同比 +47.1%，累计口径水平 90.6 件/天，水平比 0.84 → 正常，不封顶</li><li>⚠ 形态漂移，改用最近一年口径（触发月：1月、11月、12月）</li><li>⚠ 该月为系统性爬坡月（历史同月爬坡比 1.10 > 1.05），闸门豁免、照常去季节化</li></ul>
+</div>
+</div>
+<div class="card">
+<p class="ptitle">销量历史与预估（2024-01 ~ 2027-01）</p>
+<svg viewBox="0 0 1110 300" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="46" y1="266.0" x2="1102" y2="266.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="270.0" text-anchor="end" font-size="10" fill="#8a93a3">0</text><line x1="46" y1="206.0" x2="1102" y2="206.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="210.0" text-anchor="end" font-size="10" fill="#8a93a3">2,721</text><line x1="46" y1="146.0" x2="1102" y2="146.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="150.0" text-anchor="end" font-size="10" fill="#8a93a3">5,442</text><line x1="46" y1="86.0" x2="1102" y2="86.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="90.0" text-anchor="end" font-size="10" fill="#8a93a3">8,163</text><line x1="46" y1="26.0" x2="1102" y2="26.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="30.0" text-anchor="end" font-size="10" fill="#8a93a3">10,884</text><rect x="50.3" y="225.6" width="18.4" height="40.4" fill="#c3cfde" rx="1"/><text x="59.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/01</text><rect x="77.4" y="230.2" width="18.4" height="35.8" fill="#c3cfde" rx="1"/><rect x="104.5" y="204.9" width="18.4" height="61.1" fill="#c3cfde" rx="1"/><rect x="131.6" y="230.9" width="18.4" height="35.1" fill="#c3cfde" rx="1"/><rect x="158.6" y="229.2" width="18.4" height="36.8" fill="#c3cfde" rx="1"/><rect x="185.7" y="231.1" width="18.4" height="34.9" fill="#c3cfde" rx="1"/><rect x="212.8" y="226.3" width="18.4" height="39.7" fill="#c3cfde" rx="1"/><text x="222.0" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/07</text><rect x="239.9" y="228.2" width="18.4" height="37.8" fill="#c3cfde" rx="1"/><rect x="266.9" y="232.9" width="18.4" height="33.1" fill="#c3cfde" rx="1"/><rect x="294.0" y="227.0" width="18.4" height="39.0" fill="#c3cfde" rx="1"/><rect x="321.1" y="207.7" width="18.4" height="58.3" fill="#c3cfde" rx="1"/><rect x="348.2" y="152.9" width="18.4" height="113.1" fill="#c3cfde" rx="1"/><rect x="375.3" y="242.7" width="18.4" height="23.3" fill="#93a9c9" rx="1"/><text x="384.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/01</text><rect x="402.3" y="242.5" width="18.4" height="23.5" fill="#93a9c9" rx="1"/><rect x="429.4" y="237.4" width="18.4" height="28.6" fill="#93a9c9" rx="1"/><rect x="456.5" y="232.4" width="18.4" height="33.6" fill="#93a9c9" rx="1"/><rect x="483.6" y="242.8" width="18.4" height="23.2" fill="#93a9c9" rx="1"/><rect x="510.6" y="240.6" width="18.4" height="25.4" fill="#93a9c9" rx="1"/><rect x="537.7" y="239.9" width="18.4" height="26.1" fill="#93a9c9" rx="1"/><text x="546.9" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/07</text><rect x="564.8" y="234.0" width="18.4" height="32.0" fill="#93a9c9" rx="1"/><rect x="591.9" y="235.7" width="18.4" height="30.3" fill="#93a9c9" rx="1"/><rect x="618.9" y="233.1" width="18.4" height="32.9" fill="#93a9c9" rx="1"/><rect x="646.0" y="196.0" width="18.4" height="70.0" fill="#93a9c9" rx="1"/><rect x="673.1" y="119.1" width="18.4" height="146.9" fill="#93a9c9" rx="1"/><rect x="700.2" y="230.0" width="18.4" height="36.0" fill="#2563eb" rx="1"/><text x="709.4" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/01</text><rect x="727.3" y="225.9" width="18.4" height="40.1" fill="#2563eb" rx="1"/><rect x="754.3" y="214.7" width="18.4" height="51.3" fill="#2563eb" rx="1"/><rect x="781.4" y="225.3" width="18.4" height="40.7" fill="#2563eb" rx="1"/><rect x="808.5" y="226.0" width="18.4" height="40.0" fill="#2563eb" rx="1"/><rect x="835.6" y="229.0" width="18.4" height="37.0" fill="#2563eb" rx="1"/><rect x="862.6" y="226.2" width="18.4" height="39.8" fill="#2563eb" rx="1"/><text x="871.8" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/07</text><rect x="889.7" y="225.9" width="18.4" height="40.1" fill="#2563eb" rx="1"/><rect x="916.8" y="229.0" width="18.4" height="37.0" fill="#2563eb" rx="1"/><rect x="943.9" y="245.2" width="18.4" height="20.8" fill="#2563eb" rx="1"/><rect x="1025.1" y="181.3" width="18.4" height="84.7" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1034.3" y1="194.0" x2="1034.3" y2="160.1" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="194.0" x2="1038.3" y2="194.0" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="160.1" x2="1038.3" y2="160.1" stroke="#b45309" stroke-width="1.4"/><text x="1034.3" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/11</text><rect x="1052.2" y="88.2" width="18.4" height="177.8" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1061.4" y1="114.9" x2="1061.4" y2="43.8" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="114.9" x2="1065.4" y2="114.9" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="43.8" x2="1065.4" y2="43.8" stroke="#b45309" stroke-width="1.4"/><text x="1061.4" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/12</text><rect x="1079.3" y="237.8" width="18.4" height="28.2" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1088.5" y1="242.0" x2="1088.5" y2="230.7" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="242.0" x2="1092.5" y2="242.0" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="230.7" x2="1092.5" y2="230.7" stroke="#b45309" stroke-width="1.4"/><text x="1088.5" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">27/01</text><rect x="46" y="8" width="10" height="10" fill="#c3cfde" rx="1"/><text x="60" y="17" font-size="10.5" fill="#5b6270">2024 实际</text><rect x="141" y="8" width="10" height="10" fill="#93a9c9" rx="1"/><text x="155" y="17" font-size="10.5" fill="#5b6270">2025 实际</text><rect x="236" y="8" width="10" height="10" fill="#2563eb" rx="1"/><text x="250" y="17" font-size="10.5" fill="#5b6270">2026 实际</text><rect x="331" y="8" width="10" height="10" fill="#f59e0b" rx="1"/><text x="345" y="17" font-size="10.5" fill="#5b6270">预估（基准柱 + 保守~乐观区间）</text></svg>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 3 步 · 关键词校准（SIF 近期同比口径）</p>
+<table><thead><tr><th>关键词</th><th>释义</th><th>流量份额</th><th>近期同比</th><th>趋势</th><th>CTR 周/90天</th></tr></thead><tbody><tr><td>stick on earrings</td><td>贴耳环</td><td>36.3%</td><td class='up'>+1.6%</td><td>平稳·稳定</td><td>0.52 / 0.40</td></tr><tr><td>stick on earrings for little girls 4-6</td><td>适合4-6岁小女孩的粘贴耳环</td><td>23.3%</td><td class='up'>+29.8%</td><td>下滑·回暖中</td><td>0.61 / 0.50</td></tr><tr><td>sticker earrings for girls</td><td>女孩用贴纸耳环</td><td>18.0%</td><td class='up'>+131.8%</td><td>增长·加速增长</td><td>0.52 / 0.45</td></tr><tr><td>sticker earrings</td><td>贴纸耳环</td><td>14.8%</td><td class='down'>-23.3%</td><td>下滑·稳定</td><td>0.55 / 0.39</td></tr><tr><td>stick on earrings for little girls 1-3</td><td>适合1-3岁小女孩的粘贴耳环</td><td>7.6%</td><td class='up'>+140.9%</td><td>下滑·回暖中</td><td>0.59 / 0.45</td></tr></tbody></table><p class='note'>已剔除伪信号词：<b>gem stickers</b>（近期同比 +325%，份额 4.5%）——同比超 +300% 的 ABA 新收录低基数词，属搜索池扩容噪声而非真实需求增长。</p><p class='note'>顶部词「stick on earrings」季节性：峰值月 ['12', '11', '03']，低谷月 ['06', '05', '07']，距峰值约 8 周；CTR 统计周 2026-09-27。首要词 stick on earrings(24.5%) at_risk，top6 中 3 个 at_risk</p><p class='note'>校准合成：加权市场同比 <b>+38.5%</b> → 趋势调整 +12.5%，结构调整 0，广告依赖折扣 ×0.875（付费依赖/核心词异常），原始系数 0.984 → <b>最终校准系数 0.984</b>。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 4 步 · 三情景预估</p>
+<table><thead><tr><th>月份</th><th>季节系数</th><th>方法</th><th>保守</th><th>基准</th><th>乐观</th></tr></thead><tbody>
+<tr><td>2026-11</td><td>1.717</td><td>coef</td><td>3,264 [2,938~3,591]</td><td><b>3,840</b> [3,456~4,224]</td><td>4,801 [4,320~5,281]</td></tr><tr><td>2026-12</td><td>3.489</td><td>coef</td><td>6,853 [6,168~7,538]</td><td><b>8,062</b> [7,256~8,868]</td><td>10,078 [9,070~11,085]</td></tr><tr><td>2027-01</td><td>0.553</td><td>coef</td><td>1,087 [978~1,196]</td><td><b>1,279</b> [1,151~1,407]</td><td>1,599 [1,439~1,758]</td></tr>
+<tr><td><b>合计</b></td><td>—</td><td>—</td><td><b>11,204</b></td><td><b>13,181</b></td><td><b>16,477</b></td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 5 步 · 内部计划交叉验证（盛途备货预估）</p>
+<table><thead><tr><th>月份</th><th>盛途计划（件）</th><th>模型基准（件）</th><th>偏差</th></tr></thead><tbody><tr><td>2026-11</td><td>3,200</td><td>3,840</td><td class='down'>-16.7%</td></tr><tr><td>2026-12</td><td>6,700</td><td>8,062</td><td class='down'>-16.9%</td></tr><tr><td>2027-01</td><td>1,600</td><td>1,279</td><td class='up'>+25.1%</td></tr></tbody></table><p class='note'>合计：盛途计划 11,500 vs 模型基准 13,181，偏差 <b>-12.8%</b> → 一致。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 6 步 · 库存与备货</p>
+<table><thead><tr><th>FBA 可售</th><th>待调仓</th><th>入库中</th><th>总库存</th><th>当月剩余需求</th><th>总需求·保守</th><th>总需求·基准</th><th>总需求·乐观</th></tr></thead><tbody><tr><td>2,701</td><td>971</td><td>1</td><td><b>3,673</b></td><td>899</td><td>12,104</td><td><b>14,081</b></td><td>17,376</td></tr></tbody></table><p class='note'>判定：<b>断货风险</b>（保守总需求 12,104 > 当前库存 3,673）→ <b style='color:var(--red)'>立即补货</b>；建议补货量 = 基准总需求 × 1.15 − 当前库存 ≈ <b>12,520 件</b>。</p>
+</div>
+</div>
+
+<h3>3. B0D8BCMJLR — 万圣节刺绣补丁贴 36 个（Halloween Iron-on Patches） <span class="tag r">断货风险</span> <span class="tag b">校准 0.710</span></h3>
+<div class="card">
+<p class="ptitle">基本信息</p>
+<table class="kv"><tbody>
+<tr><td>ASIN / MSKU</td><td><b>B0D8BCMJLR</b> / 89-7588-A-N</td><td>售价（US 站）</td><td>$7.99</td></tr>
+<tr><td>开发人 / 推广人</td><td>徐亮 / 范雅晴</td><td>英文标题</td><td>AUGSUN 36Pcs Halloween Iron on Patches for Clothing | Skull </td></tr>
+</tbody></table>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 1 步 · 基础日销（领星 A-US 真实销量）</p>
+<table><thead><tr><th>窗口</th><th>区间销量</th><th>日均</th></tr></thead><tbody>
+<tr><td>近 7 天</td><td>373</td><td>53.3</td></tr>
+<tr><td>近 14 天</td><td>867</td><td>61.9</td></tr>
+<tr><td>近 30 天</td><td>1,227</td><td>40.9</td></tr>
+<tr><td>近 90 天</td><td>1,531</td><td>17.0</td></tr>
+</tbody></table>
+<p class="note">短期日销 57.6、中期日销 29.0 → 基础日销 <b>43.3</b> 件/天；动量比 1.99 → up（万圣节旺季爬坡所致，属季节形态而非可持续增长，基准已通过 10 月系数去季节化处理）。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 2 步 · 季节系数（相关月）</p>
+<table><thead><tr><th>月份</th><th>2024 系数</th><th>2025 系数</th><th>两年均值</th><th>相对偏离</th><th>采用系数</th></tr></thead><tbody><tr><td>10月（当月）</td><td>7.871</td><td>7.977</td><td>7.924</td><td>+1%</td><td><b>7.924</b></td></tr><tr><td>11月</td><td>0.213</td><td>0.069</td><td>0.141</td><td>—</td><td><b>0.141</b></td></tr><tr><td>12月</td><td>0.114</td><td>0.067</td><td>0.091</td><td>—</td><td><b>0.091</b></td></tr><tr><td>1月</td><td>0.000</td><td>0.061</td><td>0.030</td><td>—</td><td><b>0.030</b></td></tr></tbody></table><ul class="verdicts"><li>系数口径：<b>两年均值</b></li><li>去季节化闸门：当月实际日均 62.0 vs 上月 12.7，一致性比 4.869，历史同月爬坡比 3.298 → 通过，照常去季节化</li><li>水平一致性软上限：累计同比 -2.7%，累计口径水平 5.2 件/天，水平比 1.06 → 正常，不封顶</li></ul>
+</div>
+</div>
+<div class="card">
+<p class="ptitle">销量历史与预估（2024-01 ~ 2027-01）</p>
+<svg viewBox="0 0 1110 300" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="46" y1="266.0" x2="1102" y2="266.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="270.0" text-anchor="end" font-size="10" fill="#8a93a3">0</text><line x1="46" y1="206.0" x2="1102" y2="206.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="210.0" text-anchor="end" font-size="10" fill="#8a93a3">353</text><line x1="46" y1="146.0" x2="1102" y2="146.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="150.0" text-anchor="end" font-size="10" fill="#8a93a3">707</text><line x1="46" y1="86.0" x2="1102" y2="86.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="90.0" text-anchor="end" font-size="10" fill="#8a93a3">1,060</text><line x1="46" y1="26.0" x2="1102" y2="26.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="30.0" text-anchor="end" font-size="10" fill="#8a93a3">1,414</text><text x="59.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/01</text><text x="222.0" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/07</text><rect x="239.9" y="255.0" width="18.4" height="11.0" fill="#c3cfde" rx="1"/><rect x="266.9" y="196.6" width="18.4" height="69.4" fill="#c3cfde" rx="1"/><rect x="294.0" y="90.8" width="18.4" height="175.2" fill="#c3cfde" rx="1"/><rect x="321.1" y="261.4" width="18.4" height="4.6" fill="#c3cfde" rx="1"/><rect x="348.2" y="263.5" width="18.4" height="2.5" fill="#c3cfde" rx="1"/><rect x="375.3" y="264.3" width="18.4" height="1.7" fill="#93a9c9" rx="1"/><text x="384.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/01</text><rect x="402.3" y="263.8" width="18.4" height="2.2" fill="#93a9c9" rx="1"/><rect x="429.4" y="264.8" width="18.4" height="1.2" fill="#93a9c9" rx="1"/><rect x="456.5" y="262.8" width="18.4" height="3.2" fill="#93a9c9" rx="1"/><rect x="483.6" y="262.3" width="18.4" height="3.7" fill="#93a9c9" rx="1"/><rect x="510.6" y="261.2" width="18.4" height="4.8" fill="#93a9c9" rx="1"/><rect x="537.7" y="252.2" width="18.4" height="13.8" fill="#93a9c9" rx="1"/><text x="546.9" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/07</text><rect x="564.8" y="246.3" width="18.4" height="19.7" fill="#93a9c9" rx="1"/><rect x="591.9" y="214.2" width="18.4" height="51.8" fill="#93a9c9" rx="1"/><rect x="618.9" y="43.8" width="18.4" height="222.2" fill="#93a9c9" rx="1"/><rect x="646.0" y="264.1" width="18.4" height="1.9" fill="#93a9c9" rx="1"/><rect x="673.1" y="264.1" width="18.4" height="1.9" fill="#93a9c9" rx="1"/><rect x="700.2" y="265.2" width="18.4" height="0.8" fill="#2563eb" rx="1"/><text x="709.4" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/01</text><rect x="727.3" y="265.2" width="18.4" height="0.8" fill="#2563eb" rx="1"/><rect x="754.3" y="263.6" width="18.4" height="2.4" fill="#2563eb" rx="1"/><rect x="781.4" y="264.8" width="18.4" height="1.2" fill="#2563eb" rx="1"/><rect x="808.5" y="264.8" width="18.4" height="1.2" fill="#2563eb" rx="1"/><rect x="835.6" y="265.7" width="18.4" height="0.3" fill="#2563eb" rx="1"/><rect x="862.6" y="262.4" width="18.4" height="3.6" fill="#2563eb" rx="1"/><text x="871.8" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/07</text><rect x="889.7" y="241.9" width="18.4" height="24.1" fill="#2563eb" rx="1"/><rect x="916.8" y="201.1" width="18.4" height="64.9" fill="#2563eb" rx="1"/><rect x="943.9" y="97.6" width="18.4" height="168.4" fill="#2563eb" rx="1"/><rect x="1025.1" y="263.2" width="18.4" height="2.8" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1034.3" y1="263.6" x2="1034.3" y2="262.5" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="263.6" x2="1038.3" y2="263.6" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="262.5" x2="1038.3" y2="262.5" stroke="#b45309" stroke-width="1.4"/><text x="1034.3" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/11</text><rect x="1052.2" y="264.1" width="18.4" height="1.9" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1061.4" y1="264.4" x2="1061.4" y2="263.7" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="264.4" x2="1065.4" y2="264.4" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="263.7" x2="1065.4" y2="263.7" stroke="#b45309" stroke-width="1.4"/><text x="1061.4" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/12</text><rect x="1079.3" y="265.4" width="18.4" height="0.6" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1088.5" y1="265.5" x2="1088.5" y2="265.2" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="265.5" x2="1092.5" y2="265.5" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="265.2" x2="1092.5" y2="265.2" stroke="#b45309" stroke-width="1.4"/><text x="1088.5" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">27/01</text><rect x="46" y="8" width="10" height="10" fill="#c3cfde" rx="1"/><text x="60" y="17" font-size="10.5" fill="#5b6270">2024 实际</text><rect x="141" y="8" width="10" height="10" fill="#93a9c9" rx="1"/><text x="155" y="17" font-size="10.5" fill="#5b6270">2025 实际</text><rect x="236" y="8" width="10" height="10" fill="#2563eb" rx="1"/><text x="250" y="17" font-size="10.5" fill="#5b6270">2026 实际</text><rect x="331" y="8" width="10" height="10" fill="#f59e0b" rx="1"/><text x="345" y="17" font-size="10.5" fill="#5b6270">预估（基准柱 + 保守~乐观区间）</text></svg>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 3 步 · 关键词校准（SIF 近期同比口径）</p>
+<table><thead><tr><th>关键词</th><th>释义</th><th>流量份额</th><th>近期同比</th><th>趋势</th><th>CTR 周/90天</th></tr></thead><tbody><tr><td>halloween iron on patches</td><td>万圣节熨烫补丁</td><td>39.6%</td><td class='down'>-12.1%</td><td>下滑·稳定</td><td>0.55 / 0.31</td></tr><tr><td>halloween patches</td><td>万圣节补丁</td><td>27.0%</td><td class='down'>-28.3%</td><td>增长·见顶回落</td><td>0.50 / 0.28</td></tr><tr><td>halloween patches iron on</td><td>熨烫式万圣节补丁</td><td>18.7%</td><td class='down'>-24.6%</td><td>数据不足·稳定</td><td>0.70 / 0.31</td></tr><tr><td>iron on halloween patches</td><td>熨烫万圣节补丁</td><td>10.4%</td><td class='down'>-8.7%</td><td>数据不足·稳定</td><td>0.78 / 0.32</td></tr><tr><td>halloween iron on</td><td>万圣节熨烫</td><td>4.2%</td><td class='down'>-20.7%</td><td>数据不足·稳定</td><td>0.48 / 0.26</td></tr></tbody></table><p class='note'>已剔除伪信号词：<b>iron patches</b>（近期同比 +3525%，份额 3.5%）——同比超 +300% 的 ABA 新收录低基数词，属搜索池扩容噪声而非真实需求增长。</p><p class='note'>顶部词「halloween iron on patches」季节性：峰值月 ['10', '09', '08']，低谷月 ['03', '05', '11']，距峰值约 0 周；CTR 统计周 2026-09-27。top2 词 at_risk（合计份额52.6%）→ 广告依赖折扣；主词贡献在涨但排名 volatile</p><p class='note'>校准合成：加权市场同比 <b>-18.8%</b> → 趋势调整 -18.8%，结构调整 0，广告依赖折扣 ×0.875（付费依赖/核心词异常），原始系数 0.710 → <b>最终校准系数 0.710</b>。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 4 步 · 三情景预估</p>
+<table><thead><tr><th>月份</th><th>季节系数</th><th>方法</th><th>保守</th><th>基准</th><th>乐观</th></tr></thead><tbody>
+<tr><td>2026-11</td><td>0.141</td><td>coef</td><td>14 [13~15]</td><td><b>16</b> [15~18]</td><td>20 [18~23]</td></tr><tr><td>2026-12</td><td>0.091</td><td>coef</td><td>9.3 [8.3~10]</td><td><b>11</b> [9.8~12]</td><td>14 [12~15]</td></tr><tr><td>2027-01</td><td>0.030</td><td>coef</td><td>3.1 [2.8~3.4]</td><td><b>3.7</b> [3.3~4.0]</td><td>4.6 [4.1~5.0]</td></tr>
+<tr><td><b>合计</b></td><td>—</td><td>—</td><td><b>26</b></td><td><b>31</b></td><td><b>39</b></td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 5 步 · 内部计划交叉验证（盛途备货预估）</p>
+<table><thead><tr><th>月份</th><th>盛途计划（件）</th><th>模型基准（件）</th><th>偏差</th></tr></thead><tbody><tr><td>2026-11</td><td>0</td><td>16</td><td class='down'>-100.0%</td></tr><tr><td>2026-12</td><td>0</td><td>11</td><td class='down'>-100.0%</td></tr><tr><td>2027-01</td><td>0</td><td>3.7</td><td class='down'>-100.0%</td></tr></tbody></table><p class='note'>合计：盛途计划 0 vs 模型基准 31，偏差 <b>-100.0%</b> → 显著分歧。</p><p class='note'>分歧说明：双方实质结论一致——万圣节季结束后（11 月起）需求趋近于零；盛途未对淡季窗口编制计划属合理，模型基准 31 件为残余长尾，无需按分歧处理。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 6 步 · 库存与备货</p>
+<table><thead><tr><th>FBA 可售</th><th>待调仓</th><th>入库中</th><th>总库存</th><th>当月剩余需求</th><th>总需求·保守</th><th>总需求·基准</th><th>总需求·乐观</th></tr></thead><tbody><tr><td>746</td><td>17</td><td>0</td><td><b>763</b></td><td>864</td><td>890</td><td><b>895</b></td><td>903</td></tr></tbody></table><p class='note'>判定：<b>断货风险</b>（保守总需求 890 > 当前库存 763）→ <b style='color:var(--red)'>立即补货</b>；建议补货量 = 基准总需求 × 1.15 − 当前库存 ≈ <b>266 件</b>。</p><p class='note'>⚠ 季节收尾特别提示：该产品总需求中 864 件集中在 10 月最后两周的万圣节尾巴，11-1 月预估合计仅 31 件。若 10 月底前售罄属正常季节收尾、优于压货；除非有明年万圣节提前备货计划，否则不建议为淡季执行上述补货。</p>
+</div>
+</div>
+
+<h3>4. B07WFN5WSM — 拼豆豆模板 20 片 5mm（Fuse Beads Pegboard） <span class="tag r">断货风险</span> <span class="tag b">校准 0.984</span></h3>
+<div class="card">
+<p class="ptitle">基本信息</p>
+<table class="kv"><tbody>
+<tr><td>ASIN / MSKU</td><td><b>B07WFN5WSM</b> / 79-A676</td><td>售价（US 站）</td><td>$13.95</td></tr>
+<tr><td>开发人 / 推广人</td><td>车彩霞 / 范雅晴</td><td>英文标题</td><td>AUGSUN 20 Pieces 5mm Fuse Beads Pegboards Clear Plastic Pegb</td></tr>
+</tbody></table>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 1 步 · 基础日销（领星 A-US 真实销量）</p>
+<table><thead><tr><th>窗口</th><th>区间销量</th><th>日均</th></tr></thead><tbody>
+<tr><td>近 7 天</td><td>260</td><td>37.1</td></tr>
+<tr><td>近 14 天</td><td>549</td><td>39.2</td></tr>
+<tr><td>近 30 天</td><td>1,186</td><td>39.5</td></tr>
+<tr><td>近 90 天</td><td>4,055</td><td>45.1</td></tr>
+</tbody></table>
+<p class="note">短期日销 38.2、中期日销 42.3 → 基础日销 <b>40.2</b> 件/天；动量比 0.90 → flat。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 2 步 · 季节系数（相关月）</p>
+<table><thead><tr><th>月份</th><th>2024 系数</th><th>2025 系数</th><th>两年均值</th><th>相对偏离</th><th>采用系数</th></tr></thead><tbody><tr><td>10月（当月）</td><td>0.614</td><td>0.775</td><td>0.695</td><td>+23%</td><td><b>0.695</b></td></tr><tr><td>11月</td><td>1.152</td><td>1.187</td><td>1.170</td><td>+3%</td><td><b>1.170</b></td></tr><tr><td>12月</td><td>1.521</td><td>1.695</td><td>1.608</td><td>+11%</td><td><b>1.608</b></td></tr><tr><td>1月</td><td>1.070</td><td>0.801</td><td>0.936</td><td>+29%</td><td><b>0.936</b></td></tr></tbody></table><ul class="verdicts"><li>系数口径：<b>两年均值</b></li><li>去季节化闸门：当月实际日均 39.5 vs 上月 41.8，一致性比 0.944，历史同月爬坡比 0.776 → 通过，照常去季节化</li><li>水平一致性软上限：累计同比 +11.2%，累计口径水平 49.6 件/天，水平比 1.17 → 正常，不封顶</li><li>⚠ 已剔除一次性尖峰：2024 年 10月 扣减 91 件（Prime Big Deal Days 2024（2024-10-08 单日91件，3.0倍月常态）），该月系数与全年日均已重算</li></ul>
+</div>
+</div>
+<div class="card">
+<p class="ptitle">销量历史与预估（2024-01 ~ 2027-01）</p>
+<svg viewBox="0 0 1110 300" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="46" y1="266.0" x2="1102" y2="266.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="270.0" text-anchor="end" font-size="10" fill="#8a93a3">0</text><line x1="46" y1="206.0" x2="1102" y2="206.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="210.0" text-anchor="end" font-size="10" fill="#8a93a3">959</text><line x1="46" y1="146.0" x2="1102" y2="146.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="150.0" text-anchor="end" font-size="10" fill="#8a93a3">1,918</text><line x1="46" y1="86.0" x2="1102" y2="86.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="90.0" text-anchor="end" font-size="10" fill="#8a93a3">2,878</text><line x1="46" y1="26.0" x2="1102" y2="26.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="30.0" text-anchor="end" font-size="10" fill="#8a93a3">3,837</text><rect x="50.3" y="173.8" width="18.4" height="92.2" fill="#c3cfde" rx="1"/><text x="59.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/01</text><rect x="77.4" y="186.8" width="18.4" height="79.2" fill="#c3cfde" rx="1"/><rect x="104.5" y="195.9" width="18.4" height="70.1" fill="#c3cfde" rx="1"/><rect x="131.6" y="209.1" width="18.4" height="56.9" fill="#c3cfde" rx="1"/><rect x="158.6" y="196.6" width="18.4" height="69.4" fill="#c3cfde" rx="1"/><rect x="185.7" y="169.1" width="18.4" height="96.9" fill="#c3cfde" rx="1"/><rect x="212.8" y="153.3" width="18.4" height="112.7" fill="#c3cfde" rx="1"/><text x="222.0" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/07</text><rect x="239.9" y="184.2" width="18.4" height="81.8" fill="#c3cfde" rx="1"/><rect x="266.9" y="188.2" width="18.4" height="77.8" fill="#c3cfde" rx="1"/><rect x="294.0" y="207.4" width="18.4" height="58.6" fill="#c3cfde" rx="1"/><rect x="321.1" y="169.9" width="18.4" height="96.1" fill="#c3cfde" rx="1"/><rect x="348.2" y="135.0" width="18.4" height="131.0" fill="#c3cfde" rx="1"/><rect x="375.3" y="196.8" width="18.4" height="69.2" fill="#93a9c9" rx="1"/><text x="384.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/01</text><rect x="402.3" y="195.9" width="18.4" height="70.1" fill="#93a9c9" rx="1"/><rect x="429.4" y="198.6" width="18.4" height="67.4" fill="#93a9c9" rx="1"/><rect x="456.5" y="196.4" width="18.4" height="69.6" fill="#93a9c9" rx="1"/><rect x="483.6" y="186.5" width="18.4" height="79.5" fill="#93a9c9" rx="1"/><rect x="510.6" y="168.9" width="18.4" height="97.1" fill="#93a9c9" rx="1"/><rect x="537.7" y="164.7" width="18.4" height="101.3" fill="#93a9c9" rx="1"/><text x="546.9" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/07</text><rect x="564.8" y="188.2" width="18.4" height="77.8" fill="#93a9c9" rx="1"/><rect x="591.9" y="193.4" width="18.4" height="72.6" fill="#93a9c9" rx="1"/><rect x="618.9" y="199.0" width="18.4" height="67.0" fill="#93a9c9" rx="1"/><rect x="646.0" y="166.7" width="18.4" height="99.3" fill="#93a9c9" rx="1"/><rect x="673.1" y="119.5" width="18.4" height="146.5" fill="#93a9c9" rx="1"/><rect x="700.2" y="184.7" width="18.4" height="81.3" fill="#2563eb" rx="1"/><text x="709.4" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/01</text><rect x="727.3" y="186.2" width="18.4" height="79.8" fill="#2563eb" rx="1"/><rect x="754.3" y="190.1" width="18.4" height="75.9" fill="#2563eb" rx="1"/><rect x="781.4" y="199.4" width="18.4" height="66.6" fill="#2563eb" rx="1"/><rect x="808.5" y="167.4" width="18.4" height="98.6" fill="#2563eb" rx="1"/><rect x="835.6" y="157.6" width="18.4" height="108.4" fill="#2563eb" rx="1"/><rect x="862.6" y="164.4" width="18.4" height="101.6" fill="#2563eb" rx="1"/><text x="871.8" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/07</text><rect x="889.7" y="172.9" width="18.4" height="93.1" fill="#2563eb" rx="1"/><rect x="916.8" y="187.5" width="18.4" height="78.5" fill="#2563eb" rx="1"/><rect x="943.9" y="226.5" width="18.4" height="39.5" fill="#2563eb" rx="1"/><rect x="1025.1" y="140.9" width="18.4" height="125.1" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1034.3" y1="159.6" x2="1034.3" y2="109.6" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="159.6" x2="1038.3" y2="159.6" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="109.6" x2="1038.3" y2="109.6" stroke="#b45309" stroke-width="1.4"/><text x="1034.3" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/11</text><rect x="1052.2" y="88.2" width="18.4" height="177.8" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1061.4" y1="114.9" x2="1061.4" y2="43.8" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="114.9" x2="1065.4" y2="114.9" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="43.8" x2="1065.4" y2="43.8" stroke="#b45309" stroke-width="1.4"/><text x="1061.4" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/12</text><rect x="1079.3" y="162.6" width="18.4" height="103.4" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1088.5" y1="178.1" x2="1088.5" y2="136.7" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="178.1" x2="1092.5" y2="178.1" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="136.7" x2="1092.5" y2="136.7" stroke="#b45309" stroke-width="1.4"/><text x="1088.5" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">27/01</text><rect x="46" y="8" width="10" height="10" fill="#c3cfde" rx="1"/><text x="60" y="17" font-size="10.5" fill="#5b6270">2024 实际</text><rect x="141" y="8" width="10" height="10" fill="#93a9c9" rx="1"/><text x="155" y="17" font-size="10.5" fill="#5b6270">2025 实际</text><rect x="236" y="8" width="10" height="10" fill="#2563eb" rx="1"/><text x="250" y="17" font-size="10.5" fill="#5b6270">2026 实际</text><rect x="331" y="8" width="10" height="10" fill="#f59e0b" rx="1"/><text x="345" y="17" font-size="10.5" fill="#5b6270">预估（基准柱 + 保守~乐观区间）</text></svg>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 3 步 · 关键词校准（SIF 近期同比口径）</p>
+<table><thead><tr><th>关键词</th><th>释义</th><th>流量份额</th><th>近期同比</th><th>趋势</th><th>CTR 周/90天</th></tr></thead><tbody><tr><td>perler beads</td><td>Perler珠子</td><td>26.9%</td><td class='up'>+10.2%</td><td>平稳·稳定</td><td>0.46 / 0.34</td></tr><tr><td>perler beads boards</td><td>Perler珠子板</td><td>22.1%</td><td class='up'>+28.5%</td><td>增长·加速增长</td><td>0.55 / 0.22</td></tr><tr><td>fuse beads pegboards</td><td>保险丝珠钉板</td><td>19.5%</td><td class='up'>+60.6%</td><td>平稳·稳定</td><td>0.50 / 0.21</td></tr><tr><td>fuse beads</td><td>保险丝珠</td><td>14.2%</td><td class='up'>+40.1%</td><td>增长·加速增长</td><td>0.48 / 0.28</td></tr><tr><td>perler bead kit</td><td>Perler珠子套装</td><td>10.6%</td><td class='up'>+33.2%</td><td>增长·加速增长</td><td>0.52 / 0.32</td></tr><tr><td>perler beads pegboards</td><td>拼拼豆豆插板</td><td>6.7%</td><td class='down'>-45.4%</td><td>下滑·稳定</td><td>0.44 / 0.20</td></tr></tbody></table><p class='note'>顶部词「perler beads」季节性：峰值月 ['11', '12', '07']，低谷月 ['05', '04', '10']，距峰值约 4 周；CTR 统计周 2026-09-27。top3 中 2 个 at_risk（perler beads boards 12.1%、fuse beads pegboards 10.7%）</p><p class='note'>校准合成：加权市场同比 <b>+27.0%</b> → 趋势调整 +12.5%，结构调整 0，广告依赖折扣 ×0.875（付费依赖/核心词异常），原始系数 0.984 → <b>最终校准系数 0.984</b>。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 4 步 · 三情景预估</p>
+<table><thead><tr><th>月份</th><th>季节系数</th><th>方法</th><th>保守</th><th>基准</th><th>乐观</th></tr></thead><tbody>
+<tr><td>2026-11</td><td>1.170</td><td>coef</td><td>1,700 [1,530~1,871]</td><td><b>2,001</b> [1,800~2,201]</td><td>2,501 [2,251~2,751]</td></tr><tr><td>2026-12</td><td>1.608</td><td>coef</td><td>2,416 [2,174~2,657]</td><td><b>2,842</b> [2,558~3,126]</td><td>3,553 [3,197~3,908]</td></tr><tr><td>2027-01</td><td>0.936</td><td>coef</td><td>1,406 [1,265~1,546]</td><td><b>1,654</b> [1,488~1,819]</td><td>2,067 [1,860~2,274]</td></tr>
+<tr><td><b>合计</b></td><td>—</td><td>—</td><td><b>5,522</b></td><td><b>6,497</b></td><td><b>8,121</b></td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 5 步 · 内部计划交叉验证（盛途备货预估）</p>
+<table><thead><tr><th>月份</th><th>盛途计划（件）</th><th>模型基准（件）</th><th>偏差</th></tr></thead><tbody><tr><td>2026-11</td><td>1,700</td><td>2,001</td><td class='down'>-15.0%</td></tr><tr><td>2026-12</td><td>2,500</td><td>2,842</td><td class='down'>-12.0%</td></tr><tr><td>2027-01</td><td>1,300</td><td>1,654</td><td class='down'>-21.4%</td></tr></tbody></table><p class='note'>合计：盛途计划 5,500 vs 模型基准 6,497，偏差 <b>-15.3%</b> → 一致。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 6 步 · 库存与备货</p>
+<table><thead><tr><th>FBA 可售</th><th>待调仓</th><th>入库中</th><th>总库存</th><th>当月剩余需求</th><th>总需求·保守</th><th>总需求·基准</th><th>总需求·乐观</th></tr></thead><tbody><tr><td>2,068</td><td>1,014</td><td>84</td><td><b>3,166</b></td><td>573</td><td>6,095</td><td><b>7,069</b></td><td>8,693</td></tr></tbody></table><p class='note'>判定：<b>断货风险</b>（保守总需求 6,095 > 当前库存 3,166）→ <b style='color:var(--red)'>立即补货</b>；建议补货量 = 基准总需求 × 1.15 − 当前库存 ≈ <b>4,964 件</b>。</p>
+</div>
+</div>
+
+<h3>5. B08MW3X2MG — 树脂土擀棒 20×2cm（Polymer Clay Roller） <span class="tag r">断货风险</span> <span class="tag b">校准 1.000</span></h3>
+<div class="card">
+<p class="ptitle">基本信息</p>
+<table class="kv"><tbody>
+<tr><td>ASIN / MSKU</td><td><b>B08MW3X2MG</b> / 125-A1730</td><td>售价（US 站）</td><td>$6.95</td></tr>
+<tr><td>开发人 / 推广人</td><td>刘朱 / 范雅晴</td><td>英文标题</td><td>AUGSUN 1 Piece Acrylic Polymer Clay Roller Clear Rolling Pin</td></tr>
+</tbody></table>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 1 步 · 基础日销（领星 A-US 真实销量）</p>
+<table><thead><tr><th>窗口</th><th>区间销量</th><th>日均</th></tr></thead><tbody>
+<tr><td>近 7 天</td><td>185</td><td>26.4</td></tr>
+<tr><td>近 14 天</td><td>387</td><td>27.6</td></tr>
+<tr><td>近 30 天</td><td>881</td><td>29.4</td></tr>
+<tr><td>近 90 天</td><td>2,869</td><td>31.9</td></tr>
+</tbody></table>
+<p class="note">短期日销 27.0、中期日销 30.6 → 基础日销 <b>28.8</b> 件/天；动量比 0.88 → flat（短期略弱于中期，位于平稳区间下沿，无断货记录）。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 2 步 · 季节系数（相关月）</p>
+<table><thead><tr><th>月份</th><th>2024 系数</th><th>2025 系数</th><th>两年均值</th><th>相对偏离</th><th>采用系数</th></tr></thead><tbody><tr><td>10月（当月）</td><td>0.841</td><td>0.952</td><td>0.896</td><td>+12%</td><td><b>0.952</b></td></tr><tr><td>11月</td><td>1.481</td><td>1.592</td><td>1.536</td><td>+7%</td><td><b>1.592</b></td></tr><tr><td>12月</td><td>1.320</td><td>0.788</td><td>1.054</td><td>+50%</td><td><b>0.788</b></td></tr><tr><td>1月</td><td>1.009</td><td>1.100</td><td>1.055</td><td>+9%</td><td><b>1.100</b></td></tr></tbody></table><ul class="verdicts"><li>系数口径：<b>最近一年（形态漂移）</b></li><li>去季节化闸门：当月实际日均 27.7 vs 上月 36.0，一致性比 0.768，历史同月爬坡比 0.940 → 通过，照常去季节化</li><li>水平一致性软上限：累计同比 +1.6%，累计口径水平 31.1 件/天，水平比 0.97 → 正常，不封顶</li><li>⚠ 已剔除一次性尖峰：2024 年 7月 扣减 115 件（一次性爆量（2024-07-02 单日115件，4.2倍月常态，次年同日无重复）），该月系数与全年日均已重算</li><li>⚠ 形态漂移，改用最近一年口径（触发月：12月）</li></ul>
+</div>
+</div>
+<div class="card">
+<p class="ptitle">销量历史与预估（2024-01 ~ 2027-01）</p>
+<svg viewBox="0 0 1110 300" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="46" y1="266.0" x2="1102" y2="266.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="270.0" text-anchor="end" font-size="10" fill="#8a93a3">0</text><line x1="46" y1="206.0" x2="1102" y2="206.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="210.0" text-anchor="end" font-size="10" fill="#8a93a3">488</text><line x1="46" y1="146.0" x2="1102" y2="146.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="150.0" text-anchor="end" font-size="10" fill="#8a93a3">977</text><line x1="46" y1="86.0" x2="1102" y2="86.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="90.0" text-anchor="end" font-size="10" fill="#8a93a3">1,465</text><line x1="46" y1="26.0" x2="1102" y2="26.0" stroke="#e9edf2" stroke-width="1"/><text x="40" y="30.0" text-anchor="end" font-size="10" fill="#8a93a3">1,953</text><rect x="50.3" y="180.6" width="18.4" height="85.4" fill="#c3cfde" rx="1"/><text x="59.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/01</text><rect x="77.4" y="188.2" width="18.4" height="77.8" fill="#c3cfde" rx="1"/><rect x="104.5" y="205.3" width="18.4" height="60.7" fill="#c3cfde" rx="1"/><rect x="131.6" y="206.7" width="18.4" height="59.3" fill="#c3cfde" rx="1"/><rect x="158.6" y="182.6" width="18.4" height="83.4" fill="#c3cfde" rx="1"/><rect x="185.7" y="174.1" width="18.4" height="91.9" fill="#c3cfde" rx="1"/><rect x="212.8" y="160.3" width="18.4" height="105.7" fill="#c3cfde" rx="1"/><text x="222.0" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">24/07</text><rect x="239.9" y="190.7" width="18.4" height="75.3" fill="#c3cfde" rx="1"/><rect x="266.9" y="196.3" width="18.4" height="69.7" fill="#c3cfde" rx="1"/><rect x="294.0" y="194.9" width="18.4" height="71.1" fill="#c3cfde" rx="1"/><rect x="321.1" y="144.7" width="18.4" height="121.3" fill="#c3cfde" rx="1"/><rect x="348.2" y="154.3" width="18.4" height="111.7" fill="#c3cfde" rx="1"/><rect x="375.3" y="137.7" width="18.4" height="128.3" fill="#93a9c9" rx="1"/><text x="384.5" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/01</text><rect x="402.3" y="158.1" width="18.4" height="107.9" fill="#93a9c9" rx="1"/><rect x="429.4" y="166.2" width="18.4" height="99.8" fill="#93a9c9" rx="1"/><rect x="456.5" y="150.6" width="18.4" height="115.4" fill="#93a9c9" rx="1"/><rect x="483.6" y="167.5" width="18.4" height="98.5" fill="#93a9c9" rx="1"/><rect x="510.6" y="167.7" width="18.4" height="98.3" fill="#93a9c9" rx="1"/><rect x="537.7" y="160.2" width="18.4" height="105.8" fill="#93a9c9" rx="1"/><text x="546.9" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">25/07</text><rect x="564.8" y="150.1" width="18.4" height="115.9" fill="#93a9c9" rx="1"/><rect x="591.9" y="145.5" width="18.4" height="120.5" fill="#93a9c9" rx="1"/><rect x="618.9" y="155.1" width="18.4" height="110.9" fill="#93a9c9" rx="1"/><rect x="646.0" y="86.4" width="18.4" height="179.6" fill="#93a9c9" rx="1"/><rect x="673.1" y="174.1" width="18.4" height="91.9" fill="#93a9c9" rx="1"/><rect x="700.2" y="145.3" width="18.4" height="120.7" fill="#2563eb" rx="1"/><text x="709.4" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/01</text><rect x="727.3" y="156.5" width="18.4" height="109.5" fill="#2563eb" rx="1"/><rect x="754.3" y="157.3" width="18.4" height="108.7" fill="#2563eb" rx="1"/><rect x="781.4" y="138.7" width="18.4" height="127.3" fill="#2563eb" rx="1"/><rect x="808.5" y="174.1" width="18.4" height="91.9" fill="#2563eb" rx="1"/><rect x="835.6" y="169.6" width="18.4" height="96.4" fill="#2563eb" rx="1"/><rect x="862.6" y="170.4" width="18.4" height="95.6" fill="#2563eb" rx="1"/><text x="871.8" y="292" text-anchor="middle" font-size="9.5" fill="#5b6270">26/07</text><rect x="889.7" y="143.1" width="18.4" height="122.9" fill="#2563eb" rx="1"/><rect x="916.8" y="133.2" width="18.4" height="132.8" fill="#2563eb" rx="1"/><rect x="943.9" y="211.6" width="18.4" height="54.4" fill="#2563eb" rx="1"/><rect x="1025.1" y="88.2" width="18.4" height="177.8" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1034.3" y1="114.9" x2="1034.3" y2="43.8" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="114.9" x2="1038.3" y2="114.9" stroke="#b45309" stroke-width="1.4"/><line x1="1030.3" y1="43.8" x2="1038.3" y2="43.8" stroke="#b45309" stroke-width="1.4"/><text x="1034.3" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/11</text><rect x="1052.2" y="175.0" width="18.4" height="91.0" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1061.4" y1="188.7" x2="1061.4" y2="152.3" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="188.7" x2="1065.4" y2="188.7" stroke="#b45309" stroke-width="1.4"/><line x1="1057.4" y1="152.3" x2="1065.4" y2="152.3" stroke="#b45309" stroke-width="1.4"/><text x="1061.4" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">26/12</text><rect x="1079.3" y="139.1" width="18.4" height="126.9" fill="#f59e0b" fill-opacity="0.85" rx="1"/><line x1="1088.5" y1="158.1" x2="1088.5" y2="107.3" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="158.1" x2="1092.5" y2="158.1" stroke="#b45309" stroke-width="1.4"/><line x1="1084.5" y1="107.3" x2="1092.5" y2="107.3" stroke="#b45309" stroke-width="1.4"/><text x="1088.5" y="292" text-anchor="middle" font-size="9.5" fill="#b45309">27/01</text><rect x="46" y="8" width="10" height="10" fill="#c3cfde" rx="1"/><text x="60" y="17" font-size="10.5" fill="#5b6270">2024 实际</text><rect x="141" y="8" width="10" height="10" fill="#93a9c9" rx="1"/><text x="155" y="17" font-size="10.5" fill="#5b6270">2025 实际</text><rect x="236" y="8" width="10" height="10" fill="#2563eb" rx="1"/><text x="250" y="17" font-size="10.5" fill="#5b6270">2026 实际</text><rect x="331" y="8" width="10" height="10" fill="#f59e0b" rx="1"/><text x="345" y="17" font-size="10.5" fill="#5b6270">预估（基准柱 + 保守~乐观区间）</text></svg>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 3 步 · 关键词校准（SIF 近期同比口径）</p>
+<table><thead><tr><th>关键词</th><th>释义</th><th>流量份额</th><th>近期同比</th><th>趋势</th><th>CTR 周/90天</th></tr></thead><tbody><tr><td>clay roller</td><td>粘土滚筒</td><td>48.5%</td><td class='up'>+10.8%</td><td>下滑·回暖中</td><td>0.49 / 0.28</td></tr><tr><td>clay rolling pin</td><td>粘土擀面杖</td><td>16.8%</td><td class='up'>+17.1%</td><td>增长·加速增长</td><td>0.60 / 0.33</td></tr><tr><td>rolling pin for clay</td><td>陶土用擀面杖</td><td>9.7%</td><td class='up'>+21.1%</td><td>增长·加速增长</td><td>0.57 / 0.32</td></tr><tr><td>polymer clay roller</td><td>聚合物粘土滚筒</td><td>9.4%</td><td class='down'>-28.5%</td><td>下滑·稳定</td><td>0.44 / 0.24</td></tr><tr><td>acrylic roller for polymer clay</td><td>聚合粘土用亚克力滚筒</td><td>8.4%</td><td class='up'>+78.1%</td><td>下滑·回暖中</td><td>0.57 / 0.35</td></tr><tr><td>rolling pin</td><td>擀面杖</td><td>7.2%</td><td class='up'>+1.7%</td><td>增长·稳定</td><td>0.52 / 0.32</td></tr></tbody></table><p class='note'>顶部词「clay roller」季节性：峰值月 ['01', '11', '02']，低谷月 ['06', '08', '05']，距峰值约 12 周；CTR 统计周 2026-09-27。at_risk 词仅 7.96% 份额非核心词；top 词 volatile</p><p class='note'>校准合成：加权市场同比 <b>+14.1%</b> → 趋势调整 0，结构调整 0，广告依赖折扣 ×1.000（自然流量主导），原始系数 1.000 → <b>最终校准系数 1.000</b>。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 4 步 · 三情景预估</p>
+<table><thead><tr><th>月份</th><th>季节系数</th><th>方法</th><th>保守</th><th>基准</th><th>乐观</th></tr></thead><tbody>
+<tr><td>2026-11</td><td>1.592</td><td>coef</td><td>1,230 [1,107~1,353]</td><td><b>1,447</b> [1,302~1,592]</td><td>1,809 [1,628~1,990]</td></tr><tr><td>2026-12</td><td>0.788</td><td>coef</td><td>629 [566~692]</td><td><b>740</b> [666~814]</td><td>925 [833~1,018]</td></tr><tr><td>2027-01</td><td>1.100</td><td>coef</td><td>878 [790~966]</td><td><b>1,033</b> [930~1,137]</td><td>1,292 [1,162~1,421]</td></tr>
+<tr><td><b>合计</b></td><td>—</td><td>—</td><td><b>2,738</b></td><td><b>3,220</b></td><td><b>4,026</b></td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<p class="ptitle">第 5 步 · 内部计划交叉验证（盛途备货预估）</p>
+<table><thead><tr><th>月份</th><th>盛途计划（件）</th><th>模型基准（件）</th><th>偏差</th></tr></thead><tbody><tr><td>2026-11</td><td>1,500</td><td>1,447</td><td class='up'>+3.7%</td></tr><tr><td>2026-12</td><td>800</td><td>740</td><td class='up'>+8.1%</td></tr><tr><td>2027-01</td><td>900</td><td>1,033</td><td class='down'>-12.9%</td></tr></tbody></table><p class='note'>合计：盛途计划 3,200 vs 模型基准 3,220，偏差 <b>-0.6%</b> → 一致。</p>
+</div>
+<div class="card">
+<p class="ptitle">第 6 步 · 库存与备货</p>
+<table><thead><tr><th>FBA 可售</th><th>待调仓</th><th>入库中</th><th>总库存</th><th>当月剩余需求</th><th>总需求·保守</th><th>总需求·基准</th><th>总需求·乐观</th></tr></thead><tbody><tr><td>790</td><td>6</td><td>0</td><td><b>796</b></td><td>406</td><td>3,143</td><td><b>3,626</b></td><td>4,431</td></tr></tbody></table><p class='note'>判定：<b>断货风险</b>（保守总需求 3,143 > 当前库存 796）→ <b style='color:var(--red)'>立即补货</b>；建议补货量 = 基准总需求 × 1.15 − 当前库存 ≈ <b>3,374 件</b>。</p>
+</div>
+</div>
+
+
+<h2>五、压货风险背景（部门库销比）</h2>
+<div class="card">
+<p class="ptitle">事业一部开发部门 · 2026-09 月度快照（盛途）</p>
+<table><thead><tr><th>部门</th><th>维护人</th><th>期末库存（件）</th><th>当月出货（件）</th><th>库销比</th><th>关联样本</th></tr></thead><tbody>
+<tr><td>合肥盛途</td><td>开发部产品维护</td><td>292,348</td><td>136,496</td><td><b>2.14</b></td><td>B07W4G51XR</td></tr><tr><td>开发2组</td><td>刘朱</td><td>283,867</td><td>123,224</td><td><b>2.30</b></td><td>B08MW3X2MG</td></tr><tr><td>开发1组</td><td>车彩霞</td><td>259,175</td><td>110,603</td><td><b>2.34</b></td><td>B07WFN5WSM</td></tr><tr><td>开发1组</td><td>徐亮</td><td>218,848</td><td>77,328</td><td><b>2.83</b></td><td>B07XDJ3HGK、B0D8BCMJLR</td></tr>
+<tr class="sumrow"><td>事业一部开发部门</td><td>部门整体（21 人）</td><td>1,768,548</td><td>739,400</td><td><b>2.39</b></td><td>—</td></tr>
+</tbody></table>
+<p class="note">库销比 = 期末库存 / 当月出货，越大压货越重。部门整体库销比 2.39（约 2.4 个月库存水位），4 位相关维护人在 2.14 ~ 2.83 区间，属中等偏重压货。因此补货建议默认按<b>基准情景 + 15% 安全库存</b>下单，不建议按乐观情景放量；断货风险产品的缺口必须补，但建议分批下单、先覆盖保守情景。</p>
+</div>
+
+<h2>六、结论与行动建议</h2>
+<div class="card">
+<table><thead><tr><th>产品</th><th>结论</th><th>行动</th></tr></thead><tbody>
+<tr><td>彩色耳贴 B07W4G51XR</td><td>12 月为绝对峰值（系数 3.49，形态漂移后取去年口径），基准合计 13,181 件，与内部计划偏差 -12.8%</td><td><b>最高优先级</b>：缺口最大（12,520 件），旺季前必须完成补货入仓；补货按基准口径，盛途计划可作下限参照</td></tr>
+<tr><td>脏辫钩针 B07XDJ3HGK</td><td>全年平稳无强季节，今年累计同比 +40.5%，基准合计 8,883 件；高于内部计划 34.7%（计划疑似滞后）</td><td>补货 9,584 件；同步复核盛途备货计划是否需按今年真实增长上调</td></tr>
+<tr><td>拼豆模板 B07WFN5WSM</td><td>11-12 月双峰（系数 1.17/1.61），基准合计 6,497 件，与内部计划偏差 -15.3%</td><td>补货 4,964 件，优先保障 12 月峰值；在途 84 件已计入</td></tr>
+<tr><td>树脂擀棒 B08MW3X2MG</td><td>11 月单峰后 12 月回落（去年 12 月形态漂移），基准合计 3,220 件，与内部计划几乎一致（-0.6%）</td><td>补货 3,374 件，集中于 11 月峰值覆盖；12 月起控制到货节奏</td></tr>
+<tr><td>万圣节补丁 B0D8BCMJLR</td><td>季末收尾产品，11-1 月预估合计仅 31 件（校准系数 0.710）；当前库存足以覆盖 10 月尾巴</td><td><b>不建议补货</b>：售罄优于压货；若明年继续售卖，提前在 8-9 月旺季前备货</td></tr>
+</tbody></table>
+<p class="note"><b>补货时间倒推</b>：本轮未提供生产周期与头程物流时效，无法精确倒推最晚下单日期。5 个产品中 4 个旺季缺口巨大且旺季 11 月即开始，若「生产 + 头程」合计超过 30 天已来不及走海运全覆盖，建议立即启动补货评审、对 12 月峰值缺口部分评估空运；行动前先用领星在途数据与货代时效确认窗口。</p>
+<p class="note"><b>广告节奏</b>：彩色耳贴、拼豆模板、树脂擀棒的 11-12 月为流量旺季窗口，建议 10 月底前完成 Listing 与广告预算的旺季布局；万圣节补丁已在季末，停投收缩广告、清库存。</p>
+</div>
+
+<div class="meta" style="margin-top:26px">模型：asin-sales-forecast v1.1.0 · 计算引擎 forecast_calc.py（只读确定性脚本，29 回归用例） · 报告由 _a5_report.py 自动生成，数据中间件：_a5_results.json / _a5_cases.json / _a5_shengtu.json / _a5_ratio.json / _a5_kw_demand.json</div>
+</div>
+</body>
+</html>

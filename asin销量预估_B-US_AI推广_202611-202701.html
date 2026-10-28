@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon ASIN 销量预估 · B-US / 推广人 AI推广 · 2026-11 ~ 2027-01</title>
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+    --accent:#2563eb; --accent2:#0ea5e9; --cons:#94a3b8; --base:#2563eb; --opt:#16a34a;
+    --warn:#f59e0b; --danger:#dc2626;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    line-height:1.6;font-size:14px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 60px;}
+  header.top{background:linear-gradient(120deg,#1e3a8a,#2563eb 55%,#0ea5e9);
+    color:#fff;border-radius:16px;padding:26px 30px;box-shadow:0 10px 28px rgba(37,99,235,.25);}
+  header.top h1{margin:0 0 6px;font-size:24px;letter-spacing:.5px;}
+  header.top .sub{opacity:.92;font-size:13px;}
+  header.top .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    border-radius:999px;padding:4px 12px;font-size:12px;}
+  h2.sec{font-size:17px;margin:34px 0 14px;padding-left:12px;border-left:4px solid var(--accent);}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .kpi .val{font-size:22px;font-weight:700;margin-top:4px;}
+  .kpi .sub{font-size:11px;color:var(--muted);margin-top:2px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;margin-bottom:18px;}
+  .phead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
+    border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px;}
+  .phead .asin{font-size:18px;font-weight:700;color:var(--accent);}
+  .phead .name{font-size:15px;font-weight:600;}
+  .phead .tag{font-size:12px;color:var(--muted);background:#f3f4f6;border-radius:6px;padding:2px 8px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .mini{background:#fafbfc;border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .mini .t{font-size:12px;color:var(--muted);}
+  .mini .v{font-size:18px;font-weight:700;}
+  .mini .v small{font-size:11px;font-weight:400;color:var(--muted);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);}
+  th:first-child,td:first-child{text-align:left;}
+  thead th{background:#f8fafc;color:var(--muted);font-weight:600;font-size:12px;}
+  tbody tr:hover{background:#f9fafb;}
+  .num{font-variant-numeric:tabular-nums;}
+  .badge{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600;}
+  .b-ok{background:#dcfce7;color:#15803d;}
+  .b-warn{background:#fef3c7;color:#b45309;}
+  .b-bad{background:#fee2e2;color:#b91c1c;}
+  .b-info{background:#dbeafe;color:#1d4ed8;}
+  .bars{margin-top:6px;}
+  .barrow{display:flex;align-items:center;gap:10px;margin:6px 0;}
+  .barrow .bl{width:74px;font-size:12px;color:var(--muted);flex:0 0 74px;}
+  .bartrack{flex:1;background:#f1f5f9;border-radius:6px;height:20px;position:relative;overflow:hidden;}
+  .barfill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;
+    padding-right:7px;color:#fff;font-size:11px;font-weight:600;}
+  .f-cons{background:var(--cons);}
+  .f-base{background:var(--base);}
+  .f-opt{background:var(--opt);}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;font-size:13px;color:#92400e;}
+  .note.blue{background:#eff6ff;border-color:#bfdbfe;color:#1e40af;}
+  .note.red{background:#fef2f2;border-color:#fecaca;color:#991b1b;}
+  ul{margin:6px 0 0 18px;padding:0;}
+  li{margin:3px 0;}
+  .src{font-size:12px;color:var(--muted);}
+  .foot{margin-top:34px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;}
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:8px;}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;}
+  @media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Amazon 子 ASIN 未来三个月销量预估</h1>
+  <div class="sub">三维加权预测模型（短期趋势 × 同季修正 × 关键词验证）· 店铺 B-US · 推广人「AI推广」</div>
+  <div class="meta">
+    <span class="chip">预测区间：2026-11 / 2026-12 / 2027-01</span>
+    <span class="chip">数据基准日：2026-10-14</span>
+    <span class="chip">数据源：领星 ERP + SIF + 盛途 ERP</span>
+    <span class="chip">样本：AI推广名下 B-US 共 87 个 MSKU，取销量 Top 3 产品</span>
+  </div>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><div class="lbl">入选产品</div><div class="val">3 个</div><div class="sub">易拉扣 / 卷发器 / 蝴蝶扣</div></div>
+  <div class="kpi"><div class="lbl">基准情景 3 月合计</div><div class="val">6,568 件</div><div class="sub">保守 5,583 · 乐观 8,210</div></div>
+  <div class="kpi"><div class="lbl">基准情景预估销售额</div><div class="val">$70,086</div><div class="sub">按 B-US 售价口径（USD）</div></div>
+  <div class="kpi"><div class="lbl">库存可覆盖天数</div><div class="val">48 / 124 / 80 天</div><div class="sub">1 个产品需立即补货</div></div>
+</div>
+
+<h2 class="sec">一、模型口径与计算链</h2>
+<div class="card">
+  <div class="grid2">
+    <div>
+      <div style="font-weight:600;margin-bottom:6px;">计算链</div>
+      <div style="font-size:13px;color:#374151;">
+        基础日销 → ×季节系数 → ×关键词校准系数 → ×情景系数 → 月销量<br>
+        <span class="src">基础日销 = 短期日销 ×0.4 + 中期日销 ×0.6；短期日销 =(7天日均+14天日均)/2；中期日销 =(30天日均+90天日均)/2</span><br>
+        <span class="src">季节系数(目标月) = 去年同月日均 ÷ 去年全年月均；情景系数：保守 0.85 / 基准 1.00 / 乐观 1.25</span>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:6px;">数据源分工</div>
+      <table>
+        <thead><tr><th>模型输入</th><th>数据源</th></tr></thead>
+        <tbody>
+          <tr><td>7/14/30/90 天真实销量、去年同期、库存</td><td>领星 ERP（B-US sid=4653）</td></tr>
+          <tr><td>关键词季节性 / 搜索量同比 / 关键词健康</td><td>SIF</td></tr>
+          <tr><td>内部备货预估（计划口径，交叉验证）</td><td>盛途 ERP</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="note blue" style="margin-top:14px;">
+    <b>本次实测发现的关键问题：</b>三维模型的「基础日销」直接采用近 7/14 天窗口，而这三个产品存在<b>显著的周末低谷</b>（工作日日均约为周末的 2~4 倍），且 2026-10-14 当日数据尚未完整（记为 0）。短窗口因此被系统性压低，触发了模型「近期掉量」的告警，但经排查<b>并非真实掉量</b>。报告同时给出「中期口径修正值」与「季节性锚定值」两条交叉验证线（见第四节）。
+  </div>
+</div>
+
+<h2 class="sec">二、逐产品预估</h2>
+
+<!-- ===================== 产品 1 ===================== -->
+<div class="card">
+  <div class="phead">
+    <span class="asin">B0732Z7T8W</span>
+    <span class="name">黑色易拉扣 50pack（MSKU 12-B68N）</span>
+    <span class="tag">售价 $15.95</span>
+    <span class="tag">开发人：开发部产品维护</span>
+    <span class="badge b-info">动量：平稳偏弱</span>
+  </div>
+
+  <div class="grid3">
+    <div class="mini"><div class="t">短期日销（7/14 天）</div><div class="v">26.5 <small>件/天</small></div><div class="t">7天 172 · 14天 397</div></div>
+    <div class="mini"><div class="t">中期日销（30/90 天）</div><div class="v">36.8 <small>件/天</small></div><div class="t">30天 1,105 · 90天 3,311</div></div>
+    <div class="mini"><div class="t">基础日销（模型值）</div><div class="v">32.7 <small>件/天</small></div><div class="t">短期×0.4 + 中期×0.6</div></div>
+  </div>
+
+  <div class="note" style="margin-top:12px;">
+    <b>动量排查：</b>短期/中期 = 0.72，触发「近期掉量」告警。经查 2026-10-08~10-14 含 2 个周末低谷日（5 / 9 件）与当日未出数；近 28 天<b>工作日均 48.5 件 vs 周末均 10.9 件</b>。剔除周末与当日后的工作日口径约 35 件/天，实际掉幅约 -7%，判定为<b>平稳偏弱</b>，非断货或排名崩塌。
+  </div>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div>
+      <div style="font-weight:600;margin-bottom:4px;">季节系数（基于 2025 真实销量）</div>
+      <div class="bars">
+        <div class="barrow"><span class="bl">11 月</span><div class="bartrack"><div class="barfill f-base" style="width:93%;">0.93</div></div></div>
+        <div class="barrow"><span class="bl">12 月</span><div class="bartrack"><div class="barfill f-cons" style="width:76%;">0.76</div></div></div>
+        <div class="barrow"><span class="bl">1 月</span><div class="bartrack"><div class="barfill f-cons" style="width:84%;">0.84</div></div></div>
+      </div>
+      <div class="src" style="margin-top:6px;">2025 月均 1,170 件。SIF 交叉验证：核心词 badge reel 旺季 8/7/9 月、淡季 11/10/5 月 → <b>11 月走弱得到印证</b>；Jan 存在分歧（badge reels retractable 显示 1 月为峰值）。</div>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:4px;">关键词校准</div>
+      <table>
+        <tbody>
+          <tr><td>主流量词加权搜索量同比</td><td class="num"><b style="color:var(--opt)">+28.5%</b></td></tr>
+          <tr><td>本 ASIN 2026 年 1–9 月销量同比</td><td class="num"><b style="color:var(--danger)">-3.8%</b></td></tr>
+          <tr><td>核心词排名形态</td><td>gap_detected / volatile</td></tr>
+          <tr><td>流量依赖</td><td>mixed（自然占比 0.54）</td></tr>
+          <tr><td>校准系数</td><td class="num"><b>0.95</b></td></tr>
+        </tbody>
+      </table>
+      <div class="src" style="margin-top:6px;">市场在涨、本 ASIN 未吃到份额（排名断档 + 广告/自然混合依赖），故不给上浮、轻微打折。</div>
+    </div>
+  </div>
+
+  <div style="font-weight:600;margin:18px 0 8px;">三情景预估（单位：件）</div>
+  <table>
+    <thead><tr><th>情景</th><th>2026-11</th><th>2026-12</th><th>2027-01</th><th>三个月合计</th><th>预估销售额</th></tr></thead>
+    <tbody>
+      <tr><td>保守（×0.85）</td><td class="num">734</td><td class="num">618</td><td class="num">683</td><td class="num"><b>2,035</b></td><td class="num">$32,458</td></tr>
+      <tr style="background:#eff6ff;"><td><b>基准（×1.00）</b></td><td class="num"><b>864</b></td><td class="num"><b>727</b></td><td class="num"><b>803</b></td><td class="num"><b>2,394</b></td><td class="num"><b>$38,184</b></td></tr>
+      <tr><td>乐观（×1.25）</td><td class="num">1,080</td><td class="num">908</td><td class="num">1,004</td><td class="num"><b>2,992</b></td><td class="num">$47,722</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div class="note red">
+      <b>库存与备货：</b>当前总库存 <b>1,254 件</b>（FBA 可售 522 + 待调仓 490 + 入库中 242），按基准月均 26.3 件/天仅可覆盖 <b>约 48 天</b>。<br>
+      <b>建议补货 1,200 ~ 1,800 件</b>（3 月需求 2,394 − 库存 1,254 = 缺口 1,140，另加 1 个月安全库存）。<span class="badge b-bad">立即补货</span>
+    </div>
+    <div class="note blue">
+      <b>交叉验证：</b>盛途内部备货预估 11/12/1 月 = 1,200 / 1,000 / 1,050（合计 3,250）；季节性锚定值合计 3,223。<b>两者均显著高于模型基准值</b>，说明模型基准偏保守。
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 产品 2 ===================== -->
+<div class="card">
+  <div class="phead">
+    <span class="asin">B07D3KV6JG</span>
+    <span class="name">粉色蘑菇卷发器 + 网套（MSKU 02-B277X）</span>
+    <span class="tag">售价 $8.95</span>
+    <span class="badge b-warn">动量：短期弱 / 季节性向上</span>
+  </div>
+
+  <div class="grid3">
+    <div class="mini"><div class="t">短期日销（7/14 天）</div><div class="v">16.5 <small>件/天</small></div><div class="t">7天 104 · 14天 253</div></div>
+    <div class="mini"><div class="t">中期日销（30/90 天）</div><div class="v">22.2 <small>件/天</small></div><div class="t">30天 654 · 90天 2,032</div></div>
+    <div class="mini"><div class="t">基础日销（模型值）</div><div class="v">19.9 <small>件/天</small></div><div class="t">短期×0.4 + 中期×0.6</div></div>
+  </div>
+
+  <div class="note" style="margin-top:12px;">
+    <b>动量排查：</b>短期/中期 = 0.74。该产品 10 月正处于季节性淡季（核心词 heatless curls overnight 淡季为 1/10/5 月），而 SIF 显示其<b>需求加速增长（同比 +39.5%）、距下一个峰值约 8 周、当前搜索量已达季节基线的 2.62 倍</b>。故短期走弱属<b>季节性正常回落</b>，Q4 将向上，判定为「短期弱、季节性向上」。
+  </div>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div>
+      <div style="font-weight:600;margin-bottom:4px;">季节系数（基于 2025 真实销量）</div>
+      <div class="bars">
+        <div class="barrow"><span class="bl">11 月</span><div class="bartrack"><div class="barfill f-opt" style="width:100%;">1.22</div></div></div>
+        <div class="barrow"><span class="bl">12 月</span><div class="bartrack"><div class="barfill f-opt" style="width:95%;">1.16</div></div></div>
+        <div class="barrow"><span class="bl">1 月</span><div class="bartrack"><div class="barfill f-base" style="width:84%;">1.03</div></div></div>
+      </div>
+      <div class="src" style="margin-top:6px;">2025 月均 1,074 件。SIF 交叉验证：heatless curls overnight 旺季 12/11/8 月、淡季 1/10/5 月 → <b>11/12 月旺季得到印证</b>；1 月被 SIF 判为淡季，模型 1.03 偏乐观。</div>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:4px;">关键词校准</div>
+      <table>
+        <tbody>
+          <tr><td>主流量词加权搜索量同比</td><td class="num"><b>+2.1%</b>（≈持平）</td></tr>
+          <tr><td>本 ASIN 2026 年 7–9 月销量同比</td><td class="num"><b style="color:var(--danger)">-8.4%</b></td></tr>
+          <tr><td>核心词健康 / 依赖</td><td>natural_dominant（自然占比 1.00）</td></tr>
+          <tr><td>校准系数</td><td class="num"><b>1.00</b></td></tr>
+        </tbody>
+      </table>
+      <div class="src" style="margin-top:6px;">搜索量持平不调整；主流量词无广告依赖、自然主导，健康度良好。</div>
+    </div>
+  </div>
+
+  <div style="font-weight:600;margin:18px 0 8px;">三情景预估（单位：件）</div>
+  <table>
+    <thead><tr><th>情景</th><th>2026-11</th><th>2026-12</th><th>2027-01</th><th>三个月合计</th><th>预估销售额</th></tr></thead>
+    <tbody>
+      <tr><td>保守（×0.85）</td><td class="num">620</td><td class="num">608</td><td class="num">537</td><td class="num"><b>1,765</b></td><td class="num">$15,797</td></tr>
+      <tr style="background:#eff6ff;"><td><b>基准（×1.00）</b></td><td class="num"><b>729</b></td><td class="num"><b>715</b></td><td class="num"><b>632</b></td><td class="num"><b>2,076</b></td><td class="num"><b>$18,580</b></td></tr>
+      <tr><td>乐观（×1.25）</td><td class="num">911</td><td class="num">894</td><td class="num">790</td><td class="num"><b>2,595</b></td><td class="num">$23,225</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div class="note">
+      <b>库存与备货：</b>当前总库存 <b>2,825 件</b>（FBA 可售 2,810 + 待调仓 15），按基准月均 22.8 件/天可覆盖 <b>约 124 天</b>。<br>
+      <b>基准情景下无需补货</b>；但若 Q4 季节性完整复现（见交叉验证），则存在缺口，建议<b>小批补货 600 ~ 1,000 件</b>，并密切跟踪 11 月动销。<span class="badge b-warn">按需补货</span>
+    </div>
+    <div class="note blue">
+      <b>交叉验证（口径分歧最大）：</b>盛途内部备货预估 = 1,400 / 1,400 / 1,150（合计 <b>3,950</b>）；季节性锚定值合计 <b>3,422</b>；模型基准仅 2,076。<br>
+      分歧根因：该产品 2025 年 11/12 月真实销量（1,311 / 1,287）远高于其全年月均（1,074），旺季弹性极大，而模型基准取自 10 月淡季水平，未充分放大旺季。
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 产品 3 ===================== -->
+<div class="card">
+  <div class="phead">
+    <span class="asin">B072B9XGZ4</span>
+    <span class="name">金属蝴蝶扣 120pack（MSKU 12-B01S）</span>
+    <span class="tag">售价 $6.35</span>
+    <span class="badge b-ok">动量：平稳</span>
+  </div>
+
+  <div class="grid3">
+    <div class="mini"><div class="t">短期日销（7/14 天）</div><div class="v">30.2 <small>件/天</small></div><div class="t">7天 196 · 14天 454</div></div>
+    <div class="mini"><div class="t">中期日销（30/90 天）</div><div class="v">32.8 <small>件/天</small></div><div class="t">30天 979 · 90天 2,962</div></div>
+    <div class="mini"><div class="t">基础日销（模型值）</div><div class="v">31.7 <small>件/天</small></div><div class="t">短期×0.4 + 中期×0.6</div></div>
+  </div>
+
+  <div class="note blue" style="margin-top:12px;">
+    <b>动量：</b>短期/中期 = 0.92，落在 ±15% 平稳区间，无掉量或暴涨信号，直接采用基础日销。
+  </div>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div>
+      <div style="font-weight:600;margin-bottom:4px;">季节系数（基于 2025 真实销量）</div>
+      <div class="bars">
+        <div class="barrow"><span class="bl">11 月</span><div class="bartrack"><div class="barfill f-cons" style="width:77%;">0.77</div></div></div>
+        <div class="barrow"><span class="bl">12 月</span><div class="bartrack"><div class="barfill f-cons" style="width:69%;">0.69</div></div></div>
+        <div class="barrow"><span class="bl">1 月</span><div class="bartrack"><div class="barfill f-cons" style="width:70%;">0.70</div></div></div>
+      </div>
+      <div class="src" style="margin-top:6px;">2025 月均 1,090 件。SIF 交叉验证：pins 旺季 8/7/9 月、淡季 2/3/10 月；pin backs 淡季 12/11/1 月 → <b>11/12/1 月淡季判断高度一致</b>，季节系数可信度最高。</div>
+    </div>
+    <div>
+      <div style="font-weight:600;margin-bottom:4px;">关键词校准</div>
+      <table>
+        <tbody>
+          <tr><td>主流量词加权搜索量同比</td><td class="num"><b style="color:var(--opt)">+12.1%</b></td></tr>
+          <tr><td>本 ASIN 2026 年 7–9 月销量同比</td><td class="num"><b style="color:var(--opt)">+4.1%</b></td></tr>
+          <tr><td>核心词健康 / 依赖</td><td>volatile（自然主导）；长尾词含 at_risk</td></tr>
+          <tr><td>校准系数</td><td class="num"><b>1.00</b></td></tr>
+        </tbody>
+      </table>
+      <div class="src" style="margin-top:6px;">搜索量小幅上涨（&lt;20%）不调整；核心词 pins / pin backs 为自然主导，仅长尾词出现转化流失，风险已由保守情景覆盖。</div>
+    </div>
+  </div>
+
+  <div style="font-weight:600;margin:18px 0 8px;">三情景预估（单位：件）</div>
+  <table>
+    <thead><tr><th>情景</th><th>2026-11</th><th>2026-12</th><th>2027-01</th><th>三个月合计</th><th>预估销售额</th></tr></thead>
+    <tbody>
+      <tr><td>保守（×0.85）</td><td class="num">620</td><td class="num">578</td><td class="num">585</td><td class="num"><b>1,783</b></td><td class="num">$11,322</td></tr>
+      <tr style="background:#eff6ff;"><td><b>基准（×1.00）</b></td><td class="num"><b>730</b></td><td class="num"><b>680</b></td><td class="num"><b>688</b></td><td class="num"><b>2,098</b></td><td class="num"><b>$13,322</b></td></tr>
+      <tr><td>乐观（×1.25）</td><td class="num">911</td><td class="num">850</td><td class="num">860</td><td class="num"><b>2,621</b></td><td class="num">$16,643</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div class="note">
+      <b>库存与备货：</b>当前总库存 <b>1,838 件</b>（FBA 可售 1,829 + 待调仓 9），按基准月均 23.1 件/天可覆盖 <b>约 80 天</b>。<br>
+      <b>建议补货 500 ~ 900 件</b>（缺口 260 + 1 个月安全库存）。<span class="badge b-warn">建议补货</span>
+    </div>
+    <div class="note blue">
+      <b>交叉验证（三条线高度一致）：</b>盛途内部备货预估 = 800 / 750 / 790（合计 <b>2,340</b>）；季节性锚定值合计 <b>2,466</b>；模型基准 2,098。<b>三者偏差 &lt;15%，可信度最高</b>。
+    </div>
+  </div>
+</div>
+
+<h2 class="sec">三、三产品横向对比</h2>
+<div class="card">
+  <div style="font-weight:600;margin-bottom:10px;">基准情景三个月合计销量（件）</div>
+  <div class="bars">
+    <div class="barrow"><span class="bl">B0732Z7T8W</span><div class="bartrack"><div class="barfill f-base" style="width:92%;">2,394</div></div></div>
+    <div class="barrow"><span class="bl">B072B9XGZ4</span><div class="bartrack"><div class="barfill f-base" style="width:81%;">2,098</div></div></div>
+    <div class="barrow"><span class="bl">B07D3KV6JG</span><div class="bartrack"><div class="barfill f-base" style="width:80%;">2,076</div></div></div>
+  </div>
+  <div class="legend"><span><i class="f-base"></i>基准情景</span></div>
+
+  <div style="font-weight:600;margin:20px 0 10px;">各产品月度基准量分布</div>
+  <table>
+    <thead><tr><th>产品</th><th>2026-11</th><th>2026-12</th><th>2027-01</th><th>季节形态</th></tr></thead>
+    <tbody>
+      <tr><td>B0732Z7T8W 易拉扣</td><td class="num">864</td><td class="num">727</td><td class="num">803</td><td>11 月走弱、12 月最低</td></tr>
+      <tr><td>B07D3KV6JG 卷发器</td><td class="num">729</td><td class="num">715</td><td class="num">632</td><td>11/12 月旺季、1 月回落</td></tr>
+      <tr><td>B072B9XGZ4 蝴蝶扣</td><td class="num">730</td><td class="num">680</td><td class="num">688</td><td>11/12/1 月全淡季</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="sec">四、口径交叉验证（本次实测的核心产出）</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>产品</th><th>① 三维模型基准</th><th>② 中期口径修正</th><th>③ 季节性锚定<br><span style="font-weight:400">去年同月 × 近 3 月同比</span></th><th>④ 盛途内部备货预估<br><span style="font-weight:400">计划口径</span></th><th>三条线的收敛度</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>B0732Z7T8W</td>
+        <td class="num">2,394</td><td class="num">2,697</td><td class="num">3,223</td><td class="num">3,250</td>
+        <td><span class="badge b-warn">分歧</span> 模型偏低约 26%</td>
+      </tr>
+      <tr>
+        <td>B07D3KV6JG</td>
+        <td class="num">2,076</td><td class="num">2,316</td><td class="num">3,422</td><td class="num">3,950</td>
+        <td><span class="badge b-bad">分歧最大</span> 模型偏低约 40%</td>
+      </tr>
+      <tr>
+        <td>B072B9XGZ4</td>
+        <td class="num">2,098</td><td class="num">2,165</td><td class="num">2,466</td><td class="num">2,340</td>
+        <td><span class="badge b-ok">高度一致</span> 偏差 &lt;15%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="src" style="margin-top:10px;">② 中期口径修正：当短期/中期 &lt; 0.85（触发掉量告警）且排查确认为周末/当日口径失真时，改用「30 天日均×0.5 + 90 天日均×0.5」作基准。③ 季节性锚定：去年同月真实销量 × 近 3 个完整月同比系数，天然内含季节形态。</div>
+</div>
+
+<h2 class="sec">五、结论与建议</h2>
+<div class="card">
+  <div class="note red">
+    <b>核心发现：三维模型在本批产品上存在系统性低估。</b>
+    <ul>
+      <li><b>根因一（口径）：</b>「基础日销」取近 7/14 天窗口，而这些产品周末销量仅为工作日的 25%~35%，短窗口被压低；叠加 2026-10-14 当日数据不完整，进一步放大偏差。</li>
+      <li><b>根因二（基准时点）：</b>季节系数是「相对去年全年月均」的比值，而基础日销取自当前时点。当当前月正处于<b>淡季</b>时（如卷发器 10 月、蝴蝶扣 10 月），"淡季水平 × 旺季系数" 仍会低估旺季弹性。本次 3 个产品有 2 个命中该问题。</li>
+      <li><b>验证证据：</b>唯一未命中该问题的产品（B072B9XGZ4，短期/中期 0.92 平稳）三条口径偏差 &lt;15%；命中问题的 2 个产品偏差 26%~40%，且与盛途内部备货预估方向一致。</li>
+    </ul>
+  </div>
+
+  <div style="font-weight:600;margin:16px 0 8px;">改进建议（供 skill 迭代参考）</div>
+  <div class="grid2">
+    <div class="note blue">
+      <b>口径修正 1：剔除失真短窗口</b>
+      <ul>
+        <li>计算「基础日销」时排除当日未完整数据；</li>
+        <li>短期信号改用<b>滚动 7 日总量</b>（避免周末对齐偏差）；</li>
+        <li>或对周末低谷显著的产品改用「工作日日均」折算。</li>
+      </ul>
+    </div>
+    <div class="note blue">
+      <b>口径修正 2：季节性去偏</b>
+      <ul>
+        <li>引入「去季节化基准 = 基础日销 ÷ 当月季节系数」，再 × 目标月季节系数；</li>
+        <li>或将「去年同月 × 近期同比」作为与季节系数并列的第二主口径，两者取加权，分歧 &gt;20% 时标注冲突并下调置信度。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="font-weight:600;margin:16px 0 8px;">本次备货行动清单</div>
+  <table>
+    <thead><tr><th>产品</th><th>当前库存</th><th>可覆盖天数</th><th>基准 3 月需求</th><th>建议补货量</th><th>优先级</th></tr></thead>
+    <tbody>
+      <tr><td>B0732Z7T8W 易拉扣</td><td class="num">1,254</td><td class="num">48 天</td><td class="num">2,394</td><td class="num"><b>1,200 ~ 1,800</b></td><td><span class="badge b-bad">高（立即）</span></td></tr>
+      <tr><td>B07D3KV6JG 卷发器</td><td class="num">2,825</td><td class="num">124 天</td><td class="num">2,076</td><td class="num"><b>0 ~ 1,000</b>（视 Q4 动销）</td><td><span class="badge b-warn">中（观察）</span></td></tr>
+      <tr><td>B072B9XGZ4 蝴蝶扣</td><td class="num">1,838</td><td class="num">80 天</td><td class="num">2,098</td><td class="num"><b>500 ~ 900</b></td><td><span class="badge b-warn">中</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="foot">
+  <div><b>数据来源与口径</b></div>
+  <ul class="src">
+    <li>销量与库存：领星 ERP（店铺 B-US，sid=4653）— <code>query_product_performance_asin_lists</code>（月度/日度视图）、<code>get_my_sids</code>；库存口径 = FBA 可售 + 待调仓 + 入库中（不含预留）。</li>
+    <li>关键词：SIF — <code>ops_get_asin_sales_trend</code>、<code>market_get_asin_keyword_signals</code>、<code>market_get_keyword_history</code>、<code>market_get_keyword_demand</code>。</li>
+    <li>内部备货预估（计划口径，仅作交叉验证）：盛途 ERP — <code>query_msku-estimate-detail</code>（推广人=AI推广，店铺=B-US）。</li>
+    <li>销量单位为「件」；销售额按 B-US 售价（USD）折算，仅为量级参考。</li>
+    <li>样本选取：AI推广 名下 B-US 共 87 个 MSKU，按 2026-11~2027-01 备货预估销量降序取前 3。</li>
+  </ul>
+  <div style="margin-top:10px;">生成时间：2026-10-14 · 数据基准日 2026-10-14</div>
+</div>
+
+</div>
+</body>
+</html>

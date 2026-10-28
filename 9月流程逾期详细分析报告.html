@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>事业一部 9月流程逾期详细分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:"Microsoft YaHei",sans-serif; background:#f0f2f5; color:#2c3e50; padding:28px; }
+h1 { font-size:25px; }
+h2 { font-size:15px; color:#5d6d7e; margin-top:6px; font-weight:500; }
+.sub { color:#7f8c8d; font-size:13px; margin:8px 0 20px; }
+.title { font-size:19px; font-weight:800; margin:30px 0 14px; padding-left:10px; border-left:5px solid #e74c3c; }
+.kpi-wrap { display:flex; gap:14px; flex-wrap:wrap; }
+.kpi { flex:1; min-width:150px; background:#fff; border-radius:12px; padding:18px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.kpi .num { font-size:32px; font-weight:800; color:#e74c3c; }
+.kpi .num.blue { color:#3498db; }
+.kpi .lab { color:#7f8c8d; font-size:13px; margin-top:6px; }
+.panel { background:#fff; border-radius:12px; padding:18px 20px; box-shadow:0 2px 8px rgba(0,0,0,.06); margin-bottom:20px; }
+.chart { width:100%; height:320px; }
+.card { background:#fff; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.06); margin-bottom:18px; overflow:hidden; }
+.card-head { padding:13px 18px; background:linear-gradient(90deg,#fafafa,#fff); border-bottom:1px solid #eee; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.pname { font-size:19px; font-weight:800; }
+.badge { font-size:11px; padding:3px 9px; border-radius:20px; color:#fff; background:#e74c3c; }
+.badge.op { background:#e67e22; }
+.badge.dev { background:#3498db; }
+.stat { margin-left:auto; color:#555; font-size:14px; }
+.stat b { color:#e74c3c; font-size:17px; }
+.card-body { padding:13px 18px; }
+.row { display:flex; margin:8px 0; gap:12px; align-items:flex-start; }
+.lbl { width:76px; color:#7f8c8d; font-size:13px; padding-top:3px; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; }
+.mini { background:#fdecea; color:#c0392b; font-size:12px; padding:2px 9px; border-radius:16px; }
+table { width:100%; border-collapse:collapse; margin-top:10px; font-size:12.5px; }
+th,td { padding:6px 8px; border-bottom:1px solid #f0f0f0; text-align:left; vertical-align:middle; }
+th { background:#f8f9fb; color:#5d6d7e; }
+tr:hover td { background:#fafbfc; }
+.name { color:#555; max-width:340px; }
+.tags { line-height:1.9; }
+.tag { display:inline-block; background:#fff3cd; color:#8a6d1a; font-size:11px; padding:1px 7px; border-radius:10px; margin-right:5px; white-space:nowrap; }
+.tag em { font-style:normal; color:#1e8449; }
+.stg-wrap { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+@media (max-width:1000px) { .stg-wrap { grid-template-columns:repeat(2,1fr); } }
+.stg-block { background:#fbfcfe; border:1px solid #eef1f5; border-radius:10px; padding:12px; }
+.stg-name { font-weight:700; margin-bottom:8px; color:#2c3e50; }
+.foot { margin-top:26px; color:#95a5a6; font-size:12px; text-align:center; }
+</style>
+</head>
+<body>
+<h1>事业一部 · 2026年9月流程逾期详细分析报告</h1>
+<h2>覆盖 分配店铺 / 调研 / 样品审核 / 文案申请 / 图片申请 五个环节，逐SKU标注逾期环节与责任人</h2>
+<div class="sub">统计区间 2026-09-01 ~ 09-30 ｜ 口径：开发人+推广人归属事业一部 ｜ 生成时间 2026-10-14</div>
+
+<div class="kpi-wrap">
+  <div class="kpi"><div class="num">143</div><div class="lab">逾期SKU总数</div></div>
+  <div class="kpi"><div class="num">147</div><div class="lab">逾期环节累计(次)</div></div>
+  <div class="kpi"><div class="num blue">17</div><div class="lab">涉及开发人</div></div>
+  <div class="kpi"><div class="num blue">8</div><div class="lab">涉及推广人</div></div>
+  <div class="kpi"><div class="num blue">30</div><div class="lab">涉及店铺</div></div>
+</div>
+
+<div class="title">一、各环节逾期分布</div>
+<div class="panel"><div id="stageChart" class="chart"></div></div>
+
+<div class="title">二、各环节 责任人（处理人）逾期次数</div>
+<div class="panel stg-wrap"><div class="stg-block"><div class="stg-name">分配店铺（25次）</div><table><tr><td>韦燕敏</td><td>4</td></tr><tr><td>于战战</td><td>4</td></tr><tr><td>韩咏琪</td><td>3</td></tr><tr><td>吴跃</td><td>3</td></tr><tr><td>程智刚</td><td>2</td></tr><tr><td>李超</td><td>2</td></tr><tr><td>范昌娟</td><td>2</td></tr><tr><td>范雅晴</td><td>2</td></tr></table></div><div class="stg-block"><div class="stg-name">调研（42次）</div><table><tr><td>AI推广</td><td>18</td></tr><tr><td>范昌娟</td><td>12</td></tr><tr><td>程智刚</td><td>3</td></tr><tr><td>张淑珍</td><td>2</td></tr><tr><td>袁雯丽</td><td>1</td></tr><tr><td>徐叶</td><td>1</td></tr><tr><td>吴瑶</td><td>1</td></tr><tr><td>韦燕敏</td><td>1</td></tr></table></div><div class="stg-block"><div class="stg-name">样品审核（19次）</div><table><tr><td>李新雅</td><td>5</td></tr><tr><td>黄心怡</td><td>5</td></tr><tr><td>徐子强</td><td>2</td></tr><tr><td>王秀</td><td>2</td></tr><tr><td>卢文莲</td><td>1</td></tr><tr><td>王婷婷</td><td>1</td></tr><tr><td>沈婕</td><td>1</td></tr><tr><td>刘朱</td><td>1</td></tr></table></div><div class="stg-block"><div class="stg-name">文案申请（0次）</div><table><tr><td>-</td><td>0</td></tr></table></div><div class="stg-block"><div class="stg-name">图片申请（61次）</div><table><tr><td>未指名</td><td>57</td></tr><tr><td>储淑霞</td><td>2</td></tr><tr><td>孟夏美</td><td>1</td></tr><tr><td>吴芳</td><td>1</td></tr></table></div></div>
+
+<div class="title">三、按开发人逐人明细（含具体逾期环节 & 责任人）</div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">李新雅</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>28</b> SKU逾期　<b>30</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×13</span><span class="mini">调研×7</span><span class="mini">样品审核×5</span><span class="mini">分配店铺×5</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>326-15793</td><td>G7-US</td><td class="name">60个树脂火鸡（4款）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16042</td><td>H-US</td><td class="name">圣诞节树脂装饰品塑料个 (32个圣诞树脂姜饼人（11款））</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16319</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料耶稣60个 (60个树脂平背耶稣）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16393</td><td>K-US</td><td class="name">圣诞节纸袋纸制品32个（32套圣诞节香料袋子（纸袋*32，贴纸*32，绳子*40米））</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16394</td><td>D-US</td><td class="name">圣诞节自封袋塑料个 (50套圣诞节香料袋子（自封袋*50，卡片*50，绳子60米））</td><td>李新雅</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16403</td><td>M-US</td><td class="name">圣诞节纹身贴纸纸制品12个 (12张圣诞脸部雀斑贴（3款））</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16435</td><td>G7-US</td><td class="name">圣诞节迷你鹅配饰布3个 (三套迷你鹅圣诞服饰（火鸡，圣诞树，企鹅））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16564</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料200个 (200个圣诞迷你平背树脂（混款果冻色））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16686</td><td>G7-UK</td><td class="name">圣诞节圣诞室内装饰塑料8个 (8条圣诞镭射拉花）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16695</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料80个 (80个圣诞节鸭子（印雪花））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16902</td><td>M-US</td><td class="name">冬季纹身贴纸纸制品12个 (12张雪花脸部雀斑贴）</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16946</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料36个 (36个平背圣诞树（12款））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-17096</td><td>B-US</td><td class="name">情人节发夹塑料个 (32个爱心对话树脂发夹（8色））</td><td>李新雅</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-17253</td><td>G7-US</td><td class="name">春季树脂装饰品塑料个 +（60个春季平背树脂（不重复））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>326-17326</td><td>V-US</td><td class="name">春季鹅服饰布1个（雏菊主题门廊鹅服饰三件套（草帽+领结+围脖））</td><td>李新雅</td><td>葛月娇</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>326-17335</td><td>G13-US</td><td class="name">春季花束包装袋塑料1个（40个多支花束包装袋（深粉色）+25码丝带）</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17336</td><td>G13-US</td><td class="name">春季花束包装袋塑料1个（100个单支透明花束袋+2卷丝带）</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17338</td><td>G13-US</td><td class="name">情人节花束包装袋塑料1个（100个单支玫瑰袋+2卷黑色丝带）</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17364</td><td>G7-US</td><td class="name">情人节树脂装饰品塑料1个（60个电镀迷你熊（红粉紫各20））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>326-17428</td><td>G13-US</td><td class="name">情人节挂旗毛毡1个（一条3D爱心毛毡横幅（8个爱心+45个毛球））</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>程智刚</em></span><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>326-17452</td><td>G7-US</td><td class="name">圣帕特里克节树脂装饰品塑料1个（20个精灵帽子）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>吴跃</em></span></td></tr><tr><td>326-17454</td><td>K-US</td><td class="name">圣帕特里克节玩具金币金属1个（240个迷你金币）</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韩咏琪</em></span></td></tr><tr><td>326-17465</td><td>G7-US</td><td class="name">圣帕特里克节树脂摆件塑料1个（20个绿节金币罐）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>吴跃</em></span></td></tr><tr><td>326-17466</td><td>S-US</td><td class="name">黑人历史月挂旗纸制品1个（3条女性黑人历史月拉旗（闪粉））</td><td>李新雅</td><td>陈菲</td><td class="tags"><span class="tag bad">分配店铺<em>丁惠敏</em></span></td></tr><tr><td>326-17467</td><td>W-US</td><td class="name">圣帕特里克节儿童贴纸纸制品1个（500贴镭射彩虹贴纸）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>范昌娟</em></span><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17473</td><td>W-US</td><td class="name">圣帕特里克节儿童贴纸纸制品1个（500贴镭射金币罐贴纸）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17630</td><td>B-US</td><td class="name">夏季发带布1个（6个发带（蕾丝*3，波点*3））</td><td>李新雅</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>袁雯丽</em></span></td></tr><tr><td>326-17732</td><td>G7-US</td><td class="name">复活节树脂摆件塑料1个（80个复活节树脂兔子鸭（混色））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">徐亮</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>23</b> SKU逾期　<b>23</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">调研×18</span><span class="mini">图片申请×5</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>89-11895</td><td>D-US</td><td class="name">120件圣诞十字铃铛10MM（红绿金银）（D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11934</td><td>D-US</td><td class="name">120件圣诞十字铃铛20MM（红绿金银）（D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11935</td><td>D-US</td><td class="name">240件圣诞十字铃铛10MM（红绿金银）（D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11936</td><td>D-US</td><td class="name">240件圣诞十字铃铛15MM（红绿金银）（D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11937</td><td>D-US</td><td class="name">240件圣诞十字铃铛12MM（红绿金银）（D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12065</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（金色）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12066</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（混彩）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12068</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（银色）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12076</td><td>D-US</td><td class="name">120件圣诞十字铃铛10MM（混彩）（D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12077</td><td>D-US</td><td class="name">120件圣诞十字铃铛15MM（混彩) (D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12078</td><td>D-US</td><td class="name">120件圣诞十字铃铛20MM（混彩) (D5219/3739变体） </td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12080</td><td>D-US</td><td class="name">120件圣诞十字铃铛25MM（混彩) (D5219/3739变体） </td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12107</td><td>D-US</td><td class="name">240件圣诞十字铃铛10MM（混彩) （D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12113</td><td>D-US</td><td class="name">240件圣诞十字铃铛15MM（混彩) （D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12114</td><td>D-US</td><td class="name">240件圣诞十字铃铛8MM/10MM/12MM（混彩) （D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12949</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（古铜色）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12950</td><td>D-US</td><td class="name">50件圣诞十字铃铛20MM（做锈款）（D5192变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-16161</td><td>Q-US</td><td class="name">圣诞节刺绣圈木制品8CM红绿金银12个 (红绿金银刺绣圈3寸（8CM）12个）</td><td>徐亮</td><td>陈菲</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-16178</td><td>N-UK</td><td class="name">圣诞节挂球塑料格林奇主题色48个 (圣诞节格林奇主题色挂球48件（6CM24个+4CM24个 ））</td><td>徐亮</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-16391</td><td>G7-US</td><td class="name">圣诞节装饰挂件塑料盲盒24个 (圣诞节24天倒计时盲盒亚克力挂件饰品）</td><td>徐亮</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-16659</td><td>D-US</td><td class="name">铃铛金属古铜色圆锥36个 (圣诞复古圆锥铃铛古铜色36件）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-17062</td><td>Z-US</td><td class="name">鸟架 金属黑色蜂鸟架4个 (4件套金属鸟架蜂鸟架蜂鸟秋千带链条挂钩）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-17407</td><td>G7-US</td><td class="name">狂欢节项链金属狂欢节主题2个（狂欢节合金项链+手环套装（1项链+1手链））</td><td>徐亮</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>张淑珍</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">刘朱</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>17</b> SKU逾期　<b>17</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">分配店铺×12</span><span class="mini">调研×2</span><span class="mini">图片申请×2</span><span class="mini">样品审核×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>125-17237</td><td>A-US</td><td class="name">春节钥匙扣金属生肖羊8个 (钥匙扣+卡片+红色收口袋）</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">样品审核<em>刘朱</em></span></td></tr><tr><td>125-17453</td><td>N-US</td><td class="name">开学100天奖牌硅胶24个</td><td>刘朱</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr><tr><td>125-17455</td><td>A-US</td><td class="name">钥匙扣涤纶伞绳24个+开口环金属24个（纯色）</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>范雅晴</em></span></td></tr><tr><td>125-17456</td><td>H-US</td><td class="name">开学100天雨丝帘塑料2m*1m5色循环3个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr><tr><td>125-17457</td><td>B-US</td><td class="name">开学100天门贴涤纶门横幅1个+雨丝帘塑料五色1个</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>程智刚</em></span></td></tr><tr><td>125-17458</td><td>K-US</td><td class="name">春节装饰挂件无纺布灯笼4个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韩咏琪</em></span></td></tr><tr><td>125-17459</td><td>Z-US</td><td class="name">春节派对装饰用品纸制品扇形挂饰套装1个（12个扇形挂饰+一副对联+新年快乐横幅+6个纸塑灯笼）</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr><tr><td>125-17460</td><td>A-US</td><td class="name">情人节儿童耳贴塑料水晶滴胶耳贴4个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>范雅晴</em></span></td></tr><tr><td>125-17461</td><td>K-US</td><td class="name">情人节钥匙扣亚克力心形24个+卡纸纸制品涂鸦卡24个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr><tr><td>125-17463</td><td>Z-US</td><td class="name">黑人历史月装饰挂件纸制品扇形挂饰12个</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr><tr><td>125-17464</td><td>W-US</td><td class="name">黑人历史月拷贝纸纸100个（黑色+黄色+红色+绿色，35*50cm）</td><td>刘朱</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>范昌娟</em></span></td></tr><tr><td>125-17468</td><td>N-US</td><td class="name">开学100天铅笔木制品60个（12款）</td><td>刘朱</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>李超</em></span></td></tr><tr><td>125-17470</td><td>M-US</td><td class="name">女性历史月胸针金属28个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>125-17568</td><td>W-US</td><td class="name">情人节拷贝纸纸50*35厘米60个</td><td>刘朱</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>125-17585</td><td>T-US</td><td class="name">情人节串珠塑料心形600个+大马珠塑料600个</td><td>刘朱</td><td>葛月娇</td><td class="tags"><span class="tag bad">分配店铺<em>吴跃</em></span></td></tr><tr><td>125-17736</td><td>Z-US</td><td class="name">春季装饰挂件纸制品蜂窝云朵挂饰5个+装饰挂件纸制品车线雨滴20个</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>于战战</em></span></td></tr><tr><td>125-P1970</td><td>P-CA</td><td class="name">36件套英文字母数字模板 3英寸</td><td>刘朱</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">王婷婷</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>15</b> SKU逾期　<b>15</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×12</span><span class="mini">样品审核×1</span><span class="mini">分配店铺×1</span><span class="mini">调研×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>168-13337</td><td>B-US</td><td class="name">（1586数量变体）12支四色（红，白，蓝，黑）空笔杆+104支高温消除笔芯（26支玫红+26支米白色+26支黑色+26支蓝色）</td><td>王婷婷</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>168-16100</td><td>M-US</td><td class="name">圣诞节装饰品挂绳布圣诞节棕色装饰品挂绳个 (120个 丝绒款 装饰品挂绳（棕色））</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16151</td><td>L-US</td><td class="name">圣诞节气球丝带塑料圣诞节卷曲装饰带4个 (4卷圣诞节 卷曲 装饰带（图案款））</td><td>王婷婷</td><td>夏如梦</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16281</td><td>K-DE</td><td class="name">圣诞节金属丝塑料圣诞节圣诞树金属丝10个 (圣诞节：10条圣诞树金属丝（银色））</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16293</td><td>G13-US</td><td class="name">圣诞节咖啡搅拌器塑料圣诞节姜饼人搅拌棒36个 (圣诞节：36个姜饼人搅拌棒）</td><td>王婷婷</td><td>夏如梦</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16295</td><td>G13-US</td><td class="name">圣诞节咖啡搅拌器塑料圣诞节雪花搅拌棒36个 (圣诞节：36个雪花搅拌棒）</td><td>王婷婷</td><td>夏如梦</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16369</td><td>N-US</td><td class="name">圣诞节刮刮卡纸制品 圣诞节  36个6款 雪人 刮刮卡（36刮刮纸+36彩绳+12竹签）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16376</td><td>N-US</td><td class="name">圣诞节刮刮卡纸制品 36个6款 圣诞节 绿色圣诞树 刮刮卡（36刮刮纸+36彩绳+12竹签）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16434</td><td>N-US</td><td class="name">圣诞节装饰贴纸塑料560PCS 圣诞帽贴纸个 (560PCS 圣诞帽贴纸）</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16450</td><td>N-US</td><td class="name">圣诞节儿童贴纸塑料2700PCS 闪光 雪花贴纸（银色+深蓝+浅蓝）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16559</td><td>N-US</td><td class="name">圣诞节刮刮卡纸制品冬季圣诞节：36张蓝色雪花刮刮卡（36刮刮纸+36彩绳+12竹签）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16770</td><td>K-DE</td><td class="name">圣诞节金属丝塑料10条圣诞树金属丝（金色）个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16771</td><td>K-DE</td><td class="name">圣诞节金属丝塑料圣诞节：10条圣诞树金属丝（白色）个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-17583</td><td>K-UK</td><td class="name">斋月手工木片木制品7款木片+拉旗1个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韩咏琪</em></span></td></tr><tr><td>168-17682</td><td>M-US</td><td class="name">情人节橡皮擦塑料谈话爱心橡皮擦150个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">样品审核<em>王婷婷</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">黄利园</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>11</b> SKU逾期　<b>11</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×7</span><span class="mini">分配店铺×2</span><span class="mini">调研×1</span><span class="mini">样品审核×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>389-15225</td><td>N-US</td><td class="name">8件银色珠链（8款）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>储淑霞</em></span></td></tr><tr><td>389-15628</td><td>T-US</td><td class="name">24件套万圣节钥匙扣（24个双面木片+24个钥匙扣+300个小马珠+200个字母珠+100个骷髅珠+1卷绳子）</td><td>黄利园</td><td>葛月娇</td><td class="tags"><span class="tag bad">图片申请<em>吴芳</em></span></td></tr><tr><td>389-16205</td><td>F-US</td><td class="name">圣诞节织带塑料五角星3个 (3卷5m银色闪粉丝带）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16438</td><td>Z-US</td><td class="name">圣诞节桌面摆件木制品迷你栅栏2个 (2件圣诞小镇迷你栅栏（带灯串）（90cm白色栅栏））</td><td>黄利园</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16441</td><td>G7-US</td><td class="name">圣诞节桌面摆件橡胶12*120cm道路1个 (1件12*120cm圣诞小镇道路（马路款式））</td><td>黄利园</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16467</td><td>Q-US</td><td class="name">圣诞节装饰贴纸塑料砖墙贴纸8个 (8张圣诞小镇砖墙不干胶贴纸）</td><td>黄利园</td><td>陈菲</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16720</td><td>K-US</td><td class="name">圣诞节地插塑料圣诞姜饼人糖果12个 (12个圣诞姜饼人糖果塑料地插）</td><td>黄利园</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16845</td><td>G7-DE</td><td class="name">圣诞节桌面摆件木制品圣诞侏儒摆件个 (圣诞侏儒摆件（1个木质圣诞集市小摊+1个木质路牌+4个糖果盒子+4个糖果瓶+4个姜饼人+150cm迷你灯串花环））</td><td>黄利园</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>黄利园</em></span></td></tr><tr><td>389-17471</td><td>Q-US</td><td class="name">情人节美甲工具泡沫谈话爱心36个</td><td>黄利园</td><td>陈菲</td><td class="tags"><span class="tag bad">调研<em>韦燕敏</em></span></td></tr><tr><td>389-17582</td><td>I-US</td><td class="name">桌面摆件布柠檬8个（柠檬填充摆件）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr><tr><td>389-17584</td><td>I-US</td><td class="name">春季桌面摆件布草莓8个（草莓填充摆件）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">代焕住</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>9</b> SKU逾期　<b>9</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×4</span><span class="mini">分配店铺×3</span><span class="mini">调研×2</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>469-15857</td><td>E-US</td><td class="name">门套布万圣节1个</td><td>代焕住</td><td>葛月娇</td><td class="tags"><span class="tag bad">图片申请<em>储淑霞</em></span></td></tr><tr><td>469-16215</td><td>G7-US</td><td class="name">冬季玩具眼镜纸制品12款冬季主题36个</td><td>代焕住</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>469-16533</td><td>H-US</td><td class="name">新年拍照道具纸制品30个</td><td>代焕住</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>469-17010</td><td>B-US</td><td class="name">冬季窗帘幔布雪人1个</td><td>代焕住</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>469-17415</td><td>Q-US</td><td class="name">情人节地毯布门垫2个</td><td>代焕住</td><td>陈菲</td><td class="tags"><span class="tag bad">调研<em>张淑珍</em></span></td></tr><tr><td>469-17549</td><td>B-US</td><td class="name">春季窗帘幔布花卉3个</td><td>代焕住</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>程智刚</em></span></td></tr><tr><td>469-17641</td><td>V-US</td><td class="name">复活节袜子布6个</td><td>代焕住</td><td>葛月娇</td><td class="tags"><span class="tag bad">分配店铺<em>张颖</em></span></td></tr><tr><td>469-17642</td><td>G14-US</td><td class="name">复活节头带纸制品30个</td><td>代焕住</td><td>夏如梦</td><td class="tags"><span class="tag bad">分配店铺<em>李超</em></span></td></tr><tr><td>469-17643</td><td>B-US</td><td class="name">复活节卡片纸制品座位卡60个</td><td>代焕住</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>程智刚</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">吴正</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>7</b> SKU逾期　<b>7</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×7</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>328-16318</td><td>K-FR</td><td class="name">圣诞节卡片纸制品法语圣诞卡片+信封+贴纸20个</td><td>吴正</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>孟夏美</em></span></td></tr><tr><td>328-16597</td><td>I-US</td><td class="name">圣诞节标签贴纸纸制品Coquito酒瓶贴纸+蝴蝶结108个</td><td>吴正</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>328-16603</td><td>G7-US</td><td class="name">圣诞节卡片纸制品贺卡20个+钥匙扣塑料20个+欧根纱袋塑料红色20个</td><td>吴正</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>328-16609</td><td>Q-US</td><td class="name">圣诞节不干胶贴纸纸制品烫金耶稣诞生场景600个</td><td>吴正</td><td>陈菲</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>328-16634</td><td>Z-US</td><td class="name">圣诞节照片夹木铁结合雪花红色+绿色木夹60个</td><td>吴正</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>328-16649</td><td>M-US</td><td class="name">圣诞节纹身贴纸纸制品夜光雪花120个</td><td>吴正</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>328-16911</td><td>N-US</td><td class="name">圣诞节圣诞树装饰品金属5.51inch+7.87inch多利亚风格冰柱挂饰60个</td><td>吴正</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">车彩霞</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>6</b> SKU逾期　<b>6</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×4</span><span class="mini">调研×2</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>79-16385</td><td>F-US</td><td class="name">圣诞节织带布1cm宽格子个 (6卷圣诞节格子丝带）</td><td>车彩霞</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-16424</td><td>D-US</td><td class="name">圣诞节装饰挂件金属个 (圣诞复古1牛玲挂件，4个尺寸）</td><td>车彩霞</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-16893</td><td>F-US</td><td class="name">圣诞节织带布1cm宽6个 (6卷60码粉彩色圣诞节丝带）</td><td>车彩霞</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-16939</td><td>K-US</td><td class="name">冬季装饰挂件金属2.5cm36个 (36件冬季吊坠挂件）</td><td>车彩霞</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-17367</td><td>K-US</td><td class="name">狂欢节装饰挂件金属2.5cm36个（装饰挂件金属2.5cm36个 (36件狂欢节吊坠挂件））</td><td>车彩霞</td><td>左姜倩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>79-17586</td><td>W-US</td><td class="name">情人节吊坠金属90个（90个混装节日吊坠（情人节 绿节 复活节））</td><td>车彩霞</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">徐子强</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>6</b> SKU逾期　<b>7</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×3</span><span class="mini">调研×2</span><span class="mini">样品审核×2</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>805-17049</td><td>K-US</td><td class="name">情人节团队游戏道具纸制品1个</td><td>徐子强</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>805-17110</td><td>Y-US</td><td class="name">春节装饰挂件纸制品30个</td><td>徐子强</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>805-17391</td><td>L-US</td><td class="name">圣诞节彩印食品袋塑料24个</td><td>徐子强</td><td>夏如梦</td><td class="tags"><span class="tag bad">样品审核<em>徐子强</em></span></td></tr><tr><td>805-17478</td><td>W-US</td><td class="name">圣帕特里克节桌面摆件塑料绿色三叶草18个</td><td>徐子强</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>805-17562</td><td>L-US</td><td class="name">复活节装饰挂件木制品6英寸兔子4个</td><td>徐子强</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>徐叶</em></span><span class="tag bad">样品审核<em>徐子强</em></span></td></tr><tr><td>805-17672</td><td>Z-US</td><td class="name">春季桌旗涤纶3米1个</td><td>徐子强</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">王秀</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>5</b> SKU逾期　<b>6</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×2</span><span class="mini">调研×2</span><span class="mini">样品审核×2</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>819-17246</td><td>M-US</td><td class="name">情人节门牌木制品情人节心形木制门牌1个</td><td>王秀</td><td>左姜倩</td><td class="tags"><span class="tag bad">样品审核<em>王秀</em></span></td></tr><tr><td>819-17536</td><td>G13-US</td><td class="name">复活节派对装饰用品毛毡郁金香摆件6个</td><td>王秀</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>吴瑶</em></span><span class="tag bad">样品审核<em>王秀</em></span></td></tr><tr><td>819-17555</td><td>G13-US</td><td class="name">复活节派对装饰用品毛毡复活节兔子胡萝卜横幅1个</td><td>王秀</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>819-17615</td><td>V-US</td><td class="name">圣帕特里克节硅胶模具硅胶6连四叶草硅胶模具3个</td><td>王秀</td><td>葛月娇</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>819-17623</td><td>M-US</td><td class="name">圣帕特里克节树脂装饰品树脂闪粉三叶草60个</td><td>王秀</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">黄心怡</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>5</b> SKU逾期　<b>5</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">样品审核×5</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>735-17058</td><td>Y-US</td><td class="name">情人节信纸信封纸制品个 (60个信封+60个爱心卡纸）</td><td>黄心怡</td><td>金雨欣</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>735-17212</td><td>S-US</td><td class="name">派对装饰用品聚酯纤维个 (赛车主题生日派对横幅装饰）</td><td>黄心怡</td><td>陈菲</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>735-17280</td><td>G13-US</td><td class="name">情人节桌面摆件毛毡个 +（8个情人节纯色爱心毛毡木质摆件）</td><td>黄心怡</td><td>夏如梦</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>735-17513</td><td>Y-US</td><td class="name">复活节礼物盒纸制品1个（40套复活节兔耳朵造型牛皮纸盒）</td><td>黄心怡</td><td>金雨欣</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>735-17530</td><td>L-US</td><td class="name">圣帕特里克节花环毛毡1个（绿节三叶草蝴蝶结毛毡花环+LUCKY三叶草拉条）</td><td>黄心怡</td><td>夏如梦</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">卢文莲</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>4</b> SKU逾期　<b>4</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">调研×3</span><span class="mini">样品审核×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>550-17432</td><td>V-US</td><td class="name">春节袜子涤纶均码红色羊年新年袜子6个</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>550-17490</td><td>V-US</td><td class="name">圣帕特里克节3D创意啤酒袜针织袜子脚套，1双</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>550-17565</td><td>V-DE</td><td class="name">狂欢节cos道具涤纶均码蓝色水手·服装1个</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">调研<em>范雅晴</em></span></td></tr><tr><td>550-17718</td><td>V-DE</td><td class="name">狂欢节cos道具涤纶棕色西部牛仔服装套装1个</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">样品审核<em>卢文莲</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">钱程</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>2</b> SKU逾期　<b>2</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">调研×1</span><span class="mini">图片申请×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>494-16789</td><td>Z-US</td><td class="name">圣诞节圣诞树装饰品毛毡西部牛仔挂饰18个</td><td>钱程</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>494-17560</td><td>B-US</td><td class="name">圣帕特里克节发饰塑料圣帕特里克节30个</td><td>钱程</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>程智刚</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">沈婕</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>2</b> SKU逾期　<b>2</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">样品审核×1</span><span class="mini">调研×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>816-17409</td><td>Q-US</td><td class="name">情人节地毯防滑垫聚酯纤维120cm1个</td><td>沈婕</td><td>陈菲</td><td class="tags"><span class="tag bad">调研<em>未指名</em></span></td></tr><tr><td>816-17420</td><td>G7-UK</td><td class="name">复活节袜子棉AB袜（兔子、胡萝卜、小鸡、彩蛋）+彩蛋2个</td><td>沈婕</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>沈婕</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">倪锐</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>1</b> SKU逾期　<b>1</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">分配店铺×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>495-17647</td><td>G11-US</td><td class="name">情人节卡片纸制品篮球1个（情人节盒子和卡片套装）</td><td>倪锐</td><td>-</td><td class="tags"><span class="tag bad">分配店铺<em>孙莹</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">贾闪闪</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>1</b> SKU逾期　<b>1</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">分配店铺×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>132-17581</td><td>Z-US</td><td class="name">春季量杯塑料户外雨量器2个（海绵杯刷1个）</td><td>贾闪闪</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">吴丹</span>
+        <span class="badge op">开发人</span>
+        <div class="stat"><b>1</b> SKU逾期　<b>1</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>442-8663</td><td>Y-US</td><td class="name">5578变体，加仑丁、情人节主题粉色系5色30张组合</td><td>吴丹</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+
+<div class="title">四、按推广人逐人明细（含具体逾期环节 & 责任人）</div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">赵诗怡</span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>37</b> SKU逾期　<b>37</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">调研×22</span><span class="mini">图片申请×10</span><span class="mini">分配店铺×5</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>125-17457</td><td>B-US</td><td class="name">开学100天门贴涤纶门横幅1个+雨丝帘塑料五色1个</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>程智刚</em></span></td></tr><tr><td>125-17459</td><td>Z-US</td><td class="name">春节派对装饰用品纸制品扇形挂饰套装1个（12个扇形挂饰+一副对联+新年快乐横幅+6个纸塑灯笼）</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr><tr><td>125-17463</td><td>Z-US</td><td class="name">黑人历史月装饰挂件纸制品扇形挂饰12个</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr><tr><td>125-17736</td><td>Z-US</td><td class="name">春季装饰挂件纸制品蜂窝云朵挂饰5个+装饰挂件纸制品车线雨滴20个</td><td>刘朱</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>于战战</em></span></td></tr><tr><td>132-17581</td><td>Z-US</td><td class="name">春季量杯塑料户外雨量器2个（海绵杯刷1个）</td><td>贾闪闪</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr><tr><td>168-13337</td><td>B-US</td><td class="name">（1586数量变体）12支四色（红，白，蓝，黑）空笔杆+104支高温消除笔芯（26支玫红+26支米白色+26支黑色+26支蓝色）</td><td>王婷婷</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>326-16394</td><td>D-US</td><td class="name">圣诞节自封袋塑料个 (50套圣诞节香料袋子（自封袋*50，卡片*50，绳子60米））</td><td>李新雅</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-17096</td><td>B-US</td><td class="name">情人节发夹塑料个 (32个爱心对话树脂发夹（8色））</td><td>李新雅</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-17630</td><td>B-US</td><td class="name">夏季发带布1个（6个发带（蕾丝*3，波点*3））</td><td>李新雅</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>袁雯丽</em></span></td></tr><tr><td>328-16634</td><td>Z-US</td><td class="name">圣诞节照片夹木铁结合雪花红色+绿色木夹60个</td><td>吴正</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16438</td><td>Z-US</td><td class="name">圣诞节桌面摆件木制品迷你栅栏2个 (2件圣诞小镇迷你栅栏（带灯串）（90cm白色栅栏））</td><td>黄利园</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>469-17010</td><td>B-US</td><td class="name">冬季窗帘幔布雪人1个</td><td>代焕住</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>469-17549</td><td>B-US</td><td class="name">春季窗帘幔布花卉3个</td><td>代焕住</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>程智刚</em></span></td></tr><tr><td>469-17643</td><td>B-US</td><td class="name">复活节卡片纸制品座位卡60个</td><td>代焕住</td><td>赵诗怡</td><td class="tags"><span class="tag bad">分配店铺<em>程智刚</em></span></td></tr><tr><td>494-16789</td><td>Z-US</td><td class="name">圣诞节圣诞树装饰品毛毡西部牛仔挂饰18个</td><td>钱程</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>494-17560</td><td>B-US</td><td class="name">圣帕特里克节发饰塑料圣帕特里克节30个</td><td>钱程</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>程智刚</em></span></td></tr><tr><td>79-16424</td><td>D-US</td><td class="name">圣诞节装饰挂件金属个 (圣诞复古1牛玲挂件，4个尺寸）</td><td>车彩霞</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>805-17672</td><td>Z-US</td><td class="name">春季桌旗涤纶3米1个</td><td>徐子强</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-11895</td><td>D-US</td><td class="name">120件圣诞十字铃铛10MM（红绿金银）（D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11934</td><td>D-US</td><td class="name">120件圣诞十字铃铛20MM（红绿金银）（D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11935</td><td>D-US</td><td class="name">240件圣诞十字铃铛10MM（红绿金银）（D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11936</td><td>D-US</td><td class="name">240件圣诞十字铃铛15MM（红绿金银）（D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-11937</td><td>D-US</td><td class="name">240件圣诞十字铃铛12MM（红绿金银）（D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12065</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（金色）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12066</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（混彩）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12068</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（银色）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12076</td><td>D-US</td><td class="name">120件圣诞十字铃铛10MM（混彩）（D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12077</td><td>D-US</td><td class="name">120件圣诞十字铃铛15MM（混彩) (D5219/3739变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12078</td><td>D-US</td><td class="name">120件圣诞十字铃铛20MM（混彩) (D5219/3739变体） </td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12080</td><td>D-US</td><td class="name">120件圣诞十字铃铛25MM（混彩) (D5219/3739变体） </td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12107</td><td>D-US</td><td class="name">240件圣诞十字铃铛10MM（混彩) （D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12113</td><td>D-US</td><td class="name">240件圣诞十字铃铛15MM（混彩) （D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12114</td><td>D-US</td><td class="name">240件圣诞十字铃铛8MM/10MM/12MM（混彩) （D5189变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12949</td><td>D-US</td><td class="name">200件迷你圣诞铃铛6MM（古铜色）（D8952变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-12950</td><td>D-US</td><td class="name">50件圣诞十字铃铛20MM（做锈款）（D5192变体）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">调研<em>AI推广</em></span></td></tr><tr><td>89-16659</td><td>D-US</td><td class="name">铃铛金属古铜色圆锥36个 (圣诞复古圆锥铃铛古铜色36件）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-17062</td><td>Z-US</td><td class="name">鸟架 金属黑色蜂鸟架4个 (4件套金属鸟架蜂鸟架蜂鸟秋千带链条挂钩）</td><td>徐亮</td><td>赵诗怡</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">左姜倩</span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>27</b> SKU逾期　<b>27</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×16</span><span class="mini">分配店铺×7</span><span class="mini">样品审核×3</span><span class="mini">调研×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>125-17237</td><td>A-US</td><td class="name">春节钥匙扣金属生肖羊8个 (钥匙扣+卡片+红色收口袋）</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">样品审核<em>刘朱</em></span></td></tr><tr><td>125-17455</td><td>A-US</td><td class="name">钥匙扣涤纶伞绳24个+开口环金属24个（纯色）</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>范雅晴</em></span></td></tr><tr><td>125-17456</td><td>H-US</td><td class="name">开学100天雨丝帘塑料2m*1m5色循环3个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr><tr><td>125-17458</td><td>K-US</td><td class="name">春节装饰挂件无纺布灯笼4个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韩咏琪</em></span></td></tr><tr><td>125-17460</td><td>A-US</td><td class="name">情人节儿童耳贴塑料水晶滴胶耳贴4个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>范雅晴</em></span></td></tr><tr><td>125-17461</td><td>K-US</td><td class="name">情人节钥匙扣亚克力心形24个+卡纸纸制品涂鸦卡24个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>于战战</em></span></td></tr><tr><td>125-17470</td><td>M-US</td><td class="name">女性历史月胸针金属28个</td><td>刘朱</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16100</td><td>M-US</td><td class="name">圣诞节装饰品挂绳布圣诞节棕色装饰品挂绳个 (120个 丝绒款 装饰品挂绳（棕色））</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16281</td><td>K-DE</td><td class="name">圣诞节金属丝塑料圣诞节圣诞树金属丝10个 (圣诞节：10条圣诞树金属丝（银色））</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16770</td><td>K-DE</td><td class="name">圣诞节金属丝塑料10条圣诞树金属丝（金色）个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16771</td><td>K-DE</td><td class="name">圣诞节金属丝塑料圣诞节：10条圣诞树金属丝（白色）个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-17583</td><td>K-UK</td><td class="name">斋月手工木片木制品7款木片+拉旗1个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韩咏琪</em></span></td></tr><tr><td>168-17682</td><td>M-US</td><td class="name">情人节橡皮擦塑料谈话爱心橡皮擦150个</td><td>王婷婷</td><td>左姜倩</td><td class="tags"><span class="tag bad">样品审核<em>王婷婷</em></span></td></tr><tr><td>326-16042</td><td>H-US</td><td class="name">圣诞节树脂装饰品塑料个 (32个圣诞树脂姜饼人（11款））</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16393</td><td>K-US</td><td class="name">圣诞节纸袋纸制品32个（32套圣诞节香料袋子（纸袋*32，贴纸*32，绳子*40米））</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16403</td><td>M-US</td><td class="name">圣诞节纹身贴纸纸制品12个 (12张圣诞脸部雀斑贴（3款））</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16902</td><td>M-US</td><td class="name">冬季纹身贴纸纸制品12个 (12张雪花脸部雀斑贴）</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-17454</td><td>K-US</td><td class="name">圣帕特里克节玩具金币金属1个（240个迷你金币）</td><td>李新雅</td><td>左姜倩</td><td class="tags"><span class="tag bad">分配店铺<em>韩咏琪</em></span></td></tr><tr><td>328-16318</td><td>K-FR</td><td class="name">圣诞节卡片纸制品法语圣诞卡片+信封+贴纸20个</td><td>吴正</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>孟夏美</em></span></td></tr><tr><td>328-16649</td><td>M-US</td><td class="name">圣诞节纹身贴纸纸制品夜光雪花120个</td><td>吴正</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16720</td><td>K-US</td><td class="name">圣诞节地插塑料圣诞姜饼人糖果12个 (12个圣诞姜饼人糖果塑料地插）</td><td>黄利园</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>469-16533</td><td>H-US</td><td class="name">新年拍照道具纸制品30个</td><td>代焕住</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-16939</td><td>K-US</td><td class="name">冬季装饰挂件金属2.5cm36个 (36件冬季吊坠挂件）</td><td>车彩霞</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-17367</td><td>K-US</td><td class="name">狂欢节装饰挂件金属2.5cm36个（装饰挂件金属2.5cm36个 (36件狂欢节吊坠挂件））</td><td>车彩霞</td><td>左姜倩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>805-17049</td><td>K-US</td><td class="name">情人节团队游戏道具纸制品1个</td><td>徐子强</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>819-17246</td><td>M-US</td><td class="name">情人节门牌木制品情人节心形木制门牌1个</td><td>王秀</td><td>左姜倩</td><td class="tags"><span class="tag bad">样品审核<em>王秀</em></span></td></tr><tr><td>819-17623</td><td>M-US</td><td class="name">圣帕特里克节树脂装饰品树脂闪粉三叶草60个</td><td>王秀</td><td>左姜倩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">马善彩</span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>26</b> SKU逾期　<b>27</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×12</span><span class="mini">调研×6</span><span class="mini">样品审核×5</span><span class="mini">分配店铺×4</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>125-17464</td><td>W-US</td><td class="name">黑人历史月拷贝纸纸100个（黑色+黄色+红色+绿色，35*50cm）</td><td>刘朱</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>范昌娟</em></span></td></tr><tr><td>125-17568</td><td>W-US</td><td class="name">情人节拷贝纸纸50*35厘米60个</td><td>刘朱</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>125-P1970</td><td>P-CA</td><td class="name">36件套英文字母数字模板 3英寸</td><td>刘朱</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-15793</td><td>G7-US</td><td class="name">60个树脂火鸡（4款）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16319</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料耶稣60个 (60个树脂平背耶稣）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16435</td><td>G7-US</td><td class="name">圣诞节迷你鹅配饰布3个 (三套迷你鹅圣诞服饰（火鸡，圣诞树，企鹅））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16564</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料200个 (200个圣诞迷你平背树脂（混款果冻色））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16686</td><td>G7-UK</td><td class="name">圣诞节圣诞室内装饰塑料8个 (8条圣诞镭射拉花）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16695</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料80个 (80个圣诞节鸭子（印雪花））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-16946</td><td>G7-US</td><td class="name">圣诞节树脂装饰品塑料36个 (36个平背圣诞树（12款））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-17253</td><td>G7-US</td><td class="name">春季树脂装饰品塑料个 +（60个春季平背树脂（不重复））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>326-17364</td><td>G7-US</td><td class="name">情人节树脂装饰品塑料1个（60个电镀迷你熊（红粉紫各20））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>326-17452</td><td>G7-US</td><td class="name">圣帕特里克节树脂装饰品塑料1个（20个精灵帽子）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>吴跃</em></span></td></tr><tr><td>326-17465</td><td>G7-US</td><td class="name">圣帕特里克节树脂摆件塑料1个（20个绿节金币罐）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>吴跃</em></span></td></tr><tr><td>326-17467</td><td>W-US</td><td class="name">圣帕特里克节儿童贴纸纸制品1个（500贴镭射彩虹贴纸）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">分配店铺<em>范昌娟</em></span><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17473</td><td>W-US</td><td class="name">圣帕特里克节儿童贴纸纸制品1个（500贴镭射金币罐贴纸）</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17732</td><td>G7-US</td><td class="name">复活节树脂摆件塑料1个（80个复活节树脂兔子鸭（混色））</td><td>李新雅</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>328-16603</td><td>G7-US</td><td class="name">圣诞节卡片纸制品贺卡20个+钥匙扣塑料20个+欧根纱袋塑料红色20个</td><td>吴正</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16441</td><td>G7-US</td><td class="name">圣诞节桌面摆件橡胶12*120cm道路1个 (1件12*120cm圣诞小镇道路（马路款式））</td><td>黄利园</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16845</td><td>G7-DE</td><td class="name">圣诞节桌面摆件木制品圣诞侏儒摆件个 (圣诞侏儒摆件（1个木质圣诞集市小摊+1个木质路牌+4个糖果盒子+4个糖果瓶+4个姜饼人+150cm迷你灯串花环））</td><td>黄利园</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>黄利园</em></span></td></tr><tr><td>469-16215</td><td>G7-US</td><td class="name">冬季玩具眼镜纸制品12款冬季主题36个</td><td>代焕住</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-17586</td><td>W-US</td><td class="name">情人节吊坠金属90个（90个混装节日吊坠（情人节 绿节 复活节））</td><td>车彩霞</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>805-17478</td><td>W-US</td><td class="name">圣帕特里克节桌面摆件塑料绿色三叶草18个</td><td>徐子强</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>816-17420</td><td>G7-UK</td><td class="name">复活节袜子棉AB袜（兔子、胡萝卜、小鸡、彩蛋）+彩蛋2个</td><td>沈婕</td><td>马善彩</td><td class="tags"><span class="tag bad">样品审核<em>沈婕</em></span></td></tr><tr><td>89-16391</td><td>G7-US</td><td class="name">圣诞节装饰挂件塑料盲盒24个 (圣诞节24天倒计时盲盒亚克力挂件饰品）</td><td>徐亮</td><td>马善彩</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-17407</td><td>G7-US</td><td class="name">狂欢节项链金属狂欢节主题2个（狂欢节合金项链+手环套装（1项链+1手链））</td><td>徐亮</td><td>马善彩</td><td class="tags"><span class="tag bad">调研<em>张淑珍</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">金雨欣</span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>20</b> SKU逾期　<b>20</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×14</span><span class="mini">分配店铺×4</span><span class="mini">样品审核×2</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>125-17453</td><td>N-US</td><td class="name">开学100天奖牌硅胶24个</td><td>刘朱</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr><tr><td>125-17468</td><td>N-US</td><td class="name">开学100天铅笔木制品60个（12款）</td><td>刘朱</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>李超</em></span></td></tr><tr><td>168-16369</td><td>N-US</td><td class="name">圣诞节刮刮卡纸制品 圣诞节  36个6款 雪人 刮刮卡（36刮刮纸+36彩绳+12竹签）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16376</td><td>N-US</td><td class="name">圣诞节刮刮卡纸制品 36个6款 圣诞节 绿色圣诞树 刮刮卡（36刮刮纸+36彩绳+12竹签）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16434</td><td>N-US</td><td class="name">圣诞节装饰贴纸塑料560PCS 圣诞帽贴纸个 (560PCS 圣诞帽贴纸）</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16450</td><td>N-US</td><td class="name">圣诞节儿童贴纸塑料2700PCS 闪光 雪花贴纸（银色+深蓝+浅蓝）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16559</td><td>N-US</td><td class="name">圣诞节刮刮卡纸制品冬季圣诞节：36张蓝色雪花刮刮卡（36刮刮纸+36彩绳+12竹签）个</td><td>王婷婷</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>328-16597</td><td>I-US</td><td class="name">圣诞节标签贴纸纸制品Coquito酒瓶贴纸+蝴蝶结108个</td><td>吴正</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>328-16911</td><td>N-US</td><td class="name">圣诞节圣诞树装饰品金属5.51inch+7.87inch多利亚风格冰柱挂饰60个</td><td>吴正</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-15225</td><td>N-US</td><td class="name">8件银色珠链（8款）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>储淑霞</em></span></td></tr><tr><td>389-16205</td><td>F-US</td><td class="name">圣诞节织带塑料五角星3个 (3卷5m银色闪粉丝带）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-17582</td><td>I-US</td><td class="name">桌面摆件布柠檬8个（柠檬填充摆件）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr><tr><td>389-17584</td><td>I-US</td><td class="name">春季桌面摆件布草莓8个（草莓填充摆件）</td><td>黄利园</td><td>金雨欣</td><td class="tags"><span class="tag bad">分配店铺<em>韦燕敏</em></span></td></tr><tr><td>442-8663</td><td>Y-US</td><td class="name">5578变体，加仑丁、情人节主题粉色系5色30张组合</td><td>吴丹</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>735-17058</td><td>Y-US</td><td class="name">情人节信纸信封纸制品个 (60个信封+60个爱心卡纸）</td><td>黄心怡</td><td>金雨欣</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>735-17513</td><td>Y-US</td><td class="name">复活节礼物盒纸制品1个（40套复活节兔耳朵造型牛皮纸盒）</td><td>黄心怡</td><td>金雨欣</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>79-16385</td><td>F-US</td><td class="name">圣诞节织带布1cm宽格子个 (6卷圣诞节格子丝带）</td><td>车彩霞</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>79-16893</td><td>F-US</td><td class="name">圣诞节织带布1cm宽6个 (6卷60码粉彩色圣诞节丝带）</td><td>车彩霞</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>805-17110</td><td>Y-US</td><td class="name">春节装饰挂件纸制品30个</td><td>徐子强</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>89-16178</td><td>N-UK</td><td class="name">圣诞节挂球塑料格林奇主题色48个 (圣诞节格林奇主题色挂球48件（6CM24个+4CM24个 ））</td><td>徐亮</td><td>金雨欣</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">夏如梦</span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>14</b> SKU逾期　<b>17</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">调研×7</span><span class="mini">样品审核×6</span><span class="mini">图片申请×3</span><span class="mini">分配店铺×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>168-16151</td><td>L-US</td><td class="name">圣诞节气球丝带塑料圣诞节卷曲装饰带4个 (4卷圣诞节 卷曲 装饰带（图案款））</td><td>王婷婷</td><td>夏如梦</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16293</td><td>G13-US</td><td class="name">圣诞节咖啡搅拌器塑料圣诞节姜饼人搅拌棒36个 (圣诞节：36个姜饼人搅拌棒）</td><td>王婷婷</td><td>夏如梦</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>168-16295</td><td>G13-US</td><td class="name">圣诞节咖啡搅拌器塑料圣诞节雪花搅拌棒36个 (圣诞节：36个雪花搅拌棒）</td><td>王婷婷</td><td>夏如梦</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>326-17335</td><td>G13-US</td><td class="name">春季花束包装袋塑料1个（40个多支花束包装袋（深粉色）+25码丝带）</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17336</td><td>G13-US</td><td class="name">春季花束包装袋塑料1个（100个单支透明花束袋+2卷丝带）</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17338</td><td>G13-US</td><td class="name">情人节花束包装袋塑料1个（100个单支玫瑰袋+2卷黑色丝带）</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>326-17428</td><td>G13-US</td><td class="name">情人节挂旗毛毡1个（一条3D爱心毛毡横幅（8个爱心+45个毛球））</td><td>李新雅</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>程智刚</em></span><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>469-17642</td><td>G14-US</td><td class="name">复活节头带纸制品30个</td><td>代焕住</td><td>夏如梦</td><td class="tags"><span class="tag bad">分配店铺<em>李超</em></span></td></tr><tr><td>735-17280</td><td>G13-US</td><td class="name">情人节桌面摆件毛毡个 +（8个情人节纯色爱心毛毡木质摆件）</td><td>黄心怡</td><td>夏如梦</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>735-17530</td><td>L-US</td><td class="name">圣帕特里克节花环毛毡1个（绿节三叶草蝴蝶结毛毡花环+LUCKY三叶草拉条）</td><td>黄心怡</td><td>夏如梦</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>805-17391</td><td>L-US</td><td class="name">圣诞节彩印食品袋塑料24个</td><td>徐子强</td><td>夏如梦</td><td class="tags"><span class="tag bad">样品审核<em>徐子强</em></span></td></tr><tr><td>805-17562</td><td>L-US</td><td class="name">复活节装饰挂件木制品6英寸兔子4个</td><td>徐子强</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>徐叶</em></span><span class="tag bad">样品审核<em>徐子强</em></span></td></tr><tr><td>819-17536</td><td>G13-US</td><td class="name">复活节派对装饰用品毛毡郁金香摆件6个</td><td>王秀</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>吴瑶</em></span><span class="tag bad">样品审核<em>王秀</em></span></td></tr><tr><td>819-17555</td><td>G13-US</td><td class="name">复活节派对装饰用品毛毡复活节兔子胡萝卜横幅1个</td><td>王秀</td><td>夏如梦</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">葛月娇</span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>10</b> SKU逾期　<b>10</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">图片申请×3</span><span class="mini">调研×3</span><span class="mini">样品审核×2</span><span class="mini">分配店铺×2</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>125-17585</td><td>T-US</td><td class="name">情人节串珠塑料心形600个+大马珠塑料600个</td><td>刘朱</td><td>葛月娇</td><td class="tags"><span class="tag bad">分配店铺<em>吴跃</em></span></td></tr><tr><td>326-17326</td><td>V-US</td><td class="name">春季鹅服饰布1个（雏菊主题门廊鹅服饰三件套（草帽+领结+围脖））</td><td>李新雅</td><td>葛月娇</td><td class="tags"><span class="tag bad">样品审核<em>李新雅</em></span></td></tr><tr><td>389-15628</td><td>T-US</td><td class="name">24件套万圣节钥匙扣（24个双面木片+24个钥匙扣+300个小马珠+200个字母珠+100个骷髅珠+1卷绳子）</td><td>黄利园</td><td>葛月娇</td><td class="tags"><span class="tag bad">图片申请<em>吴芳</em></span></td></tr><tr><td>469-15857</td><td>E-US</td><td class="name">门套布万圣节1个</td><td>代焕住</td><td>葛月娇</td><td class="tags"><span class="tag bad">图片申请<em>储淑霞</em></span></td></tr><tr><td>469-17641</td><td>V-US</td><td class="name">复活节袜子布6个</td><td>代焕住</td><td>葛月娇</td><td class="tags"><span class="tag bad">分配店铺<em>张颖</em></span></td></tr><tr><td>550-17432</td><td>V-US</td><td class="name">春节袜子涤纶均码红色羊年新年袜子6个</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>550-17490</td><td>V-US</td><td class="name">圣帕特里克节3D创意啤酒袜针织袜子脚套，1双</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">调研<em>范昌娟</em></span></td></tr><tr><td>550-17565</td><td>V-DE</td><td class="name">狂欢节cos道具涤纶均码蓝色水手·服装1个</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">调研<em>范雅晴</em></span></td></tr><tr><td>550-17718</td><td>V-DE</td><td class="name">狂欢节cos道具涤纶棕色西部牛仔服装套装1个</td><td>卢文莲</td><td>葛月娇</td><td class="tags"><span class="tag bad">样品审核<em>卢文莲</em></span></td></tr><tr><td>819-17615</td><td>V-US</td><td class="name">圣帕特里克节硅胶模具硅胶6连四叶草硅胶模具3个</td><td>王秀</td><td>葛月娇</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname">陈菲</span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>8</b> SKU逾期　<b>8</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">调研×3</span><span class="mini">图片申请×3</span><span class="mini">分配店铺×1</span><span class="mini">样品审核×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>326-17466</td><td>S-US</td><td class="name">黑人历史月挂旗纸制品1个（3条女性黑人历史月拉旗（闪粉））</td><td>李新雅</td><td>陈菲</td><td class="tags"><span class="tag bad">分配店铺<em>丁惠敏</em></span></td></tr><tr><td>328-16609</td><td>Q-US</td><td class="name">圣诞节不干胶贴纸纸制品烫金耶稣诞生场景600个</td><td>吴正</td><td>陈菲</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-16467</td><td>Q-US</td><td class="name">圣诞节装饰贴纸塑料砖墙贴纸8个 (8张圣诞小镇砖墙不干胶贴纸）</td><td>黄利园</td><td>陈菲</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr><tr><td>389-17471</td><td>Q-US</td><td class="name">情人节美甲工具泡沫谈话爱心36个</td><td>黄利园</td><td>陈菲</td><td class="tags"><span class="tag bad">调研<em>韦燕敏</em></span></td></tr><tr><td>469-17415</td><td>Q-US</td><td class="name">情人节地毯布门垫2个</td><td>代焕住</td><td>陈菲</td><td class="tags"><span class="tag bad">调研<em>张淑珍</em></span></td></tr><tr><td>735-17212</td><td>S-US</td><td class="name">派对装饰用品聚酯纤维个 (赛车主题生日派对横幅装饰）</td><td>黄心怡</td><td>陈菲</td><td class="tags"><span class="tag bad">样品审核<em>黄心怡</em></span></td></tr><tr><td>816-17409</td><td>Q-US</td><td class="name">情人节地毯防滑垫聚酯纤维120cm1个</td><td>沈婕</td><td>陈菲</td><td class="tags"><span class="tag bad">调研<em>未指名</em></span></td></tr><tr><td>89-16161</td><td>Q-US</td><td class="name">圣诞节刺绣圈木制品8CM红绿金银12个 (红绿金银刺绣圈3寸（8CM）12个）</td><td>徐亮</td><td>陈菲</td><td class="tags"><span class="tag bad">图片申请<em>未指名</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <span class="pname"></span>
+        <span class="badge dev">推广人</span>
+        <div class="stat"><b>1</b> SKU逾期　<b>1</b> 环节次</div>
+      </div>
+      <div class="card-body">
+        <div class="row"><span class="lbl">环节分布</span><div class="chips"><span class="mini">分配店铺×1</span></div></div>
+        <table>
+          <tr><th>SKU</th><th>店铺</th><th>产品名称</th><th>开发人</th><th>推广人</th><th>具体逾期环节(责任人)</th></tr>
+          <tr><td>495-17647</td><td>G11-US</td><td class="name">情人节卡片纸制品篮球1个（情人节盒子和卡片套装）</td><td>倪锐</td><td>-</td><td class="tags"><span class="tag bad">分配店铺<em>孙莹</em></span></td></tr>
+        </table>
+      </div>
+    </div>
+
+<div class="foot">明细源：盛途ERP流程逾期(按SKU聚合)，2026-09全月 ｜ 共 143 条 SKU</div>
+
+<script>
+var stageChart = echarts.init(document.getElementById('stageChart'));
+stageChart.setOption({
+  tooltip: { trigger:'axis' },
+  grid: { left:'6%', right:'5%', bottom:'8%', top:'8%', containLabel:true },
+  xAxis: { type:'category', data:["分配店铺", "调研", "样品审核", "文案申请", "图片申请"] },
+  yAxis: { type:'value', name:'逾期环节次数' },
+  series: [{ name:'逾期次数', type:'bar', barWidth:'46%', data:[25, 42, 19, 0, 61],
+    itemStyle:{ color:'#e74c3c', borderRadius:[6,6,0,0] }, label:{ show:true, position:'top' } }]
+});
+window.addEventListener('resize', function(){ stageChart.resize(); });
+</script>
+</body>
+</html>
